@@ -178,74 +178,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="footer" id="footer">
-        <div className="footer-content">
-          <div className="footer-brand">
-            <h3>A L O R A</h3>
-            <p>
-              Luxury fragrances crafted for those who refuse to blend in.
-              Every scent tells a story.
-            </p>
-          </div>
 
-          <div className="footer-column">
-            <h4>Shop</h4>
-            <ul>
-              <li><Link href="/shop">All Fragrances</Link></li>
-              <li><Link href="/collections">Collections</Link></li>
-              <li><Link href="/shop?category=new">New Arrivals</Link></li>
-              <li><Link href="/shop?category=bestsellers">Bestsellers</Link></li>
-            </ul>
-          </div>
-
-          <div className="footer-column">
-            <h4>Company</h4>
-            <ul>
-              <li><Link href="/about">About Us</Link></li>
-              <li><Link href="/contact">Contact</Link></li>
-              <li><Link href="/careers">Careers</Link></li>
-              <li><Link href="/press">Press</Link></li>
-            </ul>
-          </div>
-
-          <div className="footer-column">
-            <h4>Help</h4>
-            <ul>
-              <li><Link href="/faq">FAQ</Link></li>
-              <li><Link href="/shipping">Shipping</Link></li>
-              <li><Link href="/returns">Returns</Link></li>
-              <li><Link href="/privacy">Privacy Policy</Link></li>
-            </ul>
-          </div>
-        </div>
-
-        <div className="footer-bottom">
-          <p>&copy; 2026 Alora. All rights reserved.</p>
-          <div className="footer-social">
-            {/* Instagram */}
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-              </svg>
-            </a>
-            {/* Twitter / X */}
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
-              </svg>
-            </a>
-            {/* Pinterest */}
-            <a href="https://pinterest.com" target="_blank" rel="noopener noreferrer" aria-label="Pinterest">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2C6.48 2 2 6.48 2 12c0 4.25 2.67 7.87 6.42 9.29-.09-.78-.17-1.98.04-2.83.19-.77 1.2-5.08 1.2-5.08s-.31-.61-.31-1.52c0-1.42.82-2.49 1.85-2.49.87 0 1.29.66 1.29 1.44 0 .88-.56 2.19-.85 3.41-.24 1.02.51 1.85 1.52 1.85 1.82 0 3.22-1.92 3.22-4.69 0-2.45-1.76-4.17-4.28-4.17-2.91 0-4.62 2.19-4.62 4.44 0 .88.34 1.82.76 2.34.08.1.09.19.07.29-.08.32-.25 1.02-.28 1.16-.04.19-.15.23-.35.14-1.31-.61-2.13-2.52-2.13-4.06 0-3.31 2.41-6.35 6.94-6.35 3.64 0 6.47 2.6 6.47 6.07 0 3.62-2.28 6.53-5.45 6.53-1.06 0-2.07-.55-2.41-1.21l-.66 2.5c-.24.91-.88 2.05-1.31 2.75A10 10 0 0 0 22 12c0-5.52-4.48-10-10-10z" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </footer>
     </>
   );
 }
