@@ -48,7 +48,29 @@ export default function Navbar() {
             <li><Link href="/collections">Men</Link></li>
             <li><Link href="/collections">Women</Link></li>
             <li><Link href="/collections">Unisex</Link></li>
-            <li><Link href="/brands">Brands</Link></li>
+            <li className="nav-item-dropdown">
+              <Link href="/brands">Brands</Link>
+              <div className="dropdown-menu">
+                <div className="brands-grid">
+                  {[
+                    "Afnan", "Armaf", "Burberry", "Calvin Klein", "Chanel", "Creed",
+                    "Davidoff", "Dior", "Dolce & Gabbana", "Giorgio Armani", "Gucci",
+                    "Hugo Boss", "Jean Paul", "Lattafa", "Louis Vuitton", "Mancera",
+                    "Paco Rabanne", "Prada", "Ralph Lauren", "Rassasi", "Rayhaan",
+                    "Tom Ford", "Valentino", "Versace", "Victoria's Secret", "Xerjoff",
+                    "YSL", "Zara"
+                  ].map((brand) => (
+                    <Link
+                      key={brand}
+                      href={`/brands/${brand.toLowerCase().replace(/ /g, "-")}`}
+                      className="brand-link"
+                    >
+                      {brand}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </li>
             <li><Link href="/about">About</Link></li>
             <li><Link href="/contact">Contact</Link></li>
           </ul>
@@ -56,9 +78,9 @@ export default function Navbar() {
           {/* Icons */}
           <div className="navbar-icons">
             {/* Search Toggle */}
-            <button 
-              className={`navbar-icon ${searchOpen ? 'active' : ''}`} 
-              id="navbar-search" 
+            <button
+              className={`navbar-icon ${searchOpen ? 'active' : ''}`}
+              id="navbar-search"
               onClick={() => setSearchOpen(!searchOpen)}
               aria-label="Search"
             >
@@ -103,9 +125,9 @@ export default function Navbar() {
         {/* Search Bar Popup */}
         <div className={`search-popup ${searchOpen ? 'open' : ''}`} id="search-popup">
           <div className="search-container">
-            <input 
-              type="text" 
-              placeholder="Search for fragrances, brands..." 
+            <input
+              type="text"
+              placeholder="Search for fragrances, brands..."
               autoFocus={searchOpen}
               className="search-input"
             />
