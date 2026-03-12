@@ -553,7 +553,7 @@ body {
 /* Product Grid */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 32px;
 }
 
@@ -623,7 +623,7 @@ body {
 
 .product-card-name {
   font-family: var(--font-serif);
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   color: #111;
   margin-bottom: 4px;

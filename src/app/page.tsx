@@ -92,7 +92,7 @@ export default function Home() {
                 src="/alora_BG2.png"
                 alt="Midnight Oud"
                 fill
-                sizes="(max-width: 768px) 100vw, 33vw"
+                sizes="(max-width: 768px) 100vw, 25vw"
                 style={{ objectFit: "cover", objectPosition: "center" }}
               />
               <span className="product-card-badge">Bestseller</span>
@@ -112,7 +112,7 @@ export default function Home() {
                 src="/alora_BG2.png"
                 alt="Velvet Rose"
                 fill
-                sizes="(max-width: 768px) 100vw, 33vw"
+                sizes="(max-width: 768px) 100vw, 25vw"
                 style={{ objectFit: "cover", objectPosition: "center" }}
               />
               <span className="product-card-badge">New</span>
@@ -132,7 +132,7 @@ export default function Home() {
                 src="/alora_BG2.png"
                 alt="Golden Amber"
                 fill
-                sizes="(max-width: 768px) 100vw, 33vw"
+                sizes="(max-width: 768px) 100vw, 25vw"
                 style={{ objectFit: "cover", objectPosition: "center" }}
               />
               <div className="product-card-quick">Quick View</div>
@@ -141,6 +141,103 @@ export default function Home() {
               <h3 className="product-card-name">Golden Amber</h3>
               <p className="product-card-category">Eau de Parfum</p>
               <p className="product-card-price">$165.00</p>
+            </div>
+          </Link>
+
+          {/* Product Card 4 */}
+          <Link href="/shop/silver-mist" className="product-card" id="product-card-4">
+            <div className="product-card-image">
+              <Image
+                src="/alora_BG.png"
+                alt="Silver Mist"
+                fill
+                sizes="(max-width: 768px) 100vw, 25vw"
+                style={{ objectFit: "cover", objectPosition: "center" }}
+              />
+              <div className="product-card-quick">Quick View</div>
+            </div>
+            <div className="product-card-info">
+              <h3 className="product-card-name">Silver Mist</h3>
+              <p className="product-card-category">Eau de Cologne</p>
+              <p className="product-card-price">$145.00</p>
+            </div>
+          </Link>
+
+          {/* Product Card 5 */}
+          <Link href="/shop/rose-quartz" className="product-card" id="product-card-5">
+            <div className="product-card-image">
+              <Image
+                src="/alora_BG2.png"
+                alt="Rose Quartz"
+                fill
+                sizes="(max-width: 768px) 100vw, 25vw"
+                style={{ objectFit: "cover", objectPosition: "center" }}
+              />
+              <span className="product-card-badge">Limited</span>
+              <div className="product-card-quick">Quick View</div>
+            </div>
+            <div className="product-card-info">
+              <h3 className="product-card-name">Rose Quartz</h3>
+              <p className="product-card-category">Eau de Parfum</p>
+              <p className="product-card-price">$210.00</p>
+            </div>
+          </Link>
+
+          {/* Product Card 6 */}
+          <Link href="/shop/mystic-sandalwood" className="product-card" id="product-card-6">
+            <div className="product-card-image">
+              <Image
+                src="/alora_BG.png"
+                alt="Mystic Sandalwood"
+                fill
+                sizes="(max-width: 768px) 100vw, 25vw"
+                style={{ objectFit: "cover", objectPosition: "center" }}
+              />
+              <div className="product-card-quick">Quick View</div>
+            </div>
+            <div className="product-card-info">
+              <h3 className="product-card-name">Mystic Sandalwood</h3>
+              <p className="product-card-category">Extrait de Parfum</p>
+              <p className="product-card-price">$195.00</p>
+            </div>
+          </Link>
+
+          {/* Product Card 7 */}
+          <Link href="/shop/azure-bloom" className="product-card" id="product-card-7">
+            <div className="product-card-image">
+              <Image
+                src="/alora_BG2.png"
+                alt="Azure Bloom"
+                fill
+                sizes="(max-width: 768px) 100vw, 25vw"
+                style={{ objectFit: "cover", objectPosition: "center" }}
+              />
+              <div className="product-card-quick">Quick View</div>
+            </div>
+            <div className="product-card-info">
+              <h3 className="product-card-name">Azure Bloom</h3>
+              <p className="product-card-category">Eau de Parfum</p>
+              <p className="product-card-price">$175.00</p>
+            </div>
+          </Link>
+
+          {/* Product Card 8 */}
+          <Link href="/shop/nocturnal-jasmine" className="product-card" id="product-card-8">
+            <div className="product-card-image">
+              <Image
+                src="/alora_BG.png"
+                alt="Nocturnal Jasmine"
+                fill
+                sizes="(max-width: 768px) 100vw, 25vw"
+                style={{ objectFit: "cover", objectPosition: "center" }}
+              />
+              <span className="product-card-badge">Bestseller</span>
+              <div className="product-card-quick">Quick View</div>
+            </div>
+            <div className="product-card-info">
+              <h3 className="product-card-name">Nocturnal Jasmine</h3>
+              <p className="product-card-category">Eau de Parfum</p>
+              <p className="product-card-price">$190.00</p>
             </div>
           </Link>
         </div>
