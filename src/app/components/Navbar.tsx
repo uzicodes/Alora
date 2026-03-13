@@ -45,11 +45,11 @@ export default function Navbar() {
           {/* Nav Links */}
           <ul className="navbar-links" id="navbar-links">
             <li><Link href="/shop">Shop</Link></li>
-            <li><Link href="/collections">Men</Link></li>
-            <li><Link href="/collections">Women</Link></li>
-            <li><Link href="/collections">Unisex</Link></li>
+            <li><Link href="/men">Men</Link></li>
+            <li><Link href="/woman">Women</Link></li>
+            <li><Link href="/unisex">Unisex</Link></li>
             <li className="nav-item-dropdown">
-              <Link href="/brands">Brands</Link>
+              <a href="#" onClick={(e) => e.preventDefault()}>Brands</a>
               <div className="dropdown-menu">
                 <div className="brands-grid">
                   {[
@@ -91,7 +91,7 @@ export default function Navbar() {
             </button>
 
             {/* Account */}
-            <Link href="/profile/page" className="navbar-icon" id="navbar-account" aria-label="Account">
+            <Link href="/profile" className="navbar-icon" id="navbar-account" aria-label="Account">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                 <circle cx="12" cy="7" r="4" />
@@ -144,8 +144,10 @@ export default function Navbar() {
       {/* Mobile Menu Overlay */}
       <div className={`mobile-menu ${mobileOpen ? "open" : ""}`} id="mobile-menu">
         <Link href="/shop" onClick={() => setMobileOpen(false)}>Shop</Link>
-        <Link href="/collections" onClick={() => setMobileOpen(false)}>Collections</Link>
-        <Link href="/brands" onClick={() => setMobileOpen(false)}>Brands</Link>
+        <Link href="/men" onClick={() => setMobileOpen(false)}>Men</Link>
+        <Link href="/woman" onClick={() => setMobileOpen(false)}>Women</Link>
+        <Link href="/unisex" onClick={() => setMobileOpen(false)}>Unisex</Link>
+        <a href="#" onClick={(e) => e.preventDefault()}>Brands</a>
         <Link href="/about" onClick={() => setMobileOpen(false)}>About</Link>
         <Link href="/contact" onClick={() => setMobileOpen(false)}>Contact</Link>
       </div>
