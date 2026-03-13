@@ -1,0 +1,251 @@
+.profile-page {
+  min-height: 100vh;
+  padding: 120px 40px 60px;
+  background: #ffffff;
+  color: #111111;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.profile-header {
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.profile-title {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 4vw, 48px);
+  font-weight: 300;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.profile-layout {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 60px;
+}
+
+.profile-sidebar {
+  border-right: 1px solid #eeeeee;
+  padding-right: 30px;
+}
+
+.profile-nav {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #777777;
+  text-decoration: none;
+  padding: 10px 0;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.profile-nav-link.active {
+  color: #111111;
+  font-weight: 500;
+}
+
+.profile-nav-link:hover {
+  color: #C28D10;
+  transform: translateX(4px);
+}
+
+.profile-nav-link svg {
+  width: 18px;
+  height: 18px;
+}
+
+.profile-nav-link.logout {
+  color: #d9534f;
+  margin-top: 20px;
+  border-top: 1px solid #eeeeee;
+  padding-top: 20px;
+}
+
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.profile-welcome {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 30px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #111111;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 28px;
+}
+
+.profile-welcome-text h2 {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 400;
+  margin-bottom: 4px;
+}
+
+.profile-welcome-text p {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: #777777;
+}
+
+.profile-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+.profile-card {
+  border: 1px solid #eeeeee;
+  padding: 30px;
+  transition: border-color 0.3s ease;
+}
+
+.profile-card:hover {
+  border-color: #111111;
+}
+
+.profile-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-card-title {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.profile-card-edit {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: #777777;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.profile-card-edit:hover {
+  color: #111111;
+}
+
+.profile-info-group {
+  margin-bottom: 16px;
+}
+
+.profile-info-label {
+  font-family: var(--font-body);
+  font-size: 10px;
+  color: #999999;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.profile-info-value {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: #111111;
+}
+
+.profile-orders-title {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eeeeee;
+  padding-bottom: 10px;
+}
+
+.profile-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.profile-table th {
+  text-align: left;
+  padding: 12px 0;
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: #999999;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.profile-table td {
+  padding: 20px 0;
+  font-family: var(--font-body);
+  font-size: 14px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.profile-order-id {
+  font-weight: 500;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: 1px solid #111111;
+  color: #111111;
+}
+
+@media (max-width: 900px) {
+  .profile-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .profile-sidebar {
+    border-right: none;
+    border-bottom: 1px solid #eeeeee;
+    padding-right: 0;
+    padding-bottom: 20px;
+  }
+  
+  .profile-cards {
+    grid-template-columns: 1fr;
+  }
+}
