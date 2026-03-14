@@ -56,10 +56,10 @@ const brandsData = [
 
 export default function ShopAllPage() {
   return (
-    <div className="min-h-screen bg-black text-white pb-32 pt-40 px-6 sm:px-10 lg:px-16 font-sans font-body">
+    <div className="min-h-screen bg-white text-black pb-32 pt-40 px-6 sm:px-10 lg:px-16 font-sans font-body">
       <div className="max-w-screen-2xl mx-auto">
         <header className="mb-24 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif uppercase tracking-[0.2em] mb-8 text-white">Our Collections</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif uppercase tracking-[0.2em] mb-8 text-black">Our Collections</h1>
           <div className="w-16 h-[2px] bg-[#C28D10] mx-auto"></div>
         </header>
 
@@ -70,26 +70,26 @@ export default function ShopAllPage() {
                 <h2 className="text-2xl md:text-3xl font-serif uppercase tracking-[0.15em] text-[#C28D10]">
                   {brand.name}
                 </h2>
-                <div className="h-[1px] bg-neutral-800 flex-grow relative"></div>
+                <div className="h-[1px] bg-neutral-200 flex-grow relative"></div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-[60px] md:gap-y-[80px] z-10 relative">
                 {brand.products.map((product) => (
                   <div key={product.id} className="group flex flex-col cursor-pointer h-full">
-                    <div className="relative aspect-[4/5] bg-[#0a0a0a] flex items-center justify-center border border-neutral-800/80 transition-all duration-500 hover:border-[#C28D10] hover:shadow-[0_0_20px_rgba(194,141,16,0.1)]">
+                    <div className="relative aspect-[4/5] bg-[#f8f8f8] flex items-center justify-center border border-neutral-200 transition-all duration-500 hover:border-[#C28D10] hover:shadow-[0_0_20px_rgba(194,141,16,0.1)]">
                       {/* Inner wrapper to restrict image size */}
                       <div className="relative w-2/3 h-2/3 max-w-[180px]">
                         <Image
                           src={product.image}
                           alt={product.name}
                           fill
-                          className="object-contain transition-transform duration-700 ease-out group-hover:scale-110 drop-shadow-2xl"
+                          className="object-contain transition-transform duration-700 ease-out group-hover:scale-110 drop-shadow-md"
                         />
                       </div>
                       
                       {/* Desktop Hover Add to Cart */}
                       <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 transform translate-y-2 transition-all duration-300 ease-in-out group-hover:opacity-100 group-hover:translate-y-0 hidden lg:flex justify-center z-10">
-                        <button className="bg-[#C28D10] text-black uppercase text-xs font-bold tracking-[0.15em] py-3 px-6 w-full hover:bg-white transition-colors duration-300">
+                        <button className="bg-[#C28D10] text-white uppercase text-xs font-bold tracking-[0.15em] py-3 px-6 w-full hover:bg-black transition-colors duration-300">
                           Add to Cart
                         </button>
                       </div>
@@ -97,19 +97,19 @@ export default function ShopAllPage() {
                     
                     {/* Details */}
                     <div className="flex flex-col flex-grow text-center lg:text-left px-1 mt-6">
-                      <h3 className="text-sm md:text-[15px] font-serif tracking-[0.1em] uppercase mb-2 text-neutral-100 group-hover:text-[#C28D10] transition-colors duration-300">
+                      <h3 className="text-sm md:text-[15px] font-serif tracking-[0.1em] uppercase mb-2 text-neutral-900 group-hover:text-[#C28D10] transition-colors duration-300">
                         {product.name}
                       </h3>
-                      <p className="text-xs text-neutral-400 mb-4 font-light tracking-wide uppercase">
+                      <p className="text-xs text-neutral-500 mb-4 font-light tracking-wide uppercase">
                         {product.category}
                       </p>
-                      <p className="text-sm font-medium mt-auto text-white tracking-widest">
+                      <p className="text-sm font-medium mt-auto text-black tracking-widest">
                         ${product.price}
                       </p>
                     </div>
                     
                     {/* Mobile/Tablet always visible minimal button */}
-                    <button className="lg:hidden mt-6 border border-neutral-800 text-neutral-300 uppercase text-xs font-bold tracking-[0.1em] py-3 px-4 hover:border-[#C28D10] hover:text-[#C28D10] transition-colors duration-300">
+                    <button className="lg:hidden mt-6 border border-neutral-300 text-neutral-700 uppercase text-xs font-bold tracking-[0.1em] py-3 px-4 hover:border-[#C28D10] hover:text-[#C28D10] transition-colors duration-300">
                       Add to Cart
                     </button>
                   </div>
