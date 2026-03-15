@@ -148,7 +148,7 @@ export default function Home() {
           <Link href="/shop/silver-mist" className="product-card" id="product-card-4">
             <div className="product-card-image">
               <Image
-                src="/alora_BG.png"
+                src="/alora_BG2.png"
                 alt="Silver Mist"
                 fill
                 sizes="(max-width: 768px) 100vw, 25vw"
@@ -187,7 +187,7 @@ export default function Home() {
           <Link href="/shop/mystic-sandalwood" className="product-card" id="product-card-6">
             <div className="product-card-image">
               <Image
-                src="/alora_BG.png"
+                src="/alora_BG2.png"
                 alt="Mystic Sandalwood"
                 fill
                 sizes="(max-width: 768px) 100vw, 25vw"
@@ -225,7 +225,7 @@ export default function Home() {
           <Link href="/shop/nocturnal-jasmine" className="product-card" id="product-card-8">
             <div className="product-card-image">
               <Image
-                src="/alora_BG.png"
+                src="/alora_BG2.png"
                 alt="Nocturnal Jasmine"
                 fill
                 sizes="(max-width: 768px) 100vw, 25vw"
@@ -247,7 +247,7 @@ export default function Home() {
       <section className="story-section" id="about-story">
         <div className="story-image">
           <Image
-            src="/alora_BG.png"
+            src="/alora_BG2.png"
             alt="The Alora story"
             fill
             sizes="(max-width: 768px) 100vw, 50vw"
