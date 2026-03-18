@@ -35,10 +35,10 @@ export default function ShopAllPage() {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif uppercase tracking-[0.2em] mb-8 text-black">Our Collections</h1>
         </header>
 
-        <div className="flex flex-col gap-[120px] md:gap-[160px] w-full">
+        <div className="flex flex-col gap-[60px] md:gap-[80px] w-full">
           {brandsData.map((brand) => (
             <section key={brand.name} className="brand-section w-full">
-              <div className="mb-16 md:mb-20 flex items-center justify-center gap-6 md:gap-12 w-full">
+              <div className="mb-10 md:mb-12 flex items-center justify-center gap-6 md:gap-12 w-full">
                 <div className="h-[1px] bg-neutral-200 flex-grow"></div>
                 <h2 className="text-2xl md:text-3xl font-serif uppercase tracking-[0.25em] text-[#C28D10] whitespace-nowrap text-center px-4">
                   {brand.name}
@@ -46,7 +46,7 @@ export default function ShopAllPage() {
                 <div className="h-[1px] bg-neutral-200 flex-grow"></div>
               </div>
 
-              {/* Product cards grid — fixed column widths + justify-center ensures symmetric spacing */}
+              {/* Product cards grid */}
               <div
                 className="grid gap-x-6 gap-y-[60px] md:gap-y-[80px]"
                 style={{
