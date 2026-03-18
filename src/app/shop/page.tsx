@@ -37,7 +37,7 @@ export default function ShopAllPage() {
 
         <div className="flex flex-col gap-[60px] md:gap-[80px] w-full">
           {brandsData.map((brand) => (
-            <section key={brand.name} className="brand-section w-full">
+            <section key={brand.name} id={`brand-${brand.name.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`} className="brand-section w-full scroll-mt-32">
               <div className="mb-10 md:mb-12 flex items-center justify-center gap-6 md:gap-12 w-full">
                 <div className="h-[1px] bg-neutral-200 flex-grow"></div>
                 <h2 className="text-2xl md:text-3xl font-serif uppercase tracking-[0.25em] text-[#C28D10] whitespace-nowrap text-center px-4">

@@ -62,7 +62,7 @@ export default function Navbar() {
                   ].map((brand) => (
                     <Link
                       key={brand}
-                      href={`/brands/${brand.toLowerCase().replace(/ /g, "-")}`}
+                      href={`/shop#brand-${brand.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`}
                       className="brand-link"
                     >
                       {brand}
