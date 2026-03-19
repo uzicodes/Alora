@@ -69,9 +69,9 @@ const brandGroups = menPerfumes.reduce((groups, perfume) => {
 
 export default function MenPage() {
   return (
-    <div className="min-h-screen bg-white text-black pb-32 pt-64 font-sans font-body">
+    <div className="min-h-screen bg-white text-black pb-32 pt-16 font-sans font-body">
       <div className="mx-auto w-full px-6 sm:px-10 md:px-16 lg:px-20">
-        <header className="mb-28 text-center">
+        <header className="mb-16 text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif uppercase tracking-[0.2em] mb-8 text-black">Men&apos;s Collection</h1>
         </header>
 
