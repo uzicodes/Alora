@@ -80,7 +80,7 @@ export default function Home() {
       <section className="section" id="featured-products">
         <div className="section-header">
           <p className="section-tag">Curated For You</p>
-          <h2 className="section-title">Bestselling Fragrances</h2>
+          <h2 className="section-title">OUR BESTSELLERS</h2>
           <div className="section-divider"></div>
         </div>
 

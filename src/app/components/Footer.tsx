@@ -1,11 +1,21 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Footer() {
   return (
     <footer className="footer bg-black text-white" id="footer">
       <div className="footer-content max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 mb-6">
         <div className="footer-brand">
-          <h3 className="text-white">A L O R A</h3>
+          <Link href="/" className="navbar-logo" style={{ marginBottom: "1rem", textDecoration: "none" }}>
+            <Image
+              src="/alora_BG.png"
+              alt="Alora Logo"
+              width={32}
+              height={32}
+              className="navbar-logo-img"
+            />
+            ALORA
+          </Link>
           <p className="text-gray-400">
             Luxury fragrances crafted for those who refuse to blend in.
             Every scent tells a story.
