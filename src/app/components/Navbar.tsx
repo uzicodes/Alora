@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -44,10 +46,10 @@ export default function Navbar() {
         <div className="navbar-right-group">
           {/* Nav Links */}
           <ul className="navbar-links" id="navbar-links">
-            <li><Link href="/shop">Shop</Link></li>
-            <li><Link href="/men">Men</Link></li>
-            <li><Link href="/woman">Women</Link></li>
-            <li><Link href="/unisex">Unisex</Link></li>
+            <li><Link href="/shop" className={pathname === "/shop" ? "active-link" : ""}>Shop</Link></li>
+            <li><Link href="/men" className={pathname === "/men" ? "active-link" : ""}>Men</Link></li>
+            <li><Link href="/woman" className={pathname === "/woman" ? "active-link" : ""}>Women</Link></li>
+            <li><Link href="/unisex" className={pathname === "/unisex" ? "active-link" : ""}>Unisex</Link></li>
             <li className="nav-item-dropdown">
               <a href="#" onClick={(e) => e.preventDefault()}>Brands</a>
               <div className="dropdown-menu">

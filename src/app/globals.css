@@ -139,11 +139,13 @@ body {
   transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.navbar-links a:hover {
+.navbar-links a:hover,
+.navbar-links a.active-link {
   color: #C28D10 !important;
 }
 
-.navbar-links a:hover::after {
+.navbar-links a:hover::after,
+.navbar-links a.active-link::after {
   width: 100%;
 }
 
