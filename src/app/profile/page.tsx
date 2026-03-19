@@ -4,10 +4,6 @@ import "./profile.css";
 export default function ProfilePage() {
   return (
     <div className="profile-page">
-      <div className="profile-header">
-        <h1 className="profile-title">My Account</h1>
-      </div>
-
       <div className="profile-layout">
         {/* Sidebar Navigation */}
         <aside className="profile-sidebar">
@@ -92,9 +88,9 @@ export default function ProfilePage() {
               </div>
               <div className="profile-info-group">
                 <p className="profile-info-value">John Doe</p>
-                <p className="profile-info-value" style={{color: '#777', marginTop: '4px'}}>123 Luxury Lane, Suite 400</p>
-                <p className="profile-info-value" style={{color: '#777', marginTop: '4px'}}>Beverly Hills, CA 90210</p>
-                <p className="profile-info-value" style={{color: '#777', marginTop: '4px'}}>United States</p>
+                <p className="profile-info-value" style={{ color: '#777', marginTop: '4px' }}>123 Luxury Lane, Suite 400</p>
+                <p className="profile-info-value" style={{ color: '#777', marginTop: '4px' }}>Beverly Hills, CA 90210</p>
+                <p className="profile-info-value" style={{ color: '#777', marginTop: '4px' }}>United States</p>
               </div>
             </div>
           </div>
@@ -105,7 +101,7 @@ export default function ProfilePage() {
               <h3 className="profile-orders-title" style={{ borderBottom: "none", margin: 0 }}>Recent Orders</h3>
               <a href="#" className="profile-card-edit" style={{ textDecoration: "none" }}>View All</a>
             </div>
-            
+
             <table className="profile-table">
               <thead>
                 <tr>

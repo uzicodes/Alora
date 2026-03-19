@@ -1,15 +1,10 @@
 .profile-page {
   min-height: 100vh;
-  padding: 120px 40px 60px;
+  padding: 40px 40px 60px;
   background: #ffffff;
   color: #111111;
   max-width: 1200px;
   margin: 0 auto;
-}
-
-.profile-header {
-  margin-bottom: 40px;
-  text-align: center;
 }
 
 .profile-title {
@@ -237,14 +232,14 @@
     grid-template-columns: 1fr;
     gap: 40px;
   }
-  
+
   .profile-sidebar {
     border-right: none;
     border-bottom: 1px solid #eeeeee;
     padding-right: 0;
     padding-bottom: 20px;
   }
-  
+
   .profile-cards {
     grid-template-columns: 1fr;
   }
