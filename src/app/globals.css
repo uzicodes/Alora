@@ -239,7 +239,8 @@ body {
   justify-content: center;
 }
 
-.navbar-icon:hover {
+.navbar-icon:hover,
+.navbar-icon.active {
   color: #C28D10 !important;
   transform: translateY(-1px);
 }
