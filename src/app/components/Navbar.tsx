@@ -42,7 +42,7 @@ export default function Navbar() {
           ALORA
         </Link>
 
-        {/* Right Section: Links + Icons */}
+        {/* Links + Icons */}
         <div className="navbar-right-group">
           {/* Nav Links */}
           <ul className="navbar-links" id="navbar-links">
