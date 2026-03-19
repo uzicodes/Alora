@@ -4,21 +4,21 @@ export default function AboutPage() {
   return (
     <div style={{ minHeight: '100vh', background: '#fff', color: '#111', fontFamily: 'var(--font-body)' }}>
 
-      {/* Hero / Intro Section */}
-      <section style={{ paddingTop: 80, paddingBottom: 80, textAlign: 'center', paddingLeft: 24, paddingRight: 24 }}>
+      {/* Intro Section */}
+      <section style={{ paddingTop: 20, paddingBottom: 80, textAlign: 'center', paddingLeft: 24, paddingRight: 24 }}>
         <p style={{
-          fontSize: 11, fontWeight: 500, letterSpacing: 4, textTransform: 'uppercase',
-          color: '#999', marginBottom: 20
+          fontSize: 14, fontWeight: 500, letterSpacing: 4, textTransform: 'uppercase',
+          color: '#ca3131ff', marginBottom: 20
         }}>
           Our Story
         </p>
         <h1 style={{
           fontFamily: 'var(--font-serif)', fontSize: 'clamp(36px, 5vw, 60px)',
-          fontWeight: 300, letterSpacing: 6, textTransform: 'uppercase', marginBottom: 24
+          fontWeight: 300, letterSpacing: 6, textTransform: 'uppercase', marginBottom: 10
         }}>
           About Alora
         </h1>
-        <div style={{ width: 48, height: 1, background: '#C28D10', margin: '0 auto 32px' }}></div>
+        <div style={{ width: 250, height: 2, background: '#C28D10', margin: '0 auto 20px' }}></div>
         <p style={{
           maxWidth: 680, margin: '0 auto', fontSize: 15, lineHeight: 1.8,
           color: '#666', fontWeight: 300
@@ -32,11 +32,11 @@ export default function AboutPage() {
       </section>
 
       {/* Values Section */}
-      <section style={{ background: '#fafafa', padding: '80px 24px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
+      <section style={{ background: '#ffffff', padding: '80px 24px' }}>
+        <div style={{ maxWidth: 1100, margin: '-50px auto' }}>
           <p style={{
-            fontSize: 11, fontWeight: 500, letterSpacing: 4, textTransform: 'uppercase',
-            color: '#999', marginBottom: 16, textAlign: 'center'
+            fontSize: 10, fontWeight: 500, letterSpacing: 4, textTransform: 'uppercase',
+            color: '#ca3131ff', marginBottom: 16, textAlign: 'center'
           }}>
             What We Stand For
           </p>
@@ -131,7 +131,7 @@ export default function AboutPage() {
           <div>
             <p style={{
               fontSize: 11, fontWeight: 500, letterSpacing: 4, textTransform: 'uppercase',
-              color: '#999', marginBottom: 16
+              color: '#ca3131ff', marginBottom: 16
             }}>
               Our Promise
             </p>
@@ -186,7 +186,7 @@ export default function AboutPage() {
         <div style={{ maxWidth: 1100, margin: '0 auto' }}>
           <p style={{
             fontSize: 11, fontWeight: 500, letterSpacing: 4, textTransform: 'uppercase',
-            color: '#999', marginBottom: 16, textAlign: 'center'
+            color: '#ca3131ff', marginBottom: 16, textAlign: 'center'
           }}>
             Get In Touch
           </p>
