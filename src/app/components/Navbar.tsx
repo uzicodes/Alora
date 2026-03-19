@@ -73,8 +73,7 @@ export default function Navbar() {
                 </div>
               </div>
             </li>
-            <li><Link href="/about">About</Link></li>
-            <li><Link href="/contact">Contact</Link></li>
+            <li><Link href="/about" className={pathname === "/about" ? "active-link" : ""}>About</Link></li>
           </ul>
 
           {/* Icons */}
