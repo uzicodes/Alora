@@ -31,7 +31,7 @@ export default function ShopAllPage() {
   return (
     <div className="min-h-screen bg-white text-black pb-32 pt-16 font-sans font-body">
       <div className="mx-auto w-full px-6 sm:px-10 md:px-16 lg:px-20">
-        <header className="mb-16 text-center">
+        <header className="text-center" style={{ marginBottom: '50px' }}>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif uppercase tracking-[0.2em] mb-8 text-black">Our Collections</h1>
         </header>
 
