@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Ubuntu } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/Navbar";
@@ -12,6 +12,12 @@ const geistSans = Geist({
 
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const ubuntuFont = Ubuntu({
+  variable: "--font-ubuntu",
+  weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
 });
 
@@ -53,7 +59,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${nexsa.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${nexsa.variable} ${ubuntuFont.variable} antialiased`}
       >
         <Navbar />
         <main style={{ paddingTop: 56 }}>

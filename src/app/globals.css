@@ -7,6 +7,7 @@
   --font-mono: var(--font-geist-mono);
   --font-serif: 'Cormorant Garamond', serif;
   --font-body: 'Inter', sans-serif;
+  --font-ubuntu: var(--font-ubuntu);
 }
 
 :root {
