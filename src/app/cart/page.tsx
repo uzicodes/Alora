@@ -54,13 +54,12 @@ export default function Cart() {
   };
 
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-  const total = subtotal; // Assuming shipping is complimentary
+  const total = subtotal;
 
   return (
     <div className="cart-page">
       <div className="cart-header">
-        <h1 className="cart-title animate-fade-in-up">Your Cart</h1>
-        <div className="section-divider animate-fade-in-up delay-100"></div>
+        <h1 className="cart-title text-lg animate-fade-in-up">Your Cart</h1>
       </div>
 
       {cartItems.length === 0 ? (
@@ -75,7 +74,7 @@ export default function Cart() {
           {/* Left: Cart Items */}
           <div className="cart-items animate-fade-in-up delay-200">
             {cartItems.map((item) => (
-              <div key={item.id} className="cart-item">
+              <div key={item.id} className="cart-item" style={{ backgroundColor: '#ffffff', padding: '8px 12px', marginBottom: '8px', border: '1px solid #111' }}>
                 <div className="cart-item-image">
                   <Image
                     src={item.image}
@@ -112,8 +111,20 @@ export default function Cart() {
                       </button>
                     </div>
                     <button
-                      className="remove-btn"
+                      className="remove-btn-styled"
                       onClick={() => removeItem(item.id)}
+                      style={{
+                        padding: '6px 16px',
+                        border: '1px solid #111',
+                        fontSize: '10px',
+                        textTransform: 'uppercase',
+                        letterSpacing: '1px',
+                        cursor: 'pointer',
+                        backgroundColor: 'transparent',
+                        transition: 'all 0.3s'
+                      }}
+                      onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#eb0c0cff'; e.currentTarget.style.color = '#faf9f9ff'; }}
+                      onMouseOut={(e) => { e.currentTarget.style.backgroundColor = 'transparent'; e.currentTarget.style.color = '#e21010ff'; }}
                     >
                       Remove
                     </button>
@@ -123,9 +134,9 @@ export default function Cart() {
             ))}
           </div>
 
-          {/* Right: Order Summary */}
-          <div className="cart-summary animate-fade-in-up delay-300">
-            <h2 className="summary-title">Order Summary</h2>
+          {/* Order Summary */}
+          <div className="cart-summary animate-fade-in-up delay-300" style={{ backgroundColor: '#1DC475', color: '#111' }}>
+            <h2 className="summary-title" style={{ color: '#111', borderBottom: '1px solid rgba(0,0,0,0.1)' }}>Order Summary</h2>
             <div className="summary-row">
               <span>Subtotal</span>
               <span>${subtotal.toFixed(2)}</span>
@@ -134,12 +145,8 @@ export default function Cart() {
               <span>Shipping</span>
               <span>Complimentary</span>
             </div>
-            <div className="summary-row">
-              <span>Taxes</span>
-              <span>Calculated at checkout</span>
-            </div>
             <div className="summary-divider"></div>
-            <div className="summary-row summary-total">
+            <div className="summary-row summary-total" style={{ color: '#111' }}>
               <span>Total</span>
               <span>${total.toFixed(2)}</span>
             </div>
