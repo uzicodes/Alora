@@ -80,11 +80,11 @@ export default function MenPage() {
           {Object.entries(brandGroups).map(([brand, products]) => (
             <section key={brand} className="brand-section w-full">
               <div className="mb-10 md:mb-12 flex items-center justify-center gap-6 md:gap-12 w-full">
-                <div className="h-[1px] bg-neutral-200 flex-grow"></div>
+                <hr className="w-20 md:w-40 border-t-2 border-neutral-600 shrink-0" />
                 <h2 className="text-2xl md:text-3xl font-ubuntu uppercase tracking-[0.25em] text-[#C28D10] whitespace-nowrap text-center px-4">
                   {brand}
                 </h2>
-                <div className="h-[1px] bg-neutral-200 flex-grow"></div>
+                <hr className="w-20 md:w-40 border-t-2 border-neutral-600 shrink-0" />
               </div>
 
               {/* Product cards grid */}
@@ -117,7 +117,7 @@ export default function MenPage() {
 
                     {/* Details */}
                     <div className="flex flex-col flex-grow text-center px-1 mt-5">
-                      <h3 className="text-[12px] md:text-[13px] font-serif font-semibold tracking-[0.05em] uppercase mb-1 text-neutral-900 group-hover/card:text-[#C28D10] transition-colors duration-300">
+                      <h3 className="text-[12px] md:text-[13px] font-ubuntu font-semibold tracking-[0.05em] uppercase mb-1 text-neutral-900 group-hover/card:text-[#C28D10] transition-colors duration-300">
                         {product.name}
                       </h3>
                       <p className="text-[9px] text-neutral-500 mb-1 font-ubuntu font-light tracking-wide uppercase">
