@@ -21,9 +21,16 @@ const ubuntuFont = Ubuntu({
   subsets: ["latin"],
 });
 
-const nexsa = localFont({
-  src: "../../public/fonts/nexsa.ttf",
-  variable: "--font-nexsa",
+
+const davidLibre = localFont({
+  src: "../../public/fonts/DavidLibre.ttf",
+  variable: "--font-david-libre",
+  display: "swap",
+});
+
+const kharaissa = localFont({
+  src: "../../public/fonts/Kharaissa.otf",
+  variable: "--font-kharaissa",
   display: "swap",
 });
 
@@ -59,7 +66,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${nexsa.variable} ${ubuntuFont.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${ubuntuFont.variable} ${davidLibre.variable} ${kharaissa.variable} antialiased`}
       >
         <Navbar />
         <main style={{ paddingTop: 56 }}>

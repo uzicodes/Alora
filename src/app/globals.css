@@ -8,6 +8,8 @@
   --font-serif: 'Cormorant Garamond', serif;
   --font-body: 'Inter', sans-serif;
   --font-ubuntu: var(--font-ubuntu);
+  --font-david-libre: var(--font-david-libre);
+  --font-kharaissa: var(--font-kharaissa);
 }
 
 :root {
@@ -81,7 +83,7 @@ body {
 }
 
 .navbar-logo {
-  font-family: var(--font-nexsa), sans-serif;
+  font-family: var(--font-kharaissa), sans-serif;
   font-size: 32px;
   font-weight: normal;
   letter-spacing: 5px;
@@ -1005,7 +1007,7 @@ body {
 }
 
 .cart-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-david-libre);
   font-size: clamp(32px, 4vw, 48px);
   font-weight: 300;
   color: #111;
@@ -1053,7 +1055,7 @@ body {
 }
 
 .cart-item-name {
-  font-family: var(--font-serif);
+  font-family: var(--font-david-libre);
   font-size: 20px;
   font-weight: 400;
   color: #111;
@@ -1145,7 +1147,7 @@ body {
 }
 
 .summary-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-david-libre);
   font-size: 24px;
   font-weight: 400;
   color: #111;

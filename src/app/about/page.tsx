@@ -13,7 +13,7 @@ export default function AboutPage() {
           Our Story
         </p>
         <h1 style={{
-          fontFamily: 'var(--font-serif)', fontSize: 'clamp(36px, 5vw, 60px)',
+          fontFamily: 'var(--font-david-libre)', fontSize: 'clamp(36px, 5vw, 60px)',
           fontWeight: 300, letterSpacing: 6, textTransform: 'uppercase', marginBottom: 10
         }}>
           About Alora
@@ -41,7 +41,7 @@ export default function AboutPage() {
             What We Stand For
           </p>
           <h2 style={{
-            fontFamily: 'var(--font-serif)', fontSize: 'clamp(28px, 3.5vw, 42px)',
+            fontFamily: 'var(--font-david-libre)', fontSize: 'clamp(28px, 3.5vw, 42px)',
             fontWeight: 300, letterSpacing: 4, textTransform: 'uppercase',
             textAlign: 'center', marginBottom: 60
           }}>
@@ -62,7 +62,7 @@ export default function AboutPage() {
                 ✦
               </div>
               <h3 style={{
-                fontFamily: 'var(--font-serif)', fontSize: 18, fontWeight: 400,
+                fontFamily: 'var(--font-david-libre)', fontSize: 18, fontWeight: 400,
                 letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12
               }}>
                 Authenticity
@@ -82,7 +82,7 @@ export default function AboutPage() {
                 ◆
               </div>
               <h3 style={{
-                fontFamily: 'var(--font-serif)', fontSize: 18, fontWeight: 400,
+                fontFamily: 'var(--font-david-libre)', fontSize: 18, fontWeight: 400,
                 letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12
               }}>
                 Craftsmanship
@@ -102,7 +102,7 @@ export default function AboutPage() {
                 ★
               </div>
               <h3 style={{
-                fontFamily: 'var(--font-serif)', fontSize: 18, fontWeight: 400,
+                fontFamily: 'var(--font-david-libre)', fontSize: 18, fontWeight: 400,
                 letterSpacing: 2, textTransform: 'uppercase', marginBottom: 12
               }}>
                 Experience
@@ -136,7 +136,7 @@ export default function AboutPage() {
               Our Promise
             </p>
             <h2 style={{
-              fontFamily: 'var(--font-serif)', fontSize: 'clamp(26px, 3vw, 38px)',
+              fontFamily: 'var(--font-david-libre)', fontSize: 'clamp(26px, 3vw, 38px)',
               fontWeight: 300, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 24
             }}>
               Luxury Without Compromise
@@ -191,7 +191,7 @@ export default function AboutPage() {
             Get In Touch
           </p>
           <h2 style={{
-            fontFamily: 'var(--font-serif)', fontSize: 'clamp(28px, 3.5vw, 42px)',
+            fontFamily: 'var(--font-david-libre)', fontSize: 'clamp(28px, 3.5vw, 42px)',
             fontWeight: 300, letterSpacing: 4, textTransform: 'uppercase',
             textAlign: 'center', marginBottom: 16
           }}>
@@ -206,7 +206,7 @@ export default function AboutPage() {
             {/* Contact Info */}
             <div>
               <h3 style={{
-                fontFamily: 'var(--font-serif)', fontSize: 20, fontWeight: 400,
+                fontFamily: 'var(--font-david-libre)', fontSize: 20, fontWeight: 400,
                 letterSpacing: 2, textTransform: 'uppercase', marginBottom: 28
               }}>
                 Visit or Reach Out
@@ -244,7 +244,7 @@ export default function AboutPage() {
             {/* Contact Form */}
             <div>
               <h3 style={{
-                fontFamily: 'var(--font-serif)', fontSize: 20, fontWeight: 400,
+                fontFamily: 'var(--font-david-libre)', fontSize: 20, fontWeight: 400,
                 letterSpacing: 2, textTransform: 'uppercase', marginBottom: 28
               }}>
                 Send a Message
