@@ -156,26 +156,26 @@ export default function AboutPage() {
       </section>
 
       {/* Stats Section */}
-      <section style={{ background: '#111', color: '#fff', padding: '60px 24px' }}>
+      <section style={{ background: '#111', color: '#fff', padding: '10px 24px' }}>
         <div style={{
           maxWidth: 1000, margin: '0 auto',
           display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 40,
           textAlign: 'center'
         }}>
           <div>
-            <p style={{ fontFamily: 'var(--font-serif)', fontSize: 42, fontWeight: 300, color: '#C28D10', marginBottom: 8 }}>200+</p>
+            <p style={{ fontFamily: 'var(--font-ubuntu )', fontSize: 42, fontWeight: 300, color: '#C28D10', marginBottom: 8 }}>200+</p>
             <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)' }}>Fragrances</p>
           </div>
           <div>
-            <p style={{ fontFamily: 'var(--font-serif)', fontSize: 42, fontWeight: 300, color: '#C28D10', marginBottom: 8 }}>50+</p>
+            <p style={{ fontFamily: 'var(--font-ubuntu)', fontSize: 42, fontWeight: 300, color: '#C28D10', marginBottom: 8 }}>50+</p>
             <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)' }}>Premium Brands</p>
           </div>
           <div>
-            <p style={{ fontFamily: 'var(--font-serif)', fontSize: 42, fontWeight: 300, color: '#C28D10', marginBottom: 8 }}>15K+</p>
+            <p style={{ fontFamily: 'var(--font-ubuntu)', fontSize: 42, fontWeight: 300, color: '#C28D10', marginBottom: 8 }}>15K+</p>
             <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)' }}>Happy Customers</p>
           </div>
           <div>
-            <p style={{ fontFamily: 'var(--font-serif)', fontSize: 42, fontWeight: 300, color: '#C28D10', marginBottom: 8 }}>24/7</p>
+            <p style={{ fontFamily: 'var(--font-ubuntu)', fontSize: 42, fontWeight: 300, color: '#C28D10', marginBottom: 8 }}>24/7</p>
             <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: 'rgba(255,255,255,0.5)' }}>Concierge Support</p>
           </div>
         </div>
@@ -213,7 +213,7 @@ export default function AboutPage() {
               </h3>
 
               <div style={{ marginBottom: 28 }}>
-                <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: '#999', marginBottom: 8 }}>Address</p>
+                <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: '#ca3131ff', marginBottom: 8, textDecoration: 'underline' }}>Address</p>
                 <p style={{ fontSize: 14, color: '#444', lineHeight: 1.7 }}>
                   123 Luxury Avenue, Suite 500<br />
                   Beverly Hills, CA 90210<br />
@@ -222,17 +222,17 @@ export default function AboutPage() {
               </div>
 
               <div style={{ marginBottom: 28 }}>
-                <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: '#999', marginBottom: 8 }}>Email</p>
+                <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: '#ca3131ff', marginBottom: 8, textDecoration: 'underline' }}>Email</p>
                 <p style={{ fontSize: 14, color: '#444' }}>hello@alora.com</p>
               </div>
 
               <div style={{ marginBottom: 28 }}>
-                <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: '#999', marginBottom: 8 }}>Phone</p>
+                <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: '#ca3131ff', marginBottom: 8, textDecoration: 'underline' }}>Phone</p>
                 <p style={{ fontSize: 14, color: '#444' }}>+1 (800) ALORA-LX</p>
               </div>
 
               <div>
-                <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: '#999', marginBottom: 8 }}>Hours</p>
+                <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: '#ca3131ff', marginBottom: 8, textDecoration: 'underline' }}>Hours</p>
                 <p style={{ fontSize: 14, color: '#444', lineHeight: 1.7 }}>
                   Monday – Friday: 9:00 AM – 7:00 PM<br />
                   Saturday: 10:00 AM – 5:00 PM<br />
