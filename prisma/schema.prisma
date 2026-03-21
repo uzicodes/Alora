@@ -20,6 +20,7 @@ model User {
   orders    Order[]
 }
 
+
 model Product {
   id            String   @id @default(cuid())
   name          String
@@ -33,8 +34,9 @@ model Product {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  orderItems    OrderItem[]
+  orderItems    OrderItem[] // Add this line
 }
+
 
 model Order {
   id        String      @id @default(cuid())
