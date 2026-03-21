@@ -60,12 +60,6 @@ const menPerfumes = [
 ];
 
 
-// Group perfumes by brand
-const brandGroups = menPerfumes.reduce((groups, perfume) => {
-  if (!groups[perfume.brand]) groups[perfume.brand] = [];
-  groups[perfume.brand].push(perfume);
-  return groups;
-}, {} as Record<string, typeof menPerfumes>);
 
 export default function MenPage() {
   return (
@@ -76,26 +70,16 @@ export default function MenPage() {
         </header>
 
 
-        <div className="flex flex-col gap-[60px] md:gap-[80px] w-full">
-          {Object.entries(brandGroups).map(([brand, products]) => (
-            <section key={brand} className="brand-section w-full">
-              <div className="mb-10 md:mb-12 flex items-center justify-center gap-6 md:gap-12 w-full">
-                <hr className="w-20 md:w-40 border-t-2 border-neutral-600 shrink-0" />
-                <h2 className="text-2xl md:text-3xl font-ubuntu uppercase tracking-[0.25em] text-[#C28D10] whitespace-nowrap text-center px-4">
-                  {brand}
-                </h2>
-                <hr className="w-20 md:w-40 border-t-2 border-neutral-600 shrink-0" />
-              </div>
-
-              {/* Product cards grid */}
-              <div
-                className="grid gap-x-6 gap-y-[60px] md:gap-y-[80px]"
-                style={{
-                  gridTemplateColumns: 'repeat(auto-fit, 185px)',
-                  justifyContent: 'center',
-                }}
-              >
-                {products.map((product) => (
+        <div className="w-full">
+          {/* Product cards grid */}
+          <div
+            className="grid gap-x-6 gap-y-[60px] md:gap-y-[80px]"
+            style={{
+              gridTemplateColumns: 'repeat(auto-fit, 185px)',
+              justifyContent: 'center',
+            }}
+          >
+            {menPerfumes.map((product) => (
                   <div key={product.id} className="group/card flex flex-col cursor-pointer h-full w-[185px]">
                     <div className="relative aspect-[4/5] bg-[#f8f8f8] flex items-center justify-center border border-transparent transition-all duration-500 hover:border-[#C28D10] hover:shadow-[0_0_20px_rgba(194,141,16,0.1)]">
                       <div className="relative w-[50%] h-[50%]">
@@ -137,9 +121,7 @@ export default function MenPage() {
                     </button>
                   </div>
                 ))}
-              </div>
-            </section>
-          ))}
+            </div>
         </div>
         <div className="h-20 md:h-32 w-full"></div>
       </div>
