@@ -1,7 +1,6 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["driverAdapters"]
-  output          = "../src/generated/prisma"
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
@@ -10,40 +9,31 @@ datasource db {
 }
 
 model User {
-  id            String   @id // This will match the Clerk User ID (e.g., 'user_2...')
-  email         String   @unique
-  firstName     String?
-  lastName      String?
-  imageUrl      String?
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id        String   @id // This will match the Clerk User ID (e.g., 'user_2...')
+  email     String   @unique
+  firstName String?
+  lastName  String?
+  imageUrl  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   
-  orders        Order[]
+  orders    Order[]
 }
 
 model Product {
-  id           String   @id @default(cuid())
-  name         String
-  brand        String   @default("ALORA")
-  description  String
-  price        Float
-  images       String[] // Array of image URLs for the luxury gallery
-  category     String   // e.g., "Eau de Parfum", "Extrait de Parfum"
+  id            String   @id @default(cuid())
+  name          String
+  brand         String   // e.g., "Tom Ford", "Creed"
+  price         Float
+  sizeMl        Int      // e.g., 50, 100
+  concentration String   // e.g., "Eau de Parfum", "Extrait de Parfum"
+  gender        String   // "Men", "Women", "Unisex"
+  imageUrls     String[] // Array of image links
   
-  // Perfume-specific attributes
-  topNotes     String[] // Initial scent
-  middleNotes  String[] // Heart notes
-  baseNotes    String[] // Lasting scent
-  longevity    String?  // e.g., "Long-lasting (8h+)"
-  gender       String   @default("Unisex") // Unisex, Men, Women
-  
-  stock        Int      @default(0)
-  isFeatured   Boolean  @default(false)
-  
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  
-  orderItems   OrderItem[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  orderItems    OrderItem[]
 }
 
 model Order {
