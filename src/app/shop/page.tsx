@@ -23,6 +23,7 @@ const brandsData = brandNames.map((brand, index) => {
       { id: `br-${index}-4`, name: `${brand} Oud Royale`, category: "Extrait de Parfum, 50ml", price: basePrice + 120, image: "/alora_BG2.png" },
       { id: `br-${index}-5`, name: `${brand} Rose Élixir`, category: "Eau de Parfum, 75ml", price: basePrice + 10, image: "/alora_BG2.png" },
       { id: `br-${index}-6`, name: `${brand} Velvet Gold`, category: "Eau de Parfum, 100ml", price: basePrice + 60, image: "/alora_BG2.png" },
+      { id: `br-${index}-7`, name: `${brand} Midnight Bloom`, category: "Parfum, 50ml", price: basePrice + 85, image: "/alora_BG2.png" },
     ]
   };
 });
