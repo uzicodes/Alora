@@ -25,24 +25,24 @@ export default function ProfilePage() {
             <div className="profile-section">
               <div className="profile-card-header">
                 <h3 className="profile-section-title">Personal Data</h3>
-                <button className="profile-card-edit">Edit</button>
+                <button className="profile-card-edit" style={{ padding: '8px 16px', backgroundColor: '#111', color: 'white', borderRadius: '4px', border: 'none', cursor: 'pointer', fontWeight: 'bold' }}>Edit</button>
               </div>
               <div className="profile-card">
                 <div className="profile-grid-info">
                   <div className="profile-info-group">
-                    <p className="profile-info-label">Name</p>
+                    <p className="profile-info-label" style={{ color: 'green', textDecoration: 'underline' }}>Name</p>
                     <p className="profile-info-value">John Doe</p>
                   </div>
                   <div className="profile-info-group">
-                    <p className="profile-info-label">Email</p>
+                    <p className="profile-info-label" style={{ color: 'green', textDecoration: 'underline' }}>Email</p>
                     <p className="profile-info-value">johndoe@example.com</p>
                   </div>
                   <div className="profile-info-group">
-                    <p className="profile-info-label">Phone</p>
+                    <p className="profile-info-label" style={{ color: 'green', textDecoration: 'underline' }}>Phone</p>
                     <p className="profile-info-value">+1 (555) 123-4567</p>
                   </div>
                   <div className="profile-info-group">
-                    <p className="profile-info-label">Address</p>
+                    <p className="profile-info-label" style={{ color: 'green', textDecoration: 'underline' }}>Address</p>
                     <p className="profile-info-value" style={{ lineHeight: '1.6' }}>
                       123 Luxury Lane, Suite 400<br />
                       Beverly Hills, CA 90210<br />
@@ -63,11 +63,10 @@ export default function ProfilePage() {
                   <table className="profile-table">
                     <thead>
                       <tr>
-                        <th>Order ID</th>
-                        <th>Date</th>
-                        <th>Items</th>
-                        <th>Status</th>
-                        <th style={{ textAlign: "right" }}>Total</th>
+                        <th style={{ color: 'green', textDecoration: 'underline' }}>Order ID</th>
+                        <th style={{ color: 'green', textDecoration: 'underline' }}>Date</th>
+                        <th style={{ color: 'green', textDecoration: 'underline' }}>Items</th>
+                        <th style={{ textAlign: "right", color: 'green', textDecoration: 'underline' }}>Total</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -75,21 +74,18 @@ export default function ProfilePage() {
                         <td className="profile-order-id">#ORD-0294</td>
                         <td className="text-muted">Oct 24, 2023</td>
                         <td className="text-muted">2 items</td>
-                        <td><span className="status-badge">Delivered</span></td>
                         <td className="text-right fw-500">$349.00</td>
                       </tr>
                       <tr>
                         <td className="profile-order-id">#ORD-0182</td>
                         <td className="text-muted">Sep 12, 2023</td>
                         <td className="text-muted">1 item</td>
-                        <td><span className="status-badge">Delivered</span></td>
                         <td className="text-right fw-500">$129.50</td>
                       </tr>
                       <tr>
                         <td className="profile-order-id">#ORD-0051</td>
                         <td className="text-muted">Jan 05, 2023</td>
                         <td className="text-muted">3 items</td>
-                        <td><span className="status-badge">Delivered</span></td>
                         <td className="text-right fw-500">$540.00</td>
                       </tr>
                     </tbody>
