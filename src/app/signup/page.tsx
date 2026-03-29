@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signUp, signIn } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import "./signup.css"; 
 
 export default function SignupPage() {
@@ -43,8 +44,11 @@ export default function SignupPage() {
     <div className="flex min-h-screen items-center justify-center p-4 bg-white">
       <form className="form" onSubmit={handleEmailSignup}>
         <div className="title">
-          Create Account,
-          <span>Join ALORA</span>
+          Create Your Account
+          <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+            <Image src="/alora_BG.png" alt="Alora Logo" width={20} height={20} className="rounded-full" />
+            <span style={{ fontFamily: 'var(--font-kharaissa), sans-serif', letterSpacing: '4px', fontWeight: 'normal', color: '#000000', fontSize: '1.2em' }}>ALORA</span>
+          </span>
         </div>
 
         <input 

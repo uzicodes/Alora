@@ -4,6 +4,7 @@ import { useState } from "react";
 import { signIn } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import "./login.css"; 
 
 export default function LoginPage() {
@@ -41,8 +42,11 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center p-4 bg-white">
       <form className="form" onSubmit={handleEmailLogin}>
         <div className="title">
-          Welcome back,
-          <span>Sign in to ALORA</span>
+          Welcome Back 
+          <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+            <Image src="/alora_BG.png" alt="Alora Logo" width={20} height={20} className="rounded-full" />
+            <span style={{ fontFamily: 'var(--font-kharaissa), sans-serif', letterSpacing: '4px', fontWeight: 'normal', color: '#000000', fontSize: '1.2em' }}>ALORA</span>
+          </span>
         </div>
 
         <input 
