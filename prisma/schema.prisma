@@ -9,34 +9,80 @@ datasource db {
 }
 
 model User {
-  id        String   @id // This will match the Clerk User ID (e.g., 'user_2...')
-  email     String   @unique
-  firstName String?
-  lastName  String?
-  imageUrl  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
   
-  orders    Order[]
+  sessions      Session[]
+  accounts      Account[]
+  orders        Order[]
+
+  @@map("user")
 }
 
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+
+  @@map("verification")
+}
 
 model Product {
   id            String   @id @default(cuid())
   name          String
-  brand         String   // e.g., "Tom Ford", "Creed"
+  brand         String   
   price         Float
-  sizeMl        Int      // e.g., 50, 100
-  concentration String   // e.g., "Eau de Parfum", "Extrait de Parfum"
-  gender        String   // "Men", "Women", "Unisex"
-  imageUrls     String[] // Array of image links
+  sizeMl        Int      
+  concentration String   
+  gender        String   
+  imageUrls     String[] 
   
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  orderItems    OrderItem[] // Add this line
+  orderItems    OrderItem[] 
 }
-
 
 model Order {
   id        String      @id @default(cuid())
@@ -44,7 +90,7 @@ model Order {
   user      User        @relation(fields: [userId], references: [id])
   items     OrderItem[]
   total     Float
-  status    String      @default("PENDING") // PENDING, PAID, SHIPPED
+  status    String      @default("PENDING") 
   createdAt DateTime    @default(now())
 }
 
