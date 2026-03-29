@@ -74,6 +74,15 @@ export default function Navbar() {
               </div>
             </li>
             <li><Link href="/about" className={pathname === "/about" ? "active-link" : ""}>About</Link></li>
+            <li>
+              <Link href="/login" className={pathname === "/login" ? "active-link" : ""} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                LOGIN
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M7 17L17 7" />
+                  <path d="M7 7h10v10" />
+                </svg>
+              </Link>
+            </li>
           </ul>
 
           {/* Icons */}
@@ -151,6 +160,13 @@ export default function Navbar() {
         <a href="#" onClick={(e) => e.preventDefault()}>Brands</a>
         <Link href="/about" onClick={() => setMobileOpen(false)}>About</Link>
         <Link href="/contact" onClick={() => setMobileOpen(false)}>Contact</Link>
+        <Link href="/login" onClick={() => setMobileOpen(false)} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>
+          LOGIN
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M7 17L17 7" />
+            <path d="M7 7h10v10" />
+          </svg>
+        </Link>
       </div>
     </>
   );
