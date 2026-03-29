@@ -7,10 +7,6 @@ export default function ProfilePage() {
       <div className="profile-container animate-fade-in-up">
         {/* Main Content */}
         <main className="profile-content">
-          <header className="text-center" style={{ marginBottom: '25px' }}>
-            <h1 className="text-4xl md:text-5xl font-david-libre uppercase tracking-[0.2em] mb-10 text-black">My Account</h1>
-          </header>
-
           <div className="profile-welcome">
             <div className="profile-avatar">
               JD
