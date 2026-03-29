@@ -1,22 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "@/lib/auth-client";
+import { signUp, signIn } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import "./login.css"; // Imported specific CSS
+import "./signup.css"; 
 
-export default function LoginPage() {
+export default function SignupPage() {
   const router = useRouter();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleEmailLogin = async (e: React.FormEvent) => {
+  const handleEmailSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     
-    const { data, error } = await signIn.email({
+    const { data, error } = await signUp.email({
+      name,
       email,
       password,
     });
@@ -39,11 +41,20 @@ export default function LoginPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4 bg-white">
-      <form className="form" onSubmit={handleEmailLogin}>
+      <form className="form" onSubmit={handleEmailSignup}>
         <div className="title">
-          Welcome back,
-          <span>Sign in to ALORA</span>
+          Create Account,
+          <span>Join ALORA</span>
         </div>
+
+        <input 
+          type="text" 
+          className="input" 
+          placeholder="Full Name" 
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
 
         <input 
           type="email" 
@@ -64,7 +75,7 @@ export default function LoginPage() {
         />
 
         <button className="button-confirm" type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Login →"}
+          {loading ? "Creating..." : "Sign Up →"}
         </button>
 
         <div className="w-full mt-4 text-sm font-semibold text-gray-700">
@@ -83,7 +94,7 @@ export default function LoginPage() {
         </div>
 
         <div className="w-full mt-2 text-sm font-semibold text-gray-700 text-center">
-          Don't have an account? <Link href="/signup" className="text-black underline">Sign Up</Link>
+          Already have an account? <Link href="/login" className="text-black underline">Log In</Link>
         </div>
       </form>
     </div>

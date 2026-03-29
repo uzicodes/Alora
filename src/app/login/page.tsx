@@ -1,24 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { signUp, signIn } from "@/lib/auth-client";
+import { signIn } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import "./signup.css"; // Imported specific CSS
+import "./login.css"; 
 
-export default function SignupPage() {
+export default function LoginPage() {
   const router = useRouter();
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleEmailSignup = async (e: React.FormEvent) => {
+  const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     
-    const { data, error } = await signUp.email({
-      name,
+    const { data, error } = await signIn.email({
       email,
       password,
     });
@@ -41,20 +39,11 @@ export default function SignupPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4 bg-white">
-      <form className="form" onSubmit={handleEmailSignup}>
+      <form className="form" onSubmit={handleEmailLogin}>
         <div className="title">
-          Create Account,
-          <span>Join ALORA</span>
+          Welcome back,
+          <span>Sign in to ALORA</span>
         </div>
-
-        <input 
-          type="text" 
-          className="input" 
-          placeholder="Full Name" 
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
 
         <input 
           type="email" 
@@ -75,7 +64,7 @@ export default function SignupPage() {
         />
 
         <button className="button-confirm" type="submit" disabled={loading}>
-          {loading ? "Creating..." : "Sign Up →"}
+          {loading ? "Logging in..." : "Login →"}
         </button>
 
         <div className="w-full mt-4 text-sm font-semibold text-gray-700">
@@ -94,7 +83,7 @@ export default function SignupPage() {
         </div>
 
         <div className="w-full mt-2 text-sm font-semibold text-gray-700 text-center">
-          Already have an account? <Link href="/login" className="text-black underline">Log In</Link>
+          Don't have an account? <Link href="/signup" className="text-black underline">Sign Up</Link>
         </div>
       </form>
     </div>
