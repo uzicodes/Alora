@@ -78,7 +78,7 @@ export default function SignupPage() {
           {loading ? "Creating..." : "Sign Up →"}
         </button>
 
-        <div className="w-full mt-4 text-sm font-semibold text-gray-700">
+        <div className="w-full mt-4 text-sm font-semibold text-gray-700 text-center">
           Or continue with
         </div>
 

@@ -67,7 +67,7 @@ export default function LoginPage() {
           {loading ? "Logging in..." : "Login →"}
         </button>
 
-        <div className="w-full mt-4 text-sm font-semibold text-gray-700">
+        <div className="w-full mt-4 text-sm font-semibold text-gray-700 text-center">
           Or continue with
         </div>
 
