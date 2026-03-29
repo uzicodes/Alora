@@ -41,15 +41,15 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center p-4 bg-white">
       <form className="form" onSubmit={handleEmailLogin}>
-        <div className="title">
-          Welcome Back 
-          <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
-            <Image src="/alora_BG.png" alt="Alora Logo" width={20} height={20} className="rounded-full" />
+        <div className="title" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+            <Image src="/alora_BG.png" alt="Alora Logo" width={32} height={32} className="rounded-full" />
             <span style={{ fontFamily: 'var(--font-kharaissa), sans-serif', letterSpacing: '4px', fontWeight: 'normal', color: '#000000', fontSize: '1.2em' }}>ALORA</span>
-          </span>
+          </div>
+          <span style={{ marginTop: '4px' }}>Welcome Back</span>
         </div>
 
-        <input 
+        <input
           type="email" 
           className="input" 
           placeholder="Email" 
