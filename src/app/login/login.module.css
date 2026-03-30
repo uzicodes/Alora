@@ -14,8 +14,13 @@
   border-radius: 5px;
   border: 2px solid var(--main-color);
   box-shadow: 6px 6px var(--main-color);
-  margin: -40px auto 0 auto; 
+  
+  margin: -80px auto 0 auto; 
+  width: 400px;
+  min-height: 580px;
+  box-sizing: border-box;
 }
+
 
 .title {
   color: var(--font-color);
@@ -34,7 +39,8 @@
 }
 
 .input {
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   height: 45px;
   border-radius: 5px;
   border: 2px solid var(--main-color);

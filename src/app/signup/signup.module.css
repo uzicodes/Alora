@@ -14,8 +14,14 @@
   border-radius: 5px;
   border: 2px solid var(--main-color);
   box-shadow: 6px 6px var(--main-color);
-  margin: -50px auto 0 auto; 
+  
+  margin: -80px auto 0 auto; 
+  width: 400px;
+  min-height: 580px;
+  box-sizing: border-box;
 }
+
+
 
 .title {
   color: var(--font-color);
@@ -34,7 +40,8 @@
 }
 
 .input {
-  width: 300px;
+  width: 100%; /* Changed to 100% to fit the 400px container padding */
+  max-width: 300px;
   height: 45px;
   border-radius: 5px;
   border: 2px solid var(--main-color);

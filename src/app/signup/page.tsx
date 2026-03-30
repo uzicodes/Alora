@@ -5,12 +5,13 @@ import { useSignUp, useSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import "./signup.css";
+// @ts-ignore
+import styles from "./signup.module.css";
 
 export default function SignupPage() {
   const router = useRouter();
-  const { signUp, errors: signUpErrors, fetchStatus: signUpStatus } = useSignUp();
-  const { signIn, errors: signInErrors, fetchStatus: signInStatus } = useSignIn();
+  const { signUp, fetchStatus: signUpStatus } = useSignUp();
+  const { signIn, fetchStatus: signInStatus } = useSignIn();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -72,23 +73,24 @@ export default function SignupPage() {
 
   if (pendingVerification) {
     return (
+      // Corrected styling for the parent div
       <div className="flex min-h-screen items-center justify-center p-4 bg-white">
-        <form className="form" onSubmit={onPressVerify}>
-          <div className="title" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+        <form className={styles.form} onSubmit={onPressVerify}>
+          <div className={styles.title} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
             <span style={{ fontSize: '1.2em' }}>Verify your email</span>
             <span style={{ fontSize: '0.8em', textAlign: 'center', marginTop: '8px' }}>We sent a code to {email}</span>
           </div>
 
           <input
             type="text"
-            className="input"
+            className={styles.input}
             placeholder="Verification Code"
             value={code}
             onChange={(e) => setCode(e.target.value)}
             required
           />
 
-          <button className="button-confirm" type="submit" disabled={isLoading}>    
+          <button className={styles["button-confirm"]} type="submit" disabled={isLoading}>    
             {isLoading ? "Verifying..." : "Verify Code"}
           </button>
         </form>
@@ -97,11 +99,12 @@ export default function SignupPage() {
   }
 
   return (
+    // Corrected styling for the parent div
     <div className="flex min-h-screen items-center justify-center p-4 bg-white">
-      <form className="form" onSubmit={handleEmailSignup}>
-        <div className="title" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+      <form className={styles.form} onSubmit={handleEmailSignup}>
+        <div className={styles.title} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-            <Image src="/alora_BG.png" alt="Alora Logo" width={32} height={32} className="rounded-full" />
+            <Image src="/alora_BG.png" alt="Alora Logo" width={32} height={32} className="rounded-full" priority />
             <span style={{ fontFamily: 'var(--font-kharaissa), sans-serif', letterSpacing: '4px', fontWeight: 'normal', color: '#636B06', fontSize: '1.2em' }}>ALORA</span>
           </div>
           <span style={{ marginTop: '4px', fontSize: '0.50em' }}>CREATE YOUR ACCOUNT</span>
@@ -109,7 +112,7 @@ export default function SignupPage() {
 
         <input
           type="text"
-          className="input"
+          className={styles.input}
           placeholder="Full Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -118,7 +121,7 @@ export default function SignupPage() {
 
         <input
           type="email"
-          className="input"
+          className={styles.input}
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -127,14 +130,14 @@ export default function SignupPage() {
 
         <input
           type="password"
-          className="input"
+          className={styles.input}
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
 
-        <button className="button-confirm" type="submit" disabled={isLoading || !signUp}>    
+        <button className={styles["button-confirm"]} type="submit" disabled={isLoading || !signUp}>    
           {isLoading ? "Creating..." : "Sign Up →"}
         </button>
 
@@ -142,9 +145,9 @@ export default function SignupPage() {
           Or continue with
         </div>
 
-        <div className="login-with">
-          <button type="button" className="button-log" onClick={handleGoogleLogin}>
-            <svg className="icon" viewBox="0 0 24 24">
+        <div className={styles["login-with"]}>
+          <button type="button" className={styles["button-log"]} onClick={handleGoogleLogin}>
+            <svg className={styles.icon} viewBox="0 0 24 24">
               <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
               <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
               <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
