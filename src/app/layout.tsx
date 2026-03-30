@@ -69,7 +69,7 @@ export default function RootLayout({
           />
         </head>
         <body
-          className={${geistSans.variable}     antialiased}
+          className={`${geistSans.variable} ${geistMono.variable} ${ubuntuFont.variable} ${davidLibre.variable} ${kharaissa.variable} antialiased`}
         >
           <ScrollToTop />
           <Navbar />
