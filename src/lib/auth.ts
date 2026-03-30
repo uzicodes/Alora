@@ -1,9 +1,16 @@
 import { betterAuth } from "better-auth";
-import { prismaAdapter } from "better-auth/adapters/prisma"; 
-import { PrismaClient } from "../generated/prisma"; 
+import { prismaAdapter } from "better-auth/adapters/prisma";
+import { PrismaClient } from "../generated/prisma";
+import { Pool } from "@neondatabase/serverless";
+import { PrismaNeon } from "@prisma/adapter-neon";
 import { dash } from "@better-auth/infra";
 
-const prisma = new PrismaClient();
+const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+
+// FIX: Added 'as any' to bypass the TypeScript mismatch
+const adapter = new PrismaNeon(pool as any); 
+
+const prisma = new PrismaClient({ adapter });
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
@@ -18,5 +25,7 @@ export const auth = betterAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
   },
-  plugins: [dash()],
+  plugins: [
+    dash()
+  ]
 });
