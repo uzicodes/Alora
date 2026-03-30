@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-// @ts-ignore
 import { Show, UserButton } from "@clerk/nextjs";
 
 export default function Navbar() {
@@ -32,8 +31,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={
-avbar } id="navbar">      
+      <nav className={`navbar ${scrolled ? "scrolled" : ""}`} id="navbar">      
         {/* Logo */}
         <Link href="/" className="navbar-logo" id="navbar-logo">
           <Image
@@ -68,7 +66,7 @@ avbar } id="navbar">
                   ].map((brand) => (
                     <Link
                       key={brand}
-                      href={/shop#brand-}
+                      href={`/shop#brand-${brand}`}
                       className="brand-link"
                     >
                       {brand}
@@ -101,8 +99,7 @@ avbar } id="navbar">
           <div className="navbar-icons">
             {/* Search Toggle */}
             <button
-              className={
-avbar-icon }
+              className="navbar-icon"
               id="navbar-search"
               onClick={() => setSearchOpen(!searchOpen)}
               aria-label="Search"
@@ -115,8 +112,7 @@ avbar-icon }
 
             <Show when="signed-in">
               {/* Account */}
-              <Link href="/profile" className={
-avbar-icon } id="navbar-account" aria-label="Account">
+              <Link href="/profile" className="navbar-icon" id="navbar-account" aria-label="Account">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"> 
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
@@ -124,8 +120,7 @@ avbar-icon } id="navbar-account" aria-label="Account">
               </Link>
 
               {/* Cart */}
-              <Link href="/cart" className={
-avbar-icon } id="navbar-cart" aria-label="Cart">
+              <Link href="/cart" className="navbar-icon" id="navbar-cart" aria-label="Cart">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"> 
                   <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /> 
                   <line x1="3" y1="6" x2="21" y2="6" />
@@ -141,7 +136,7 @@ avbar-icon } id="navbar-cart" aria-label="Cart">
 
             {/* Mobile Toggle */}
             <div
-              className={mobile-toggle }
+              className={`mobile-toggle ${mobileOpen ? "active" : ""}`}
               onClick={() => setMobileOpen(!mobileOpen)}
               id="mobile-toggle"
               role="button"
@@ -155,7 +150,7 @@ avbar-icon } id="navbar-cart" aria-label="Cart">
         </div>
 
         {/* Search Bar Popup */}
-        <div className={search-popup } id="search-popup">
+        <div className={`search-popup ${searchOpen ? "active" : ""}`} id="search-popup">
           <div className="search-container">
             <input
               type="text"
@@ -174,7 +169,7 @@ avbar-icon } id="navbar-cart" aria-label="Cart">
       </nav>
 
       {/* Mobile Menu Overlay */}
-      <div className={mobile-menu } id="mobile-menu">
+      <div className={`mobile-menu ${mobileOpen ? "active" : ""}`} id="mobile-menu">
         <Link href="/shop" onClick={() => setMobileOpen(false)}>Shop</Link>     
         <Link href="/men" onClick={() => setMobileOpen(false)}>Men</Link>       
         <Link href="/woman" onClick={() => setMobileOpen(false)}>Women</Link>   
