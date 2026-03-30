@@ -4,20 +4,20 @@
   --font-color-sub: #666;
   --bg-color: beige;
   --main-color: black;
-  padding: 40px;
+  padding: 25px;
   background: lightblue;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
   border-radius: 5px;
   border: 2px solid var(--main-color);
   box-shadow: 6px 6px var(--main-color);
   
   margin: -80px auto 0 auto; 
   width: 400px;
-  min-height: 580px;
+  min-height: 500px;
   box-sizing: border-box;
 }
 
@@ -27,7 +27,7 @@
   color: var(--font-color);
   font-weight: 900;
   font-size: 24px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   text-align: center;
 }
 
@@ -97,7 +97,7 @@
 }
 
 .button-confirm {
-  margin: 20px auto 0 auto;
+  margin: 10px auto 0 auto;
   width: 140px;
   height: 45px;
   border-radius: 5px;

@@ -56,7 +56,7 @@ export default function LoginPage() {
             <Image src="/alora_BG.png" alt="Alora Logo" width={32} height={32} className="rounded-full" priority />
             <span style={{ fontFamily: 'var(--font-kharaissa), sans-serif', letterSpacing: '4px', fontWeight: 'normal', color: '#636B06', fontSize: '1.2em' }}>ALORA</span>
           </div>
-          <span style={{ marginTop: '4px', fontSize: '0.50em' }}>WELCOME BACK</span>
+          <span style={{ marginTop: '4px', fontSize: '0.75rem' }}>WELCOME BACK</span>
         </div>
 
         <input
