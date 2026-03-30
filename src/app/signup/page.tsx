@@ -9,7 +9,7 @@ import "./signup.css";
 
 export default function SignupPage() {
   const router = useRouter();
-  const { isLoaded, signUp, setActive } = useSignUp();
+  const { isLoaded, signUp } = useSignUp();
   const { signIn } = useSignIn();
 
   const [name, setName] = useState("");
@@ -17,7 +17,6 @@ export default function SignupPage() {
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
-  const [pendingVerification, setPendingVerification] = useState(false);
 
   const handleEmailSignup = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,8 +34,11 @@ export default function SignupPage() {
         password,
       });
 
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-      setPendingVerification(true);
+      // @ts-ignore
+      if (signUp.unverified) {
+        // @ts-ignore
+        await signUp.emailCode.sendCode();
+      }
     } catch (err: any) {
       alert(err.errors?.[0]?.message || "An error occurred during sign up");
     } finally {
@@ -50,17 +52,11 @@ export default function SignupPage() {
     setLoading(true);
 
     try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code,
-      });
-
-      if (completeSignUp.status !== "complete") {
-        console.error(completeSignUp);
-        alert("Failed to verify");
-      } else {
-        await setActive({ session: completeSignUp.createdSessionId });
-        router.push("/");
-      }
+      // @ts-ignore
+      await signUp.emailCode.verify({ code });
+      // @ts-ignore
+      await signUp.finalize();
+      router.push("/");
     } catch (err: any) {
       alert(err.errors?.[0]?.message || "Error verifying code");
     } finally {
@@ -77,7 +73,8 @@ export default function SignupPage() {
     });
   };
 
-  if (pendingVerification) {
+  // @ts-ignore
+  if (isLoaded && signUp.unverified) {
     return (
       <div className="flex min-h-screen items-center justify-center p-4 bg-white">
         <form className="form" onSubmit={onPressVerify}>

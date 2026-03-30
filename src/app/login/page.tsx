@@ -9,7 +9,7 @@ import "./login.css";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { isLoaded, signIn, setActive } = useSignIn();
+  const { isLoaded, signIn } = useSignIn();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,20 +21,13 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
-      const result = await signIn.create({
-        identifier: email,
-        password,
-      });
-
-      if (result.status === "complete") {
-        await setActive({ session: result.createdSessionId });
-        router.push("/");
-      } else {
-        console.error(result);
-        alert("Login incomplete.");
-      }
+      await signIn.create({ identifier: email });
+      // @ts-ignore
+      await signIn.password({ password });
+      // @ts-ignore
+      await signIn.finalize({ navigate: () => router.push('/') });
     } catch (err: any) {
-      alert(err.errors?.[0]?.message || "An error occurred during login");
+      alert(err.errors?.[0]?.fields?.identifier?.message || err.errors?.[0]?.message || "An error occurred during login");
     } finally {
       setLoading(false);
     }
