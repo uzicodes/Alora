@@ -39,7 +39,7 @@ export default function LoginPage() {
     try {
       await signIn.sso({
         strategy: "oauth_google",
-        redirectUrl: "/",
+        redirectUrl: "/profile",
         redirectCallbackUrl: "/sso-callback",
       });
     } catch (err: any) {
@@ -49,7 +49,7 @@ export default function LoginPage() {
 
   return (
     // Reverted the styling of this div to use items-center and remove paddingTop
-    <div className="flex min-h-screen items-center justify-center p-4 bg-white">
+    <div className="flex min-h-screen items-start justify-center p-4 bg-white" style={{ paddingTop: '140px' }}>
       <form className={styles.form} onSubmit={handleEmailLogin}>
         <div className={styles.title} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>

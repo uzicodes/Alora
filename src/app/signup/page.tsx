@@ -63,7 +63,7 @@ export default function SignupPage() {
     try {
       await signIn.sso({
         strategy: "oauth_google",
-        redirectUrl: "/",
+        redirectUrl: "/profile",
         redirectCallbackUrl: "/sso-callback",
       });
     } catch (err: any) {
@@ -73,8 +73,7 @@ export default function SignupPage() {
 
   if (pendingVerification) {
     return (
-      // Corrected styling for the parent div
-      <div className="flex min-h-screen items-center justify-center p-4 bg-white">
+      <div className="flex min-h-screen items-start justify-center p-4 bg-white" style={{ paddingTop: '140px' }}>
         <form className={styles.form} onSubmit={onPressVerify}>
           <div className={styles.title} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
             <span style={{ fontSize: '1.2em' }}>Verify your email</span>
@@ -90,6 +89,9 @@ export default function SignupPage() {
             required
           />
 
+          {/* Added Captcha element for verification step */}
+          <div id="clerk-captcha"></div>
+
           <button className={styles["button-confirm"]} type="submit" disabled={isLoading}>    
             {isLoading ? "Verifying..." : "Verify Code"}
           </button>
@@ -99,8 +101,7 @@ export default function SignupPage() {
   }
 
   return (
-    // Corrected styling for the parent div
-    <div className="flex min-h-screen items-center justify-center p-4 bg-white">
+    <div className="flex min-h-screen items-start justify-center p-4 bg-white" style={{ paddingTop: '140px' }}>
       <form className={styles.form} onSubmit={handleEmailSignup}>
         <div className={styles.title} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
@@ -136,6 +137,9 @@ export default function SignupPage() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
+
+        {/* Added Captcha element for main signup step */}
+        <div id="clerk-captcha"></div>
 
         <button className={styles["button-confirm"]} type="submit" disabled={isLoading || !signUp}>    
           {isLoading ? "Creating..." : "Sign Up →"}
