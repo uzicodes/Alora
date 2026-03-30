@@ -1,44 +1,106 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
-import { signUp, signIn } from "@/lib/auth-client";
+import { useSignUp, useSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import "./signup.css"; 
+import "./signup.css";
 
 export default function SignupPage() {
   const router = useRouter();
+  const { isLoaded, signUp, setActive } = useSignUp();
+  const { signIn } = useSignIn();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [code, setCode] = useState("");
   const [loading, setLoading] = useState(false);
+  const [pendingVerification, setPendingVerification] = useState(false);
 
   const handleEmailSignup = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!isLoaded) return;
     setLoading(true);
-    
-    const { data, error } = await signUp.email({
-      name,
-      email,
-      password,
-    });
 
-    if (error) {
-      alert(error.message);
+    try {
+      const [firstName, ...rest] = name.split(" ");
+      const lastName = rest.join(" ");
+
+      await signUp.create({
+        firstName,
+        lastName,
+        emailAddress: email,
+        password,
+      });
+
+      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+      setPendingVerification(true);
+    } catch (err: any) {
+      alert(err.errors?.[0]?.message || "An error occurred during sign up");
+    } finally {
       setLoading(false);
-      return;
     }
+  };
 
-    router.push("/");
+  const onPressVerify = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isLoaded) return;
+    setLoading(true);
+
+    try {
+      const completeSignUp = await signUp.attemptEmailAddressVerification({
+        code,
+      });
+
+      if (completeSignUp.status !== "complete") {
+        console.error(completeSignUp);
+        alert("Failed to verify");
+      } else {
+        await setActive({ session: completeSignUp.createdSessionId });
+        router.push("/");
+      }
+    } catch (err: any) {
+      alert(err.errors?.[0]?.message || "Error verifying code");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleGoogleLogin = async () => {
-    await signIn.social({
-      provider: "google",
-      callbackURL: "/", 
+    if (!signIn) return;
+    await signIn.authenticateWithRedirect({
+      strategy: "oauth_google",
+      redirectUrl: "/sso-callback",
+      redirectUrlComplete: "/",
     });
   };
+
+  if (pendingVerification) {
+    return (
+      <div className="flex min-h-screen items-center justify-center p-4 bg-white">
+        <form className="form" onSubmit={onPressVerify}>
+          <div className="title" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
+            <span style={{ fontSize: '1.2em' }}>Verify your email</span>
+          </div>
+
+          <input
+            type="text"
+            className="input"
+            placeholder="Verification Code"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+            required
+          />
+
+          <button className="button-confirm" type="submit" disabled={loading}>    
+            {loading ? "Verifying..." : "Verify Code"}
+          </button>
+        </form>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4 bg-white">
@@ -51,34 +113,34 @@ export default function SignupPage() {
           <span style={{ marginTop: '4px' }}>Create Your Account</span>
         </div>
 
-        <input 
-          type="text" 
-          className="input" 
-          placeholder="Full Name" 
+        <input
+          type="text"
+          className="input"
+          placeholder="Full Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required
         />
 
-        <input 
-          type="email" 
-          className="input" 
-          placeholder="Email" 
+        <input
+          type="email"
+          className="input"
+          placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        
-        <input 
-          type="password" 
-          className="input" 
-          placeholder="Password" 
+
+        <input
+          type="password"
+          className="input"
+          placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
 
-        <button className="button-confirm" type="submit" disabled={loading}>
+        <button className="button-confirm" type="submit" disabled={loading || !isLoaded}>    
           {loading ? "Creating..." : "Sign Up →"}
         </button>
 

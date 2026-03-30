@@ -1,40 +1,52 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
-import { signIn } from "@/lib/auth-client";
+import { useSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import "./login.css"; 
+import "./login.css";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { isLoaded, signIn, setActive } = useSignIn();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    if (!isLoaded) return;
     
-    const { data, error } = await signIn.email({
-      email,
-      password,
-    });
+    setLoading(true);
 
-    if (error) {
-      alert(error.message);
+    try {
+      const result = await signIn.create({
+        identifier: email,
+        password,
+      });
+
+      if (result.status === "complete") {
+        await setActive({ session: result.createdSessionId });
+        router.push("/");
+      } else {
+        console.error(result);
+        alert("Login incomplete.");
+      }
+    } catch (err: any) {
+      alert(err.errors?.[0]?.message || "An error occurred during login");
+    } finally {
       setLoading(false);
-      return;
     }
-
-    router.push("/");
   };
 
   const handleGoogleLogin = async () => {
-    await signIn.social({
-      provider: "google",
-      callbackURL: "/", 
+    if (!isLoaded) return;
+    
+    await signIn.authenticateWithRedirect({
+      strategy: "oauth_google",
+      redirectUrl: "/sso-callback",
+      redirectUrlComplete: "/",
     });
   };
 
@@ -67,7 +79,7 @@ export default function LoginPage() {
           required
         />
 
-        <button className="button-confirm" type="submit" disabled={loading}>
+        <button className="button-confirm" type="submit" disabled={loading || !isLoaded}>
           {loading ? "Logging in..." : "Login →"}
         </button>
 

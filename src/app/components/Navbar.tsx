@@ -1,12 +1,16 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { useUser, useClerk } from "@clerk/nextjs";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { isSignedIn } = useUser();
+  const { signOut } = useClerk();
+  
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -29,7 +33,8 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`navbar ${scrolled ? "scrolled" : ""}`} id="navbar">
+      <nav className={
+avbar } id="navbar">      
         {/* Logo */}
         <Link href="/" className="navbar-logo" id="navbar-logo">
           <Image
@@ -51,7 +56,7 @@ export default function Navbar() {
             <li><Link href="/woman" className={pathname === "/woman" ? "active-link" : ""}>Women</Link></li>
             <li><Link href="/unisex" className={pathname === "/unisex" ? "active-link" : ""}>Unisex</Link></li>
             <li className="nav-item-dropdown">
-              <a href="#" onClick={(e) => e.preventDefault()}>Brands</a>
+              <a href="#" onClick={(e) => e.preventDefault()}>Brands</a>        
               <div className="dropdown-menu">
                 <div className="brands-grid">
                   {[
@@ -64,7 +69,7 @@ export default function Navbar() {
                   ].map((brand) => (
                     <Link
                       key={brand}
-                      href={`/shop#brand-${brand.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`}
+                      href={/shop#brand-}
                       className="brand-link"
                     >
                       {brand}
@@ -74,52 +79,68 @@ export default function Navbar() {
               </div>
             </li>
             <li><Link href="/about" className={pathname === "/about" ? "active-link" : ""}>About</Link></li>
-            <li>
-              <Link href="/login" className={pathname === "/login" ? "active-link" : ""} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                LOGIN
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M7 17L17 7" />
-                  <path d="M7 7h10v10" />
-                </svg>
-              </Link>
-            </li>
+            
+            {!isSignedIn ? (
+              <li>
+                <Link href="/login" className={pathname === "/login" ? "active-link" : ""} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>  
+                  LOGIN
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"> 
+                    <path d="M7 17L17 7" />
+                    <path d="M7 7h10v10" />
+                  </svg>
+                </Link>
+              </li>
+            ) : (
+              <li>
+                <button onClick={() => signOut()} style={{ background: 'none', border: 'none', fontFamily: 'inherit', fontSize: 'inherit', fontWeight: 'bold', color: 'inherit', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>  
+                  LOGOUT
+                </button>
+              </li>
+            )}
           </ul>
 
           {/* Icons */}
           <div className="navbar-icons">
             {/* Search Toggle */}
             <button
-              className={`navbar-icon ${searchOpen ? 'active' : ''}`}
+              className={
+avbar-icon }
               id="navbar-search"
               onClick={() => setSearchOpen(!searchOpen)}
               aria-label="Search"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"> 
                 <circle cx="11" cy="11" r="8" />
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
             </button>
 
-            {/* Account */}
-            <Link href="/profile" className={`navbar-icon ${pathname === "/profile" ? "active" : ""}`} id="navbar-account" aria-label="Account">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-            </Link>
+            {isSignedIn && (
+              <>
+                {/* Account */}
+                <Link href="/profile" className={
+avbar-icon } id="navbar-account" aria-label="Account">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"> 
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                    <circle cx="12" cy="7" r="4" />
+                  </svg>
+                </Link>
 
-            {/* Cart */}
-            <Link href="/cart" className={`navbar-icon ${pathname === "/cart" ? "active" : ""}`} id="navbar-cart" aria-label="Cart">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
-                <line x1="3" y1="6" x2="21" y2="6" />
-                <path d="M16 10a4 4 0 0 1-8 0" />
-              </svg>
-            </Link>
+                {/* Cart */}
+                <Link href="/cart" className={
+avbar-icon } id="navbar-cart" aria-label="Cart">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"> 
+                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /> 
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <path d="M16 10a4 4 0 0 1-8 0" />
+                  </svg>
+                </Link>
+              </>
+            )}
 
             {/* Mobile Toggle */}
             <div
-              className={`mobile-toggle ${mobileOpen ? "active" : ""}`}
+              className={mobile-toggle }
               onClick={() => setMobileOpen(!mobileOpen)}
               id="mobile-toggle"
               role="button"
@@ -133,7 +154,7 @@ export default function Navbar() {
         </div>
 
         {/* Search Bar Popup */}
-        <div className={`search-popup ${searchOpen ? 'open' : ''}`} id="search-popup">
+        <div className={search-popup } id="search-popup">
           <div className="search-container">
             <input
               type="text"
@@ -142,7 +163,7 @@ export default function Navbar() {
               className="search-input"
             />
             <button className="search-close" onClick={() => setSearchOpen(false)}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">   
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
@@ -152,21 +173,27 @@ export default function Navbar() {
       </nav>
 
       {/* Mobile Menu Overlay */}
-      <div className={`mobile-menu ${mobileOpen ? "open" : ""}`} id="mobile-menu">
-        <Link href="/shop" onClick={() => setMobileOpen(false)}>Shop</Link>
-        <Link href="/men" onClick={() => setMobileOpen(false)}>Men</Link>
-        <Link href="/woman" onClick={() => setMobileOpen(false)}>Women</Link>
-        <Link href="/unisex" onClick={() => setMobileOpen(false)}>Unisex</Link>
+      <div className={mobile-menu } id="mobile-menu">
+        <Link href="/shop" onClick={() => setMobileOpen(false)}>Shop</Link>     
+        <Link href="/men" onClick={() => setMobileOpen(false)}>Men</Link>       
+        <Link href="/woman" onClick={() => setMobileOpen(false)}>Women</Link>   
+        <Link href="/unisex" onClick={() => setMobileOpen(false)}>Unisex</Link> 
         <a href="#" onClick={(e) => e.preventDefault()}>Brands</a>
-        <Link href="/about" onClick={() => setMobileOpen(false)}>About</Link>
+        <Link href="/about" onClick={() => setMobileOpen(false)}>About</Link>   
         <Link href="/contact" onClick={() => setMobileOpen(false)}>Contact</Link>
-        <Link href="/login" onClick={() => setMobileOpen(false)} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>
-          LOGIN
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M7 17L17 7" />
-            <path d="M7 7h10v10" />
-          </svg>
-        </Link>
+        {!isSignedIn ? (
+          <Link href="/login" onClick={() => setMobileOpen(false)} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>
+            LOGIN
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">       
+              <path d="M7 17L17 7" />
+              <path d="M7 7h10v10" />
+            </svg>
+          </Link>
+        ) : (
+          <button onClick={() => { setMobileOpen(false); signOut(); }} style={{ background: 'none', border: 'none', fontFamily: 'inherit', fontSize: 'inherit', fontWeight: 'bold', color: 'inherit', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>  
+            LOGOUT
+          </button>
+        )}
       </div>
     </>
   );
