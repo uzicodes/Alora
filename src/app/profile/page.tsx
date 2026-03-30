@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import { useUser, useClerk } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import "./profile.css";
 
 export default function ProfilePage() {
@@ -16,90 +17,79 @@ export default function ProfilePage() {
     }
   }, [isLoaded, isSignedIn, router]);
 
-  if (!isLoaded) {
+  if (!isLoaded || !isSignedIn) {
     return (
-      <div className="flex min-h-screen items-start justify-center p-4 bg-white" style={{ paddingTop: '140px' }}>
-        <p style={{ fontWeight: 'bold' }}>Loading...</p>
+      <div className="flex min-h-screen items-center justify-center p-4 bg-white">
+        <p style={{ fontWeight: 'bold' }}>Loading Profile...</p>
       </div>
     );
   }
 
-  if (!isSignedIn) {
-    return null;
-  }
-
   return (
-    <div className="flex min-h-screen items-start justify-center p-4 bg-white" style={{ paddingTop: '140px' }}>
-      <div 
-        style={{
-          padding: '40px',
-          background: 'lightblue',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '20px',
-          borderRadius: '5px',
-          border: '2px solid black',
-          boxShadow: '6px 6px black',
-          width: '100%',
-          maxWidth: '400px'
-        }}
-      >
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '15px' }}>
-          {user.imageUrl ? (
-            <div style={{ width: '80px', height: '80px', borderRadius: '50%', overflow: 'hidden', border: '2px solid black' }}>
-              <img src={user.imageUrl} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+    <div className="profile-page-wrapper">
+      <div className="profile-dashboard">
+        
+        {/* LEFT COLUMN: IDENTITY */}
+        <aside className="profile-sidebar">
+          <div className="identity-card">
+            <div className="avatar-wrapper">
+              <img src={user.imageUrl} alt="Profile" className="avatar-img" />
             </div>
-          ) : (
-            <div style={{ width: '80px', height: '80px', borderRadius: '50%', backgroundColor: 'beige', border: '2px solid black', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold' }}>
-              {user.firstName?.[0] || "U"}
+            <h2 className="user-name">{user.fullName}</h2>
+            <p className="user-email">{user.primaryEmailAddress?.emailAddress}</p>
+            
+            <div className="contact-details">
+              <div className="info-item">
+                <span className="label">PHONE</span>
+                <span className="value">{user.primaryPhoneNumber?.phoneNumber || "Not provided"}</span>
+              </div>
+              <div className="info-item">
+                <span className="label">ADDRESS</span>
+                <span className="value">123 Fragrance Lane, Dhaka, Bangladesh</span>
+              </div>
             </div>
-          )}
-          
-          <h2 style={{ fontSize: '24px', fontWeight: '900', color: '#323232', margin: 0, textAlign: 'center' }}>
-            {user.fullName}
-          </h2>
-          
-          <p style={{ color: '#666', fontWeight: '600', fontSize: '15px', margin: 0 }}>
-            {user.primaryEmailAddress?.emailAddress}
-          </p>
-        </div>
 
-        <button 
-          onClick={() => signOut({ redirectUrl: '/' })}
-          style={{
-            marginTop: '20px',
-            width: '140px',
-            height: '45px',
-            borderRadius: '5px',
-            border: '2px solid black',
-            backgroundColor: 'beige',
-            boxShadow: '4px 4px black',
-            fontSize: '17px',
-            fontWeight: '600',
-            color: '#323232',
-            cursor: 'pointer',
-            transition: 'all 0.2s ease',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}
-          onMouseDown={(e) => {
-            e.currentTarget.style.boxShadow = '0px 0px black';
-            e.currentTarget.style.transform = 'translate(3px, 3px)';
-          }}
-          onMouseUp={(e) => {
-            e.currentTarget.style.boxShadow = '4px 4px black';
-            e.currentTarget.style.transform = 'none';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = '4px 4px black';
-            e.currentTarget.style.transform = 'none';
-          }}
-        >
-          LOG OUT
-        </button>
+            <button className="logout-btn" onClick={() => signOut({ redirectUrl: '/' })}>
+              LOG OUT
+            </button>
+          </div>
+        </aside>
+
+        {/* RIGHT COLUMN: ORDERS */}
+        <main className="profile-content">
+          <div className="section-header">
+            <h3 className="section-title">RECENT ORDERS</h3>
+          </div>
+
+          <div className="orders-container">
+            {/* Table for Orders */}
+            <table className="orders-table">
+              <thead>
+                <tr>
+                  <th>ORDER ID</th>
+                  <th>DATE</th>
+                  <th>STATUS</th>
+                  <th className="text-right">TOTAL</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#AL-9921</td>
+                  <td>Mar 28, 2026</td>
+                  <td><span className="status-tag">SHIPPED</span></td>
+                  <td className="text-right">৳ 12,500</td>
+                </tr>
+                <tr>
+                  <td>#AL-9845</td>
+                  <td>Feb 15, 2026</td>
+                  <td><span className="status-tag">DELIVERED</span></td>
+                  <td className="text-right">৳ 8,200</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+
       </div>
     </div>
   );
