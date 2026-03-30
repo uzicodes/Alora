@@ -6,13 +6,13 @@ import { PrismaNeon } from "@prisma/adapter-neon";
 import { dash } from "@better-auth/infra";
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-
-// FIX: Added 'as any' to bypass the TypeScript mismatch
 const adapter = new PrismaNeon(pool as any); 
-
 const prisma = new PrismaClient({ adapter });
 
 export const auth = betterAuth({
+  baseURL: process.env.NODE_ENV === "development" ? "http://localhost:3000" : process.env.BETTER_AUTH_URL,
+  trustedOrigins: ["http://localhost:3000", "https://aloraa.vercel.app"],
+  
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
