@@ -13,8 +13,8 @@
   gap: 20px;
   border-radius: 5px;
   border: 2px solid var(--main-color);
-  box-shadow: 4px 4px var(--main-color);
-  margin: 0 auto;
+  box-shadow: 6px 6px var(--main-color);
+  margin: -40px auto 0 auto; 
 }
 
 .title {

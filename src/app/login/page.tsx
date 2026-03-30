@@ -9,49 +9,53 @@ import "./login.css";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { isLoaded, signIn } = useSignIn();
+  const { signIn, errors, fetchStatus } = useSignIn();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+
+  const isLoading = fetchStatus === "fetching";
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isLoaded) return;
-    
-    setLoading(true);
+    if (!signIn) return;
 
     try {
-      await signIn.create({ identifier: email });
-      // @ts-ignore
-      await signIn.password({ password });
-      // @ts-ignore
-      await signIn.finalize({ navigate: () => router.push('/') });
+      await signIn.password({ 
+        emailAddress: email, 
+        password 
+      });
+
+      if (signIn.status === 'complete') {
+        await signIn.finalize({ navigate: () => router.push('/') });
+      }
     } catch (err: any) {
-      alert(err.errors?.[0]?.fields?.identifier?.message || err.errors?.[0]?.message || "An error occurred during login");
-    } finally {
-      setLoading(false);
+      alert(err.errors?.[0]?.longMessage || err.errors?.[0]?.message || "An error occurred during login");
     }
   };
 
   const handleGoogleLogin = async () => {
-    if (!isLoaded) return;
+    if (!signIn) return;
     
-    await signIn.authenticateWithRedirect({
-      strategy: "oauth_google",
-      redirectUrl: "/sso-callback",
-      redirectUrlComplete: "/",
-    });
+    try {
+      await signIn.sso({
+        strategy: "oauth_google",
+        redirectUrl: "/",
+        redirectCallbackUrl: "/sso-callback",
+      });
+    } catch (err: any) {
+      console.error("SSO Error:", err);
+    }
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4 bg-white">
+    <div className="flex min-h-screen items-start justify-center p-4 bg-white" style={{ paddingTop: '10vh' }}>
       <form className="form" onSubmit={handleEmailLogin}>
         <div className="title" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
             <Image src="/alora_BG.png" alt="Alora Logo" width={32} height={32} className="rounded-full" />
-            <span style={{ fontFamily: 'var(--font-kharaissa), sans-serif', letterSpacing: '4px', fontWeight: 'normal', color: '#000000', fontSize: '1.2em' }}>ALORA</span>
+            <span style={{ fontFamily: 'var(--font-kharaissa), sans-serif', letterSpacing: '4px', fontWeight: 'normal', color: '#636B06', fontSize: '1.2em' }}>ALORA</span>
           </div>
-          <span style={{ marginTop: '4px' }}>Welcome Back</span>
+          <span style={{ marginTop: '4px', fontSize: '0.50em' }}>WELCOME BACK</span>
         </div>
 
         <input
@@ -72,8 +76,8 @@ export default function LoginPage() {
           required
         />
 
-        <button className="button-confirm" type="submit" disabled={loading || !isLoaded}>
-          {loading ? "Logging in..." : "Login →"}
+        <button className="button-confirm" type="submit" disabled={isLoading || !signIn}>
+          {isLoading ? "Logging in..." : "Login →"}
         </button>
 
         <div className="w-full mt-4 text-sm font-semibold text-gray-700 text-center">
