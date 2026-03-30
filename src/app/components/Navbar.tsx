@@ -4,10 +4,11 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Show, UserButton } from "@clerk/nextjs";
+import { useUser, useClerk } from "@clerk/nextjs";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { isSignedIn, user } = useUser();
   
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -77,7 +78,7 @@ export default function Navbar() {
             </li>
             <li><Link href="/about" className={pathname === "/about" ? "active-link" : ""}>About</Link></li>
             
-            <Show when="signed-out">
+            {!isSignedIn && (
               <li>
                 <Link href="/login" className={pathname === "/login" ? "active-link" : ""} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>  
                   LOGIN
@@ -87,7 +88,7 @@ export default function Navbar() {
                   </svg>
                 </Link>
               </li>
-            </Show>
+            )}
           </ul>
 
           {/* Icons */}
@@ -105,13 +106,21 @@ export default function Navbar() {
               </svg>
             </button>
 
-            {/* Profile (Always Visible) */}
-            <Link href="/profile" className="navbar-icon" id="navbar-account" aria-label="Account">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"> 
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                <circle cx="12" cy="7" r="4" />
-              </svg>
-            </Link>
+            {/* Profile Icon / Avatar */}
+            {isSignedIn && user ? (
+              <Link href="/profile" className="navbar-icon" id="navbar-account" aria-label="Account" style={{ display: 'flex', alignItems: 'center', padding: 0, justifyContent: 'center' }}>
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid black', overflow: 'hidden' }}>
+                  <img src={user.imageUrl} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+              </Link>
+            ) : (
+              <Link href="/login" className="navbar-icon" id="navbar-account" aria-label="Account">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"> 
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </Link>
+            )}
 
             {/* Cart (Always Visible) */}
             <Link href="/cart" className="navbar-icon" id="navbar-cart" aria-label="Cart">
@@ -121,13 +130,6 @@ export default function Navbar() {
                 <path d="M16 10a4 4 0 0 1-8 0" />
               </svg>
             </Link>
-
-            {/* Clerk User Button (Visible Only When Logged In) */}
-            <Show when="signed-in">
-              <div className="navbar-icon" style={{ display: 'flex', alignItems: 'center' }}>
-                <UserButton />
-              </div>
-            </Show>
 
             {/* Mobile Toggle */}
             <div
@@ -172,7 +174,7 @@ export default function Navbar() {
         <a href="#" onClick={(e) => e.preventDefault()}>Brands</a>
         <Link href="/about" onClick={() => setMobileOpen(false)}>About</Link>   
         <Link href="/contact" onClick={() => setMobileOpen(false)}>Contact</Link>
-        <Show when="signed-out">
+        {!isSignedIn && (
           <Link href="/login" onClick={() => setMobileOpen(false)} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>
             LOGIN
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">       
@@ -180,12 +182,16 @@ export default function Navbar() {
               <path d="M7 7h10v10" />
             </svg>
           </Link>
-        </Show>
-        <Show when="signed-in">
+        )}
+        {isSignedIn && user && (
           <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-            <UserButton />
+            <Link href="/profile" onClick={() => setMobileOpen(false)}>
+              <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid black', overflow: 'hidden' }}>
+                <img src={user.imageUrl} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+            </Link>
           </div>
-        </Show>
+        )}
       </div>
     </>
   );
