@@ -56,7 +56,7 @@ export default async function ShopAllPage() {
                   return (
                     <div key={product.id} className="group/card flex flex-col cursor-pointer h-full w-[185px]">
                       <div className="relative aspect-[4/5] bg-[#f8f8f8] flex items-center justify-center border border-transparent transition-all duration-500 hover:border-[#C28D10] hover:shadow-[0_0_20px_rgba(194,141,16,0.1)]">
-                        <div className="relative w-[50%] h-[50%]">
+                        <div className="relative w-[90%] h-[90%]">    {/* ratio in product card */}
                           <Image
                             src={image}
                             alt={product.name}
