@@ -9,19 +9,8 @@ datasource db {
   
 }
 
-model User {
-  id            String    @id
-  email         String    @unique
-  name          String?
-  emailVerified Boolean   @default(false)
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  
-  orders        Order[]
 
-  @@map("user")
-}
+
 
 model Product {
   id            String   @id @default(cuid())
@@ -36,24 +25,39 @@ model Product {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
-  orderItems    OrderItem[] 
 }
+
+
+
+model User {
+  id        String   @id    // Clerk User ID 
+  email     String   @unique
+  name      String?   
+  phone     String?   
+  address   String?  
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+                          // link orders to this user
+  orders    Order[]  
+}
+
+
 
 model Order {
-  id        String      @id @default(cuid())
-  userId    String
-  user      User        @relation(fields: [userId], references: [id])
-  items     OrderItem[]
-  total     Float
-  status    String      @default("PENDING") 
-  createdAt DateTime    @default(now())
-}
+  id          String   @id @default(cuid())        // Unique Order ID
+  userId      String                               
+  name        String   
+  email       String   
+  orderTime   DateTime @default(now())
+  
+                                          // entire cart (items, quantities, prices) JSON 
+  items       Json     
+  
+  totalCost   Float
+  paymentType String   
 
-model OrderItem {
-  id        String  @id @default(cuid())
-  orderId   String
-  order     Order   @relation(fields: [orderId], references: [id])
-  productId String
-  product   Product @relation(fields: [productId], references: [id])
-  quantity  Int
+                                         // links Order back to the User table
+  user        User     @relation(fields: [userId], references: [id])
 }
