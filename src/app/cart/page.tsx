@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useCart } from "../components/CartContext";
 
 export default function Cart() {
-  const { cartItems, removeFromCart, updateItemQuantity } = useCart();
+  const { cartItems, removeFromCart, updateItemQuantity, clearCart } = useCart();
 
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   const total = subtotal;
@@ -35,6 +35,7 @@ export default function Cart() {
           <p className="mb-8 font-body" style={{ color: '#555', fontSize: '12px', letterSpacing: '0.5px' }}>Looks like you haven&apos;t added any fragrances yet.</p>
           <Link href="/shop" className="btn-primary" style={{ 
             display: 'inline-flex',
+            marginTop: '24px',
             border: '2px solid #000',
             boxShadow: '4px 4px 0px #000',
             backgroundColor: '#000',
@@ -170,6 +171,31 @@ export default function Cart() {
               </svg>
               <span>Secure Checkout</span>
             </div>
+
+            <button 
+              onClick={clearCart}
+              style={{
+                display: 'block',
+                margin: '24px auto 0',
+                padding: '6px 16px',
+                fontSize: '10px',
+                textTransform: 'uppercase',
+                letterSpacing: '1px',
+                fontWeight: 'bold',
+                color: '#ef4444',
+                backgroundColor: '#fff',
+                border: '2px solid #ef4444',
+                boxShadow: '2px 2px 0px #ef4444',
+                cursor: 'pointer',
+                transition: 'all 0.1s'
+              }}
+              onMouseDown={(e) => { e.currentTarget.style.transform = 'translate(2px, 2px)'; e.currentTarget.style.boxShadow = '0px 0px 0px #ef4444'; }}
+              onMouseUp={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '2px 2px 0px #ef4444'; }}
+              onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#ef4444'; e.currentTarget.style.color = '#fff'; }}
+              onMouseOut={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '2px 2px 0px #ef4444'; e.currentTarget.style.backgroundColor = '#fff'; e.currentTarget.style.color = '#ef4444'; }}
+            >
+              Clear Cart
+            </button>
           </div>
         </div>
       )}
