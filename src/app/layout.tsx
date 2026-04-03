@@ -1,10 +1,11 @@
-﻿import type { Metadata } from "next";
+import type { Metadata } from "next";
 import { Geist, Geist_Mono, Ubuntu } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
+import { CartProvider } from "./components/CartContext";
 import { ClerkProvider } from "@clerk/nextjs";
 
 const geistSans = Geist({
@@ -73,9 +74,11 @@ export default function RootLayout({
         >
           <ScrollToTop />
           <Navbar />
-          <main style={{ paddingTop: 56 }}>
-            {children}
-          </main>
+          <CartProvider>
+            <main style={{ paddingTop: 56 }}>
+              {children}
+            </main>
+          </CartProvider>
           <Footer />
         </body>
       </html>

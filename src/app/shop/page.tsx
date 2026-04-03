@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import prisma from "@/lib/prisma";
+import AddToCartButton from "../components/AddToCartButton";
 
 export default async function ShopAllPage() {
   const products = await prisma.product.findMany();
@@ -67,11 +68,13 @@ export default async function ShopAllPage() {
                         </div>
 
                         {/* Desktop Hover Add to Cart */}
-                        <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 transform translate-y-2 transition-all duration-300 ease-in-out group-hover/card:opacity-100 group-hover/card:translate-y-0 hidden lg:flex justify-center z-10">
-                          <button className="bg-[#C28D10] text-white uppercase text-[9px] font-bold tracking-[0.1em] py-2.5 px-4 w-full hover:bg-[#13382C] transition-colors duration-300">
-                            Add to Cart
-                          </button>
-                        </div>
+                        <AddToCartButton
+                          id={product.id}
+                          name={product.name}
+                          price={product.price}
+                          image={image}
+                          category={category}
+                        />
                       </div>
 
                       {/* Details */}
@@ -90,11 +93,6 @@ export default async function ShopAllPage() {
                           {formattedPrice}
                         </p>
                       </div>
-
-                      {/* Mobile/Tablet always visible minimal button */}
-                      <button className="lg:hidden mt-5 border border-neutral-300 text-neutral-700 uppercase text-[9px] font-bold tracking-[0.1em] py-2.5 px-4 hover:border-[#13382C] hover:text-[#13382C] transition-colors duration-300">
-                        Add to Cart
-                      </button>
                     </div>
                   );
                 })}

@@ -1,57 +1,11 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-
-type CartItem = {
-  id: string;
-  name: string;
-  category: string;
-  price: number;
-  quantity: number;
-  image: string;
-};
-
-const initialCart: CartItem[] = [
-  {
-    id: "item-1",
-    name: "Midnight Oud",
-    category: "Eau de Parfum • 50ml",
-    price: 185.00,
-    quantity: 1,
-    image: "/alora_BG2.png",
-  },
-  {
-    id: "item-2",
-    name: "Velvet Rose",
-    category: "Extrait de Parfum • 100ml",
-    price: 220.00,
-    quantity: 1,
-    image: "/alora_BG2.png",
-  }
-];
+import { useCart } from "../components/CartContext";
 
 export default function Cart() {
-  const [cartItems, setCartItems] = useState<CartItem[]>(initialCart);
-
-  const increaseQuantity = (id: string) => {
-    setCartItems(prev => prev.map(item =>
-      item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-    ));
-  };
-
-  const decreaseQuantity = (id: string) => {
-    setCartItems(prev => prev.map(item =>
-      item.id === id && item.quantity > 1
-        ? { ...item, quantity: item.quantity - 1 }
-        : item
-    ));
-  };
-
-  const removeItem = (id: string) => {
-    setCartItems(prev => prev.filter(item => item.id !== id));
-  };
+  const { cartItems, removeFromCart, updateItemQuantity } = useCart();
 
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   const total = subtotal;
@@ -72,7 +26,13 @@ export default function Cart() {
           maxWidth: '500px', 
           margin: '0 auto' 
         }}>
-          <p className="text-gray-500 mb-8 font-body uppercase tracking-wider" style={{ color: '#000', fontWeight: 'bold' }}>Your cart is empty.</p>
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ margin: '0 auto 20px' }}>
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+          <p className="text-gray-500 mb-2 font-body uppercase tracking-wider" style={{ color: '#000', fontWeight: 'bold', fontSize: '14px' }}>Your cart is currently empty</p>
+          <p className="mb-8 font-body" style={{ color: '#555', fontSize: '12px', letterSpacing: '0.5px' }}>Looks like you haven&apos;t added any fragrances yet.</p>
           <Link href="/shop" className="btn-primary" style={{ 
             display: 'inline-flex',
             border: '2px solid #000',
@@ -111,14 +71,15 @@ export default function Cart() {
                       <h3 className="cart-item-name" style={{ fontWeight: '900', color: '#000' }}>{item.name}</h3>
                       <p className="cart-item-category">{item.category}</p>
                     </div>
-                    <p className="cart-item-price" style={{ fontWeight: '900', color: '#000' }}>${item.price.toFixed(2)}</p>
+                    <p className="cart-item-price" style={{ fontWeight: '900', color: '#000' }}>BDT {item.price}</p>
                   </div>
                   <div className="cart-item-bottom">
                     <div className="quantity-selector" style={{ border: '2px solid #000', borderRadius: '4px' }}>
                       <button
                         className="quantity-btn decrease"
                         aria-label="Decrease quantity"
-                        onClick={() => decreaseQuantity(item.id)}
+                        onClick={() => updateItemQuantity(item.id, item.quantity - 1)}
+                        disabled={item.quantity <= 1}
                         style={{ fontWeight: 'bold' }}
                       >
                         −
@@ -127,7 +88,7 @@ export default function Cart() {
                       <button
                         className="quantity-btn increase"
                         aria-label="Increase quantity"
-                        onClick={() => increaseQuantity(item.id)}
+                        onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
                         style={{ fontWeight: 'bold' }}
                       >
                         +
@@ -135,7 +96,7 @@ export default function Cart() {
                     </div>
                     <button
                       className="remove-btn-styled"
-                      onClick={() => removeItem(item.id)}
+                      onClick={() => removeFromCart(item.id)}
                       style={{
                         padding: '6px 16px',
                         border: '2px solid #000',       
@@ -173,7 +134,7 @@ export default function Cart() {
             <h2 className="summary-title" style={{ color: '#111', borderBottom: '2px solid #000', fontWeight: '900' }}>Order Summary</h2>
             <div className="summary-row" style={{ fontWeight: '600' }}>
               <span>Subtotal</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>BDT {subtotal}</span>
             </div>
             <div className="summary-row" style={{ fontWeight: '600' }}>
               <span>Shipping</span>
@@ -182,7 +143,7 @@ export default function Cart() {
             <div className="summary-divider" style={{ borderTop: '2px solid #000' }}></div>
             <div className="summary-row summary-total" style={{ color: '#111', fontWeight: '900' }}>
               <span>Total</span>
-              <span>${total.toFixed(2)}</span>
+              <span>BDT {total}</span>
             </div>
 
             <Link href="/checkout" className="btn-primary" style={{ 
