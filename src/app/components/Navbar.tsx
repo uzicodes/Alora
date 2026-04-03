@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
@@ -67,7 +67,7 @@ export default function Navbar() {
                   ].map((brand) => (
                     <Link
                       key={brand}
-                      href={`/shop#brand-${brand}`}
+                      href={`/shop#brand-${brand.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`}
                       className="brand-link"
                     >
                       {brand}
