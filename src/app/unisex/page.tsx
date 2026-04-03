@@ -1,11 +1,6 @@
 import Image from "next/image";
-import { PrismaClient } from "@prisma/client";
-import { PrismaPg } from "@prisma/adapter-pg";
+import prisma from "@/lib/prisma";
 
-const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL,
-});
-const prisma = new PrismaClient({ adapter });
 
 export default async function UnisexPage() {
   const products = await prisma.product.findMany({
