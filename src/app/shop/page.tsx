@@ -74,6 +74,7 @@ export default async function ShopAllPage() {
                           price={product.price}
                           image={image}
                           category={category}
+                          variant="desktop"
                         />
                       </div>
 
@@ -93,6 +94,16 @@ export default async function ShopAllPage() {
                           {formattedPrice}
                         </p>
                       </div>
+
+                      {/* Mobile Add to Cart */}
+                      <AddToCartButton
+                        id={product.id}
+                        name={product.name}
+                        price={product.price}
+                        image={image}
+                        category={category}
+                        variant="mobile"
+                      />
                     </div>
                   );
                 })}

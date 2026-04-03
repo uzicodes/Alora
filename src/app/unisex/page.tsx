@@ -49,6 +49,7 @@ export default async function UnisexPage() {
                       price={product.price}
                       image={image}
                       category={category}
+                      variant="desktop"
                     />
                   </div>
 
@@ -64,6 +65,16 @@ export default async function UnisexPage() {
                       {formattedPrice}
                     </p>
                   </div>
+                  
+                  {/* Mobile Add to Cart */}
+                  <AddToCartButton
+                    id={product.id}
+                    name={product.name}
+                    price={product.price}
+                    image={image}
+                    category={category}
+                    variant="mobile"
+                  />
                 </div>
               );
             })}
