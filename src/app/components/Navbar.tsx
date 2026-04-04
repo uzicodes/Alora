@@ -183,15 +183,6 @@ export default function Navbar() {
             </svg>
           </Link>
         )}
-        {isSignedIn && user && (
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: '10px' }}>
-            <Link href="/profile" onClick={() => setMobileOpen(false)}>
-              <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid black', overflow: 'hidden' }}>
-                <img src={user.imageUrl} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-            </Link>
-          </div>
-        )}
       </div>
     </>
   );
