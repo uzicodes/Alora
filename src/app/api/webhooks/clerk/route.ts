@@ -9,7 +9,6 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
 export async function POST(req: Request) {
-  // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
@@ -22,23 +21,21 @@ export async function POST(req: Request) {
   const svix_timestamp = headerPayload.get("svix-timestamp");
   const svix_signature = headerPayload.get("svix-signature");
 
-  // If there are no headers, error out
   if (!svix_id || !svix_timestamp || !svix_signature) {
     return new Response("Error occured -- no svix headers", {
       status: 400,
     });
   }
 
-  // Get the body
   const payload = await req.json();
   const body = JSON.stringify(payload);
 
-  // Create a new Svix instance with your secret.
+  // Svix instance 
   const wh = new Webhook(WEBHOOK_SECRET);
 
   let evt: WebhookEvent;
 
-  // Verify the payload with the headers
+  // Verify the payload 
   try {
     evt = wh.verify(body, {
       "svix-id": svix_id,
@@ -63,8 +60,8 @@ export async function POST(req: Request) {
     const name = [first_name, last_name].filter(Boolean).join(" ") || "Unknown";
 
     // Get primary email
-    const primaryEmail = email_addresses?.length > 0 
-      ? email_addresses[0].email_address 
+    const primaryEmail = email_addresses?.length > 0
+      ? email_addresses[0].email_address
       : "";
 
     if (!clerkId || !primaryEmail) {
