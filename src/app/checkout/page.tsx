@@ -202,7 +202,7 @@ export default function CheckoutPage() {
           </button>
 
           <p className="place-order-info">
-            By placing your order, you agree to Alora's Terms & Conditions and Privacy Policy. All transactions are secure and encrypted.
+            By placing your order, you agree to Alora's Terms & Conditions and Privacy Policy.
           </p>
         </div>
       </div>
