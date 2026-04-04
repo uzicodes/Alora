@@ -111,6 +111,27 @@
   font-weight: 500;
 }
 
+.edit-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #000;
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 4px;
+  outline: none;
+}
+
+.edit-input:focus {
+  border-width: 2px;
+}
+
+.address-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
 /* BUTTONS */
 .logout-btn {
   margin-top: 40px;
