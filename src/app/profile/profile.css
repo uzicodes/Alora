@@ -209,6 +209,29 @@
 @media (max-width: 900px) {
   .profile-dashboard {
     grid-template-columns: 1fr;
+    width: 100%;
+    padding: 20px 15px;
   }
-  .identity-card { position: static; }
+  
+  .identity-card { 
+    position: static; 
+    padding: 30px 15px;
+    margin-right: 6px; 
+  }
+  
+  .profile-content {
+    padding: 20px 15px;
+    margin-right: 6px;
+    overflow-x: auto;
+  }
+  
+  .user-name {
+    font-size: 18px;
+    word-break: break-word;
+  }
+  
+  .user-email {
+    font-size: 12px;
+    word-break: break-all;
+  }
 }
