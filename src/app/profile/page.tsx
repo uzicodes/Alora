@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import "./profile.css";
 import { getUserProfile, updateUserProfile } from "./actions";
+import Loader from "../components/Loader";
+
 
 export default function ProfilePage() {
   const { isLoaded, isSignedIn, user } = useUser();
@@ -44,11 +46,7 @@ export default function ProfilePage() {
   }, [isLoaded, isSignedIn, user, initialDataLoaded]);
 
   if (!isLoaded || !isSignedIn || !initialDataLoaded) {
-    return (
-      <div className="flex min-h-screen items-center justify-center p-4 bg-white">
-        <p style={{ fontWeight: "bold" }}>Loading Profile...</p>
-      </div>
-    );
+    return <Loader />;
   }
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
