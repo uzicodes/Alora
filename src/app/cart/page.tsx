@@ -3,9 +3,49 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "../components/CartContext";
+import { useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+
 
 export default function Cart() {
   const { cartItems, removeFromCart, updateItemQuantity, clearCart } = useCart();
+  const { isSignedIn, isLoaded } = useUser();
+  const router = useRouter();
+
+  const handleCheckout = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!isLoaded) return;
+
+    if (!isSignedIn) {
+      toast.error("Please login to proceed to checkout", {
+        id: "auth-checkout-toast",
+        duration: 3000,
+        style: {
+          border: '2px solid #000',
+          padding: '16px',
+          color: '#000',
+          backgroundColor: '#fff',
+          fontWeight: 'bold',
+          boxShadow: '4px 4px 0px #000',
+          borderRadius: '0',
+          fontSize: '14px',
+        },
+        iconTheme: {
+          primary: '#000',
+          secondary: '#fff',
+        },
+      });
+      
+      // Delay navigation a bit so the user can see the toast
+      setTimeout(() => {
+        router.push("/login");
+      }, 1500);
+      return;
+    }
+
+    router.push("/checkout");
+  };
 
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
   const total = subtotal;
@@ -147,23 +187,28 @@ export default function Cart() {
               <span>BDT {total}</span>
             </div>
 
-            <Link href="/checkout" className="btn-primary" style={{ 
-              width: '100%', 
-              marginTop: '24px', 
-              justifyContent: 'center',
-              border: '2px solid #000',
-              boxShadow: '4px 4px 0px #000',
-              backgroundColor: 'beige',
-              color: '#000',
-              fontWeight: '900',
-              transition: 'all 0.1s'
-            }}>
+            <button 
+              onClick={handleCheckout}
+              className="btn-primary" 
+              style={{ 
+                width: '100%', 
+                marginTop: '24px', 
+                justifyContent: 'center',
+                border: '2px solid #000',
+                boxShadow: '4px 4px 0px #000',
+                backgroundColor: 'beige',
+                color: '#000',
+                fontWeight: '900',
+                transition: 'all 0.1s',
+                cursor: 'pointer'
+              }}
+            >
               Proceed to Checkout
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '8px' }}>
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
                 <path d="M7 11V7a5 5 0 0 1 10 0v4" />
               </svg>
-            </Link>
+            </button>
 
             <div className="summary-footer" style={{ fontWeight: 'bold' }}>
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
