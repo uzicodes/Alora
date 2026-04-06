@@ -7,12 +7,15 @@ import Image from "next/image";
 import "./profile.css";
 import { getUserProfile, updateUserProfile } from "./actions";
 import Loader from "../components/Loader";
+import { useCart } from "../components/CartContext";
+
 
 
 export default function ProfilePage() {
   const { isLoaded, isSignedIn, user } = useUser();
   const { signOut } = useClerk();
   const router = useRouter();
+  const { clearCart } = useCart();
 
   const [isEditing, setIsEditing] = useState(false);
   const [phone, setPhone] = useState("");
@@ -162,7 +165,10 @@ export default function ProfilePage() {
               </div>
             </div>
 
-            <button className="logout-btn" onClick={() => signOut({ redirectUrl: '/' })}>
+            <button className="logout-btn" onClick={() => {
+              clearCart();
+              signOut({ redirectUrl: '/' });
+            }}>
               LOG OUT
             </button>
           </div>

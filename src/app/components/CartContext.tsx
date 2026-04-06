@@ -1,6 +1,8 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, useRef, type ReactNode } from "react";
+import { useAuth } from "@clerk/nextjs";
+
 
 export type CartItem = {
   id: string;
@@ -37,6 +39,8 @@ function getStoredCart(): CartItem[] {
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [hydrated, setHydrated] = useState(false);
+  const { isSignedIn } = useAuth();
+  const prevIsSignedIn = useRef(isSignedIn);
 
   // Hydrate from localStorage on mount
   useEffect(() => {
@@ -76,7 +80,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   const clearCart = useCallback(() => {
     setCartItems([]);
+    if (typeof window !== "undefined") {
+      localStorage.removeItem(CART_STORAGE_KEY);
+    }
   }, []);
+
+  // Clear cart when the user logs out
+  useEffect(() => {
+    if (prevIsSignedIn.current === true && isSignedIn === false) {
+      clearCart();
+    }
+    prevIsSignedIn.current = isSignedIn;
+  }, [isSignedIn, clearCart]);
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
