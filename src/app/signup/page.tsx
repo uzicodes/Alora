@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import { useSignUp, useSignIn } from "@clerk/nextjs";
@@ -15,6 +15,7 @@ export default function SignupPage() {
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [code, setCode] = useState("");
   const [pendingVerification, setPendingVerification] = useState(false);
@@ -34,6 +35,9 @@ export default function SignupPage() {
         lastName: lastName || "",
         emailAddress: email,
         password,
+        unsafeMetadata: {
+          phone: phone,
+        },
       });
 
       await signUp.verifications.sendEmailCode();
@@ -127,6 +131,14 @@ export default function SignupPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+        />
+
+        <input
+          type="tel"
+          className={styles.input}
+          placeholder="Phone"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
         />
 
         <input
