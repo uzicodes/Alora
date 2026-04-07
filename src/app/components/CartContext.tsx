@@ -46,7 +46,7 @@ function getStoredCart(): CartItem[] {
       return parsed.items || [];
     }
 
-    // Fallback for old format (just an array)
+    // Fallback for old format
     if (Array.isArray(parsed)) {
       return parsed;
     }

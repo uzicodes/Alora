@@ -147,7 +147,7 @@ export default function Navbar() {
         </div>
 
         {/* Search Bar Popup */}
-        <div className={`search-popup ${searchOpen ? "active" : ""}`} id="search-popup">
+        <div className={`search-popup ${searchOpen ? "open" : ""}`} id="search-popup">
           <div className="search-container">
             <input
               type="text"
@@ -186,4 +186,4 @@ export default function Navbar() {
       </div>
     </>
   );
-}
+}
