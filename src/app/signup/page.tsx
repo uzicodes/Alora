@@ -23,6 +23,11 @@ export default function SignupPage() {
 
   const isLoading = signUpStatus === "fetching" || signInStatus === "fetching";
 
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.replace(/[^a-zA-Z\s]/g, "").slice(0, 50);
+    setName(val);
+  };
+
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value.replace(/\D/g, "").slice(0, 15);
     setPhone(val);
@@ -31,6 +36,19 @@ export default function SignupPage() {
   const handleEmailSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!signUp) return;
+
+    // Validate email '@' count
+    const atCount = (email.match(/@/g) || []).length;
+    if (atCount !== 1) {
+      alert("Please enter a valid email with exactly one '@' symbol.");
+      return;
+    }
+
+    // Validate password length
+    if (password.length < 6) {
+      alert("Password must be at least 6 characters long.");
+      return;
+    }
 
     try {
       const [firstName, ...rest] = name.split(" ");
@@ -126,7 +144,7 @@ export default function SignupPage() {
           className={styles.input}
           placeholder="Full Name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={handleNameChange}
           required
         />
 
