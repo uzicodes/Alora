@@ -339,8 +339,8 @@ export default function Home() {
         /* product grid */
         .products-grid {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 2px;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 12px;
         }
         .product-cell {
           position: relative;
@@ -370,15 +370,15 @@ export default function Home() {
         }
         .product-badge {
           position: absolute;
-          top: 24px;
-          left: 24px;
-          font-size: 8px;
+          top: 16px;
+          left: 16px;
+          font-size: 7px;
           font-weight: 400;
           letter-spacing: 0.25em;
           text-transform: uppercase;
           color: #0a0805;
           background: #d4b896;
-          padding: 5px 12px;
+          padding: 4px 10px;
           z-index: 2;
         }
         .product-info {
@@ -386,27 +386,27 @@ export default function Home() {
           bottom: 0;
           left: 0;
           right: 0;
-          padding: 32px 28px;
+          padding: 24px 20px;
           z-index: 2;
-          transform: translateY(8px);
+          transform: translateY(6px);
           transition: transform 0.4s;
         }
         .product-cell:hover .product-info { transform: translateY(0); }
         .product-name {
           font-family: 'Cormorant Garamond', serif;
-          font-size: 22px;
+          font-size: 18px;
           font-weight: 300;
           color: #f0e6d8;
           line-height: 1.1;
-          margin-bottom: 6px;
+          margin-bottom: 4px;
         }
         .product-category {
-          font-size: 9px;
+          font-size: 8px;
           font-weight: 300;
           letter-spacing: 0.25em;
           text-transform: uppercase;
           color: #7a6d5e;
-          margin-bottom: 16px;
+          margin-bottom: 12px;
         }
         .product-price-row {
           display: flex;
@@ -415,7 +415,7 @@ export default function Home() {
         }
         .product-price {
           font-family: 'Cormorant Garamond', serif;
-          font-size: 18px;
+          font-size: 16px;
           font-weight: 400;
           color: #d4b896;
         }
@@ -423,14 +423,14 @@ export default function Home() {
           opacity: 0;
           transform: translateY(4px);
           transition: opacity 0.3s 0.05s, transform 0.3s;
-          font-size: 8px;
+          font-size: 7px;
           font-weight: 400;
-          letter-spacing: 0.25em;
+          letter-spacing: 0.2em;
           text-transform: uppercase;
           color: #0a0805;
           background: #d4b896;
           border: none;
-          padding: 8px 16px;
+          padding: 6px 12px;
           cursor: pointer;
         }
         .product-cell:hover .product-add-btn {
@@ -608,7 +608,7 @@ export default function Home() {
           .hero-left { padding: 40px 32px 80px; }
           .hero-right { display: none; }
           .section-products { padding: 80px 32px; }
-          .products-grid { grid-template-columns: repeat(2, 1fr); }
+          .products-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
           .story-section { grid-template-columns: 1fr; }
           .story-visual { min-height: 400px; }
           .story-text-side { padding: 60px 32px; }
@@ -636,10 +636,6 @@ export default function Home() {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
             </Link>
             <Link href="/about" className="btn-hero-ghost">Our Maison</Link>
-          </div>
-          <div className="hero-scroll-hint fade-in-up delay-4">
-            <div className="scroll-line"></div>
-            Scroll
           </div>
         </div>
         <div className="hero-right">
