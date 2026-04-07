@@ -23,6 +23,11 @@ export default function SignupPage() {
 
   const isLoading = signUpStatus === "fetching" || signInStatus === "fetching";
 
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.replace(/\D/g, "").slice(0, 15);
+    setPhone(val);
+  };
+
   const handleEmailSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!signUp) return;
@@ -139,7 +144,7 @@ export default function SignupPage() {
           className={styles.input}
           placeholder="Phone"
           value={phone}
-          onChange={(e) => setPhone(e.target.value)}
+          onChange={handlePhoneChange}
         />
 
         <div className={styles.inputGroup}>
