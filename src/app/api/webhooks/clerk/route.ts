@@ -54,7 +54,8 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   if (eventType === "user.created" || eventType === "user.updated") {
-    const { id: clerkId, email_addresses, first_name, last_name } = evt.data;
+    const data = evt.data as any;
+    const { id: clerkId, email_addresses, first_name, last_name, unsafe_metadata } = data;
 
     // Combine first and last name
     const name = [first_name, last_name].filter(Boolean).join(" ") || "Unknown";
@@ -68,18 +69,27 @@ export async function POST(req: Request) {
       return new Response("Missing user data", { status: 400 });
     }
 
+    const phone = unsafe_metadata?.phone || null;
+
     try {
+      const updateData: any = {
+        email: primaryEmail,
+        name: name,
+      };
+
+      if (phone) {
+        updateData.phone = phone;
+      }
+
       // Upsert user in database
       const user = await prisma.user.upsert({
         where: { id: clerkId },
-        update: {
-          email: primaryEmail,
-          name: name,
-        },
+        update: updateData,
         create: {
           id: clerkId,
           email: primaryEmail,
           name: name,
+          phone: phone,
         },
       });
 
