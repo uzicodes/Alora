@@ -30,7 +30,28 @@ function getStoredCart(): CartItem[] {
   if (typeof window === "undefined") return [];
   try {
     const stored = localStorage.getItem(CART_STORAGE_KEY);
-    return stored ? JSON.parse(stored) : [];
+    if (!stored) return [];
+
+    const parsed = JSON.parse(stored);
+
+    // Check if it's the new format with timestamp
+    if (parsed && typeof parsed === "object" && "timestamp" in parsed && "items" in parsed) {
+      const now = Date.now();
+      const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
+
+      if (now - parsed.timestamp > TWENTY_FOUR_HOURS) {
+        localStorage.removeItem(CART_STORAGE_KEY);
+        return [];
+      }
+      return parsed.items || [];
+    }
+
+    // Fallback for old format (just an array)
+    if (Array.isArray(parsed)) {
+      return parsed;
+    }
+
+    return [];
   } catch {
     return [];
   }
@@ -51,7 +72,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // Persist to localStorage
   useEffect(() => {
     if (hydrated) {
-      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cartItems));
+      const dataToStore = {
+        items: cartItems,
+        timestamp: Date.now(),
+      };
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(dataToStore));
     }
   }, [cartItems, hydrated]);
 
