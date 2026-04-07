@@ -58,7 +58,7 @@ export default function Home() {
         /* HERO */
         .alora-hero {
           position: relative;
-          min-height: 100vh;
+          min-height: calc(100vh - 80px); 
           display: grid;
           grid-template-columns: 1fr 1fr;
           overflow: hidden;
@@ -67,7 +67,7 @@ export default function Home() {
           display: flex;
           flex-direction: column;
           justify-content: center;
-          padding: 140px 60px 80px;
+          padding: 40px 60px 80px; 
           position: relative;
           z-index: 2;
         }
@@ -605,7 +605,7 @@ export default function Home() {
 
         @media (max-width: 1024px) {
           .alora-hero { grid-template-columns: 1fr; }
-          .hero-left { padding: 140px 32px 80px; }
+          .hero-left { padding: 40px 32px 80px; }
           .hero-right { display: none; }
           .section-products { padding: 80px 32px; }
           .products-grid { grid-template-columns: repeat(2, 1fr); }
