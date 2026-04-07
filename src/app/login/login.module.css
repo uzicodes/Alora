@@ -62,6 +62,37 @@
   border: 2px solid var(--input-focus);
 }
 
+.inputGroup {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+}
+
+.inputGroup .input {
+  max-width: none;
+  padding-right: 40px;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--font-color-sub);
+  padding: 0;
+  transition: color 0.2s ease;
+}
+
+.eyeIcon:hover {
+  color: var(--main-color);
+}
+
 .login-with {
   display: flex;
   gap: 20px;
