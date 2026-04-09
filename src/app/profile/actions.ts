@@ -27,3 +27,16 @@ export async function updateUserProfile(clerkId: string, phone: string, address:
     return { success: false };
   }
 }
+
+export async function getUserOrders(clerkId: string) {
+  try {
+    const orders = await prisma.order.findMany({
+      where: { userId: clerkId },
+      orderBy: { orderTime: 'desc' },
+    });
+    return orders;
+  } catch (error) {
+    console.error("Error fetching user orders:", error);
+    return [];
+  }
+}

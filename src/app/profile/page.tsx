@@ -5,7 +5,7 @@ import { useUser, useClerk } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import "./profile.css";
-import { getUserProfile, updateUserProfile } from "./actions";
+import { getUserProfile, updateUserProfile, getUserOrders } from "./actions";
 import Loader from "../components/Loader";
 import { useCart } from "../components/CartContext";
 
@@ -24,6 +24,7 @@ export default function ProfilePage() {
   const [country, setCountry] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [initialDataLoaded, setInitialDataLoaded] = useState(false);
+  const [orders, setOrders] = useState<any[]>([]);
 
   useEffect(() => {
     if (isLoaded && !isSignedIn) {
@@ -33,7 +34,10 @@ export default function ProfilePage() {
 
   useEffect(() => {
     if (isLoaded && isSignedIn && user && !initialDataLoaded) {
-      getUserProfile(user.id).then((data) => {
+      Promise.all([
+        getUserProfile(user.id),
+        getUserOrders(user.id)
+      ]).then(([data, fetchedOrders]) => {
         if (data) {
           setPhone(data.phone || "");
           if (data.address) {
@@ -42,6 +46,9 @@ export default function ProfilePage() {
             setCity(parts[1] || "");
             setCountry(parts[2] || "");
           }
+        }
+        if (fetchedOrders) {
+          setOrders(fetchedOrders);
         }
         setInitialDataLoaded(true);
       });
@@ -181,31 +188,32 @@ export default function ProfilePage() {
           </div>
 
           <div className="orders-container">
-            {/* Table for Orders */}
-            <table className="orders-table">
-              <thead>
-                <tr>
-                  <th>ORDER ID</th>
-                  <th>DATE</th>
-                  <th>STATUS</th>
-                  <th className="text-center">TOTAL</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>#AL-9921</td>
-                  <td>Mar 28, 2026</td>
-                  <td><span className="status-tag">SHIPPED</span></td>
-                  <td className="text-center">৳ 12,500</td>
-                </tr>
-                <tr>
-                  <td>#AL-9845</td>
-                  <td>Feb 15, 2026</td>
-                  <td><span className="status-tag">DELIVERED</span></td>
-                  <td className="text-center">৳ 8,200</td>
-                </tr>
-              </tbody>
-            </table>
+            {orders.length === 0 ? (
+              <div style={{ textAlign: 'center', padding: '40px', backgroundColor: '#f9f9f9', border: '2px solid #000' }}>
+                <p style={{ fontWeight: 'bold' }}>You have no recent orders.</p>
+              </div>
+            ) : (
+              <table className="orders-table">
+                <thead>
+                  <tr>
+                    <th>ORDER ID</th>
+                    <th>DATE</th>
+                    <th>STATUS</th>
+                    <th className="text-center">TOTAL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orders.map((order) => (
+                    <tr key={order.id}>
+                      <td>#{order.id.slice(-8).toUpperCase()}</td>
+                      <td>{new Date(order.orderTime).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</td>
+                      <td><span className="status-tag">PROCESSING</span></td>
+                      <td className="text-center">৳ {order.totalCost}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
           </div>
         </main>
       </div>
