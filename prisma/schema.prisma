@@ -6,9 +6,6 @@ datasource db {
   provider  = "postgresql"
 }
 
-
-
-
 model Product {
   id            String   @id @default(cuid())
   name          String
@@ -21,10 +18,7 @@ model Product {
   
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-
 }
-
-
 
 model User {
   id        String   @id    // Clerk User ID 
@@ -39,8 +33,6 @@ model User {
                           // link orders to this user
   orders    Order[]  
 }
-
-
 
 model Order {
   id          String   @id @default(cuid())        // Unique Order ID
@@ -57,4 +49,6 @@ model Order {
 
                                          // links Order back to the User table
   user        User     @relation(fields: [userId], references: [id])
+
+  @@map("Orders")
 }
