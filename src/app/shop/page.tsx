@@ -51,9 +51,8 @@ export default async function ShopAllPage() {
               >
                 {brand.products.map((product) => {
                   const image = product.imageUrls.length > 0 ? product.imageUrls[0] : "/alora_BG2.png";
-                  const category = `${product.concentration}, ${product.sizeMl}ml`;
+                  const category = `${product.concentration} | ${product.gender} | ${product.sizeMl}ml`;
                   const formattedPrice = `BDT ${product.price}`;
-                  const gender = product.gender;
 
                   return (
                     <div key={product.id} className="group/card flex flex-col cursor-pointer h-full w-[185px]">
@@ -86,9 +85,9 @@ export default async function ShopAllPage() {
                         <p className="text-[9px] text-neutral-500 mb-3 font-light tracking-wide uppercase flex items-center justify-center gap-1.5">
                           <span>{product.concentration}</span>
                           <span className="text-neutral-300">|</span>
-                          <span>{product.sizeMl}ml</span>
+                          <span>{product.gender}</span>
                           <span className="text-neutral-300">|</span>
-                          <span>{gender}</span>
+                          <span>{product.sizeMl}ml</span>
                         </p>
                         <p className="text-[12px] font-medium mt-auto text-black tracking-widest">
                           {formattedPrice}
