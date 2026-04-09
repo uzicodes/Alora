@@ -27,28 +27,29 @@ export default async function ShopAllPage() {
     <div className="min-h-screen bg-white text-black pb-32 pt-16 font-sans font-body">
       <div className="mx-auto w-full px-6 sm:px-10 md:px-16 lg:px-20">
         <header className="text-center" style={{ marginBottom: '50px' }}>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-david-libre uppercase tracking-[0.2em] mb-8 text-black">Our Collections</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-david-libre uppercase tracking-[0.2em] mb-8 text-black">Brands Collections</h1>
         </header>
 
         <div className="flex flex-col gap-[60px] md:gap-[80px] w-full">
           {brandsData.map((brand) => (
             <section key={brand.name} id={`brand-${brand.name.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`} className="brand-section w-full scroll-mt-32">
-              <div className="mb-10 md:mb-12 flex items-center justify-center gap-6 md:gap-12 w-full">
-                <hr className="w-20 md:w-40 border-t-2 border-neutral-600 shrink-0" />
-                <h2 className="text-2xl md:text-3xl font-ubuntu uppercase tracking-[0.25em] text-[#C28D10] whitespace-nowrap text-center px-4">
-                  {brand.name}
-                </h2>
-                <hr className="w-20 md:w-40 border-t-2 border-neutral-600 shrink-0" />
-              </div>
-
               {/* Product cards grid */}
               <div
-                className="grid gap-x-6 gap-y-[60px] md:gap-y-[80px]"
+                className="grid gap-x-6 gap-y-8"
                 style={{
                   gridTemplateColumns: 'repeat(auto-fit, 185px)',
                   justifyContent: 'center',
                 }}
               >
+                {/* Brand Header as a grid item spanning all columns */}
+                <div className="col-span-full mb-1 flex items-center justify-center gap-4 md:gap-8">
+                  <hr className="flex-1 border-t-2 border-neutral-600" />
+                  <h2 className="text-2xl md:text-3xl font-ubuntu uppercase tracking-[0.25em] text-[#C28D10] whitespace-nowrap text-center px-2">
+                    {brand.name}
+                  </h2>
+                  <hr className="flex-1 border-t-2 border-neutral-600" />
+                </div>
+
                 {brand.products.map((product) => {
                   const image = product.imageUrls.length > 0 ? product.imageUrls[0] : "/alora_BG2.png";
                   const category = `${product.concentration} | ${product.gender} | ${product.sizeMl}ml`;
