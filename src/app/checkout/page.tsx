@@ -6,6 +6,7 @@ import { useCart } from "../components/CartContext";
 import { useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import "./checkout.css";
+import { getUserProfile } from "../profile/actions";
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -21,6 +22,7 @@ export default function CheckoutPage() {
     postCode: "",
   });
 
+  const [paymentMethod, setPaymentMethod] = useState("cod");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -31,14 +33,28 @@ export default function CheckoutPage() {
         email: user.primaryEmailAddress?.emailAddress || "",
         phone: user.primaryPhoneNumber?.phoneNumber || "",
       }));
+
+      // Fetch profile data from database
+      getUserProfile(user.id).then((data) => {
+        if (data && data.phone) {
+          setFormData(prev => ({
+            ...prev,
+            phone: data.phone as string
+          }));
+        }
+      });
     }
   }, [isLoaded, isSignedIn, user]);
 
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-  const total = subtotal; // Assuming complimentary shipping
+  const total = subtotal; // complimentary shipping
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handlePaymentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPaymentMethod(e.target.value);
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +76,7 @@ export default function CheckoutPage() {
       setIsSubmitting(false);
 
 
-      alert(`Order placed successfully!\nThank you, ${formData.fullName}. We will email your receipt to ${formData.email}.`);
+      alert(`Order placed successfully using ${paymentMethod.toUpperCase()}!\nThank you, ${formData.fullName}. We will email your receipt to ${formData.email}.`);
       router.push("/profile");
     }, 1500);
   };
@@ -111,20 +127,28 @@ export default function CheckoutPage() {
         {/* Left: Checkout Form */}
         <div className="checkout-form-container animate-fade-in-up delay-200">
           <form id="checkout-form" onSubmit={handlePlaceOrder}>
-            <h2 className="checkout-section-title">Contact Details</h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderBottom: '2px solid #000', paddingBottom: '6px', marginBottom: '12px' }}>
+              <h2 className="checkout-section-title" style={{ borderBottom: 'none', paddingBottom: 0, marginBottom: 0 }}>Contact Details</h2>
+              {isSignedIn && (
+                <span style={{ fontSize: '10px', fontWeight: 'bold', color: '#555', marginBottom: '2px' }}>
+                  If needed, update in <Link href="/profile" style={{ textDecoration: 'underline', color: '#e81c1cff' }}>Profile</Link>
+                </span>
+              )}
+            </div>
+
             <div className="form-group">
               <label className="checkout-label">Full Name</label>
-              <input type="text" name="fullName" className="checkout-input" value={formData.fullName} onChange={handleChange} required />
+              <input type="text" name="fullName" className="checkout-input" value={formData.fullName} onChange={handleChange} required readOnly={!!isSignedIn} style={isSignedIn ? { backgroundColor: '#ebebeb', color: '#777', cursor: 'not-allowed', borderColor: '#aaa' } : {}} />
             </div>
 
             <div className="form-row">
               <div className="form-group">
                 <label className="checkout-label">Email Address</label>
-                <input type="email" name="email" className="checkout-input" value={formData.email} onChange={handleChange} required />
+                <input type="email" name="email" className="checkout-input" value={formData.email} onChange={handleChange} required readOnly={!!isSignedIn} style={isSignedIn ? { backgroundColor: '#ebebeb', color: '#777', cursor: 'not-allowed', borderColor: '#aaa' } : {}} />
               </div>
               <div className="form-group">
                 <label className="checkout-label">Phone Number</label>
-                <input type="text" name="phone" className="checkout-input" value={formData.phone} onChange={handlePhoneChange} required />
+                <input type="text" name="phone" className="checkout-input" value={formData.phone} onChange={handlePhoneChange} required readOnly={!!isSignedIn} style={isSignedIn ? { backgroundColor: '#ebebeb', color: '#777', cursor: 'not-allowed', borderColor: '#aaa' } : {}} />
               </div>
             </div>
 
@@ -147,20 +171,20 @@ export default function CheckoutPage() {
             <h2 className="checkout-section-title" style={{ marginTop: '30px' }}>Payment Method</h2>
             <div className="form-row">
               <div className="form-group" style={{ flex: 1 }}>
-                <label htmlFor="cod" style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '15px', border: '2px solid #000', backgroundColor: '#f9f9f9', fontWeight: 'bold', cursor: 'pointer', height: '100%', fontSize: '12px' }}>
-                  <input type="radio" name="payment" value="cod" id="cod" defaultChecked style={{ accentColor: '#000', width: '18px', height: '18px' }} />
+                <label htmlFor="cod" style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '15px', border: '2px solid #000', backgroundColor: paymentMethod === 'cod' ? '#dcfce7' : '#f9f9f9', fontWeight: 'bold', cursor: 'pointer', height: '100%', fontSize: '12px' }}>
+                  <input type="radio" name="payment" value="cod" id="cod" checked={paymentMethod === 'cod'} onChange={handlePaymentChange} style={{ accentColor: '#000', width: '18px', height: '18px' }} />
                   Cash on Delivery (COD)
                 </label>
               </div>
               <div className="form-group" style={{ flex: 1 }}>
-                <label htmlFor="card" style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '15px', border: '2px solid #000', backgroundColor: '#f9f9f9', fontWeight: 'bold', cursor: 'pointer', height: '100%', fontSize: '12px' }}>
-                  <input type="radio" name="payment" value="card" id="card" style={{ accentColor: '#000', width: '18px', height: '18px' }} />
+                <label htmlFor="card" style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '15px', border: '2px solid #000', backgroundColor: paymentMethod === 'card' ? '#dcfce7' : '#f9f9f9', fontWeight: 'bold', cursor: 'pointer', height: '100%', fontSize: '12px' }}>
+                  <input type="radio" name="payment" value="card" id="card" checked={paymentMethod === 'card'} onChange={handlePaymentChange} style={{ accentColor: '#000', width: '18px', height: '18px' }} />
                   Credit / Debit Card
                 </label>
               </div>
               <div className="form-group" style={{ flex: 1 }}>
-                <label htmlFor="mobile" style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '15px', border: '2px solid #000', backgroundColor: '#f9f9f9', fontWeight: 'bold', cursor: 'pointer', height: '100%', fontSize: '12px' }}>
-                  <input type="radio" name="payment" value="mobile" id="mobile" style={{ accentColor: '#000', width: '18px', height: '18px' }} />
+                <label htmlFor="mobile" style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '15px', border: '2px solid #000', backgroundColor: paymentMethod === 'mobile' ? '#dcfce7' : '#f9f9f9', fontWeight: 'bold', cursor: 'pointer', height: '100%', fontSize: '12px' }}>
+                  <input type="radio" name="payment" value="mobile" id="mobile" checked={paymentMethod === 'mobile'} onChange={handlePaymentChange} style={{ accentColor: '#000', width: '18px', height: '18px' }} />
                   Mobile Banking
                 </label>
               </div>
