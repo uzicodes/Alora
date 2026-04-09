@@ -635,7 +635,6 @@ export default function Home() {
               Explore Collection
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
             </Link>
-            <Link href="/about" className="btn-hero-ghost">Our Maison</Link>
           </div>
         </div>
         <div className="hero-right">
@@ -651,7 +650,7 @@ export default function Home() {
             />
           </div>
           <div className="hero-image-overlay"></div>
-          <div className="hero-bg-text">A</div>
+
         </div>
       </section>
 
@@ -729,7 +728,6 @@ export default function Home() {
           <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent, rgba(245,240,232,0.3))" }}></div>
         </div>
         <div className="story-text-side">
-          <span className="story-number">II</span>
           <div className="section-tag-row" style={{ marginBottom: "24px" }}>Our Story</div>
           <h2 className="section-h2" style={{ marginBottom: "36px" }}>The Art of<br /><em style={{ fontStyle: "italic", color: "#b8956a" }}>Perfumery</em></h2>
           <p className="story-body">
