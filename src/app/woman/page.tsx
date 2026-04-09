@@ -61,7 +61,7 @@ export default async function WomanPage() {
                     <p className="text-[9px] text-neutral-500 mb-3 font-light tracking-wide uppercase flex flex-wrap items-center justify-center gap-1.5">
                       <span className="text-blue-500 font-medium">{product.concentration || ""}</span>
                       <span className="text-neutral-300">|</span>
-                      <span className="text-red-600 font-bold">{product.brand || ""}</span>
+                      <span className="text-red-600 font-normal text-[11px]">{product.brand || ""}</span>
                       <span className="text-neutral-300">|</span>
                       <span className="text-green-600 font-medium">{product.sizeMl}ml</span>
                     </p>
