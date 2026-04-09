@@ -63,7 +63,7 @@ export default async function WomanPage() {
                       <span className="text-neutral-300">|</span>
                       <span className="text-red-600 font-normal text-[11px]">{product.brand || ""}</span>
                       <span className="text-neutral-300">|</span>
-                      <span className="text-green-600 font-medium">{product.sizeMl}ml</span>
+                      <span className="text-green-600 font-medium normal-case">{product.sizeMl}ml</span>
                     </p>
                     <p className="text-[12px] font-medium mt-auto text-black tracking-widest">
                       {formattedPrice}
