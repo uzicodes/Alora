@@ -27,7 +27,7 @@ export default async function WomanPage() {
           >
             {products.map((product) => {
               const image = product.imageUrls && product.imageUrls.length > 0 ? product.imageUrls[0] : "/alora_BG2.png";
-              const category = `${product.concentration} | ${product.gender} | ${product.sizeMl}ml`;
+              const category = `${product.concentration} | ${product.brand} | ${product.sizeMl}ml`;
               const formattedPrice = `BDT ${product.price}`;
 
               return (
@@ -61,7 +61,7 @@ export default async function WomanPage() {
                     <p className="text-[9px] text-neutral-500 mb-3 font-light tracking-wide uppercase flex items-center justify-center gap-1.5">
                       <span>{product.concentration}</span>
                       <span className="text-neutral-300">|</span>
-                      <span>{product.gender}</span>
+                      <span>{product.brand}</span>
                       <span className="text-neutral-300">|</span>
                       <span>{product.sizeMl}ml</span>
                     </p>

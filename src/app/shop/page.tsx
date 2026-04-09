@@ -15,7 +15,7 @@ export default async function ShopAllPage() {
     brandMap[product.brand].push(product);
   }
 
-  // Sort brands alphabetically A-Z
+  // Sort brands alphabetically
   const brandsData = Object.keys(brandMap)
     .sort((a, b) => a.localeCompare(b))
     .map((brand) => ({
@@ -41,7 +41,7 @@ export default async function ShopAllPage() {
                   justifyContent: 'center',
                 }}
               >
-                {/* Brand Header as a grid item spanning all columns */}
+                {/* Brand Header */}
                 <div className="col-span-full mb-1 flex items-center justify-center gap-4 md:gap-8">
                   <hr className="flex-1 border-t-2 border-neutral-600" />
                   <h2 className="text-2xl md:text-3xl font-ubuntu uppercase tracking-[0.25em] text-[#C28D10] whitespace-nowrap text-center px-2">
