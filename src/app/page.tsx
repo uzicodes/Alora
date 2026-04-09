@@ -50,8 +50,8 @@ export default function Home() {
 
         body {
           font-family: 'Jost', sans-serif;
-          background: #0a0805;
-          color: #e8ddd0;
+          background: #faf8f5;
+          color: #1a1410;
           overflow-x: hidden;
         }
 
@@ -76,7 +76,7 @@ export default function Home() {
           font-weight: 300;
           letter-spacing: 0.4em;
           text-transform: uppercase;
-          color: #d4b896;
+          color: #b8956a;
           margin-bottom: 32px;
           display: flex;
           align-items: center;
@@ -87,25 +87,25 @@ export default function Home() {
           display: block;
           width: 40px;
           height: 1px;
-          background: #d4b896;
+          background: #b8956a;
         }
         .hero-headline {
           font-family: 'Cormorant Garamond', serif;
           font-size: clamp(54px, 6vw, 88px);
           font-weight: 300;
           line-height: 1.0;
-          color: #f0e6d8;
+          color: #1a1410;
           margin-bottom: 36px;
         }
         .hero-headline em {
           font-style: italic;
-          color: #d4b896;
+          color: #b8956a;
         }
         .hero-body {
           font-size: 14px;
           font-weight: 300;
           line-height: 1.9;
-          color: #a89880;
+          color: #7a6d5e;
           max-width: 380px;
           margin-bottom: 56px;
           letter-spacing: 0.03em;
@@ -120,8 +120,8 @@ export default function Home() {
           align-items: center;
           gap: 12px;
           padding: 16px 40px;
-          background: #d4b896;
-          color: #0a0805;
+          background: #1a1410;
+          color: #faf8f5;
           font-family: 'Jost', sans-serif;
           font-size: 10px;
           font-weight: 500;
@@ -131,7 +131,7 @@ export default function Home() {
           transition: background 0.3s, transform 0.2s;
         }
         .btn-hero-primary:hover {
-          background: #c4a886;
+          background: #2e2820;
           transform: translateY(-1px);
         }
         .btn-hero-ghost {
@@ -142,13 +142,13 @@ export default function Home() {
           font-weight: 300;
           letter-spacing: 0.3em;
           text-transform: uppercase;
-          color: #c8bbab;
+          color: #5a5040;
           text-decoration: none;
-          border-bottom: 1px solid rgba(200,187,171,0.4);
+          border-bottom: 1px solid rgba(90,80,64,0.4);
           padding-bottom: 4px;
           transition: color 0.3s, border-color 0.3s;
         }
-        .btn-hero-ghost:hover { color: #d4b896; border-color: #d4b896; }
+        .btn-hero-ghost:hover { color: #b8956a; border-color: #b8956a; }
 
         .hero-right {
           position: relative;
@@ -157,7 +157,7 @@ export default function Home() {
         .hero-right-bg {
           position: absolute;
           inset: 0;
-          background: radial-gradient(ellipse at 60% 50%, #1a1208 0%, #0a0805 70%);
+          background: radial-gradient(ellipse at 60% 50%, #f0e8dc 0%, #faf8f5 70%);
         }
         .hero-image-container {
           position: absolute;
@@ -169,7 +169,7 @@ export default function Home() {
         .hero-image-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(135deg, rgba(10,8,5,0.6) 0%, transparent 60%);
+          background: linear-gradient(135deg, rgba(250,248,245,0.4) 0%, transparent 60%);
         }
         .hero-scroll-hint {
           position: absolute;
@@ -182,13 +182,13 @@ export default function Home() {
           font-weight: 300;
           letter-spacing: 0.35em;
           text-transform: uppercase;
-          color: #5a5040;
+          color: #b8a898;
           z-index: 2;
         }
         .scroll-line {
           width: 1px;
           height: 48px;
-          background: linear-gradient(to bottom, transparent, #5a5040);
+          background: linear-gradient(to bottom, transparent, #b8a898);
           animation: scrollAnim 2s ease-in-out infinite;
         }
         @keyframes scrollAnim {
@@ -209,27 +209,27 @@ export default function Home() {
         .stat-circle {
           width: 100px;
           height: 100px;
-          border: 1px solid rgba(212,184,150,0.3);
+          border: 1px solid rgba(184,149,106,0.4);
           border-radius: 50%;
           display: flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
           backdrop-filter: blur(4px);
-          background: rgba(10,8,5,0.4);
+          background: rgba(250,248,245,0.6);
         }
         .stat-num {
           font-family: 'Cormorant Garamond', serif;
           font-size: 28px;
           font-weight: 300;
-          color: #d4b896;
+          color: #b8956a;
           line-height: 1;
         }
         .stat-label {
           font-size: 8px;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #7a6d5e;
+          color: #a89880;
           margin-top: 2px;
         }
         .hero-bg-text {
@@ -239,7 +239,7 @@ export default function Home() {
           font-family: 'Cormorant Garamond', serif;
           font-size: 200px;
           font-weight: 300;
-          color: rgba(212,184,150,0.04);
+          color: rgba(184,149,106,0.07);
           line-height: 1;
           pointer-events: none;
           user-select: none;
@@ -248,9 +248,9 @@ export default function Home() {
 
         /* MARQUEE */
         .alora-marquee {
-          border-top: 1px solid rgba(212,184,150,0.15);
-          border-bottom: 1px solid rgba(212,184,150,0.15);
-          background: rgba(212,184,150,0.04);
+          border-top: 1px solid rgba(184,149,106,0.2);
+          border-bottom: 1px solid rgba(184,149,106,0.2);
+          background: rgba(184,149,106,0.05);
           overflow: hidden;
           padding: 18px 0;
         }
@@ -270,11 +270,11 @@ export default function Home() {
           font-weight: 300;
           letter-spacing: 0.3em;
           text-transform: uppercase;
-          color: #a89880;
+          color: #8a7d6e;
           padding: 0 40px;
         }
         .marquee-diamond {
-          color: #d4b896;
+          color: #b8956a;
           font-size: 6px;
         }
         @keyframes marqueeScroll {
@@ -300,7 +300,7 @@ export default function Home() {
           font-weight: 300;
           letter-spacing: 0.4em;
           text-transform: uppercase;
-          color: #d4b896;
+          color: #b8956a;
           margin-bottom: 20px;
         }
         .section-tag-row::after {
@@ -308,13 +308,13 @@ export default function Home() {
           display: block;
           width: 48px;
           height: 1px;
-          background: #d4b896;
+          background: #b8956a;
         }
         .section-h2 {
           font-family: 'Cormorant Garamond', serif;
           font-size: clamp(36px, 4vw, 60px);
           font-weight: 300;
-          color: #f0e6d8;
+          color: #1a1410;
           letter-spacing: 0.05em;
           line-height: 1.0;
         }
@@ -326,15 +326,15 @@ export default function Home() {
           font-weight: 300;
           letter-spacing: 0.3em;
           text-transform: uppercase;
-          color: #7a6d5e;
+          color: #a89880;
           text-decoration: none;
-          border-bottom: 1px solid rgba(122,109,94,0.4);
+          border-bottom: 1px solid rgba(168,152,128,0.4);
           padding-bottom: 4px;
           transition: color 0.3s;
           white-space: nowrap;
           margin-bottom: 6px;
         }
-        .view-all-link:hover { color: #d4b896; }
+        .view-all-link:hover { color: #b8956a; }
 
         /* product grid */
         .products-grid {
@@ -346,7 +346,7 @@ export default function Home() {
           position: relative;
           overflow: hidden;
           cursor: pointer;
-          background: #0f0c08;
+          background: #f0ebe3;
           aspect-ratio: 3/4;
           text-decoration: none;
           display: block;
@@ -362,11 +362,11 @@ export default function Home() {
         .product-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(to top, rgba(10,8,5,0.9) 0%, rgba(10,8,5,0.2) 50%, transparent 100%);
+          background: linear-gradient(to top, rgba(26,20,16,0.85) 0%, rgba(26,20,16,0.15) 50%, transparent 100%);
           transition: opacity 0.4s;
         }
         .product-cell:hover .product-overlay {
-          background: linear-gradient(to top, rgba(10,8,5,0.95) 0%, rgba(10,8,5,0.4) 60%, rgba(10,8,5,0.1) 100%);
+          background: linear-gradient(to top, rgba(26,20,16,0.92) 0%, rgba(26,20,16,0.35) 60%, rgba(26,20,16,0.05) 100%);
         }
         .product-badge {
           position: absolute;
@@ -376,8 +376,8 @@ export default function Home() {
           font-weight: 400;
           letter-spacing: 0.25em;
           text-transform: uppercase;
-          color: #0a0805;
-          background: #d4b896;
+          color: #faf8f5;
+          background: #1a1410;
           padding: 4px 10px;
           z-index: 2;
         }
@@ -396,7 +396,7 @@ export default function Home() {
           font-family: 'Cormorant Garamond', serif;
           font-size: 18px;
           font-weight: 300;
-          color: #f0e6d8;
+          color: #faf8f5;
           line-height: 1.1;
           margin-bottom: 4px;
         }
@@ -405,7 +405,7 @@ export default function Home() {
           font-weight: 300;
           letter-spacing: 0.25em;
           text-transform: uppercase;
-          color: #7a6d5e;
+          color: #a89880;
           margin-bottom: 12px;
         }
         .product-price-row {
@@ -427,8 +427,8 @@ export default function Home() {
           font-weight: 400;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #0a0805;
-          background: #d4b896;
+          color: #1a1410;
+          background: #faf8f5;
           border: none;
           padding: 6px 12px;
           cursor: pointer;
@@ -454,7 +454,7 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           padding: 100px 80px 100px 80px;
-          background: #0d0a07;
+          background: #f5f0e8;
           position: relative;
         }
         .story-text-side::before {
@@ -463,13 +463,13 @@ export default function Home() {
           top: 0; left: 0;
           width: 1px;
           height: 100%;
-          background: linear-gradient(to bottom, transparent, rgba(212,184,150,0.2), transparent);
+          background: linear-gradient(to bottom, transparent, rgba(184,149,106,0.3), transparent);
         }
         .story-number {
           font-family: 'Cormorant Garamond', serif;
           font-size: 120px;
           font-weight: 300;
-          color: rgba(212,184,150,0.06);
+          color: rgba(184,149,106,0.08);
           line-height: 1;
           position: absolute;
           top: 40px;
@@ -479,7 +479,7 @@ export default function Home() {
           font-size: 14px;
           font-weight: 300;
           line-height: 2;
-          color: #8a7d6e;
+          color: #7a6d5e;
           max-width: 440px;
           margin-bottom: 20px;
           letter-spacing: 0.02em;
@@ -489,26 +489,26 @@ export default function Home() {
         /* PILLARS */
         .pillars-section {
           padding: 100px 60px;
-          border-top: 1px solid rgba(212,184,150,0.1);
+          border-top: 1px solid rgba(184,149,106,0.15);
         }
         .pillars-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
           gap: 1px;
           margin-top: 72px;
-          background: rgba(212,184,150,0.08);
+          background: rgba(184,149,106,0.12);
         }
         .pillar-card {
-          background: #0a0805;
+          background: #faf8f5;
           padding: 48px 36px;
           transition: background 0.3s;
         }
-        .pillar-card:hover { background: #0f0c08; }
+        .pillar-card:hover { background: #f5f0e8; }
         .pillar-num {
           font-family: 'Cormorant Garamond', serif;
           font-size: 13px;
           font-weight: 300;
-          color: #d4b896;
+          color: #b8956a;
           letter-spacing: 0.1em;
           margin-bottom: 28px;
         }
@@ -516,7 +516,7 @@ export default function Home() {
           font-family: 'Cormorant Garamond', serif;
           font-size: 22px;
           font-weight: 300;
-          color: #f0e6d8;
+          color: #1a1410;
           line-height: 1.2;
           margin-bottom: 20px;
         }
@@ -524,13 +524,13 @@ export default function Home() {
           font-size: 12px;
           font-weight: 300;
           line-height: 1.8;
-          color: #5a5040;
+          color: #a89880;
           letter-spacing: 0.02em;
         }
         .pillar-line {
           width: 32px;
           height: 1px;
-          background: rgba(212,184,150,0.4);
+          background: rgba(184,149,106,0.5);
           margin: 24px 0 0;
         }
 
@@ -546,7 +546,7 @@ export default function Home() {
         .editorial-banner-bg {
           position: absolute;
           inset: 0;
-          background: #0d0a07;
+          background: #f5f0e8;
         }
         .editorial-content {
           position: relative;
@@ -560,7 +560,7 @@ export default function Home() {
           font-size: clamp(28px, 4vw, 54px);
           font-weight: 300;
           font-style: italic;
-          color: #f0e6d8;
+          color: #1a1410;
           line-height: 1.3;
           margin-bottom: 40px;
         }
@@ -569,21 +569,21 @@ export default function Home() {
           font-weight: 300;
           letter-spacing: 0.4em;
           text-transform: uppercase;
-          color: #5a5040;
+          color: #a89880;
         }
         .editorial-border {
           position: absolute;
           inset: 40px;
-          border: 1px solid rgba(212,184,150,0.12);
+          border: 1px solid rgba(184,149,106,0.2);
           pointer-events: none;
         }
         .editorial-corner {
           position: absolute;
           width: 20px;
           height: 20px;
-          border-color: #d4b896;
+          border-color: #b8956a;
           border-style: solid;
-          opacity: 0.4;
+          opacity: 0.5;
         }
         .ec-tl { top: 40px; left: 40px; border-width: 1px 0 0 1px; }
         .ec-tr { top: 40px; right: 40px; border-width: 1px 1px 0 0; }
@@ -726,12 +726,12 @@ export default function Home() {
             sizes="50vw"
             style={{ objectFit: "cover" }}
           />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent, rgba(13,10,7,0.3))" }}></div>
+          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent, rgba(245,240,232,0.3))" }}></div>
         </div>
         <div className="story-text-side">
           <span className="story-number">II</span>
           <div className="section-tag-row" style={{ marginBottom: "24px" }}>Our Story</div>
-          <h2 className="section-h2" style={{ marginBottom: "36px" }}>The Art of<br /><em style={{ fontStyle: "italic", color: "#d4b896" }}>Perfumery</em></h2>
+          <h2 className="section-h2" style={{ marginBottom: "36px" }}>The Art of<br /><em style={{ fontStyle: "italic", color: "#b8956a" }}>Perfumery</em></h2>
           <p className="story-body">
             Founded on the belief that fragrance is an extension of identity, Alora combines centuries-old artisanal techniques with contemporary design. Every bottle is a masterpiece — from hand-selected raw materials sourced across five continents, to the meticulous blending process that can take up to three years to perfect.
           </p>
@@ -775,7 +775,6 @@ export default function Home() {
           <p className="editorial-quote">
             "A fragrance is the invisible part of your personality that says the most about who you are."
           </p>
-          <p className="editorial-attr">— The Alora Philosophy</p>
         </div>
       </div>
     </>
