@@ -63,9 +63,13 @@ export default function CheckoutPage() {
     setFormData({ ...formData, phone: val });
   };
 
+  const isShippingValid = formData.street.trim() !== "" && formData.city.trim() !== "" && formData.postCode.trim() !== "";
+  const isContactValid = formData.fullName.trim() !== "" && formData.email.trim() !== "" && formData.phone.trim() !== "";
+  const isFormValid = isShippingValid && isContactValid;
+
   const handlePlaceOrder = (e: React.FormEvent) => {
     e.preventDefault();
-    if (cartItems.length === 0) return;
+    if (cartItems.length === 0 || !isFormValid) return;
 
     setIsSubmitting(true);
 
@@ -152,19 +156,21 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            <h2 className="checkout-section-title" style={{ marginTop: '30px' }}>Shipping Address</h2>
+            <h2 className="checkout-section-title" style={{ marginTop: '30px' }}>
+              Shipping Address <span style={{ color: '#e81c1cff' }}>*</span>
+            </h2>
             <div className="form-row">
               <div className="form-group" style={{ flex: 2 }}>
-                <label className="checkout-label">Street / House</label>
-                <input type="text" name="street" className="checkout-input" value={formData.street} onChange={handleChange} required placeholder="123 Fragrance Lane" />
+                <label className="checkout-label">Street / House <span style={{ color: '#e81c1cff' }}>*</span></label>
+                <input type="text" name="street" className="checkout-input" value={formData.street} onChange={handleChange} required />
               </div>
               <div className="form-group" style={{ flex: 1 }}>
-                <label className="checkout-label">City</label>
-                <input type="text" name="city" className="checkout-input" value={formData.city} onChange={handleChange} required placeholder="Dhaka" />
+                <label className="checkout-label">City <span style={{ color: '#e81c1cff' }}>*</span></label>
+                <input type="text" name="city" className="checkout-input" value={formData.city} onChange={handleChange} required />
               </div>
               <div className="form-group" style={{ flex: 1 }}>
-                <label className="checkout-label">Post Code</label>
-                <input type="text" name="postCode" className="checkout-input" value={formData.postCode} onChange={handleChange} required placeholder="1212" />
+                <label className="checkout-label">Post Code <span style={{ color: '#e81c1cff' }}>*</span></label>
+                <input type="text" name="postCode" className="checkout-input" value={formData.postCode} onChange={handleChange} required />
               </div>
             </div>
 
@@ -221,7 +227,13 @@ export default function CheckoutPage() {
             <span>BDT {total}</span>
           </div>
 
-          <button type="submit" form="checkout-form" className="place-order-btn" disabled={isSubmitting || cartItems.length === 0}>
+          <button 
+            type="submit" 
+            form="checkout-form" 
+            className="place-order-btn" 
+            disabled={isSubmitting || cartItems.length === 0 || !isFormValid}
+            style={(!isFormValid && !isSubmitting && cartItems.length > 0) ? { backgroundColor: '#ccc', cursor: 'not-allowed', filter: 'grayscale(1)' } : {}}
+          >
             {isSubmitting ? "PROCESSING..." : "PLACE ORDER"}
           </button>
 
