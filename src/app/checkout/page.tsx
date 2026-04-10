@@ -67,19 +67,49 @@ export default function CheckoutPage() {
   const isContactValid = formData.fullName.trim() !== "" && formData.email.trim() !== "" && formData.phone.trim() !== "";
   const isFormValid = isShippingValid && isContactValid;
 
-  const handlePlaceOrder = (e: React.FormEvent) => {
+  const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     if (cartItems.length === 0 || !isFormValid) return;
 
     setIsSubmitting(true);
 
-    // Simulate an API call delay
+    // --- SSLCOMMERZ FLOW (Card & Mobile Banking) ---
+    if (paymentMethod === "card" || paymentMethod === "mobile") {
+      try {
+        console.log("Initializing SSLCommerz Payment...");
+
+        const response = await fetch("/api/payment/init", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            total: total,
+            cus_name: formData.fullName,
+            cus_email: formData.email,
+            cus_phone: formData.phone,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (data.success && data.url) {
+          // Redirect the user to the SSLCommerz secure checkout page
+          window.location.href = data.url;
+        } else {
+          alert("Failed to initialize payment gateway. Check console for details.");
+          setIsSubmitting(false);
+        }
+      } catch (error) {
+        console.error("Gateway trigger failed:", error);
+        alert("Something went wrong while connecting to the payment gateway.");
+        setIsSubmitting(false);
+      }
+      return; // Stop execution here so it doesn't trigger COD
+    }
+
+    // --- COD FLOW (Simulation) ---
     setTimeout(() => {
-      // Clear the cart on successful checkout
       clearCart();
       setIsSubmitting(false);
-
-
       alert(`Order placed successfully using ${paymentMethod.toUpperCase()}!\nThank you, ${formData.fullName}. We will email your receipt to ${formData.email}.`);
       router.push("/profile");
     }, 1500);
@@ -227,10 +257,10 @@ export default function CheckoutPage() {
             <span>BDT {total}</span>
           </div>
 
-          <button 
-            type="submit" 
-            form="checkout-form" 
-            className="place-order-btn" 
+          <button
+            type="submit"
+            form="checkout-form"
+            className="place-order-btn"
             disabled={isSubmitting || cartItems.length === 0 || !isFormValid}
             style={(!isFormValid && !isSubmitting && cartItems.length > 0) ? { backgroundColor: '#ccc', cursor: 'not-allowed', filter: 'grayscale(1)' } : {}}
           >
