@@ -94,11 +94,12 @@
 .summary-item {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 12px;
   border-bottom: 1px dashed #ccc;
-  padding-bottom: 10px;
+  padding-bottom: 8px;
+  color: #0000ffff; /* Vibrant Blue */
 }
 
 .summary-item-name {

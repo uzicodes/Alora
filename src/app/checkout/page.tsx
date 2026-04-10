@@ -253,7 +253,7 @@ export default function CheckoutPage() {
 
         {/* Right: Order Summary */}
         <div className="checkout-summary animate-fade-in-up delay-300">
-          <h2 className="checkout-section-title" style={{ borderBottomColor: '#ccc', textAlign: 'center' }}>Order Summary</h2>
+          <h2 className="checkout-section-title" style={{ borderBottomColor: '#000', textAlign: 'center', fontSize: '20px', paddingBottom: '10px', marginBottom: '20px', textTransform: 'uppercase' }}>Order Summary</h2>
 
           <div style={{ marginBottom: '20px' }}>
             {cartItems.map((item) => (
@@ -266,11 +266,8 @@ export default function CheckoutPage() {
             ))}
           </div>
 
-          <div className="summary-item" style={{ border: 'none', marginBottom: '5px' }}>
-            <span>Subtotal</span>
-            <span>BDT {subtotal}</span>
-          </div>
-          <div className="summary-item" style={{ border: 'none' }}>
+
+          <div className="summary-item" style={{ border: 'none', color: '#000' }}>
             <span>Shipping</span>
             <span>Complimentary</span>
           </div>
