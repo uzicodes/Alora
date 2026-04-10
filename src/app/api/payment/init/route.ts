@@ -3,23 +3,23 @@ import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
     try {
-        // 1. Grab all order details sent from the checkout page
+        // Grab all order details sent from the checkout page
         const { total, cus_name, cus_email, cus_phone, cartItems, userId } = await req.json();
 
         const store_id = process.env.SSLCOMMERZ_STORE_ID as string;
         const store_passwd = process.env.SSLCOMMERZ_STORE_PASSWORD as string;
 
-        // 2. Generate a unique transaction ID for this order
+        // Generate a unique transaction ID for this order
         const tran_id = `REF-${Date.now()}`;
 
-        // 3. CRUCIAL: Save a PENDING order to the database BEFORE calling SSLCommerz
+        // Save a PENDING order to the database BEFORE calling SSLCommerz
         await prisma.order.create({
             data: {
                 userId: userId,
                 name: cus_name,
                 email: cus_email,
                 phone: cus_phone,
-                items: cartItems,       // stored as JSON (array of cart items)
+                items: cartItems,       // as JSON (array)
                 totalCost: total,
                 paymentType: "SSLCommerz",
                 trxId: tran_id,
@@ -27,7 +27,7 @@ export async function POST(req: Request) {
             },
         });
 
-        // 4. Format Data for SSLCommerz
+        // Format Data for SSLCommerz
         const formData = new URLSearchParams();
         formData.append("store_id", store_id);
         formData.append("store_passwd", store_passwd);
@@ -60,7 +60,7 @@ export async function POST(req: Request) {
         formData.append("product_category", "Fragrance");
         formData.append("product_profile", "general");
 
-        // 5. Hit the SSLCommerz Sandbox API
+        // Hit SSLCommerz Sandbox API
         const response = await fetch("https://sandbox.sslcommerz.com/gwprocess/v4/api.php", {
             method: "POST",
             headers: {
@@ -71,7 +71,7 @@ export async function POST(req: Request) {
 
         const apiResponse = await response.json();
 
-        // 6. Return the payment link to the frontend
+        // Return payment link to frontend
         if (apiResponse?.status === "SUCCESS" && apiResponse?.GatewayPageURL) {
             return NextResponse.json({ success: true, url: apiResponse.GatewayPageURL });
         } else {

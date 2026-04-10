@@ -106,12 +106,35 @@ export default function CheckoutPage() {
     }
 
     if (paymentMethod === "cod") {
-      setTimeout(() => {
-        clearCart();
+      try {
+        const response = await fetch("/api/payment/cod", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            total: total,
+            cus_name: formData.fullName,
+            cus_email: formData.email,
+            cus_phone: formData.phone,
+            cartItems: cartItems,
+            userId: user?.id,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          clearCart();
+          setIsSubmitting(false);
+          router.push("/success");
+        } else {
+          alert("Failed to create COD order. Please try again.");
+          setIsSubmitting(false);
+        }
+      } catch (error) {
+        console.error("COD order failed:", error);
+        alert("Something went wrong while placing order.");
         setIsSubmitting(false);
-        alert(`Order placed successfully using COD!\nThank you, ${formData.fullName}. We will email your receipt to ${formData.email}.`);
-        router.push("/profile");
-      }, 1500);
+      }
     }
   };
 
