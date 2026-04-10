@@ -11,6 +11,43 @@ import { useCart } from "../components/CartContext";
 
 
 
+function OrderItemDropdown({ items }: { items: any }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  if (!Array.isArray(items) || items.length === 0) {
+    return <span className="ordered-item-name">N/A</span>;
+  }
+
+  return (
+    <div className="order-items-dropdown-container">
+      <button 
+        className={`dropdown-toggle-btn ${isOpen ? 'active' : ''}`}
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span>{items.length} {items.length === 1 ? 'ITEM' : 'ITEMS'}</span>
+        <svg 
+          width="12" height="12" viewBox="0 0 24 24" fill="none" 
+          stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"
+          className={`chevron-icon ${isOpen ? 'open' : ''}`}
+        >
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
+      
+      {isOpen && (
+        <div className="dropdown-content animate-slide-down">
+          {items.map((item: any, i: number) => (
+            <div key={i} className="dropdown-item">
+              <span className="item-qty">{item.quantity}x</span>
+              <span className="item-name">{item.name}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function ProfilePage() {
   const { isLoaded, isSignedIn, user } = useUser();
   const { signOut } = useClerk();
@@ -196,18 +233,22 @@ export default function ProfilePage() {
               <table className="orders-table">
                 <thead>
                   <tr>
-                    <th>ORDER ID</th>
-                    <th>DATE</th>
-                    <th>STATUS</th>
+                    <th className="text-center">ORDER ID</th>
+                    <th className="text-center">DATE</th>
+                    <th className="text-center">ITEMS</th>
+                    <th className="text-center">PAYMENT</th>
                     <th className="text-center">TOTAL</th>
                   </tr>
                 </thead>
                 <tbody>
                   {orders.map((order) => (
                     <tr key={order.id}>
-                      <td>#{order.id.slice(-8).toUpperCase()}</td>
-                      <td>{new Date(order.orderTime).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</td>
-                      <td><span className="status-tag">PROCESSING</span></td>
+                      <td className="text-center">#{order.id.slice(-8).toUpperCase()}</td>
+                      <td className="text-center">{new Date(order.orderTime).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}</td>
+                      <td className="text-center">
+                        <OrderItemDropdown items={order.items} />
+                      </td>
+                      <td className="text-center">{order.paymentType}</td>
                       <td className="text-center">৳ {order.totalCost}</td>
                     </tr>
                   ))}
