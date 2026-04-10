@@ -1,15 +1,35 @@
 import { NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
-    // You can retrieve the search params (like tran_id) if you want to verify the order in your database later.
-    // const { searchParams } = new URL(req.url);
-    // const tran_id = searchParams.get("tran_id");
+    try {
+        // 1. SSLCommerz sends form-data in the POST body with the transaction details
+        const formData = await req.formData();
+        const tran_id = formData.get("tran_id") as string | null;
 
-    // Once payment is confirmed by SSLCommerz (this endpoint hit),
-    // redirect the user back to the /success frontend page.
-    
-    // We use a 303 redirect so the browser correctly switches the POST request into a GET request
-    // when navigating to the success page.
-    const url = new URL("/success", req.url);
-    return NextResponse.redirect(url, 303);
+        // Also try query params as a fallback (we pass tran_id in success_url)
+        const { searchParams } = new URL(req.url);
+        const queryTranId = searchParams.get("tran_id");
+
+        const transactionId = tran_id || queryTranId;
+
+        if (!transactionId) {
+            console.error("No tran_id received from SSLCommerz");
+            return NextResponse.redirect(new URL("/checkout", req.url), 303);
+        }
+
+        // 2. Find the PENDING order and update its status to PAID
+        await prisma.order.update({
+            where: { trxId: transactionId },
+            data: { paymentStatus: "PAID" },
+        });
+
+        // 3. Redirect user to the frontend success page
+        return NextResponse.redirect(new URL("/success", req.url), 303);
+
+    } catch (error) {
+        console.error("Payment success handler failed:", error);
+        // Even if DB update fails, still redirect so user isn't stuck on a raw API page
+        return NextResponse.redirect(new URL("/success", req.url), 303);
+    }
 }

@@ -35,20 +35,23 @@ model User {
 }
 
 model Order {
-  id          String   @id @default(cuid())        // Unique Order ID
-  userId      String                               
-  name        String   
-  email       String   
-  orderTime   DateTime @default(now())
+  id            String   @id @default(cuid())        // Unique Order ID
+  userId        String                               
+  name          String   
+  email         String   
+  phone         String?
+  orderTime     DateTime @default(now())
   
-                                          // entire cart (items, quantities, prices) JSON 
-  items       Json     
+                                            // entire cart (items, quantities, prices) JSON 
+  items         Json     
   
-  totalCost   Float
-  paymentType String   
+  totalCost     Float
+  paymentType   String   
+  trxId         String?  @unique              // SSLCommerz transaction reference
+  paymentStatus String   @default("PENDING")  // PENDING | PAID | FAILED | CANCELLED
 
-                                         // links Order back to the User table
-  user        User     @relation(fields: [userId], references: [id])
+                                           // links Order back to the User table
+  user          User     @relation(fields: [userId], references: [id])
 
   @@map("Orders")
 }

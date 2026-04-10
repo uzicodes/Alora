@@ -1,10 +1,24 @@
 import { NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
-    // Redirect the user back to checkout if the payment was cancelled
-    // Using 303 so it switches from POST to GET
-    const url = new URL("/checkout", req.url);
-    // Optionally append a query param so the frontend can show a toast
-    // url.searchParams.set("error", "Payment was cancelled");
-    return NextResponse.redirect(url, 303);
+    try {
+        const formData = await req.formData();
+        const tran_id = formData.get("tran_id") as string | null;
+
+        const { searchParams } = new URL(req.url);
+        const queryTranId = searchParams.get("tran_id");
+        const transactionId = tran_id || queryTranId;
+
+        if (transactionId) {
+            await prisma.order.update({
+                where: { trxId: transactionId },
+                data: { paymentStatus: "CANCELLED" },
+            });
+        }
+    } catch (error) {
+        console.error("Payment cancel handler error:", error);
+    }
+
+    return NextResponse.redirect(new URL("/checkout", req.url), 303);
 }

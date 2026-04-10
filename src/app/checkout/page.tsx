@@ -83,6 +83,8 @@ export default function CheckoutPage() {
             cus_name: formData.fullName,
             cus_email: formData.email,
             cus_phone: formData.phone,
+            cartItems: cartItems,
+            userId: user?.id,
           }),
         });
 

@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
     try {
-        // 1. Grab the order details sent from your checkout page
-        const { total, cus_name, cus_email, cus_phone } = await req.json();
+        // 1. Grab all order details sent from the checkout page
+        const { total, cus_name, cus_email, cus_phone, cartItems, userId } = await req.json();
 
         const store_id = process.env.SSLCOMMERZ_STORE_ID as string;
         const store_passwd = process.env.SSLCOMMERZ_STORE_PASSWORD as string;
@@ -11,16 +12,31 @@ export async function POST(req: Request) {
         // 2. Generate a unique transaction ID for this order
         const tran_id = `REF-${Date.now()}`;
 
-        // 3. Format Data
+        // 3. CRUCIAL: Save a PENDING order to the database BEFORE calling SSLCommerz
+        await prisma.order.create({
+            data: {
+                userId: userId,
+                name: cus_name,
+                email: cus_email,
+                phone: cus_phone,
+                items: cartItems,       // stored as JSON (array of cart items)
+                totalCost: total,
+                paymentType: "SSLCommerz",
+                trxId: tran_id,
+                paymentStatus: "PENDING",
+            },
+        });
+
+        // 4. Format Data for SSLCommerz
         const formData = new URLSearchParams();
         formData.append("store_id", store_id);
         formData.append("store_passwd", store_passwd);
         formData.append("total_amount", total.toString());
         formData.append("currency", "BDT");
         formData.append("tran_id", tran_id);
-        formData.append("success_url", `http://localhost:3000/api/payment/success?tran_id=${tran_id}`);
-        formData.append("fail_url", "http://localhost:3000/api/payment/fail");
-        formData.append("cancel_url", "http://localhost:3000/api/payment/cancel");
+        formData.append("success_url", `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/payment/success?tran_id=${tran_id}`);
+        formData.append("fail_url", `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/payment/fail?tran_id=${tran_id}`);
+        formData.append("cancel_url", `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/payment/cancel?tran_id=${tran_id}`);
 
         // Customer Info
         formData.append("cus_name", cus_name);
@@ -31,7 +47,7 @@ export async function POST(req: Request) {
         formData.append("cus_country", "Bangladesh");
         formData.append("cus_phone", cus_phone);
 
-        // Shipping Info (THIS IS THE NEW PART FIXING YOUR ERROR)
+        // Shipping Info
         formData.append("shipping_method", "Courier");
         formData.append("ship_name", cus_name);
         formData.append("ship_add1", "Dhaka");
@@ -44,7 +60,7 @@ export async function POST(req: Request) {
         formData.append("product_category", "Fragrance");
         formData.append("product_profile", "general");
 
-        // 4. Hit the SSLCommerz Sandbox API directly
+        // 5. Hit the SSLCommerz Sandbox API
         const response = await fetch("https://sandbox.sslcommerz.com/gwprocess/v4/api.php", {
             method: "POST",
             headers: {
@@ -55,10 +71,15 @@ export async function POST(req: Request) {
 
         const apiResponse = await response.json();
 
-        // 5. Return the payment link to the frontend
+        // 6. Return the payment link to the frontend
         if (apiResponse?.status === "SUCCESS" && apiResponse?.GatewayPageURL) {
             return NextResponse.json({ success: true, url: apiResponse.GatewayPageURL });
         } else {
+            // If SSLCommerz fails, update the order status to FAILED
+            await prisma.order.update({
+                where: { trxId: tran_id },
+                data: { paymentStatus: "FAILED" },
+            });
             console.error("SSLCommerz API Error:", apiResponse);
             return NextResponse.json({ success: false, message: "Failed to generate payment link" }, { status: 400 });
         }
