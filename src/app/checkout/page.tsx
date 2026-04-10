@@ -73,11 +73,8 @@ export default function CheckoutPage() {
 
     setIsSubmitting(true);
 
-    // --- SSLCOMMERZ FLOW (Card & Mobile Banking) ---
     if (paymentMethod === "card" || paymentMethod === "mobile") {
       try {
-        console.log("Initializing SSLCommerz Payment...");
-
         const response = await fetch("/api/payment/init", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -92,27 +89,28 @@ export default function CheckoutPage() {
         const data = await response.json();
 
         if (data.success && data.url) {
-          // Redirect the user to the SSLCommerz secure checkout page
           window.location.href = data.url;
         } else {
-          alert("Failed to initialize payment gateway. Check console for details.");
+          alert("Failed to initialize payment gateway. Please try again.");
           setIsSubmitting(false);
+          return;
         }
       } catch (error) {
         console.error("Gateway trigger failed:", error);
         alert("Something went wrong while connecting to the payment gateway.");
         setIsSubmitting(false);
+        return;
       }
-      return; // Stop execution here so it doesn't trigger COD
     }
 
-    // --- COD FLOW (Simulation) ---
-    setTimeout(() => {
-      clearCart();
-      setIsSubmitting(false);
-      alert(`Order placed successfully using ${paymentMethod.toUpperCase()}!\nThank you, ${formData.fullName}. We will email your receipt to ${formData.email}.`);
-      router.push("/profile");
-    }, 1500);
+    if (paymentMethod === "cod") {
+      setTimeout(() => {
+        clearCart();
+        setIsSubmitting(false);
+        alert(`Order placed successfully using COD!\nThank you, ${formData.fullName}. We will email your receipt to ${formData.email}.`);
+        router.push("/profile");
+      }, 1500);
+    }
   };
 
   if (cartItems.length === 0 && !isSubmitting) {
