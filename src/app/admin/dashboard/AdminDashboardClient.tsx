@@ -748,7 +748,7 @@ export default function AdminDashboardClient({ initialOrders, initialProducts, i
                             key={tab.id}
                             onClick={() => setActive(tab.id)}
                             className={`w-full text-left p-4 border-2 font-bold tracking-widest uppercase text-sm transition-all duration-200 ${active === tab.id
-                                ? "border-white bg-white text-black shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)]"
+                                ? "border-white text-white"
                                 : "border-transparent text-gray-400 hover:border-white/40 hover:text-white"
                                 }`}
                         >
