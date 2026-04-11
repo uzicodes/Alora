@@ -1,45 +1,54 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
+
 
 type Tab = "orders" | "products" | "customers";
 
-// ─── Mock Data (replace with your real DB fetches later) ──────────────────────
 
-const orders = [
-    { id: "#ORD-8821", customer: "Rania Chowdhury", product: "Silk Drape Midi", amount: "$248.00", status: "Delivered", date: "Apr 09, 2026" },
-    { id: "#ORD-8820", customer: "Mehreen Aslam", product: "Linen Co-ord Set", amount: "$185.00", status: "Processing", date: "Apr 09, 2026" },
-    { id: "#ORD-8819", customer: "Nadia Islam", product: "Velvet Blazer", amount: "$320.00", status: "Shipped", date: "Apr 08, 2026" },
-    { id: "#ORD-8818", customer: "Tanya Rahman", product: "Cotton Wrap Dress", amount: "$140.00", status: "Delivered", date: "Apr 08, 2026" },
-    { id: "#ORD-8817", customer: "Sara Hossain", product: "Structured Tote", amount: "$95.00", status: "Cancelled", date: "Apr 07, 2026" },
-    { id: "#ORD-8816", customer: "Layla Bhuiyan", product: "Crêpe Palazzo Set", amount: "$210.00", status: "Delivered", date: "Apr 07, 2026" },
-];
+// ─── Types ───
+
+type Order = {
+    id: string;
+    userId: string;
+    name: string;
+    email: string;
+    phone: string | null;
+    orderTime: string;
+    items: any;
+    totalCost: number;
+    paymentType: string;
+    trxId: string | null;
+    paymentStatus: string;
+};
+
 
 const products = [
-    { id: "PRD-001", name: "Silk Drape Midi", category: "Dresses", stock: 42, price: "$248.00", status: "Active" },
-    { id: "PRD-002", name: "Linen Co-ord Set", category: "Sets", stock: 18, price: "$185.00", status: "Active" },
-    { id: "PRD-003", name: "Velvet Blazer", category: "Outerwear", stock: 0, price: "$320.00", status: "Out of Stock" },
-    { id: "PRD-004", name: "Cotton Wrap Dress", category: "Dresses", stock: 67, price: "$140.00", status: "Active" },
-    { id: "PRD-005", name: "Structured Tote", category: "Accessories", stock: 5, price: "$95.00", status: "Low Stock" },
-    { id: "PRD-006", name: "Crêpe Palazzo Set", category: "Sets", stock: 29, price: "$210.00", status: "Active" },
+    { id: "PRD-001", name: "Silk Drape Midi", category: "Dresses", stock: 42, price: "BDT 248.00", status: "Active" },
+    { id: "PRD-002", name: "Linen Co-ord Set", category: "Sets", stock: 18, price: "BDT 185.00", status: "Active" },
+    { id: "PRD-003", name: "Velvet Blazer", category: "Outerwear", stock: 0, price: "BDT 320.00", status: "Out of Stock" },
+    { id: "PRD-004", name: "Cotton Wrap Dress", category: "Dresses", stock: 67, price: "BDT 140.00", status: "Active" },
+    { id: "PRD-005", name: "Structured Tote", category: "Accessories", stock: 5, price: "BDT 95.00", status: "Low Stock" },
+    { id: "PRD-006", name: "Crêpe Palazzo Set", category: "Sets", stock: 29, price: "BDT 210.00", status: "Active" },
 ];
 
 const customers = [
-    { id: "USR-001", name: "Rania Chowdhury", email: "rania@email.com", orders: 14, spent: "$2,840", joined: "Jan 2025", status: "VIP" },
-    { id: "USR-002", name: "Mehreen Aslam", email: "mehreen@email.com", orders: 7, spent: "$1,120", joined: "Mar 2025", status: "Active" },
-    { id: "USR-003", name: "Nadia Islam", email: "nadia@email.com", orders: 3, spent: "$540", joined: "Aug 2025", status: "Active" },
-    { id: "USR-004", name: "Tanya Rahman", email: "tanya@email.com", orders: 21, spent: "$4,200", joined: "Nov 2024", status: "VIP" },
-    { id: "USR-005", name: "Sara Hossain", email: "sara@email.com", orders: 1, spent: "$95", joined: "Feb 2026", status: "New" },
-    { id: "USR-006", name: "Layla Bhuiyan", email: "layla@email.com", orders: 9, spent: "$1,890", joined: "Jun 2025", status: "Active" },
+    { id: "USR-001", name: "Rania Chowdhury", email: "rania@email.com", orders: 14, spent: "BDT 2,840", joined: "Jan 2025", status: "VIP" },
+    { id: "USR-002", name: "Mehreen Aslam", email: "mehreen@email.com", orders: 7, spent: "BDT 1,120", joined: "Mar 2025", status: "Active" },
+    { id: "USR-003", name: "Nadia Islam", email: "nadia@email.com", orders: 3, spent: "BDT 540", joined: "Aug 2025", status: "Active" },
+    { id: "USR-004", name: "Tanya Rahman", email: "tanya@email.com", orders: 21, spent: "BDT 4,200", joined: "Nov 2024", status: "VIP" },
+    { id: "USR-005", name: "Sara Hossain", email: "sara@email.com", orders: 1, spent: "BDT 95", joined: "Feb 2026", status: "New" },
+    { id: "USR-006", name: "Layla Bhuiyan", email: "layla@email.com", orders: 9, spent: "BDT 1,890", joined: "Jun 2025", status: "Active" },
 ];
 
-// ─── Status Badge ──────────────────────────────────────────────────────────────
+// ─── Status Badge ───
 
 const statusColors: Record<string, string> = {
-    Delivered: "bg-emerald-100 text-emerald-700",
-    Processing: "bg-amber-100   text-amber-700",
-    Shipped: "bg-blue-100    text-blue-700",
-    Cancelled: "bg-red-100     text-red-600",
+    PAID: "bg-emerald-100 text-emerald-700",
+    PENDING: "bg-amber-100   text-amber-700",
+    FAILED: "bg-red-100     text-red-600",
+    CANCELLED: "bg-red-200     text-red-800",
     Active: "bg-emerald-100 text-emerald-700",
     "Out of Stock": "bg-red-100     text-red-600",
     "Low Stock": "bg-amber-100   text-amber-700",
@@ -55,50 +64,169 @@ function Badge({ label }: { label: string }) {
     );
 }
 
-// ─── Section: Orders ──────────────────────────────────────────────────────────
+// ─── Dropdown for Items ───
 
-function OrdersSection() {
+function ItemsDropdown({ items }: { items: any[] }) {
+    const [isOpen, setIsOpen] = useState(false);
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const [coords, setCoords] = useState({ top: 0, left: 0 });
+
+    const toggleDropdown = () => {
+        if (!isOpen && buttonRef.current) {
+            const rect = buttonRef.current.getBoundingClientRect();
+            // We use fixed positioning relative to viewport to avoid scroll issues
+            setCoords({
+                top: rect.bottom + 12,
+                left: rect.left + rect.width / 2
+            });
+        }
+        setIsOpen(!isOpen);
+    };
+
+    // Recalculate position on scroll if open
+    useEffect(() => {
+        const handleScroll = () => {
+            if (isOpen && buttonRef.current) {
+                const rect = buttonRef.current.getBoundingClientRect();
+                setCoords({
+                    top: rect.bottom + 12,
+                    left: rect.left + rect.width / 2
+                });
+            }
+        };
+        window.addEventListener('scroll', handleScroll, true);
+        return () => window.removeEventListener('scroll', handleScroll, true);
+    }, [isOpen]);
+
+    return (
+        <div className="relative">
+            <button
+                ref={buttonRef}
+                onClick={toggleDropdown}
+                className="font-bold text-[10px] bg-black text-white px-3 py-1.5 rounded-none border-2 border-black hover:bg-gray-800 transition-all active:translate-y-0.5 active:translate-x-0.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] flex items-center gap-2"
+            >
+                {items.length} ITEMS
+                <svg className={`w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+
+            {isOpen && createPortal(
+                <div className="fixed inset-0 z-[9999]">
+                    {/* Backdrop to close on click outside */}
+                    <div className="absolute inset-0 bg-transparent" onClick={() => setIsOpen(false)}></div>
+
+                    <div
+                        className="fixed w-72 bg-white border-2 border-black shadow-[10px_10px_0px_0px_#000] p-4 text-left animate-in fade-in slide-in-from-top-2 duration-200"
+                        style={{
+                            top: `${coords.top}px`,
+                            left: `${coords.left}px`,
+                            transform: 'translateX(-50%)'
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="mb-3 pb-2 border-b-2 border-black">
+                            <h4 className="text-[10px] font-black uppercase tracking-widest text-gray-400">Order Contents</h4>
+                        </div>
+                        <div className="space-y-3 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
+                            {items.map((item: any, idx: number) => (
+                                <div key={idx} className="bg-gray-50 border-2 border-black p-2 shadow-[2px_2px_0px_0px_#000]">
+                                    <p className="font-black text-[11px] uppercase leading-tight mb-1">{item.name}</p>
+                                    <div className="flex justify-between items-center text-[9px] font-bold uppercase tracking-widest">
+                                        <span className="text-gray-500">QTY: <span className="text-black">{item.quantity}</span></span>
+                                        <span className="bg-black text-white px-1.5 py-0.5">BDT {(item.price * item.quantity).toLocaleString()}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="mt-4 pt-3 border-t-2 border-black flex justify-between items-center">
+                            <span className="text-[10px] font-black uppercase">Total Items</span>
+                            <span className="text-sm font-black">{items.reduce((acc, i) => acc + (i.quantity || 1), 0)}</span>
+                        </div>
+                    </div>
+                </div>,
+                document.body
+            )}
+        </div>
+    );
+}
+
+// ─── Section: Orders ───
+
+
+function OrdersSection({ orders }: { orders: Order[] }) {
     return (
         <div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 {[
-                    { label: "Total Orders", value: "8,821", delta: "↑ 12% this month" },
-                    { label: "Revenue", value: "$142K", delta: "↑ 8% this month" },
-                    { label: "Pending", value: "34", delta: "↓ 5 from yesterday" },
-                    { label: "Delivered", value: "98.2%", delta: "↑ 0.4% this week" },
+                    { label: "Total Orders", value: orders.length.toString() },
+                    { label: "Revenue", value: `BDT ${orders.reduce((acc, o) => acc + (o.paymentStatus === 'PAID' ? o.totalCost : 0), 0).toLocaleString()}` },
+                    { label: "Pending", value: orders.filter(o => o.paymentStatus === 'PENDING').length.toString() },
+                    { label: "Recent Items", value: orders.slice(0, 5).reduce((acc, o) => acc + (Array.isArray(o.items) ? o.items.length : 0), 0).toString() },
                 ].map(s => (
                     <div key={s.label} className="bg-white border-2 border-black p-5 shadow-[4px_4px_0px_0px_#000]">
                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2">{s.label}</p>
                         <p className="text-3xl font-black tracking-tight">{s.value}</p>
-                        <p className="text-xs text-emerald-600 font-bold mt-1">{s.delta}</p>
                     </div>
                 ))}
             </div>
 
-            <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#000] overflow-hidden">
+            <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#000]">
                 <div className="px-6 py-4 border-b-2 border-black flex items-center justify-between bg-black text-white">
-                    <h3 className="font-black uppercase tracking-widest text-sm">Recent Orders</h3>
-                    <button className="text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors">View All →</button>
+                    <h3 className="font-black uppercase tracking-widest text-sm">All Orders</h3>
+                    <div className="flex gap-4">
+                        <button className="text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors">Export CSV →</button>
+                    </div>
                 </div>
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                         <thead>
                             <tr className="border-b-2 border-black bg-gray-50">
-                                {["Order ID", "Customer", "Product", "Amount", "Status", "Date"].map(h => (
-                                    <th key={h} className="px-5 py-3 text-left text-[10px] font-black uppercase tracking-widest text-gray-500">{h}</th>
+                                {[
+                                    "OrderID",
+                                    "User ID",
+                                    "Name",
+                                    "Email",
+                                    "Phone",
+                                    "Order Time",
+                                    "Items",
+                                    "Total Cost",
+                                    "Payment",
+                                    "TrxID"
+                                ].map(h => (
+                                    <th key={h} className="px-5 py-3 text-center text-[10px] font-black uppercase tracking-widest text-gray-500 whitespace-nowrap border-r-2 border-black last:border-r-0">{h}</th>
                                 ))}
                             </tr>
                         </thead>
                         <tbody>
                             {orders.map((o, i) => (
-                                <tr key={i} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                    <td className="px-5 py-4 font-mono font-bold text-xs">{o.id}</td>
-                                    <td className="px-5 py-4 font-semibold">{o.customer}</td>
-                                    <td className="px-5 py-4 text-gray-600">{o.product}</td>
-                                    <td className="px-5 py-4 font-black">{o.amount}</td>
-                                    <td className="px-5 py-4"><Badge label={o.status} /></td>
-                                    <td className="px-5 py-4 text-gray-400 text-xs">{o.date}</td>
+                                <tr key={i} className="border-b border-gray-100 hover:bg-gray-50 transition-colors text-center">
+                                    <td className="px-5 py-4 font-mono font-bold text-xs whitespace-nowrap border-r-2 border-black last:border-r-0" title={o.id}>
+                                        {o.id.slice(-8)}
+                                    </td>
+                                    <td className="px-5 py-4 font-mono text-[10px] text-gray-400 whitespace-nowrap border-r-2 border-black last:border-r-0" title={o.userId}>
+                                        {o.userId.slice(-8)}
+                                    </td>
+                                    <td className="px-5 py-4 font-semibold whitespace-nowrap border-r-2 border-black last:border-r-0">{o.name}</td>
+                                    <td className="px-5 py-4 text-gray-600 whitespace-nowrap border-r-2 border-black last:border-r-0">{o.email}</td>
+                                    <td className="px-5 py-4 text-gray-500 whitespace-nowrap border-r-2 border-black last:border-r-0">{o.phone || "-"}</td>
+                                    <td className="px-5 py-4 text-gray-400 text-xs whitespace-nowrap border-r-2 border-black last:border-r-0">
+                                        {new Date(o.orderTime).toLocaleString()}
+                                    </td>
+                                    <td className="px-5 py-4 border-r-2 border-black last:border-r-0">
+                                        <div className="flex flex-col items-center gap-1">
+                                            {Array.isArray(o.items) ? (
+                                                <ItemsDropdown items={o.items} />
+                                            ) : (
+                                                <span className="text-gray-400 text-[10px]">Data Error</span>
+                                            )}
+                                        </div>
+                                    </td>
+                                    <td className="px-5 py-4 font-black whitespace-nowrap border-r-2 border-black last:border-r-0">BDT {o.totalCost.toLocaleString()}</td>
+                                    <td className="px-5 py-4 text-[10px] font-bold uppercase tracking-tighter text-gray-400 border-r-2 border-black last:border-r-0">{o.paymentType}</td>
+                                    <td className="px-5 py-4 font-mono text-[10px] text-blue-600 font-bold whitespace-nowrap border-r-2 border-black last:border-r-0">{o.trxId || "N/A"}</td>
                                 </tr>
+
                             ))}
                         </tbody>
                     </table>
@@ -108,7 +236,8 @@ function OrdersSection() {
     );
 }
 
-// ─── Section: Products ────────────────────────────────────────────────────────
+
+// ─── Section: Products ───
 
 function ProductsSection() {
     return (
@@ -175,7 +304,7 @@ function CustomersSection() {
                     { label: "Total Customers", value: "12,408", delta: "↑ 340 this month" },
                     { label: "VIP Members", value: "1,204", delta: "9.7% of customers" },
                     { label: "New (30d)", value: "340", delta: "↑ 22% growth" },
-                    { label: "Avg. Order Value", value: "$186", delta: "↑ $14 vs last month" },
+                    { label: "Avg. Order Value", value: "BDT 186", delta: "↑ BDT 14 vs last month" },
                 ].map(s => (
                     <div key={s.label} className="bg-white border-2 border-black p-5 shadow-[4px_4px_0px_0px_#000]">
                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2">{s.label}</p>
@@ -234,13 +363,13 @@ const tabs: { id: Tab; label: string }[] = [
     { id: "customers", label: "Customers" },
 ];
 
-export default function AdminDashboardClient() {
+export default function AdminDashboardClient({ initialOrders }: { initialOrders: Order[] }) {
     const [active, setActive] = useState<Tab>("orders");
+    const [orders, setOrders] = useState<Order[]>(initialOrders);
 
     return (
         <div className="min-h-screen bg-[#F4F4F5] flex selection:bg-black selection:text-white">
 
-            {/* ── Sidebar ─────────────────────────────────── */}
             <div className="w-72 bg-black text-white p-8 hidden md:flex flex-col flex-shrink-0 border-r-4 border-black">
                 <div className="mb-12 border-b-2 border-white/20 pb-6">
                     <h2 className="text-3xl font-black tracking-tighter uppercase mb-1">Alora</h2>
@@ -253,8 +382,8 @@ export default function AdminDashboardClient() {
                             key={tab.id}
                             onClick={() => setActive(tab.id)}
                             className={`w-full text-left p-4 border-2 font-bold tracking-widest uppercase text-sm transition-all duration-200 ${active === tab.id
-                                    ? "border-white bg-white text-black shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)]"
-                                    : "border-transparent text-gray-400 hover:border-white/40 hover:text-white"
+                                ? "border-white bg-white text-black shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)]"
+                                : "border-transparent text-gray-400 hover:border-white/40 hover:text-white"
                                 }`}
                         >
                             {tab.label}
@@ -296,7 +425,6 @@ export default function AdminDashboardClient() {
                     {/* Header */}
                     <div className="mb-8 border-b-4 border-black pb-5 flex items-end justify-between">
                         <div>
-                            <p className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 mb-1">Admin Portal</p>
                             <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tight">
                                 {tabs.find(t => t.id === active)!.label}
                             </h1>
@@ -309,8 +437,8 @@ export default function AdminDashboardClient() {
                                     key={tab.id}
                                     onClick={() => setActive(tab.id)}
                                     className={`px-4 py-2 text-xs font-black uppercase tracking-widest transition-colors ${active === tab.id
-                                            ? "bg-black text-white"
-                                            : "text-gray-500 hover:text-black"
+                                        ? "bg-black text-white"
+                                        : "text-gray-500 hover:text-black"
                                         }`}
                                 >
                                     {tab.label}
@@ -328,7 +456,7 @@ export default function AdminDashboardClient() {
                             }
                         `}</style>
 
-                        {active === "orders" && <OrdersSection />}
+                        {active === "orders" && <OrdersSection orders={orders} />}
                         {active === "products" && <ProductsSection />}
                         {active === "customers" && <CustomersSection />}
                     </div>
