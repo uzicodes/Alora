@@ -51,29 +51,6 @@ type Customer = {
 };
 
 
-
-// ─── Status Badge ───
-
-const statusColors: Record<string, string> = {
-    PAID: "bg-emerald-100 text-emerald-700",
-    PENDING: "bg-amber-100   text-amber-700",
-    FAILED: "bg-red-100     text-red-600",
-    CANCELLED: "bg-red-200     text-red-800",
-    Active: "bg-emerald-100 text-emerald-700",
-    "Out of Stock": "bg-red-100     text-red-600",
-    "Low Stock": "bg-amber-100   text-amber-700",
-    VIP: "bg-purple-100  text-purple-700",
-    New: "bg-blue-100    text-blue-700",
-};
-
-function Badge({ label }: { label: string }) {
-    return (
-        <span className={`inline-block px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wide ${statusColors[label] ?? "bg-gray-100 text-gray-600"}`}>
-            {label}
-        </span>
-    );
-}
-
 // ─── Dropdown for Items ───
 
 function ItemsDropdown({ items }: { items: any[] }) {
@@ -84,7 +61,6 @@ function ItemsDropdown({ items }: { items: any[] }) {
     const toggleDropdown = () => {
         if (!isOpen && buttonRef.current) {
             const rect = buttonRef.current.getBoundingClientRect();
-            // We use fixed positioning relative to viewport to avoid scroll issues
             setCoords({
                 top: rect.bottom + 12,
                 left: rect.left + rect.width / 2
@@ -93,7 +69,7 @@ function ItemsDropdown({ items }: { items: any[] }) {
         setIsOpen(!isOpen);
     };
 
-    // Recalculate position on scroll if open
+
     useEffect(() => {
         const handleScroll = () => {
             if (isOpen && buttonRef.current) {
@@ -123,7 +99,6 @@ function ItemsDropdown({ items }: { items: any[] }) {
 
             {isOpen && createPortal(
                 <div className="fixed inset-0 z-[9999]">
-                    {/* Backdrop to close on click outside */}
                     <div className="absolute inset-0 bg-transparent" onClick={() => setIsOpen(false)}></div>
 
                     <div
@@ -234,9 +209,18 @@ function UserOrdersDropdown({ orders }: { orders: { id: string; orderTime: strin
     );
 }
 
+
+
+
+
+
+
+
+
+
+
+
 // ─── Section: Orders ───
-
-
 
 function OrdersSection({ orders }: { orders: Order[] }) {
     return (
@@ -316,6 +300,16 @@ function OrdersSection({ orders }: { orders: Order[] }) {
         </div>
     );
 }
+
+
+
+
+
+
+
+
+
+
 
 
 // ─── Section: Products ───
@@ -483,7 +477,7 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
                                             className={`flex-1 py-3 border-2 border-black font-black uppercase tracking-widest text-xs transition-all ${form.gender === g
                                                 ? "bg-black text-white shadow-[4px_4px_0px_0px_#000]"
                                                 : "bg-white text-black hover:bg-gray-100"
-                                            }`}
+                                                }`}
                                         >
                                             {g}
                                         </button>
@@ -618,6 +612,26 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
     );
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ─── Section: Customers ───
 
 function CustomersSection({ customers }: { customers: Customer[] }) {
@@ -685,7 +699,16 @@ function CustomersSection({ customers }: { customers: Customer[] }) {
     );
 }
 
-// ─── Main Export ──────────────────────────────────────────────────────────────
+
+
+
+
+
+
+
+
+
+// ─── Main Export ────
 
 const tabs: { id: Tab; label: string }[] = [
     { id: "orders", label: "Orders" },
@@ -737,7 +760,7 @@ export default function AdminDashboardClient({ initialOrders, initialProducts, i
                 </nav>
 
                 <div className="mt-auto pt-8 border-t-2 border-white/20">
-                    <button 
+                    <button
                         onClick={handleLogout}
                         className="mx-auto w-fit px-10 bg-red-600 text-white py-3 border-2 border-red-600 font-black uppercase tracking-widest text-[10px] hover:bg-red-700 hover:border-red-700 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(255,0,0,0.3)] active:translate-y-1 active:shadow-none flex items-center gap-3 group"
                     >
@@ -749,7 +772,7 @@ export default function AdminDashboardClient({ initialOrders, initialProducts, i
                 </div>
             </div>
 
-            {/* ── Mobile Tab Bar ───────────────────────────── */}
+            {/* ── Mobile Tab Bar ── */}
             <div className="md:hidden fixed bottom-0 left-0 right-0 bg-black border-t-2 border-white/20 flex z-50">
                 {tabs.map(tab => (
                     <button
@@ -763,7 +786,7 @@ export default function AdminDashboardClient({ initialOrders, initialProducts, i
                 ))}
             </div>
 
-            {/* ── Main Content ─────────────────────────────── */}
+            {/* ── Main Content ── */}
             <div className="flex-1 p-6 md:p-10 pb-24 md:pb-10 overflow-auto">
                 <div className="max-w-6xl mx-auto">
 
