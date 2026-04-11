@@ -229,8 +229,6 @@ function OrdersSection({ orders }: { orders: Order[] }) {
                 {[
                     { label: "Total Orders", value: orders.length.toString() },
                     { label: "Revenue", value: `BDT ${orders.reduce((acc, o) => acc + (o.paymentStatus === 'PAID' ? o.totalCost : 0), 0).toLocaleString()}` },
-                    { label: "Pending", value: orders.filter(o => o.paymentStatus === 'PENDING').length.toString() },
-                    { label: "Recent Items", value: orders.slice(0, 5).reduce((acc, o) => acc + (Array.isArray(o.items) ? o.items.length : 0), 0).toString() },
                 ].map(s => (
                     <div key={s.label} className="bg-white border-2 border-black p-5 shadow-[4px_4px_0px_0px_#000]">
                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2">{s.label}</p>
