@@ -257,7 +257,7 @@ function OrdersSection({ orders }: { orders: Order[] }) {
                                     "Payment",
                                     "TrxID"
                                 ].map(h => (
-                                    <th key={h} className="px-5 py-3 text-center text-[10px] font-black uppercase tracking-widest text-gray-500 whitespace-nowrap border-r-2 border-black last:border-r-0">{h}</th>
+                                    <th key={h} className="px-5 py-3 text-center text-[10px] font-black uppercase tracking-widest text-red-600 whitespace-nowrap border-r-2 border-black last:border-r-0">{h}</th>
                                 ))}
                             </tr>
                         </thead>
@@ -549,7 +549,7 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
                     <table className="w-full text-sm">
                         <thead>
                             <tr className="border-b-2 border-black bg-gray-50">
-                                {editMode && <th className="px-3 py-3 text-center text-[10px] font-black uppercase tracking-widest text-gray-500 border-r-2 border-black">Select</th>}
+                                {editMode && <th className="px-3 py-3 text-center text-[10px] font-black uppercase tracking-widest text-red-600 border-r-2 border-black">Select</th>}
                                 {[
                                     "ID",
                                     "Brand",
@@ -560,7 +560,7 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
                                     "ML",
                                     "ImageURL"
                                 ].map(h => (
-                                    <th key={h} className="px-5 py-3 text-center text-[10px] font-black uppercase tracking-widest text-gray-500 whitespace-nowrap border-r-2 border-black last:border-r-0">{h}</th>
+                                    <th key={h} className="px-5 py-3 text-center text-[10px] font-black uppercase tracking-widest text-red-600 whitespace-nowrap border-r-2 border-black last:border-r-0">{h}</th>
                                 ))}
                             </tr>
                         </thead>
@@ -663,7 +663,7 @@ function CustomersSection({ customers }: { customers: Customer[] }) {
                                     "Joined",
                                     "Orders"
                                 ].map(h => (
-                                    <th key={h} className="px-5 py-3 text-center text-[10px] font-black uppercase tracking-widest text-gray-500 whitespace-nowrap border-r-2 border-black last:border-r-0">{h}</th>
+                                    <th key={h} className="px-5 py-3 text-center text-[10px] font-black uppercase tracking-widest text-red-600 whitespace-nowrap border-r-2 border-black last:border-r-0">{h}</th>
                                 ))}
                             </tr>
                         </thead>
