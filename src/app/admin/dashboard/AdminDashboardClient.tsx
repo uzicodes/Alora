@@ -35,14 +35,20 @@ type Product = {
 };
 
 
-const customers = [
-    { id: "USR-001", name: "Rania Chowdhury", email: "rania@email.com", orders: 14, spent: "BDT 2,840", joined: "Jan 2025", status: "VIP" },
-    { id: "USR-002", name: "Mehreen Aslam", email: "mehreen@email.com", orders: 7, spent: "BDT 1,120", joined: "Mar 2025", status: "Active" },
-    { id: "USR-003", name: "Nadia Islam", email: "nadia@email.com", orders: 3, spent: "BDT 540", joined: "Aug 2025", status: "Active" },
-    { id: "USR-004", name: "Tanya Rahman", email: "tanya@email.com", orders: 21, spent: "BDT 4,200", joined: "Nov 2024", status: "VIP" },
-    { id: "USR-005", name: "Sara Hossain", email: "sara@email.com", orders: 1, spent: "BDT 95", joined: "Feb 2026", status: "New" },
-    { id: "USR-006", name: "Layla Bhuiyan", email: "layla@email.com", orders: 9, spent: "BDT 1,890", joined: "Jun 2025", status: "Active" },
-];
+type Customer = {
+    id: string;
+    name: string | null;
+    email: string;
+    phone: string | null;
+    address: string | null;
+    createdAt: string;
+    orders: { id: string; orderTime: string }[];
+    _count: {
+        orders: number;
+    };
+};
+
+
 
 // ─── Status Badge ───
 
@@ -153,7 +159,81 @@ function ItemsDropdown({ items }: { items: any[] }) {
     );
 }
 
+function UserOrdersDropdown({ orders }: { orders: { id: string; orderTime: string }[] }) {
+    const [isOpen, setIsOpen] = useState(false);
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const [coords, setCoords] = useState({ top: 0, left: 0 });
+
+    const toggleDropdown = () => {
+        if (!isOpen && buttonRef.current) {
+            const rect = buttonRef.current.getBoundingClientRect();
+            setCoords({
+                top: rect.bottom + 12,
+                left: rect.left + rect.width / 2
+            });
+        }
+        setIsOpen(!isOpen);
+    };
+
+    useEffect(() => {
+        const handleScroll = () => {
+            if (isOpen && buttonRef.current) {
+                const rect = buttonRef.current.getBoundingClientRect();
+                setCoords({
+                    top: rect.bottom + 12,
+                    left: rect.left + rect.width / 2
+                });
+            }
+        };
+        window.addEventListener('scroll', handleScroll, true);
+        return () => window.removeEventListener('scroll', handleScroll, true);
+    }, [isOpen]);
+
+    if (!orders || orders.length === 0) return <span className="text-gray-300">-</span>;
+
+    return (
+        <div className="relative">
+            <button
+                ref={buttonRef}
+                onClick={toggleDropdown}
+                className="bg-black text-white px-3 py-1 font-black text-xs hover:bg-gray-800 transition-all active:translate-y-0.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] flex items-center gap-2"
+            >
+                {orders.length} ORDERS
+            </button>
+
+            {isOpen && createPortal(
+                <div className="fixed inset-0 z-[9999]">
+                    <div className="absolute inset-0 bg-transparent" onClick={() => setIsOpen(false)}></div>
+                    <div
+                        className="fixed w-48 bg-white border-2 border-black shadow-[10px_10px_0px_0px_#000] p-4 text-left animate-in fade-in slide-in-from-top-2 duration-200"
+                        style={{
+                            top: `${coords.top}px`,
+                            left: `${coords.left}px`,
+                            transform: 'translateX(-50%)'
+                        }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <div className="mb-2 pb-1 border-b-2 border-black">
+                            <h4 className="text-[9px] font-black uppercase tracking-widest text-gray-400">Order History</h4>
+                        </div>
+                        <div className="space-y-2 max-h-48 overflow-y-auto pr-1 custom-scrollbar">
+                            {orders.map((order, idx) => (
+                                <div key={idx} className="flex flex-col border-b border-gray-100 last:border-0 pb-1 mb-1">
+                                    <span className="font-mono text-[10px] font-black uppercase">#{order.id.slice(-8)}</span>
+                                    <span className="text-[8px] text-gray-400 uppercase">{new Date(order.orderTime).toLocaleDateString()}</span>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>,
+                document.body
+            )}
+        </div>
+    );
+}
+
 // ─── Section: Orders ───
+
 
 
 function OrdersSection({ orders }: { orders: Order[] }) {
@@ -176,9 +256,6 @@ function OrdersSection({ orders }: { orders: Order[] }) {
             <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#000]">
                 <div className="px-6 py-4 border-b-2 border-black flex items-center justify-between bg-black text-white">
                     <h3 className="font-black uppercase tracking-widest text-sm">All Orders</h3>
-                    <div className="flex gap-4">
-                        <button className="text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors">Export CSV →</button>
-                    </div>
                 </div>
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm">
@@ -323,55 +400,61 @@ function ProductsSection({ products }: { products: Product[] }) {
 
 // ─── Section: Customers ───
 
-function CustomersSection() {
+function CustomersSection({ customers }: { customers: Customer[] }) {
     return (
         <div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 {[
-                    { label: "Total Customers", value: "12,408", delta: "↑ 340 this month" },
-                    { label: "VIP Members", value: "1,204", delta: "9.7% of customers" },
-                    { label: "New (30d)", value: "340", delta: "↑ 22% growth" },
-                    { label: "Avg. Order Value", value: "BDT 186", delta: "↑ BDT 14 vs last month" },
+                    { label: "Total Customers", value: customers.length.toString() },
                 ].map(s => (
                     <div key={s.label} className="bg-white border-2 border-black p-5 shadow-[4px_4px_0px_0px_#000]">
                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2">{s.label}</p>
                         <p className="text-3xl font-black tracking-tight">{s.value}</p>
-                        <p className="text-xs text-emerald-600 font-bold mt-1">{s.delta}</p>
                     </div>
                 ))}
             </div>
 
-            <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#000] overflow-hidden">
+            <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#000]">
                 <div className="px-6 py-4 border-b-2 border-black flex items-center justify-between bg-black text-white">
                     <h3 className="font-black uppercase tracking-widest text-sm">Customers</h3>
-                    <button className="text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-white transition-colors">Export CSV →</button>
                 </div>
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                         <thead>
                             <tr className="border-b-2 border-black bg-gray-50">
-                                {["ID", "Name", "Email", "Orders", "Total Spent", "Joined", "Status"].map(h => (
-                                    <th key={h} className="px-5 py-3 text-left text-[10px] font-black uppercase tracking-widest text-gray-500">{h}</th>
+                                {[
+                                    "UserID",
+                                    "Name",
+                                    "Email",
+                                    "Phone",
+                                    "Address",
+                                    "Joined",
+                                    "Orders"
+                                ].map(h => (
+                                    <th key={h} className="px-5 py-3 text-center text-[10px] font-black uppercase tracking-widest text-gray-500 whitespace-nowrap border-r-2 border-black last:border-r-0">{h}</th>
                                 ))}
                             </tr>
                         </thead>
                         <tbody>
                             {customers.map((u, i) => (
-                                <tr key={i} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                    <td className="px-5 py-4 font-mono text-xs text-gray-500">{u.id}</td>
-                                    <td className="px-5 py-4">
-                                        <div className="flex items-center gap-2">
-                                            <div className="w-7 h-7 rounded-full bg-black text-white text-xs font-black flex items-center justify-center flex-shrink-0">
-                                                {u.name[0]}
-                                            </div>
-                                            <span className="font-semibold">{u.name}</span>
+                                <tr key={i} className="border-b border-gray-100 hover:bg-gray-50 transition-colors text-center font-bold">
+                                    <td className="px-5 py-4 font-mono text-[10px] text-gray-400 border-r-2 border-black last:border-r-0" title={u.id}>
+                                        {u.id.slice(-8)}
+                                    </td>
+                                    <td className="px-5 py-4 border-r-2 border-black last:border-r-0 truncate max-w-[150px]">
+                                        {u.name || "N/A"}
+                                    </td>
+                                    <td className="px-5 py-4 text-gray-600 border-r-2 border-black last:border-r-0 lowercase">{u.email}</td>
+                                    <td className="px-5 py-4 text-gray-500 border-r-2 border-black last:border-r-0">{u.phone || "-"}</td>
+                                    <td className="px-5 py-4 border-r-2 border-black last:border-r-0 truncate max-w-[150px]">{u.address || "N/A"}</td>
+                                    <td className="px-5 py-4 text-gray-400 text-[10px] border-r-2 border-black last:border-r-0">
+                                        {new Date(u.createdAt).toLocaleDateString()}
+                                    </td>
+                                    <td className="px-5 py-4 border-r-2 border-black last:border-r-0">
+                                        <div className="flex justify-center">
+                                            <UserOrdersDropdown orders={u.orders} />
                                         </div>
                                     </td>
-                                    <td className="px-5 py-4 text-gray-500">{u.email}</td>
-                                    <td className="px-5 py-4 font-black">{u.orders}</td>
-                                    <td className="px-5 py-4 font-black">{u.spent}</td>
-                                    <td className="px-5 py-4 text-gray-400 text-xs">{u.joined}</td>
-                                    <td className="px-5 py-4"><Badge label={u.status} /></td>
                                 </tr>
                             ))}
                         </tbody>
@@ -390,10 +473,12 @@ const tabs: { id: Tab; label: string }[] = [
     { id: "customers", label: "Customers" },
 ];
 
-export default function AdminDashboardClient({ initialOrders, initialProducts }: { initialOrders: Order[], initialProducts: Product[] }) {
+export default function AdminDashboardClient({ initialOrders, initialProducts, initialUsers }: { initialOrders: Order[], initialProducts: Product[], initialUsers: Customer[] }) {
     const [active, setActive] = useState<Tab>("orders");
     const [orders, setOrders] = useState<Order[]>(initialOrders);
     const [products, setProducts] = useState<Product[]>(initialProducts);
+    const [customers, setCustomers] = useState<Customer[]>(initialUsers);
+
 
 
     return (
@@ -473,7 +558,7 @@ export default function AdminDashboardClient({ initialOrders, initialProducts }:
 
                         {active === "orders" && <OrdersSection orders={orders} />}
                         {active === "products" && <ProductsSection products={products} />}
-                        {active === "customers" && <CustomersSection />}
+                        {active === "customers" && <CustomersSection customers={customers} />}
                     </div>
 
                 </div>
