@@ -320,7 +320,81 @@ function OrdersSection({ orders }: { orders: Order[] }) {
 
 // ─── Section: Products ───
 
-function ProductsSection({ products }: { products: Product[] }) {
+function ProductsSection({ products, setProducts }: { products: Product[], setProducts: React.Dispatch<React.SetStateAction<Product[]>> }) {
+    const [showDialog, setShowDialog] = useState(false);
+    const [editMode, setEditMode] = useState(false);
+    const [selectedId, setSelectedId] = useState<string | null>(null);
+    const [saving, setSaving] = useState(false);
+    const [form, setForm] = useState({
+        name: "", brand: "", price: "", sizeMl: "", concentration: "", gender: "", imageUrls: ""
+    });
+
+    const resetForm = () => {
+        setForm({ name: "", brand: "", price: "", sizeMl: "", concentration: "", gender: "", imageUrls: "" });
+        setSelectedId(null);
+    };
+
+    const handleAddClick = () => {
+        resetForm();
+        setEditMode(false);
+        setShowDialog(true);
+    };
+
+    const handleEditClick = () => {
+        setEditMode(prev => !prev);
+        setSelectedId(null);
+        setShowDialog(false);
+    };
+
+    const handleSelectForEdit = (p: Product) => {
+        setSelectedId(p.id);
+        setForm({
+            name: p.name,
+            brand: p.brand,
+            price: p.price.toString(),
+            sizeMl: p.sizeMl.toString(),
+            concentration: p.concentration,
+            gender: p.gender,
+            imageUrls: p.imageUrls.join(", ")
+        });
+        setShowDialog(true);
+    };
+
+    const handleSave = async () => {
+        setSaving(true);
+        try {
+            const payload = {
+                ...form,
+                imageUrls: form.imageUrls.split(",").map(s => s.trim()).filter(Boolean),
+                ...(selectedId ? { id: selectedId } : {})
+            };
+
+            const res = await fetch("/api/admin/products", {
+                method: selectedId ? "PUT" : "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                if (selectedId) {
+                    setProducts(prev => prev.map(p => p.id === selectedId ? data.product : p));
+                } else {
+                    setProducts(prev => [data.product, ...prev]);
+                }
+                setShowDialog(false);
+                setEditMode(false);
+                resetForm();
+            } else {
+                alert("Error: " + (data.message || "Failed to save"));
+            }
+        } catch (err) {
+            alert("Network error. Please try again.");
+        } finally {
+            setSaving(false);
+        }
+    };
+
     return (
         <div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
@@ -335,24 +409,155 @@ function ProductsSection({ products }: { products: Product[] }) {
                 ))}
 
                 {/* Add Item Button */}
-                <button className="bg-black text-green-300 p-5 border-2 border-black shadow-[4px_4px_0px_0px_#000] flex flex-col items-center justify-center gap-1 hover:bg-gray-800 transition-all active:translate-x-1 active:translate-y-1 active:shadow-none group">
+                <button onClick={handleAddClick} className="bg-black text-green-300 p-5 border-2 border-black shadow-[4px_4px_0px_0px_#000] flex flex-col items-center justify-center gap-1 hover:bg-gray-800 transition-all active:translate-x-1 active:translate-y-1 active:shadow-none group">
                     <span className="text-xl font-black uppercase tracking-tighter truncate w-full">+ Add Item</span>
                 </button>
 
                 {/* Edit Item Button */}
-                <button className="bg-black text-blue-400 p-5 border-2 border-black shadow-[4px_4px_0px_0px_#000] flex flex-col items-center justify-center gap-1 hover:bg-gray-800 transition-all active:translate-x-1 active:translate-y-1 active:shadow-none group">
-                    <span className="text-xl font-black uppercase tracking-tighter truncate w-full">Edit Item</span>
+                <button onClick={handleEditClick} className={`p-5 border-2 border-black shadow-[4px_4px_0px_0px_#000] flex flex-col items-center justify-center gap-1 hover:bg-gray-800 transition-all active:translate-x-1 active:translate-y-1 active:shadow-none group ${editMode ? "bg-blue-600 text-white" : "bg-black text-blue-400"}`}>
+                    <span className="text-xl font-black uppercase tracking-tighter truncate w-full">{editMode ? "Cancel Edit" : "Edit Item"}</span>
                 </button>
             </div>
+
+            {/* ─── Product Dialog (Add / Edit) ─── */}
+            {showDialog && createPortal(
+                <div className="fixed inset-0 z-[9999] flex items-center justify-center">
+                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => { setShowDialog(false); resetForm(); setEditMode(false); }}></div>
+                    <div className="relative bg-white border-4 border-black shadow-[12px_12px_0px_0px_#000] p-8 w-full max-w-lg max-h-[90vh] overflow-y-auto animate-in fade-in slide-in-from-bottom-4 duration-300">
+                        <div className="mb-6 pb-3 border-b-4 border-black flex items-center justify-between">
+                            <h3 className="text-2xl font-black uppercase tracking-tight">
+                                {selectedId ? "Edit Product" : "Add New Product"}
+                            </h3>
+                            <button onClick={() => { setShowDialog(false); resetForm(); setEditMode(false); }} className="w-8 h-8 bg-black text-white flex items-center justify-center font-black hover:bg-red-600 transition-colors text-sm">✕</button>
+                        </div>
+
+                        <div className="space-y-4">
+                            {/* Brand Dropdown */}
+                            <div>
+                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Brand</label>
+                                <select
+                                    value={form.brand}
+                                    onChange={(e) => setForm(prev => ({ ...prev, brand: e.target.value }))}
+                                    className="w-full border-2 border-black p-3 font-bold text-sm focus:shadow-[4px_4px_0px_0px_#000] outline-none transition-all bg-white appearance-none cursor-pointer"
+                                >
+                                    <option value="">Select a brand...</option>
+                                    {Array.from(new Set(products.map(p => p.brand))).sort().map(brand => (
+                                        <option key={brand} value={brand}>{brand}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Name */}
+                            <div>
+                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Name</label>
+                                <input
+                                    type="text"
+                                    value={form.name}
+                                    onChange={(e) => setForm(prev => ({ ...prev, name: e.target.value }))}
+                                    placeholder="e.g. Eros EDP"
+                                    className="w-full border-2 border-black p-3 font-bold text-sm focus:shadow-[4px_4px_0px_0px_#000] outline-none transition-all placeholder-gray-300"
+                                />
+                            </div>
+
+                            {/* Price */}
+                            <div>
+                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Price (BDT)</label>
+                                <input
+                                    type="number"
+                                    value={form.price}
+                                    onChange={(e) => setForm(prev => ({ ...prev, price: e.target.value }))}
+                                    placeholder="e.g. 2500"
+                                    className="w-full border-2 border-black p-3 font-bold text-sm focus:shadow-[4px_4px_0px_0px_#000] outline-none transition-all placeholder-gray-300"
+                                />
+                            </div>
+
+                            {/* Gender Toggle Buttons */}
+                            <div>
+                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Gender</label>
+                                <div className="flex gap-2">
+                                    {["Men", "Women", "Unisex"].map(g => (
+                                        <button
+                                            key={g}
+                                            type="button"
+                                            onClick={() => setForm(prev => ({ ...prev, gender: g }))}
+                                            className={`flex-1 py-3 border-2 border-black font-black uppercase tracking-widest text-xs transition-all ${form.gender === g
+                                                ? "bg-black text-white shadow-[4px_4px_0px_0px_#000]"
+                                                : "bg-white text-black hover:bg-gray-100"
+                                            }`}
+                                        >
+                                            {g}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Concentration */}
+                            <div>
+                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Concentration</label>
+                                <input
+                                    type="text"
+                                    value={form.concentration}
+                                    onChange={(e) => setForm(prev => ({ ...prev, concentration: e.target.value }))}
+                                    placeholder="e.g. EDP / EDT / Parfum"
+                                    className="w-full border-2 border-black p-3 font-bold text-sm focus:shadow-[4px_4px_0px_0px_#000] outline-none transition-all placeholder-gray-300"
+                                />
+                            </div>
+
+                            {/* Size (ML) */}
+                            <div>
+                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Size (ML)</label>
+                                <input
+                                    type="number"
+                                    value={form.sizeMl}
+                                    onChange={(e) => setForm(prev => ({ ...prev, sizeMl: e.target.value }))}
+                                    placeholder="e.g. 100"
+                                    className="w-full border-2 border-black p-3 font-bold text-sm focus:shadow-[4px_4px_0px_0px_#000] outline-none transition-all placeholder-gray-300"
+                                />
+                            </div>
+
+                            {/* Image URLs */}
+                            <div>
+                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Image URLs (comma separated)</label>
+                                <input
+                                    type="text"
+                                    value={form.imageUrls}
+                                    onChange={(e) => setForm(prev => ({ ...prev, imageUrls: e.target.value }))}
+                                    placeholder="https://example.com/image.jpg"
+                                    className="w-full border-2 border-black p-3 font-bold text-sm focus:shadow-[4px_4px_0px_0px_#000] outline-none transition-all placeholder-gray-300"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="mt-8 flex gap-3">
+                            <button
+                                onClick={handleSave}
+                                disabled={saving || !form.name || !form.brand || !form.price}
+                                className="flex-1 bg-black text-white py-4 font-black uppercase tracking-widest text-xs border-2 border-black hover:bg-emerald-600 hover:border-emerald-600 transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-[4px_4px_0px_0px_#000] active:translate-y-1 active:shadow-none"
+                            >
+                                {saving ? "SAVING..." : selectedId ? "UPDATE PRODUCT" : "ADD PRODUCT"}
+                            </button>
+                            <button
+                                onClick={() => { setShowDialog(false); resetForm(); setEditMode(false); }}
+                                className="px-6 py-4 border-2 border-black font-black uppercase tracking-widest text-xs hover:bg-gray-100 transition-colors"
+                            >
+                                CANCEL
+                            </button>
+                        </div>
+                    </div>
+                </div>,
+                document.body
+            )}
 
             <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#000]">
                 <div className="px-6 py-4 border-b-2 border-black flex items-center justify-between bg-black text-white">
                     <h3 className="font-black uppercase tracking-widest text-sm">All Products</h3>
+                    {editMode && <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-400 animate-pulse">← Select a row to edit</span>}
                 </div>
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                         <thead>
                             <tr className="border-b-2 border-black bg-gray-50">
+                                {editMode && <th className="px-3 py-3 text-center text-[10px] font-black uppercase tracking-widest text-gray-500 border-r-2 border-black">Select</th>}
                                 {[
                                     "ID",
                                     "Brand",
@@ -369,7 +574,20 @@ function ProductsSection({ products }: { products: Product[] }) {
                         </thead>
                         <tbody>
                             {products.map((p, i) => (
-                                <tr key={i} className="border-b border-gray-100 hover:bg-gray-50 transition-colors text-center font-bold">
+                                <tr
+                                    key={i}
+                                    className={`border-b border-gray-100 hover:bg-gray-50 transition-colors text-center font-bold ${editMode ? "cursor-pointer" : ""} ${selectedId === p.id ? "bg-blue-50 border-blue-300" : ""}`}
+                                    onClick={() => editMode && handleSelectForEdit(p)}
+                                >
+                                    {editMode && (
+                                        <td className="px-3 py-4 border-r-2 border-black">
+                                            <div className="flex justify-center">
+                                                <div className={`w-5 h-5 border-2 border-black flex items-center justify-center ${selectedId === p.id ? "bg-blue-600" : "bg-white"}`}>
+                                                    {selectedId === p.id && <span className="text-white text-xs font-black">✓</span>}
+                                                </div>
+                                            </div>
+                                        </td>
+                                    )}
                                     <td className="px-5 py-4 font-mono text-[10px] text-gray-400 border-r-2 border-black last:border-r-0" title={p.id}>
                                         {p.id}
                                     </td>
@@ -570,7 +788,7 @@ export default function AdminDashboardClient({ initialOrders, initialProducts, i
                         `}</style>
 
                         {active === "orders" && <OrdersSection orders={orders} />}
-                        {active === "products" && <ProductsSection products={products} />}
+                        {active === "products" && <ProductsSection products={products} setProducts={setProducts} />}
                         {active === "customers" && <CustomersSection customers={customers} />}
                     </div>
 
