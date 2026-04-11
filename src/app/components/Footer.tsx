@@ -56,7 +56,7 @@ export default function Footer() {
         <p className="text-gray-500 text-sm">&copy; 2026 Alora. All rights reserved.</p>
         <div className="footer-social flex gap-4">
           <Link
-            href="/admin"
+            href="/admin/login"
             className="text-[10px] uppercase tracking-[0.2em] text-gray-500 hover:text-white border border-white/10 hover:border-white/40 px-4 py-2 transition-all duration-300"
           >
             Admin Access
