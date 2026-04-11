@@ -24,3 +24,9 @@ export async function POST(req: Request) {
         return NextResponse.json({ success: false, message: "Server error" }, { status: 500 });
     }
 }
+
+export async function DELETE() {
+    const cookieStore = await cookies();
+    cookieStore.delete("admin_session");
+    return NextResponse.json({ success: true });
+}

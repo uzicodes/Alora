@@ -2,6 +2,8 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
+import { useRouter } from "next/navigation";
+
 
 
 type Tab = "orders" | "products" | "customers";
@@ -478,13 +480,24 @@ export default function AdminDashboardClient({ initialOrders, initialProducts, i
     const [orders, setOrders] = useState<Order[]>(initialOrders);
     const [products, setProducts] = useState<Product[]>(initialProducts);
     const [customers, setCustomers] = useState<Customer[]>(initialUsers);
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        try {
+            await fetch("/api/admin/auth", { method: "DELETE" });
+            router.push("/");
+        } catch (err) {
+            console.error("Logout failed:", err);
+        }
+    };
+
 
 
 
     return (
         <div className="min-h-screen bg-[#F4F4F5] flex selection:bg-black selection:text-white">
 
-            <div className="w-72 bg-black text-white p-8 hidden md:flex flex-col flex-shrink-0 border-r-4 border-black">
+            <div className="w-72 bg-black text-white p-8 hidden md:flex flex-col flex-shrink-0 border-r-4 border-black h-screen sticky top-0">
                 <div className="mb-12 border-b-2 border-white/20 pb-6">
                     <h2 className="text-3xl font-black tracking-tighter uppercase mb-1">Alora</h2>
                     <p className="text-[10px] tracking-[0.3em] text-gray-400 uppercase font-bold">Admin Portal</p>
@@ -506,15 +519,15 @@ export default function AdminDashboardClient({ initialOrders, initialProducts, i
                 </nav>
 
                 <div className="mt-auto pt-8 border-t-2 border-white/20">
-                    <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                            <span className="text-black font-black text-sm">A</span>
-                        </div>
-                        <div>
-                            <p className="text-xs font-bold uppercase tracking-widest">Admin</p>
-                            <p className="text-[10px] capitalize text-gray-400">System Root</p>
-                        </div>
-                    </div>
+                    <button 
+                        onClick={handleLogout}
+                        className="mx-auto w-fit px-10 bg-red-600 text-white py-3 border-2 border-red-600 font-black uppercase tracking-widest text-[10px] hover:bg-red-700 hover:border-red-700 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(255,0,0,0.3)] active:translate-y-1 active:shadow-none flex items-center gap-3 group"
+                    >
+                        LOGOUT
+                        <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M17 16l4-4m0 0l-4-4m4 4H7" />
+                        </svg>
+                    </button>
                 </div>
             </div>
 
