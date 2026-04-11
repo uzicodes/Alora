@@ -2,10 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Ubuntu } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
-import { CartProvider } from "./components/CartContext";
+import LayoutShell from "./components/LayoutShell";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "react-hot-toast";
 
@@ -76,14 +74,9 @@ export default function RootLayout({
         >
           <ScrollToTop />
           <Toaster position="bottom-right" />
-          <Navbar />
-
-          <CartProvider>
-            <main style={{ paddingTop: 56 }}>
+          <LayoutShell>
               {children}
-            </main>
-          </CartProvider>
-          <Footer />
+          </LayoutShell>
         </body>
       </html>
     </ClerkProvider>
