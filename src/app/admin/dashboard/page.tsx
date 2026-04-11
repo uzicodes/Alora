@@ -12,13 +12,21 @@ export default async function AdminDashboard() {
         redirect("/admin/login");
     }
 
-    // Fetch orders from DB in real-time
-    const orders = await prisma.order.findMany({
-        orderBy: {
-            orderTime: 'desc'
-        }
-    });
+    // Fetch orders and products from DB in real-time
+    const [orders, products] = await Promise.all([
+        prisma.order.findMany({
+            orderBy: { orderTime: 'desc' }
+        }),
+        prisma.product.findMany({
+            orderBy: { brand: 'asc' }
+        })
+    ]);
 
-    return <AdminDashboardClient initialOrders={JSON.parse(JSON.stringify(orders))} />;
+    return (
+        <AdminDashboardClient 
+            initialOrders={JSON.parse(JSON.stringify(orders))} 
+            initialProducts={JSON.parse(JSON.stringify(products))} 
+        />
+    );
 }
 

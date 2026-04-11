@@ -7,8 +7,6 @@ import { createPortal } from "react-dom";
 type Tab = "orders" | "products" | "customers";
 
 
-// ─── Types ───
-
 type Order = {
     id: string;
     userId: string;
@@ -24,14 +22,18 @@ type Order = {
 };
 
 
-const products = [
-    { id: "PRD-001", name: "Silk Drape Midi", category: "Dresses", stock: 42, price: "BDT 248.00", status: "Active" },
-    { id: "PRD-002", name: "Linen Co-ord Set", category: "Sets", stock: 18, price: "BDT 185.00", status: "Active" },
-    { id: "PRD-003", name: "Velvet Blazer", category: "Outerwear", stock: 0, price: "BDT 320.00", status: "Out of Stock" },
-    { id: "PRD-004", name: "Cotton Wrap Dress", category: "Dresses", stock: 67, price: "BDT 140.00", status: "Active" },
-    { id: "PRD-005", name: "Structured Tote", category: "Accessories", stock: 5, price: "BDT 95.00", status: "Low Stock" },
-    { id: "PRD-006", name: "Crêpe Palazzo Set", category: "Sets", stock: 29, price: "BDT 210.00", status: "Active" },
-];
+type Product = {
+    id: string;
+    name: string;
+    brand: string;
+    price: number;
+    sizeMl: number;
+    concentration: string;
+    gender: string;
+    imageUrls: string[];
+    createdAt: string;
+};
+
 
 const customers = [
     { id: "USR-001", name: "Rania Chowdhury", email: "rania@email.com", orders: 14, spent: "BDT 2,840", joined: "Jan 2025", status: "VIP" },
@@ -239,51 +241,76 @@ function OrdersSection({ orders }: { orders: Order[] }) {
 
 // ─── Section: Products ───
 
-function ProductsSection() {
+function ProductsSection({ products }: { products: Product[] }) {
     return (
         <div>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 {[
-                    { label: "Total Products", value: "248", delta: "↑ 6 added this week" },
-                    { label: "Active", value: "231", delta: "93% of catalogue" },
-                    { label: "Out of Stock", value: "9", delta: "↓ 3 from last week" },
-                    { label: "Low Stock", value: "8", delta: "Needs restocking" },
+                    { label: "Total Products", value: products.length.toString() },
+                    { label: "Brands", value: Array.from(new Set(products.map(p => p.brand))).length.toString() },
                 ].map(s => (
                     <div key={s.label} className="bg-white border-2 border-black p-5 shadow-[4px_4px_0px_0px_#000]">
                         <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2">{s.label}</p>
                         <p className="text-3xl font-black tracking-tight">{s.value}</p>
-                        <p className="text-xs text-emerald-600 font-bold mt-1">{s.delta}</p>
                     </div>
                 ))}
+
+                {/* Add Item Button */}
+                <button className="bg-black text-green-300 p-5 border-2 border-black shadow-[4px_4px_0px_0px_#000] flex flex-col items-center justify-center gap-1 hover:bg-gray-800 transition-all active:translate-x-1 active:translate-y-1 active:shadow-none group">
+                    <span className="text-xl font-black uppercase tracking-tighter truncate w-full">+ Add Item</span>
+                </button>
+
+                {/* Edit Item Button */}
+                <button className="bg-black text-blue-400 p-5 border-2 border-black shadow-[4px_4px_0px_0px_#000] flex flex-col items-center justify-center gap-1 hover:bg-gray-800 transition-all active:translate-x-1 active:translate-y-1 active:shadow-none group">
+                    <span className="text-xl font-black uppercase tracking-tighter truncate w-full">Edit Item</span>
+                </button>
             </div>
 
-            <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#000] overflow-hidden">
+            <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#000]">
                 <div className="px-6 py-4 border-b-2 border-black flex items-center justify-between bg-black text-white">
                     <h3 className="font-black uppercase tracking-widest text-sm">All Products</h3>
-                    <button className="text-xs font-black uppercase tracking-widest border border-white px-3 py-1 hover:bg-white hover:text-black transition-colors">+ Add Product</button>
                 </div>
                 <div className="overflow-x-auto">
                     <table className="w-full text-sm">
                         <thead>
                             <tr className="border-b-2 border-black bg-gray-50">
-                                {["ID", "Name", "Category", "Stock", "Price", "Status"].map(h => (
-                                    <th key={h} className="px-5 py-3 text-left text-[10px] font-black uppercase tracking-widest text-gray-500">{h}</th>
+                                {[
+                                    "ID",
+                                    "Brand",
+                                    "Name",
+                                    "Price",
+                                    "Gender",
+                                    "Concentration",
+                                    "ML",
+                                    "ImageURL"
+                                ].map(h => (
+                                    <th key={h} className="px-5 py-3 text-center text-[10px] font-black uppercase tracking-widest text-gray-500 whitespace-nowrap border-r-2 border-black last:border-r-0">{h}</th>
                                 ))}
                             </tr>
                         </thead>
                         <tbody>
                             {products.map((p, i) => (
-                                <tr key={i} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
-                                    <td className="px-5 py-4 font-mono text-xs text-gray-500">{p.id}</td>
-                                    <td className="px-5 py-4 font-semibold">{p.name}</td>
-                                    <td className="px-5 py-4 text-gray-600">{p.category}</td>
-                                    <td className="px-5 py-4">
-                                        <span className={`font-black ${p.stock === 0 ? "text-red-600" : p.stock < 10 ? "text-amber-600" : "text-black"}`}>
-                                            {p.stock}
-                                        </span>
+                                <tr key={i} className="border-b border-gray-100 hover:bg-gray-50 transition-colors text-center font-bold">
+                                    <td className="px-5 py-4 font-mono text-[10px] text-gray-400 border-r-2 border-black last:border-r-0" title={p.id}>
+                                        {p.id}
                                     </td>
-                                    <td className="px-5 py-4 font-black">{p.price}</td>
-                                    <td className="px-5 py-4"><Badge label={p.status} /></td>
+                                    <td className="px-5 py-4 uppercase border-r-2 border-black last:border-r-0">{p.brand}</td>
+                                    <td className="px-5 py-4 border-r-2 border-black last:border-r-0 truncate max-w-[150px]">{p.name}</td>
+                                    <td className="px-5 py-4 font-black border-r-2 border-black last:border-r-0">BDT {p.price.toLocaleString()}</td>
+                                    <td className="px-5 py-4 uppercase text-xs border-r-2 border-black last:border-r-0">{p.gender}</td>
+                                    <td className="px-3 py-4 uppercase text-[10px] border-r-2 border-black last:border-r-0 max-w-[80px] truncate">{p.concentration}</td>
+                                    <td className="px-5 py-4 border-r-2 border-black last:border-r-0">{p.sizeMl}ML</td>
+                                    <td className="px-5 py-4 border-r-2 border-black last:border-r-0">
+                                        <div className="flex justify-center">
+                                            {p.imageUrls[0] ? (
+                                                <div className="w-10 h-10 border-2 border-black overflow-hidden shadow-[2px_2px_0px_0px_#000]">
+                                                    <img src={p.imageUrls[0]} alt={p.name} className="w-full h-full object-cover" />
+                                                </div>
+                                            ) : (
+                                                <span className="text-gray-300 text-[10px]">NO IMG</span>
+                                            )}
+                                        </div>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>
@@ -294,7 +321,7 @@ function ProductsSection() {
     );
 }
 
-// ─── Section: Customers ───────────────────────────────────────────────────────
+// ─── Section: Customers ───
 
 function CustomersSection() {
     return (
@@ -363,9 +390,11 @@ const tabs: { id: Tab; label: string }[] = [
     { id: "customers", label: "Customers" },
 ];
 
-export default function AdminDashboardClient({ initialOrders }: { initialOrders: Order[] }) {
+export default function AdminDashboardClient({ initialOrders, initialProducts }: { initialOrders: Order[], initialProducts: Product[] }) {
     const [active, setActive] = useState<Tab>("orders");
     const [orders, setOrders] = useState<Order[]>(initialOrders);
+    const [products, setProducts] = useState<Product[]>(initialProducts);
+
 
     return (
         <div className="min-h-screen bg-[#F4F4F5] flex selection:bg-black selection:text-white">
@@ -430,21 +459,7 @@ export default function AdminDashboardClient({ initialOrders }: { initialOrders:
                             </h1>
                         </div>
 
-                        {/* Desktop tab switcher inside header */}
-                        <div className="hidden md:flex items-center gap-1 border-2 border-black p-1">
-                            {tabs.map(tab => (
-                                <button
-                                    key={tab.id}
-                                    onClick={() => setActive(tab.id)}
-                                    className={`px-4 py-2 text-xs font-black uppercase tracking-widest transition-colors ${active === tab.id
-                                        ? "bg-black text-white"
-                                        : "text-gray-500 hover:text-black"
-                                        }`}
-                                >
-                                    {tab.label}
-                                </button>
-                            ))}
-                        </div>
+
                     </div>
 
                     {/* Tab Content */}
@@ -457,7 +472,7 @@ export default function AdminDashboardClient({ initialOrders }: { initialOrders:
                         `}</style>
 
                         {active === "orders" && <OrdersSection orders={orders} />}
-                        {active === "products" && <ProductsSection />}
+                        {active === "products" && <ProductsSection products={products} />}
                         {active === "customers" && <CustomersSection />}
                     </div>
 
