@@ -3,7 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export default async function AdminDashboard() {
-    // Protect the route: Check if the admin cookie exists
+    // Protect the route: Check admin cookie exists
     const cookieStore = await cookies();
     const adminSession = cookieStore.get("admin_session");
 
