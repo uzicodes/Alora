@@ -401,12 +401,12 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
                 ))}
 
                 {/* Add Item Button */}
-                <button onClick={handleAddClick} className="bg-black text-green-300 p-5 border-2 border-black shadow-[4px_4px_0px_0px_#000] flex flex-col items-center justify-center gap-1 hover:bg-gray-800 transition-all active:translate-x-1 active:translate-y-1 active:shadow-none group">
+                <button onClick={handleAddClick} className="bg-transparent text-green-600 p-5 border-2 border-green-600 transition-all hover:bg-green-600 hover:text-white active:translate-y-1 group">
                     <span className="text-xl font-black uppercase tracking-tighter truncate w-full">+ Add Item</span>
                 </button>
 
                 {/* Edit Item Button */}
-                <button onClick={handleEditClick} className={`p-5 border-2 border-black shadow-[4px_4px_0px_0px_#000] flex flex-col items-center justify-center gap-1 hover:bg-gray-800 transition-all active:translate-x-1 active:translate-y-1 active:shadow-none group ${editMode ? "bg-blue-600 text-white" : "bg-black text-blue-400"}`}>
+                <button onClick={handleEditClick} className={`p-5 border-2 transition-all active:translate-y-1 group ${editMode ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700" : "bg-transparent text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white"}`}>
                     <span className="text-xl font-black uppercase tracking-tighter truncate w-full">{editMode ? "Cancel Edit" : "Edit Item"}</span>
                 </button>
             </div>
@@ -592,7 +592,7 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
                                     <td className="px-5 py-4 border-r-2 border-black last:border-r-0">
                                         <div className="flex justify-center">
                                             {p.imageUrls[0] ? (
-                                                <div className="w-10 h-10 border-2 border-black overflow-hidden shadow-[2px_2px_0px_0px_#000]">
+                                                <div className="w-10 h-10 border-2 border-black overflow-hidden">
                                                     <img src={p.imageUrls[0]} alt={p.name} className="w-full h-full object-cover" />
                                                 </div>
                                             ) : (
