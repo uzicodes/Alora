@@ -3,14 +3,16 @@ import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
     try {
-        // Grab all order details sent from the checkout page
-        const { total, cus_name, cus_email, cus_phone, cartItems, userId } = await req.json();
+        // Grab all order details from checkout page
+        const { total, cus_name, cus_email, cus_phone, street, city, postCode, cartItems, userId } = await req.json();
 
         const store_id = process.env.SSLCOMMERZ_STORE_ID as string;
         const store_passwd = process.env.SSLCOMMERZ_STORE_PASSWORD as string;
 
         // Generate a unique transaction ID for this order
         const tran_id = `REF-${Date.now()}`;
+        const shippingAddress = `${street}, ${city}, ${postCode}`;
+
 
         // Save a PENDING order to the database BEFORE calling SSLCommerz
         await prisma.order.create({
@@ -19,6 +21,7 @@ export async function POST(req: Request) {
                 name: cus_name,
                 email: cus_email,
                 phone: cus_phone,
+                address: shippingAddress,
                 items: cartItems,       // as JSON (array)
                 totalCost: total,
                 paymentType: "SSLCommerz",
