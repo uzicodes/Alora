@@ -115,45 +115,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Our Promise Section */}
-      <section style={{ padding: '80px 24px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 60, alignItems: 'center' }}>
-          <div>
-            <div style={{ position: 'relative', width: '100%', aspectRatio: '4/5', background: '#f5f5f5' }}>
-              <Image
-                src="/alora_BG2.png"
-                alt="Alora luxury craftsmanship"
-                fill
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
-          </div>
-          <div>
-            <p style={{
-              fontSize: 11, fontWeight: 500, letterSpacing: 4, textTransform: 'uppercase',
-              color: '#ca3131ff', marginBottom: 16
-            }}>
-              Our Promise
-            </p>
-            <h2 style={{
-              fontFamily: 'var(--font-david-libre)', fontSize: 'clamp(26px, 3vw, 38px)',
-              fontWeight: 300, letterSpacing: 3, textTransform: 'uppercase', marginBottom: 24
-            }}>
-              Luxury Without Compromise
-            </h2>
-            <div style={{ width: 40, height: 1, background: '#C28D10', marginBottom: 28 }}></div>
-            <p style={{ fontSize: 14, lineHeight: 1.9, color: '#666', fontWeight: 300, marginBottom: 20 }}>
-              At Alora, we believe every individual deserves access to the world&apos;s finest fragrances.
-              Our curated collection spans the most iconic perfume houses — from Dior and Chanel to
-              niche artisans like Creed and Tom Ford.
-            </p>
-            <p style={{ fontSize: 14, lineHeight: 1.9, color: '#666', fontWeight: 300 }}>
-              With complimentary gift wrapping, free shipping on orders over $150, and a dedicated
-              concierge team, every Alora experience is designed to feel extraordinary.
-            </p>
-          </div>
-        </div>
-      </section>
 
       {/* Stats Section */}
       <section style={{ background: '#111', color: '#fff', padding: '10px 24px' }}>
