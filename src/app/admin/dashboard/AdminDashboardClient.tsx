@@ -15,6 +15,7 @@ type Order = {
     name: string;
     email: string;
     phone: string | null;
+    address: string;
     orderTime: string;
     items: any;
     totalCost: number;
@@ -251,6 +252,7 @@ function OrdersSection({ orders }: { orders: Order[] }) {
                                     "Name",
                                     "Email",
                                     "Phone",
+                                    "Address",
                                     "Order Time",
                                     "Items",
                                     "Total Cost",
@@ -273,6 +275,7 @@ function OrdersSection({ orders }: { orders: Order[] }) {
                                     <td className="px-5 py-4 font-semibold whitespace-nowrap border-r-2 border-black last:border-r-0">{o.name}</td>
                                     <td className="px-5 py-4 text-gray-600 whitespace-nowrap border-r-2 border-black last:border-r-0">{o.email}</td>
                                     <td className="px-5 py-4 text-gray-500 whitespace-nowrap border-r-2 border-black last:border-r-0">{o.phone || "-"}</td>
+                                    <td className="px-5 py-4 text-gray-600 whitespace-nowrap border-r-2 border-black last:border-r-0 truncate max-w-[150px] text-[10px]" title={o.address}>{o.address}</td>
                                     <td className="px-5 py-4 text-gray-400 text-xs whitespace-nowrap border-r-2 border-black last:border-r-0">
                                         {new Date(o.orderTime).toLocaleString()}
                                     </td>
