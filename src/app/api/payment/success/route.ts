@@ -29,19 +29,17 @@ export async function POST(req: Request) {
 
             // Call utility function to send a success email
             try {
-                await sendOrderEmail(
-                    updatedOrder.email,
-                    updatedOrder.name,
-                    transactionId,
-                    updatedOrder.totalCost
-                );
+                await sendOrderEmail(updatedOrder);
             } catch (emailError) {
                 console.error("Failed to send order email:", emailError);
             }
-        }
 
-        // Redirect user to success page
-        return NextResponse.redirect(new URL("/success", req.url), 303);
+            // Redirect user to success page using an absolute URL
+            return NextResponse.redirect(new URL("/success", req.url), 303);
+        } else {
+            console.warn(`Payment status not VALID for transaction ${transactionId}, status: ${status}`);
+            return NextResponse.redirect(new URL("/", req.url), 303);
+        }
 
     } catch (error) {
         console.error("Payment success handler failed:", error);
