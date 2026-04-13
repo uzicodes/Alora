@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { sendOrderEmail } from "@/lib/mail";
 
 export async function POST(req: Request) {
+    const baseUrl = process.env.NODE_ENV === 'production' ? 'https://aloraa.vercel.app' : 'http://localhost:3000';
     try {
         // SSLCommerz sends form-data in the POST with the transaction details
         const formData = await req.formData();
@@ -17,7 +18,7 @@ export async function POST(req: Request) {
 
         if (!transactionId) {
             console.error("No tran_id received from SSLCommerz");
-            return NextResponse.redirect(new URL("/checkout", req.url), 303);
+            return NextResponse.redirect(`${baseUrl}/checkout`, 303);
         }
 
         if (status === 'VALID') {
@@ -35,15 +36,15 @@ export async function POST(req: Request) {
             }
 
             // Redirect user to success page using an absolute URL
-            return NextResponse.redirect(new URL("/success", req.url), 303);
+            return NextResponse.redirect(`${baseUrl}/success`, 303);
         } else {
             console.warn(`Payment status not VALID for transaction ${transactionId}, status: ${status}`);
-            return NextResponse.redirect(new URL("/", req.url), 303);
+            return NextResponse.redirect(`${baseUrl}/`, 303);
         }
 
     } catch (error) {
         console.error("Payment success handler failed:", error);
         // Even if DB update fails, still redirect 
-        return NextResponse.redirect(new URL("/success", req.url), 303);
+        return NextResponse.redirect(`${baseUrl}/success`, 303);
     }
 }

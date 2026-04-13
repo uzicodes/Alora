@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
 export async function POST(req: Request) {
+    const baseUrl = process.env.NODE_ENV === 'production' ? 'https://aloraa.vercel.app' : 'http://localhost:3000';
     try {
         // Grab all order details from checkout page
         const { total, cus_name, cus_email, cus_phone, street, city, postCode, cartItems, userId } = await req.json();
@@ -37,9 +38,9 @@ export async function POST(req: Request) {
         formData.append("total_amount", total.toString());
         formData.append("currency", "BDT");
         formData.append("tran_id", tran_id);
-        formData.append("success_url", `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/payment/success?tran_id=${tran_id}`);
-        formData.append("fail_url", `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/payment/fail?tran_id=${tran_id}`);
-        formData.append("cancel_url", `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/payment/cancel?tran_id=${tran_id}`);
+        formData.append("success_url", `${baseUrl}/api/payment/success?tran_id=${tran_id}`);
+        formData.append("fail_url", `${baseUrl}/api/payment/fail?tran_id=${tran_id}`);
+        formData.append("cancel_url", `${baseUrl}/api/payment/cancel?tran_id=${tran_id}`);
 
         // Customer Info
         formData.append("cus_name", cus_name);
