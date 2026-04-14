@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { sendOrderEmail } from "@/lib/mail";
 
 export async function POST(req: Request) {
     try {
@@ -11,7 +12,7 @@ export async function POST(req: Request) {
         // Prisma Client has been generated with 'address' field.
 
         // Save a PENDING order to the database for COD
-        await prisma.order.create({
+        const createdOrder = await prisma.order.create({
             data: {
                 userId: userId || "", // Ensure userId is provided or handled appropriately
                 name: cus_name,
@@ -22,9 +23,16 @@ export async function POST(req: Request) {
                 totalCost: total,
                 paymentType: "COD",
                 trxId: tran_id,
-                paymentStatus: "PENDING", // PENDING since it's COD
+                paymentStatus: "PENDING", // COD
             },
         });
+
+        // Send order confirmation email
+        try {
+            await sendOrderEmail(createdOrder);
+        } catch (emailError) {
+            console.error("Failed to send COD order email:", emailError);
+        }
 
         return NextResponse.json({ success: true, message: "Order placed successfully" });
     } catch (error) {
