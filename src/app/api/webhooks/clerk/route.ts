@@ -1,6 +1,7 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
+import { sendWelcomeEmail } from "@/lib/mail";
 
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
@@ -58,7 +59,7 @@ export async function POST(req: Request) {
     const { id: clerkId, email_addresses, first_name, last_name, unsafe_metadata } = data;
 
     // Combine first and last name
-    const name = [first_name, last_name].filter(Boolean).join(" ") || "Unknown";
+    const name = [first_name, last_name].filter(Boolean).join(" ") || "Guest";
 
     // Get primary email
     const primaryEmail = email_addresses?.length > 0
@@ -97,6 +98,15 @@ export async function POST(req: Request) {
     } catch (error) {
       console.error("Error saving user to database:", error);
       return new Response("Error executing database operation", { status: 500 });
+    }
+
+    if (eventType === "user.created") {
+      try {
+        await sendWelcomeEmail({ name, email: primaryEmail });
+        console.log(`Welcome email triggered for ${primaryEmail}`);
+      } catch (emailError) {
+        console.error("Failed to trigger welcome email:", emailError);
+      }
     }
   }
 
