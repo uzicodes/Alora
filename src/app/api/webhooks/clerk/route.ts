@@ -10,10 +10,12 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
 export async function POST(req: Request) {
-  const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
+  // 1. CHANGED THIS LINE TO LOOK FOR THE NEW SECRET
+  const WEBHOOK_SECRET = process.env.WELCOME_WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
-    throw new Error("Please add WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local");
+    // 2. UPDATED THE ERROR MESSAGE
+    throw new Error("Please add WELCOME_WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local");
   }
 
   // Get the headers
