@@ -1,12 +1,12 @@
 export function generateOrderEmailHtml(order: any) {
-    const formattedDate = new Date(order.orderTime).toLocaleDateString("en-US", {
-        year: "numeric", month: "short", day: "numeric"
-    });
-    
-    const formattedAddress = order.address ? order.address.replace(/,/g, '<br>') : "Not Provided";
-    const itemsJson = typeof order.items === 'string' ? JSON.parse(order.items) : (order.items || []);
-    
-    const itemsHtml = itemsJson.map((item: any) => `
+  const formattedDate = new Date(order.orderTime).toLocaleDateString("en-US", {
+    year: "numeric", month: "short", day: "numeric"
+  });
+
+  const formattedAddress = order.address ? order.address.replace(/,/g, '<br>') : "Not Provided";
+  const itemsJson = typeof order.items === 'string' ? JSON.parse(order.items) : (order.items || []);
+
+  const itemsHtml = itemsJson.map((item: any) => `
              <tr>
               <td align="left" class="esdev-adapt-off" style="Margin:0;padding:10px 20px">
                <table cellpadding="0" cellspacing="0" class="esdev-mso-table" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-spacing:0px;width:560px">
@@ -54,7 +54,7 @@ export function generateOrderEmailHtml(order: any) {
              </tr>
     `).join("");
 
-    return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  return `<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html dir="ltr" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
  <head>
   <meta charset="UTF-8">
@@ -62,8 +62,15 @@ export function generateOrderEmailHtml(order: any) {
   <meta name="x-apple-disable-message-reformatting">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta content="telephone=no" name="format-detection">
-  <title>Alora Order Confirmed: #${order.id.slice(-8)}</title>
-  <style type="text/css">.rollover:hover .rollover-first {
+  <title>Alora Order Confirmed: #${order.id.slice(-8).toUpperCase()}</title>
+  <style type="text/css">
+  @font-face {
+    font-family: 'Kharaissa';
+    src: url('https://aloraa.vercel.app/fonts/Kharaissa.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  .rollover:hover .rollover-first {
   max-height:0px!important;
   display:none!important;
 }
@@ -118,10 +125,13 @@ a[x-apple-data-detectors],
        <table cellpadding="0" cellspacing="0" align="center" class="es-content" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-spacing:0px;width:100%;table-layout:fixed !important">
          <tr>
           <td align="center" style="padding:0;Margin:0;padding-top:40px;">
-           <table bgcolor="#ffffff" align="center" cellpadding="0" cellspacing="0" class="es-content-body" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-spacing:0px;background-color:#FFFFFF;width:600px;border: 4px solid black; box-shadow: 6px 6px 0px 0px #000;">
+           <table bgcolor="#f2ecaa" align="center" cellpadding="0" cellspacing="0" class="es-content-body" role="none" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-spacing:0px;background-color:#f2ecaa;width:600px;border: 4px solid black; box-shadow: 6px 6px 0px 0px #000;">
              <tr>
               <td align="center" style="padding:40px;Margin:0">
-               <h1 style="text-transform: uppercase; font-weight: 900; letter-spacing: 4px; border-bottom: 4px solid black; padding-bottom: 20px; font-size: 32px; color: #000;">ALORA</h1>
+                <h1 style="font-family: 'Kharaissa', sans-serif; font-weight: normal; text-transform: uppercase; letter-spacing: 5px; border-bottom: 4px solid black; padding-bottom: 20px; font-size: 32px; color: #000; Margin: 0; text-align: center;">
+                  <img src="https://aloraa.vercel.app/alora_BG.png" alt="Alora Logo" width="32" height="32" style="vertical-align: middle; margin-right: 8px; display: inline-block;" />
+                  <span style="vertical-align: middle;">ALORA</span>
+                </h1>
               </td>
              </tr>
              <tr>
@@ -131,7 +141,7 @@ a[x-apple-data-detectors],
                   <td align="center" valign="top" style="padding:0;Margin:0;width:520px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-spacing:0px">
                      <tr>
-                      <td align="center" style="padding:0 0 10px;Margin:0"><h1 class="es-m-txt-c" style="Margin:0;font-family:arial, 'helvetica neue', helvetica, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:32px;font-style:normal;font-weight:bold;color:#333333">Order confirmed!</h1></td>
+                      <td align="center" style="padding:0 0 10px;Margin:0"><h1 class="es-m-txt-c" style="Margin:0;font-family:arial, 'helvetica neue', helvetica, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:32px;font-style:normal;font-weight:bold;color:#333333">Your Order is Confirmed!</h1></td>
                      </tr>
                    </table></td>
                  </tr>
@@ -144,7 +154,7 @@ a[x-apple-data-detectors],
                   <td align="center" valign="top" style="padding:0;Margin:0;width:560px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-spacing:0px">
                      <tr>
-                      <td align="center" style="padding:0;Margin:0"><h2 class="es-m-txt-c" style="Margin:0;font-family:arial, 'helvetica neue', helvetica, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:22px;font-style:normal;font-weight:bold;color:#333333">Order&nbsp;<a target="_blank" href="#" style="mso-line-height-rule:exactly;text-decoration:none;color:#000;font-size:22px">#${order.id.slice(-8)}</a></h2></td>
+                      <td align="center" style="padding:0;Margin:0"><h2 class="es-m-txt-c" style="Margin:0;font-family:arial, 'helvetica neue', helvetica, sans-serif;mso-line-height-rule:exactly;letter-spacing:0;font-size:22px;font-style:normal;font-weight:bold;color:#333333">Order ID&nbsp;<a target="_blank" href="#" style="mso-line-height-rule:exactly;text-decoration:none;color:#000;font-size:22px">#${order.id.slice(-8).toUpperCase()}</a></h2></td>
                      </tr>
                      <tr>
                       <td align="center" class="es-m-p0r es-m-p0l" style="Margin:0;padding:5px 40px"><p style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px">${formattedDate}</p></td>
@@ -181,7 +191,7 @@ a[x-apple-data-detectors],
                   <td align="center" class="es-m-p0r es-m-p20b" style="padding:0;Margin:0;width:280px">
                    <table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-spacing:0px">
                      <tr>
-                      <td align="left" style="padding:0;Margin:0"><p class="es-m-txt-c" style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px">Customer: <strong style="font-weight:700 !important">${order.email}</strong></p><p class="es-m-txt-c" style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px">Order number:&nbsp;<strong style="font-weight:700 !important">#${order.id.slice(-8)}</strong></p><p class="es-m-txt-c" style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px">Payment method:&nbsp;<strong style="font-weight:700 !important">${order.paymentType}</strong></p></td>
+                      <td align="left" style="padding:0;Margin:0"><p class="es-m-txt-c" style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px">Customer: <strong style="font-weight:700 !important">${order.email}</strong></p><p class="es-m-txt-c" style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px">Transaction ID:&nbsp;<strong style="font-weight:700 !important">${order.trxId}</strong></p><p class="es-m-txt-c" style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:21px;letter-spacing:0;color:#333333;font-size:14px">Payment method:&nbsp;<strong style="font-weight:700 !important">${order.paymentType}</strong></p></td>
                      </tr>
                    </table></td>
                  </tr>

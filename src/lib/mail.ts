@@ -11,9 +11,9 @@ const transporter = nodemailer.createTransport({
 
 export const sendOrderEmail = async (order: any) => {
     const mailOptions = {
-        from: `"Alora System" <${process.env.GMAIL_USER}>`,
+        from: `"ALORA PERFUMES" <${process.env.GMAIL_USER}>`,
         to: order.email,
-        subject: `Order Confirmed: #${order.id.slice(-8)}`,
+        subject: `Your Order #${order.id.slice(-8).toUpperCase()} is Confirmed`,
         html: generateOrderEmailHtml(order),
     };
 
