@@ -9,17 +9,19 @@ type AddToCartButtonProps = {
   price: number;
   image: string;
   category: string;
+  sizeMl: number;
+  concentration: string;
   variant?: 'desktop' | 'mobile' | 'both';
 };
 
-export default function AddToCartButton({ id, name, price, image, category, variant = 'both' }: AddToCartButtonProps) {
+export default function AddToCartButton({ id, name, price, image, category, sizeMl, concentration, variant = 'both' }: AddToCartButtonProps) {
   const { addToCart } = useCart();
   const [added, setAdded] = useState(false);
 
   const handleClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    addToCart({ id, name, price, image, category });
+    addToCart({ id, name, price, image, category, sizeMl, concentration });
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
   };

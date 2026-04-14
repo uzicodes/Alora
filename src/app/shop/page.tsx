@@ -74,6 +74,8 @@ export default async function ShopAllPage() {
                           price={product.price}
                           image={image}
                           category={category}
+                          sizeMl={product.sizeMl}
+                          concentration={product.concentration}
                           variant="desktop"
                         />
                       </div>
@@ -102,6 +104,8 @@ export default async function ShopAllPage() {
                         price={product.price}
                         image={image}
                         category={category}
+                        sizeMl={product.sizeMl}
+                        concentration={product.concentration}
                         variant="mobile"
                       />
                     </div>

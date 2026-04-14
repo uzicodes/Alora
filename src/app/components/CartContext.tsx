@@ -11,6 +11,8 @@ export type CartItem = {
   image: string;
   category: string;
   quantity: number;
+  sizeMl: number;
+  concentration: string;
 };
 
 type CartContextType = {

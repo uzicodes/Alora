@@ -49,6 +49,8 @@ export default async function MenPage() {
                       price={product.price}
                       image={image}
                       category={category}
+                      sizeMl={product.sizeMl}
+                      concentration={product.concentration}
                       variant="desktop"
                     />
                   </div>
@@ -77,6 +79,8 @@ export default async function MenPage() {
                     price={product.price}
                     image={image}
                     category={category}
+                    sizeMl={product.sizeMl}
+                    concentration={product.concentration}
                     variant="mobile"
                   />
                 </div>
