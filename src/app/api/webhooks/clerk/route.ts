@@ -10,11 +10,9 @@ const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
 export async function POST(req: Request) {
-  // 1. CHANGED THIS LINE TO LOOK FOR THE NEW SECRET
   const WEBHOOK_SECRET = process.env.WELCOME_WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
-    // 2. UPDATED THE ERROR MESSAGE
     throw new Error("Please add WELCOME_WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local");
   }
 
@@ -56,6 +54,9 @@ export async function POST(req: Request) {
   const { id } = evt.data;
   const eventType = evt.type;
 
+  // -------------------------------------------------------------------
+  // HANDLE USER CREATION & UPDATES
+  // -------------------------------------------------------------------
   if (eventType === "user.created" || eventType === "user.updated") {
     const data = evt.data as any;
     const { id: clerkId, email_addresses, first_name, last_name, unsafe_metadata } = data;
@@ -109,6 +110,27 @@ export async function POST(req: Request) {
       } catch (emailError) {
         console.error("Failed to trigger welcome email:", emailError);
       }
+    }
+  }
+
+  // -------------------------------------------------------------------
+  // HANDLE USER DELETION
+  // -------------------------------------------------------------------
+  if (eventType === "user.deleted") {
+    const { id: clerkId } = evt.data;
+
+    if (!clerkId) {
+      return new Response("Missing user ID", { status: 400 });
+    }
+
+    try {
+      // Delete the user from your database
+      await prisma.user.delete({
+        where: { id: clerkId },
+      });
+      console.log(`Success: User ${clerkId} was deleted from the database.`);
+    } catch (error) {
+      console.error("Error deleting user from database:", error);
     }
   }
 
