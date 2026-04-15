@@ -176,9 +176,8 @@ export default function AboutPage() {
               <div style={{ marginBottom: 28 }}>
                 <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: '#ca3131ff', marginBottom: 8, textDecoration: 'underline' }}>Address</p>
                 <p style={{ fontSize: 14, color: '#444', lineHeight: 1.7 }}>
-                  123 Luxury Avenue, Suite 500<br />
-                  Beverly Hills, CA 90210<br />
-                  United States
+                  Gulshan Avenue- 1212<br />
+                  Dhaka, Bangladesh<br />
                 </p>
               </div>
 
@@ -189,7 +188,7 @@ export default function AboutPage() {
 
               <div style={{ marginBottom: 28 }}>
                 <p style={{ fontSize: 11, letterSpacing: 3, textTransform: 'uppercase', color: '#ca3131ff', marginBottom: 8, textDecoration: 'underline' }}>Phone</p>
-                <p style={{ fontSize: 14, color: '#444' }}>+1 (800) ALORA-LX</p>
+                <p style={{ fontSize: 14, color: '#444' }}>+8801711111111</p>
               </div>
 
               <div>
@@ -197,7 +196,6 @@ export default function AboutPage() {
                 <p style={{ fontSize: 14, color: '#444', lineHeight: 1.7 }}>
                   Monday – Friday: 9:00 AM – 7:00 PM<br />
                   Saturday: 10:00 AM – 5:00 PM<br />
-                  Sunday: Closed
                 </p>
               </div>
             </div>
