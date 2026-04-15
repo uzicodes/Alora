@@ -10,12 +10,57 @@ import styles from "./login.module.css";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { signIn, fetchStatus } = useSignIn();
+  const { signIn, fetchStatus, setActive } = useSignIn() as any;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
+  const [resetCode, setResetCode] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [error, setError] = useState("");
 
   const isLoading = fetchStatus === "fetching";
+
+  const handleForgotPasswordClick = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (!signIn) return;
+    if (!email) {
+      setError("Please enter your email first");
+      return;
+    }
+    setError("");
+    try {
+      await signIn.resetPasswordEmailCode.sendCode({ emailAddress: email });
+      setIsForgotPassword(true);
+    } catch (err: any) {
+      console.error(err);
+      setError(err.errors?.[0]?.longMessage || err.errors?.[0]?.message || "An error occurred");
+    }
+  };
+
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!signIn) return;
+    setError("");
+    try {
+      // Verify code 
+      await signIn.resetPasswordEmailCode.verifyCode({ code: resetCode });
+
+      // code OK? -> submit the new password
+      if (signIn.status === "needs_new_password") {
+        await signIn.resetPasswordEmailCode.submitPassword({ password: newPassword });
+      }
+
+      // Finalize the login & redirect
+      if (signIn.status === "complete") {
+        await signIn.finalize();
+        router.push("/shop");
+      }
+    } catch (err: any) {
+      console.error(err);
+      setError(err.errors?.[0]?.longMessage || err.errors?.[0]?.message || "Invalid code or weak password");
+    }
+  };
 
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,9 +94,8 @@ export default function LoginPage() {
   };
 
   return (
-    // Reverted the styling of this div to use items-center and remove paddingTop
     <div className="flex min-h-screen items-start justify-center p-4 bg-white" style={{ paddingTop: '140px' }}>
-      <form className={styles.form} onSubmit={handleEmailLogin}>
+      <form className={styles.form} onSubmit={isForgotPassword ? handleResetPassword : handleEmailLogin}>
         <div className={styles.title} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
             <Image src="/alora_BG.png" alt="Alora Logo" width={32} height={32} className="rounded-full" priority />
@@ -59,6 +103,12 @@ export default function LoginPage() {
           </div>
           <span style={{ marginTop: '4px', fontSize: '0.75rem' }}>WELCOME BACK</span>
         </div>
+
+        {error && (
+          <div className="w-full text-red-500 text-sm mb-2 text-center font-medium">
+            {error}
+          </div>
+        )}
 
         <input
           type="email"
@@ -69,35 +119,103 @@ export default function LoginPage() {
           required
         />
 
-        <div className={styles.inputGroup}>
-          <input
-            type={showPassword ? "text" : "password"}
-            className={styles.input}
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <button 
-            type="button" 
-            className={styles.eyeIcon} 
-            onClick={() => setShowPassword(!showPassword)}
-            aria-label={showPassword ? "Hide password" : "Show password"}
-          >
-            {showPassword ? (
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22"/></svg>
-            ) : (
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-            )}
-          </button>
-        </div>
+        {!isForgotPassword ? (
+          <>
+            <div className={styles.inputGroup}>
+              <input
+                type={showPassword ? "text" : "password"}
+                className={styles.input}
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                className={styles.eyeIcon}
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22" /></svg>
+                ) : (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>
+                )}
+              </button>
+            </div>
 
-        {/* Captcha element for Clerk Bot Protection */}
-        <div id="clerk-captcha"></div>
+            <div className="w-full max-w-[300px] flex justify-end mb-2 mt-1 pr-4">
+              <span
+                className="text-[10px] text-gray-500 hover:text-black cursor-pointer"
+                onClick={handleForgotPasswordClick}
+              >
+                Forgot password?
+              </span>
+            </div>
 
-        <button className={styles["button-confirm"]} type="submit" disabled={isLoading || !signIn}>
-          {isLoading ? "Logging in..." : "Login →"}
-        </button>
+            {/* Captcha element for Clerk Bot Protection */}
+            <div id="clerk-captcha"></div>
+
+            <button className={styles["button-confirm"]} type="submit" disabled={isLoading || !signIn}>
+              {isLoading ? "Logging in..." : "Login →"}
+            </button>
+          </>
+        ) : (
+          <>
+            <input
+              type="text"
+              className={styles.input}
+              placeholder="Enter 6-digit Reset Code"
+              value={resetCode}
+              onChange={(e) => setResetCode(e.target.value)}
+              required
+              style={{ marginTop: '16px' }}
+            />
+            <div className={styles.inputGroup} style={{ marginTop: '16px' }}>
+              <input
+                type={showPassword ? "text" : "password"}
+                className={styles.input}
+                placeholder="Enter New Password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                className={styles.eyeIcon}
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22" /></svg>
+                ) : (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>
+                )}
+              </button>
+            </div>
+
+            <button
+              className={styles["button-confirm"]}
+              type="submit"
+              disabled={isLoading || !signIn}
+              style={{ marginTop: '24px' }}
+            >
+              Reset Password
+            </button>
+
+            <div className="w-full text-center mt-4">
+              <span
+                className="text-sm text-gray-500 hover:text-black cursor-pointer"
+                onClick={() => {
+                  setIsForgotPassword(false);
+                  setError("");
+                }}
+              >
+                Back to login
+              </span>
+            </div>
+          </>
+        )}
 
         <div className="w-full mt-4 text-sm font-semibold text-gray-700 text-center">
           Or continue with
