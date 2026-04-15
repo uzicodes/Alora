@@ -59,7 +59,7 @@ function SuccessContent() {
         </div>
 
         <h1 style={{ fontSize: '2.2rem', margin: '10px 0 0 0', fontWeight: 900, textTransform: 'uppercase', lineHeight: '1.1' }}>
-          Payment Successful!
+          {transactionId.startsWith('COD-') ? 'Order Successful' : 'Payment Successful!'}
         </h1>
 
         <p style={{ fontSize: '0.9rem', fontWeight: 600, color: '#222', margin: 0, padding: '0 10px' }}>
@@ -67,7 +67,7 @@ function SuccessContent() {
         </p>
 
         <p style={{ fontSize: '0.9rem', fontWeight: 700, color: '#333', margin: '15px 0 0 0', textAlign: 'center' }}>
-          Transaction ID: <span style={{ fontWeight: 900, fontFamily: 'monospace', textDecoration: 'underline' }}>{transactionId}</span>
+          <span style={{ color: 'red' }}>Transaction ID:</span> <span style={{ fontWeight: 900, fontFamily: 'monospace', textDecoration: 'underline' }}>{transactionId}</span>
         </p>
 
         <div style={{ display: 'flex', gap: '15px', marginTop: '20px', width: '100%', flexDirection: 'row' }}>
