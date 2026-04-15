@@ -34,7 +34,7 @@ export async function POST(req: Request) {
             console.error("Failed to send COD order email:", emailError);
         }
 
-        return NextResponse.json({ success: true, message: "Order placed successfully" });
+        return NextResponse.json({ success: true, message: "Order placed successfully", tran_id: tran_id });
     } catch (error) {
         console.error("Payment COD API failed:", error);
         return NextResponse.json({ success: false, message: "Internal Server Error" }, { status: 500 });

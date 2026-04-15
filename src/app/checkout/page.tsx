@@ -131,7 +131,7 @@ export default function CheckoutPage() {
         if (data.success) {
           clearCart();
           setIsSubmitting(false);
-          router.push("/success");
+          router.push(`/success?tran_id=${data.tran_id}`);
         } else {
           alert("Failed to create COD order. Please try again.");
           setIsSubmitting(false);

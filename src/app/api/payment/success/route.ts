@@ -36,7 +36,7 @@ export async function POST(req: Request) {
             }
 
             // Redirect user to success page using an absolute URL
-            return NextResponse.redirect(`${baseUrl}/success`, 303);
+            return NextResponse.redirect(`${baseUrl}/success?tran_id=${transactionId}`, 303);
         } else {
             console.warn(`Payment status not VALID for transaction ${transactionId}, status: ${status}`);
             return NextResponse.redirect(`${baseUrl}/`, 303);
