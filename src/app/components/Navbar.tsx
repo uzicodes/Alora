@@ -1,18 +1,49 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useUser, useClerk } from "@clerk/nextjs";
 
+const BRANDS = [
+  "Afnan", "Armaf", "Burberry", "Calvin Klein", "Chanel", "Creed",
+  "Davidoff", "Dior", "Dolce & Gabbana", "Giorgio Armani", "Gucci",
+  "Hugo Boss", "Jean Paul", "Lattafa", "Louis Vuitton", "Mancera",
+  "Paco Rabanne", "Prada", "Ralph Lauren", "Rassasi", "Rayhaan",
+  "Tom Ford", "Valentino", "Versace", "Victoria's Secret", "Xerjoff",
+  "YSL", "Zara"
+];
+
 export default function Navbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const { isSignedIn, user } = useUser();
   
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleBrandClick = (e: React.MouseEvent<HTMLAnchorElement>, brand: string) => {
+    e.preventDefault();
+    setSearchOpen(false);
+    setSearchQuery('');
+    setMobileOpen(false);
+
+    const targetId = `brand-${brand.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`;
+    const targetUrl = `/shop#${targetId}`;
+
+    if (pathname === '/shop') {
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        window.history.pushState(null, '', targetUrl);
+      }
+    } else {
+      router.push(targetUrl);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,18 +88,12 @@ export default function Navbar() {
               <a href="#" onClick={(e) => e.preventDefault()}>Brands</a>        
               <div className="dropdown-menu">
                 <div className="brands-grid">
-                  {[
-                    "Afnan", "Armaf", "Burberry", "Calvin Klein", "Chanel", "Creed",
-                    "Davidoff", "Dior", "Dolce & Gabbana", "Giorgio Armani", "Gucci",
-                    "Hugo Boss", "Jean Paul", "Lattafa", "Louis Vuitton", "Mancera",
-                    "Paco Rabanne", "Prada", "Ralph Lauren", "Rassasi", "Rayhaan",
-                    "Tom Ford", "Valentino", "Versace", "Victoria's Secret", "Xerjoff",
-                    "YSL", "Zara"
-                  ].map((brand) => (
+                  {BRANDS.map((brand) => (
                     <Link
                       key={brand}
                       href={`/shop#brand-${brand.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`}
                       className="brand-link"
+                      onClick={(e) => handleBrandClick(e, brand)}
                     >
                       {brand}
                     </Link>
@@ -154,13 +179,64 @@ export default function Navbar() {
               placeholder="Search for fragrances, brands..."
               autoFocus={searchOpen}
               className="search-input"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
-            <button className="search-close" onClick={() => setSearchOpen(false)}>
+            <button className="search-close" onClick={() => { setSearchOpen(false); setSearchQuery(''); }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">   
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
+
+            {searchQuery.trim().length > 0 && (
+              <div 
+                className="search-results" 
+                style={{
+                  position: 'absolute',
+                  top: '100%',
+                  left: 0,
+                  right: 0,
+                  backgroundColor: 'rgba(0, 0, 0, 0.98)',
+                  backdropFilter: 'blur(15px)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  borderTop: 'none',
+                  maxHeight: '300px',
+                  overflowY: 'auto',
+                  marginTop: '10px',
+                  zIndex: 10,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  padding: '10px 0'
+                }}
+              >
+                {BRANDS.filter(brand => brand.toLowerCase().includes(searchQuery.toLowerCase())).map(brand => (
+                  <Link
+                    key={brand}
+                    href={`/shop#brand-${brand.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`}
+                    style={{
+                      padding: '12px 20px',
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      textDecoration: 'none',
+                      fontFamily: 'var(--font-body)',
+                      fontSize: '14px',
+                      display: 'block',
+                      transition: 'color 0.3s'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = '#C28D10'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)'}
+                    onClick={(e) => handleBrandClick(e, brand)}
+                  >
+                    {brand}
+                  </Link>
+                ))}
+                {BRANDS.filter(brand => brand.toLowerCase().includes(searchQuery.toLowerCase())).length === 0 && (
+                  <div style={{ padding: '12px 20px', color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-body)', fontSize: '14px' }}>
+                    No brands found matching "{searchQuery}"
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </nav>
