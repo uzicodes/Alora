@@ -40,6 +40,12 @@ const pillars: Pillar[] = [
 export default function Home() {
   const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
+  const [heroVisible, setHeroVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setHeroVisible(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
@@ -50,90 +56,245 @@ export default function Home() {
 
         body {
           font-family: 'Jost', sans-serif;
-          background: #faf8f5;
+          background: #C2B280;
           color: #1a1410;
           overflow-x: hidden;
         }
 
-        /* HERO */
+        /* ==================== HERO SECTION ==================== */
         .alora-hero {
           position: relative;
-          min-height: calc(100vh - 80px); 
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          overflow: hidden;
-        }
-        .hero-left {
+          min-height: 100vh;
           display: flex;
           flex-direction: column;
+          align-items: center;
           justify-content: center;
-          padding: 40px 60px 80px; 
-          position: relative;
-          z-index: 2;
+          overflow: hidden;
+          background: #C2B280;
+          padding: 60px 40px 80px;
         }
+
+        /* Ambient glow behind bottle */
+        .hero-glow {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 700px;
+          height: 700px;
+          background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.06) 40%, transparent 70%);
+          pointer-events: none;
+          z-index: 0;
+          animation: glowPulse 6s ease-in-out infinite;
+        }
+        @keyframes glowPulse {
+          0%, 100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1); }
+          50% { opacity: 1; transform: translate(-50%, -50%) scale(1.08); }
+        }
+
+        /* Subtle grid/noise overlay */
+        .hero-noise {
+          position: absolute;
+          inset: 0;
+          background-image: radial-gradient(circle at 1px 1px, rgba(0,0,0,0.03) 1px, transparent 0);
+          background-size: 40px 40px;
+          pointer-events: none;
+          z-index: 0;
+        }
+
+        /* Decorative corner accents */
+        .hero-corner {
+          position: absolute;
+          width: 60px;
+          height: 60px;
+          border-color: rgba(26,20,16,0.15);
+          border-style: solid;
+          z-index: 1;
+          transition: border-color 0.6s;
+        }
+        .hero-corner:hover { border-color: rgba(26,20,16,0.35); }
+        .hc-tl { top: 30px; left: 30px; border-width: 1px 0 0 1px; }
+        .hc-tr { top: 30px; right: 30px; border-width: 1px 1px 0 0; }
+        .hc-bl { bottom: 30px; left: 30px; border-width: 0 0 1px 1px; }
+        .hc-br { bottom: 30px; right: 30px; border-width: 0 1px 1px 0; }
+
+        /* Top eyebrow */
         .hero-eyebrow {
           font-size: 10px;
           font-weight: 300;
-          letter-spacing: 0.4em;
+          letter-spacing: 0.5em;
           text-transform: uppercase;
-          color: #b8956a;
-          margin-bottom: 32px;
+          color: #6b5a3e;
+          margin-bottom: 20px;
           display: flex;
           align-items: center;
           gap: 16px;
+          z-index: 2;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-        .hero-eyebrow::before {
+        .hero-eyebrow.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        .hero-eyebrow::before,
+        .hero-eyebrow::after {
           content: '';
           display: block;
           width: 40px;
           height: 1px;
-          background: #b8956a;
+          background: linear-gradient(90deg, transparent, #6b5a3e);
         }
+        .hero-eyebrow::after {
+          background: linear-gradient(90deg, #6b5a3e, transparent);
+        }
+
+        /* Main headline */
         .hero-headline {
           font-family: 'Cormorant Garamond', serif;
-          font-size: clamp(54px, 6vw, 88px);
+          font-size: clamp(42px, 5.5vw, 80px);
           font-weight: 300;
-          line-height: 1.0;
+          line-height: 1.05;
           color: #1a1410;
-          margin-bottom: 36px;
+          text-align: center;
+          margin-bottom: 16px;
+          z-index: 2;
+          opacity: 0;
+          transform: translateY(30px);
+          transition: all 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s;
+        }
+        .hero-headline.visible {
+          opacity: 1;
+          transform: translateY(0);
         }
         .hero-headline em {
           font-style: italic;
-          color: #b8956a;
+          color: #6b5a3e;
         }
-        .hero-body {
-          font-size: 14px;
+
+        /* Subheadline text */
+        .hero-sub {
+          font-size: 13px;
           font-weight: 300;
           line-height: 1.9;
-          color: #7a6d5e;
-          max-width: 380px;
-          margin-bottom: 56px;
-          letter-spacing: 0.03em;
+          color: rgba(26,20,16,0.5);
+          max-width: 460px;
+          text-align: center;
+          margin-bottom: 40px;
+          letter-spacing: 0.04em;
+          z-index: 2;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.3s;
         }
+        .hero-sub.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        /* Hero image wrapper */
+        .hero-image-wrap {
+          position: relative;
+          z-index: 2;
+          margin-bottom: 50px;
+          opacity: 0;
+          transform: translateY(40px) scale(0.95);
+          transition: all 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
+        }
+        .hero-image-wrap.visible {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+        .hero-image-inner {
+          position: relative;
+          width: clamp(320px, 38vw, 520px);
+          height: clamp(380px, 45vw, 620px);
+          filter: drop-shadow(0 20px 60px rgba(0,0,0,0.15)) drop-shadow(0 8px 20px rgba(0,0,0,0.2));
+          transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.6s;
+        }
+        .hero-image-inner:hover {
+          transform: translateY(-8px) rotate(1deg);
+          filter: drop-shadow(0 30px 80px rgba(0,0,0,0.2)) drop-shadow(0 12px 30px rgba(0,0,0,0.3));
+        }
+
+        /* Floating ring around image */
+        .hero-ring {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 110%;
+          height: 110%;
+          border: 1px solid rgba(184,149,106,0.1);
+          border-radius: 50%;
+          animation: ringRotate 20s linear infinite;
+          pointer-events: none;
+        }
+        .hero-ring::after {
+          content: '';
+          position: absolute;
+          top: -3px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 6px;
+          height: 6px;
+          background: #b8956a;
+          border-radius: 50%;
+        }
+        @keyframes ringRotate {
+          from { transform: translate(-50%, -50%) rotate(0deg); }
+          to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* CTA row */
         .hero-cta-row {
           display: flex;
           align-items: center;
           gap: 36px;
+          z-index: 2;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.55s;
+        }
+        .hero-cta-row.visible {
+          opacity: 1;
+          transform: translateY(0);
         }
         .btn-hero-primary {
           display: inline-flex;
           align-items: center;
           gap: 12px;
-          padding: 16px 40px;
-          background: #1a1410;
-          color: #faf8f5;
+          padding: 18px 48px;
+          background: linear-gradient(135deg, #1a1410, #2e2820);
+          color: #f0ece6;
           font-family: 'Jost', sans-serif;
           font-size: 10px;
           font-weight: 500;
           letter-spacing: 0.3em;
           text-transform: uppercase;
           text-decoration: none;
-          transition: background 0.3s, transform 0.2s;
+          border: none;
+          position: relative;
+          overflow: hidden;
+          transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .btn-hero-primary::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, #2e2820, #1a1410);
+          opacity: 0;
+          transition: opacity 0.3s;
         }
         .btn-hero-primary:hover {
-          background: #2e2820;
-          transform: translateY(-1px);
+          transform: translateY(-2px);
+          box-shadow: 0 8px 30px rgba(26,20,16,0.3);
         }
+        .btn-hero-primary:hover::before { opacity: 1; }
+        .btn-hero-primary span,
+        .btn-hero-primary svg { position: relative; z-index: 1; }
+
         .btn-hero-ghost {
           display: inline-flex;
           align-items: center;
@@ -142,115 +303,109 @@ export default function Home() {
           font-weight: 300;
           letter-spacing: 0.3em;
           text-transform: uppercase;
-          color: #5a5040;
+          color: rgba(26,20,16,0.5);
           text-decoration: none;
-          border-bottom: 1px solid rgba(90,80,64,0.4);
+          border-bottom: 1px solid rgba(26,20,16,0.25);
           padding-bottom: 4px;
           transition: color 0.3s, border-color 0.3s;
         }
-        .btn-hero-ghost:hover { color: #b8956a; border-color: #b8956a; }
+        .btn-hero-ghost:hover { color: #1a1410; border-color: #1a1410; }
 
-        .hero-right {
-          position: relative;
-          overflow: hidden;
-        }
-        .hero-right-bg {
+        /* Scroll indicator */
+        .hero-scroll-indicator {
           position: absolute;
-          inset: 0;
-          background: radial-gradient(ellipse at 60% 50%, #f0e8dc 0%, #faf8f5 70%);
-        }
-        .hero-image-container {
-          position: absolute;
-          inset: 0;
+          bottom: 40px;
+          left: 50%;
+          transform: translateX(-50%);
           display: flex;
+          flex-direction: column;
           align-items: center;
-          justify-content: center;
+          gap: 10px;
+          z-index: 2;
         }
-        .hero-image-overlay {
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(135deg, rgba(250,248,245,0.4) 0%, transparent 60%);
-        }
-        .hero-scroll-hint {
-          position: absolute;
-          bottom: 48px;
-          left: 60px;
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          font-size: 9px;
+        .scroll-text {
+          font-size: 8px;
           font-weight: 300;
           letter-spacing: 0.35em;
           text-transform: uppercase;
-          color: #b8a898;
-          z-index: 2;
+          color: rgba(26,20,16,0.3);
         }
         .scroll-line {
           width: 1px;
-          height: 48px;
-          background: linear-gradient(to bottom, transparent, #b8a898);
+          height: 40px;
+          background: linear-gradient(to bottom, rgba(26,20,16,0.4), transparent);
           animation: scrollAnim 2s ease-in-out infinite;
         }
         @keyframes scrollAnim {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 1; }
+          0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+          50% { opacity: 1; transform: scaleY(1); }
         }
-        .hero-stat-badge {
+
+        /* Side stats */
+        .hero-side-stats {
           position: absolute;
+          right: 50px;
           top: 50%;
-          right: 60px;
           transform: translateY(-50%);
           display: flex;
           flex-direction: column;
-          align-items: center;
-          gap: 8px;
-          z-index: 3;
+          gap: 32px;
+          z-index: 2;
         }
-        .stat-circle {
-          width: 100px;
-          height: 100px;
-          border: 1px solid rgba(184,149,106,0.4);
-          border-radius: 50%;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          backdrop-filter: blur(4px);
-          background: rgba(250,248,245,0.6);
+        .side-stat {
+          text-align: right;
+          opacity: 0;
+          transform: translateX(20px);
+          transition: all 0.6s ease;
         }
-        .stat-num {
+        .side-stat.visible {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        .side-stat-num {
           font-family: 'Cormorant Garamond', serif;
-          font-size: 28px;
+          font-size: 32px;
           font-weight: 300;
-          color: #b8956a;
+          color: #6b5a3e;
           line-height: 1;
         }
-        .stat-label {
+        .side-stat-label {
           font-size: 8px;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #a89880;
-          margin-top: 2px;
+          color: rgba(26,20,16,0.35);
+          margin-top: 4px;
         }
+        .side-stat-line {
+          width: 24px;
+          height: 1px;
+          background: rgba(26,20,16,0.15);
+          margin-left: auto;
+          margin-top: 8px;
+        }
+
+        /* Large BG text */
         .hero-bg-text {
           position: absolute;
-          bottom: -40px;
-          right: -20px;
+          bottom: 10%;
+          left: 50%;
+          transform: translateX(-50%);
           font-family: 'Cormorant Garamond', serif;
-          font-size: 200px;
+          font-size: clamp(120px, 18vw, 280px);
           font-weight: 300;
-          color: rgba(184,149,106,0.07);
+          color: rgba(26,20,16,0.04);
           line-height: 1;
           pointer-events: none;
           user-select: none;
           z-index: 0;
+          white-space: nowrap;
         }
 
-        /* MARQUEE */
+        /* ==================== MARQUEE ==================== */
         .alora-marquee {
-          border-top: 1px solid rgba(184,149,106,0.2);
-          border-bottom: 1px solid rgba(184,149,106,0.2);
-          background: rgba(184,149,106,0.05);
+          border-top: 1px solid rgba(26,20,16,0.1);
+          border-bottom: 1px solid rgba(26,20,16,0.1);
+          background: rgba(26,20,16,0.04);
           overflow: hidden;
           padding: 18px 0;
         }
@@ -270,11 +425,11 @@ export default function Home() {
           font-weight: 300;
           letter-spacing: 0.3em;
           text-transform: uppercase;
-          color: #8a7d6e;
+          color: rgba(26,20,16,0.4);
           padding: 0 40px;
         }
         .marquee-diamond {
-          color: #b8956a;
+          color: #6b5a3e;
           font-size: 6px;
         }
         @keyframes marqueeScroll {
@@ -282,9 +437,10 @@ export default function Home() {
           100% { transform: translateX(-50%); }
         }
 
-        /* FEATURED PRODUCTS */
+        /* ==================== FEATURED PRODUCTS ==================== */
         .section-products {
           padding: 120px 60px;
+          background: #C2B280;
         }
         .section-heading-block {
           display: flex;
@@ -300,7 +456,7 @@ export default function Home() {
           font-weight: 300;
           letter-spacing: 0.4em;
           text-transform: uppercase;
-          color: #b8956a;
+          color: #6b5a3e;
           margin-bottom: 20px;
         }
         .section-tag-row::after {
@@ -308,7 +464,7 @@ export default function Home() {
           display: block;
           width: 48px;
           height: 1px;
-          background: #b8956a;
+          background: #6b5a3e;
         }
         .section-h2 {
           font-family: 'Cormorant Garamond', serif;
@@ -326,15 +482,15 @@ export default function Home() {
           font-weight: 300;
           letter-spacing: 0.3em;
           text-transform: uppercase;
-          color: #a89880;
+          color: rgba(26,20,16,0.45);
           text-decoration: none;
-          border-bottom: 1px solid rgba(168,152,128,0.4);
+          border-bottom: 1px solid rgba(26,20,16,0.2);
           padding-bottom: 4px;
           transition: color 0.3s;
           white-space: nowrap;
           margin-bottom: 6px;
         }
-        .view-all-link:hover { color: #b8956a; }
+        .view-all-link:hover { color: #1a1410; }
 
         /* product grid */
         .products-grid {
@@ -346,7 +502,7 @@ export default function Home() {
           position: relative;
           overflow: hidden;
           cursor: pointer;
-          background: #f0ebe3;
+          background: #b5a778;
           aspect-ratio: 3/4;
           text-decoration: none;
           display: block;
@@ -362,11 +518,11 @@ export default function Home() {
         .product-overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(to top, rgba(26,20,16,0.85) 0%, rgba(26,20,16,0.15) 50%, transparent 100%);
+          background: linear-gradient(to top, rgba(10,10,10,0.9) 0%, rgba(10,10,10,0.2) 50%, transparent 100%);
           transition: opacity 0.4s;
         }
         .product-cell:hover .product-overlay {
-          background: linear-gradient(to top, rgba(26,20,16,0.92) 0%, rgba(26,20,16,0.35) 60%, rgba(26,20,16,0.05) 100%);
+          background: linear-gradient(to top, rgba(10,10,10,0.95) 0%, rgba(10,10,10,0.4) 60%, rgba(10,10,10,0.05) 100%);
         }
         .product-badge {
           position: absolute;
@@ -376,7 +532,7 @@ export default function Home() {
           font-weight: 400;
           letter-spacing: 0.25em;
           text-transform: uppercase;
-          color: #faf8f5;
+          color: #f0ece6;
           background: #1a1410;
           padding: 4px 10px;
           z-index: 2;
@@ -405,7 +561,7 @@ export default function Home() {
           font-weight: 300;
           letter-spacing: 0.25em;
           text-transform: uppercase;
-          color: #a89880;
+          color: rgba(250,248,245,0.6);
           margin-bottom: 12px;
         }
         .product-price-row {
@@ -417,7 +573,7 @@ export default function Home() {
           font-family: 'Cormorant Garamond', serif;
           font-size: 16px;
           font-weight: 400;
-          color: #d4b896;
+          color: #faf8f5;
         }
         .product-add-btn {
           opacity: 0;
@@ -427,8 +583,8 @@ export default function Home() {
           font-weight: 400;
           letter-spacing: 0.2em;
           text-transform: uppercase;
-          color: #1a1410;
-          background: #faf8f5;
+          color: #f0ece6;
+          background: #1a1410;
           border: none;
           padding: 6px 12px;
           cursor: pointer;
@@ -438,7 +594,7 @@ export default function Home() {
           transform: translateY(0);
         }
 
-        /* STORY SECTION */
+        /* ==================== STORY SECTION ==================== */
         .story-section {
           display: grid;
           grid-template-columns: 1fr 1fr;
@@ -454,7 +610,7 @@ export default function Home() {
           flex-direction: column;
           justify-content: center;
           padding: 100px 80px 100px 80px;
-          background: #f5f0e8;
+          background: #b8a870;
           position: relative;
         }
         .story-text-side::before {
@@ -463,13 +619,13 @@ export default function Home() {
           top: 0; left: 0;
           width: 1px;
           height: 100%;
-          background: linear-gradient(to bottom, transparent, rgba(184,149,106,0.3), transparent);
+          background: linear-gradient(to bottom, transparent, rgba(26,20,16,0.1), transparent);
         }
         .story-number {
           font-family: 'Cormorant Garamond', serif;
           font-size: 120px;
           font-weight: 300;
-          color: rgba(184,149,106,0.08);
+          color: rgba(26,20,16,0.06);
           line-height: 1;
           position: absolute;
           top: 40px;
@@ -479,36 +635,37 @@ export default function Home() {
           font-size: 14px;
           font-weight: 300;
           line-height: 2;
-          color: #7a6d5e;
+          color: rgba(26,20,16,0.55);
           max-width: 440px;
           margin-bottom: 20px;
           letter-spacing: 0.02em;
         }
         .story-body + .story-body { margin-top: 0; }
 
-        /* PILLARS */
+        /* ==================== PILLARS ==================== */
         .pillars-section {
           padding: 100px 60px;
-          border-top: 1px solid rgba(184,149,106,0.15);
+          border-top: 1px solid rgba(26,20,16,0.1);
+          background: #C2B280;
         }
         .pillars-grid {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
           gap: 1px;
           margin-top: 72px;
-          background: rgba(184,149,106,0.12);
+          background: rgba(26,20,16,0.08);
         }
         .pillar-card {
-          background: #faf8f5;
+          background: #c8be8e;
           padding: 48px 36px;
           transition: background 0.3s;
         }
-        .pillar-card:hover { background: #f5f0e8; }
+        .pillar-card:hover { background: #d0c89c; }
         .pillar-num {
           font-family: 'Cormorant Garamond', serif;
           font-size: 13px;
           font-weight: 300;
-          color: #b8956a;
+          color: #6b5a3e;
           letter-spacing: 0.1em;
           margin-bottom: 28px;
         }
@@ -524,17 +681,17 @@ export default function Home() {
           font-size: 12px;
           font-weight: 300;
           line-height: 1.8;
-          color: #a89880;
+          color: rgba(26,20,16,0.45);
           letter-spacing: 0.02em;
         }
         .pillar-line {
           width: 32px;
           height: 1px;
-          background: rgba(184,149,106,0.5);
+          background: rgba(26,20,16,0.15);
           margin: 24px 0 0;
         }
 
-        /* EDITORIAL BANNER */
+        /* ==================== EDITORIAL BANNER ==================== */
         .editorial-banner {
           position: relative;
           height: 500px;
@@ -546,7 +703,7 @@ export default function Home() {
         .editorial-banner-bg {
           position: absolute;
           inset: 0;
-          background: #f5f0e8;
+          background: #b8a870;
         }
         .editorial-content {
           position: relative;
@@ -569,19 +726,19 @@ export default function Home() {
           font-weight: 300;
           letter-spacing: 0.4em;
           text-transform: uppercase;
-          color: #a89880;
+          color: rgba(26,20,16,0.35);
         }
         .editorial-border {
           position: absolute;
           inset: 40px;
-          border: 1px solid rgba(184,149,106,0.2);
+          border: 1px solid rgba(26,20,16,0.1);
           pointer-events: none;
         }
         .editorial-corner {
           position: absolute;
           width: 20px;
           height: 20px;
-          border-color: #b8956a;
+          border-color: rgba(26,20,16,0.25);
           border-style: solid;
           opacity: 0.5;
         }
@@ -590,7 +747,7 @@ export default function Home() {
         .ec-bl { bottom: 40px; left: 40px; border-width: 0 0 1px 1px; }
         .ec-br { bottom: 40px; right: 40px; border-width: 0 1px 1px 0; }
 
-        /* ANIMATIONS */
+        /* ==================== ANIMATIONS ==================== */
         @keyframes fadeInUp {
           from { opacity: 0; transform: translateY(30px); }
           to { opacity: 1; transform: translateY(0); }
@@ -603,10 +760,15 @@ export default function Home() {
         .delay-3 { animation-delay: 0.45s; }
         .delay-4 { animation-delay: 0.65s; }
 
+        /* ==================== RESPONSIVE ==================== */
         @media (max-width: 1024px) {
-          .alora-hero { grid-template-columns: 1fr; }
-          .hero-left { padding: 40px 32px 80px; }
-          .hero-right { display: none; }
+          .alora-hero { padding: 40px 24px 60px; min-height: auto; }
+          .hero-side-stats { display: none; }
+          .hero-corner { display: none; }
+          .hero-image-inner {
+            width: clamp(260px, 60vw, 400px) !important;
+            height: clamp(320px, 72vw, 480px) !important;
+          }
           .section-products { padding: 80px 32px; }
           .products-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
           .story-section { grid-template-columns: 1fr; }
@@ -616,45 +778,48 @@ export default function Home() {
           .pillars-grid { grid-template-columns: repeat(2, 1fr); }
           .section-heading-block { flex-direction: column; align-items: flex-start; gap: 20px; }
         }
+        @media (max-width: 640px) {
+          .hero-headline { font-size: clamp(32px, 10vw, 48px); }
+          .hero-image-inner {
+            width: clamp(220px, 70vw, 320px) !important;
+            height: clamp(270px, 85vw, 400px) !important;
+          }
+          .products-grid { grid-template-columns: repeat(2, 1fr); }
+          .pillars-grid { grid-template-columns: 1fr; }
+        }
       `}</style>
 
-      {/* HERO */}
+      {/* ==================== HERO ==================== */}
       <section className="alora-hero">
-        <div className="hero-left">
-          <p className="hero-eyebrow fade-in-up">Luxury Fragrance Maison</p>
-          <h1 className="hero-headline fade-in-up delay-1">
-            Find Your<br />
-            <em>Signature</em><br />
-            Scent
-          </h1>
-          <p className="hero-body fade-in-up delay-2">
-            Crafted from the world's rarest ingredients, each Alora fragrance is a meditation on elegance — a story worn on skin.
-          </p>
-          <div className="hero-cta-row fade-in-up delay-3">
-            <Link href="/shop" className="btn-hero-primary">
-              Explore Collection
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
-            </Link>
-          </div>
-        </div>
-        <div className="hero-right">
-          <div className="hero-right-bg"></div>
-          <div className="hero-image-container">
-            <Image
-              src="/hero_perfume.png"
-              alt="Alora luxury perfume"
-              width={440}
-              height={580}
-              priority
-              style={{ position: "relative", zIndex: 1, objectFit: "contain" }}
-            />
-          </div>
-          <div className="hero-image-overlay"></div>
+        {/* Background elements */}
+        <div className="hero-glow"></div>
+        <div className="hero-noise"></div>
 
+
+        {/* Corner decorations */}
+        <div className="hero-corner hc-tl"></div>
+        <div className="hero-corner hc-tr"></div>
+        <div className="hero-corner hc-bl"></div>
+        <div className="hero-corner hc-br"></div>
+
+
+        {/* Hero Image - Center */}
+        <div className={`hero-image-wrap ${heroVisible ? 'visible' : ''}`}>
+          <div className="hero-image-inner">
+            <Image
+              src="/hero_image.png"
+              alt="Alora luxury perfume bottle"
+              fill
+              priority
+              unoptimized
+              style={{ objectFit: "contain" }}
+            />
+
+          </div>
         </div>
       </section>
 
-      {/* MARQUEE */}
+      {/* ==================== MARQUEE ==================== */}
       <div className="alora-marquee">
         <div className="marquee-track" ref={marqueeRef}>
           {[...Array(2)].map((_, gi) => (
@@ -670,7 +835,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* FEATURED PRODUCTS */}
+      {/* ==================== FEATURED PRODUCTS ==================== */}
       <section className="section-products">
         <div className="section-heading-block">
           <div>
@@ -715,35 +880,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* STORY */}
-      <section className="story-section" id="about-story">
-        <div className="story-visual">
-          <Image
-            src="/alora_BG2.png"
-            alt="The Alora atelier"
-            fill
-            sizes="50vw"
-            style={{ objectFit: "cover" }}
-          />
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to right, transparent, rgba(245,240,232,0.3))" }}></div>
-        </div>
-        <div className="story-text-side">
-          <div className="section-tag-row" style={{ marginBottom: "24px" }}>Our Story</div>
-          <h2 className="section-h2" style={{ marginBottom: "36px" }}>The Art of<br /><em style={{ fontStyle: "italic", color: "#b8956a" }}>Perfumery</em></h2>
-          <p className="story-body">
-            Founded on the belief that fragrance is an extension of identity, Alora combines centuries-old artisanal techniques with contemporary design. Every bottle is a masterpiece — from hand-selected raw materials sourced across five continents, to the meticulous blending process that can take up to three years to perfect.
-          </p>
-          <p className="story-body" style={{ marginTop: "20px", marginBottom: "48px" }}>
-            We believe luxury should be felt, not just seen. Each Alora scent is designed to evolve throughout the day, revealing new layers and leaving an unforgettable impression.
-          </p>
-          <Link href="/about" className="btn-hero-ghost" style={{ alignSelf: "flex-start" }}>
-            Discover Our Maison
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
-          </Link>
-        </div>
-      </section>
-
-      {/* PILLARS */}
+      {/* ==================== PILLARS ==================== */}
       <section className="pillars-section">
         <div style={{ maxWidth: "600px" }}>
           <div className="section-tag-row">The Alora Promise</div>
@@ -761,7 +898,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* EDITORIAL QUOTE */}
+      {/* ==================== EDITORIAL QUOTE ==================== */}
       <div className="editorial-banner">
         <div className="editorial-banner-bg"></div>
         <div className="ec-tl editorial-corner"></div>
@@ -771,7 +908,7 @@ export default function Home() {
         <div className="editorial-border"></div>
         <div className="editorial-content">
           <p className="editorial-quote">
-            "A fragrance is the invisible part of your personality that says the most about who you are."
+            &ldquo;A fragrance is the invisible part of your personality that says the most about who you are.&rdquo;
           </p>
         </div>
       </div>
