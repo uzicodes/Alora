@@ -5,11 +5,52 @@ import { sendWelcomeEmail } from "@/lib/mail";
 
 import { PrismaClient } from "@prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+
+import { Redis } from "@upstash/redis";
+import { Ratelimit } from "@upstash/ratelimit";
+
+
+
+// INITIALIZE UPSTASH OUTSIDE THE HANDLER 
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
+
+const ratelimit = new Ratelimit({
+  redis: redis,
+  limiter: Ratelimit.slidingWindow(10, "10 s"), // Max 10 requests per 10 seconds
+  prefix: "alora-ratelimit", // separated from other projects!
+});
+
 // @ts-ignore - Ignoring potential type error if connectionString object is passed directly instead of a Pool instance
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
 export async function POST(req: Request) {
+  // -------------------------------------------------------------------
+  // BOUNCER (RATE LIMIT CHECK)
+  // -------------------------------------------------------------------
+  const ip = req.headers.get("x-forwarded-for") ?? "127.0.0.1";
+  const { success, limit, reset, remaining } = await ratelimit.limit(ip);
+
+  if (!success) {
+    console.log(`❌ Bouncer BLOCKED webhook spam from IP: ${ip}`);
+    return new Response(
+      JSON.stringify({ error: "Too many requests. Please try again later." }),
+      {
+        status: 429,
+        headers: {
+          "Content-Type": "application/json",
+          "X-RateLimit-Limit": limit.toString(),
+          "X-RateLimit-Remaining": remaining.toString(),
+          "X-RateLimit-Reset": reset.toString(),
+        },
+      }
+    );
+  }
+  // -------------------------------------------------------------------
+
   const WEBHOOK_SECRET = process.env.WELCOME_WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
