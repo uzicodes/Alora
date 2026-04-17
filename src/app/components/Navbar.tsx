@@ -19,7 +19,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const { isSignedIn, user } = useUser();
-  
+
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -39,7 +39,7 @@ export default function Navbar() {
           console.error("Error fetching products:", error);
         }
       };
-      
+
       const timeoutId = setTimeout(fetchProducts, 300);
       return () => clearTimeout(timeoutId);
     } else {
@@ -81,13 +81,12 @@ export default function Navbar() {
       if (el) {
         el.scrollIntoView({ behavior: 'smooth', block: 'center' });
         window.history.pushState(null, '', targetUrl);
-        // Add transient class for highlighting in case :target is missed by pushState
         el.classList.remove('search-highlight-active');
-        void el.offsetWidth; // trigger reflow
+        void el.offsetWidth;
         el.classList.add('search-highlight-active');
         setTimeout(() => el.classList.remove('search-highlight-active'), 2500);
       } else {
-         router.push(targetUrl);
+        router.push(targetUrl);
       }
     } else {
       router.push(targetUrl);
@@ -113,7 +112,7 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className={`navbar ${scrolled ? "scrolled" : ""}`} id="navbar">      
+      <nav className={`navbar ${scrolled ? "scrolled" : ""}`} id="navbar">
         {/* Logo */}
         <Link href="/" className="navbar-logo" id="navbar-logo">
           <Image
@@ -135,7 +134,7 @@ export default function Navbar() {
             <li><Link href="/woman" className={pathname === "/woman" ? "active-link" : ""}>Women</Link></li>
             <li><Link href="/unisex" className={pathname === "/unisex" ? "active-link" : ""}>Unisex</Link></li>
             <li className="nav-item-dropdown">
-              <a href="#" onClick={(e) => e.preventDefault()}>Brands</a>        
+              <a href="#" onClick={(e) => e.preventDefault()}>Brands</a>
               <div className="dropdown-menu">
                 <div className="brands-grid">
                   {BRANDS.map((brand) => (
@@ -152,12 +151,12 @@ export default function Navbar() {
               </div>
             </li>
             <li><Link href="/about" className={pathname === "/about" ? "active-link" : ""}>About</Link></li>
-            
+
             {!isSignedIn && (
               <li>
-                <Link href="/login" className={pathname === "/login" ? "active-link" : ""} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>  
+                <Link href="/login" className={pathname === "/login" ? "active-link" : ""} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                   LOGIN
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"> 
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M7 17L17 7" />
                     <path d="M7 7h10v10" />
                   </svg>
@@ -175,7 +174,7 @@ export default function Navbar() {
               onClick={() => setSearchOpen(!searchOpen)}
               aria-label="Search"
             >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"> 
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <circle cx="11" cy="11" r="8" />
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
               </svg>
@@ -190,7 +189,7 @@ export default function Navbar() {
               </Link>
             ) : (
               <Link href="/login" className="navbar-icon" id="navbar-account" aria-label="Account">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"> 
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
@@ -199,8 +198,8 @@ export default function Navbar() {
 
             {/* Cart (Always Visible) */}
             <Link href="/cart" className="navbar-icon" id="navbar-cart" aria-label="Cart">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"> 
-                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /> 
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
                 <line x1="3" y1="6" x2="21" y2="6" />
                 <path d="M16 10a4 4 0 0 1-8 0" />
               </svg>
@@ -233,15 +232,15 @@ export default function Navbar() {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
             <button className="search-close" onClick={() => { setSearchOpen(false); setSearchQuery(''); }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">   
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
               </svg>
             </button>
 
             {searchQuery.trim().length > 0 && (
-              <div 
-                className="search-results" 
+              <div
+                className="search-results"
                 style={{
                   position: 'absolute',
                   top: '100%',
@@ -281,7 +280,7 @@ export default function Navbar() {
                     <span style={{ fontSize: '10px', marginLeft: '10px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Brand</span>
                   </Link>
                 ))}
-                
+
                 {productResults.map(product => (
                   <Link
                     key={product.id}
@@ -317,17 +316,17 @@ export default function Navbar() {
 
       {/* Mobile Menu Overlay */}
       <div className={`mobile-menu ${mobileOpen ? "active" : ""}`} id="mobile-menu">
-        <Link href="/shop" onClick={() => setMobileOpen(false)}>Shop</Link>     
-        <Link href="/men" onClick={() => setMobileOpen(false)}>Men</Link>       
-        <Link href="/woman" onClick={() => setMobileOpen(false)}>Women</Link>   
-        <Link href="/unisex" onClick={() => setMobileOpen(false)}>Unisex</Link> 
+        <Link href="/shop" onClick={() => setMobileOpen(false)}>Shop</Link>
+        <Link href="/men" onClick={() => setMobileOpen(false)}>Men</Link>
+        <Link href="/woman" onClick={() => setMobileOpen(false)}>Women</Link>
+        <Link href="/unisex" onClick={() => setMobileOpen(false)}>Unisex</Link>
         <a href="#" onClick={(e) => e.preventDefault()}>Brands</a>
-        <Link href="/about" onClick={() => setMobileOpen(false)}>About</Link>   
+        <Link href="/about" onClick={() => setMobileOpen(false)}>About</Link>
         <Link href="/contact" onClick={() => setMobileOpen(false)}>Contact</Link>
         {!isSignedIn && (
           <Link href="/login" onClick={() => setMobileOpen(false)} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>
             LOGIN
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">       
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M7 17L17 7" />
               <path d="M7 7h10v10" />
             </svg>
@@ -336,4 +335,4 @@ export default function Navbar() {
       </div>
     </>
   );
-}
+}
