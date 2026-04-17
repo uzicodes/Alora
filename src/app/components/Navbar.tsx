@@ -24,6 +24,28 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [productResults, setProductResults] = useState<any[]>([]);
+
+  useEffect(() => {
+    if (searchQuery.trim().length > 0) {
+      const fetchProducts = async () => {
+        try {
+          const res = await fetch(`/api/products/search?q=${encodeURIComponent(searchQuery)}`);
+          if (res.ok) {
+            const data = await res.json();
+            setProductResults(data);
+          }
+        } catch (error) {
+          console.error("Error fetching products:", error);
+        }
+      };
+      
+      const timeoutId = setTimeout(fetchProducts, 300);
+      return () => clearTimeout(timeoutId);
+    } else {
+      setProductResults([]);
+    }
+  }, [searchQuery]);
 
   const handleBrandClick = (e: React.MouseEvent<HTMLAnchorElement>, brand: string) => {
     e.preventDefault();
@@ -44,6 +66,29 @@ export default function Navbar() {
       router.push(targetUrl);
     }
   };
+
+  const handleProductClick = (e: React.MouseEvent<HTMLAnchorElement>, productId: string) => {
+    e.preventDefault();
+    setSearchOpen(false);
+    setSearchQuery('');
+    setMobileOpen(false);
+
+    const targetId = `product-${productId}`;
+    const targetUrl = `/shop#${targetId}`;
+
+    if (pathname === '/shop') {
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        window.history.pushState(null, '', targetUrl);
+      } else {
+         router.push(targetUrl);
+      }
+    } else {
+      router.push(targetUrl);
+    }
+  };
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -227,12 +272,36 @@ export default function Navbar() {
                     onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)'}
                     onClick={(e) => handleBrandClick(e, brand)}
                   >
-                    {brand}
+                    <span>{brand}</span>
+                    <span style={{ fontSize: '10px', marginLeft: '10px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Brand</span>
                   </Link>
                 ))}
-                {BRANDS.filter(brand => brand.toLowerCase().includes(searchQuery.toLowerCase())).length === 0 && (
+                
+                {productResults.map(product => (
+                  <Link
+                    key={product.id}
+                    href={`/shop#product-${product.id}`}
+                    style={{
+                      padding: '12px 20px',
+                      color: 'rgba(255, 255, 255, 0.8)',
+                      textDecoration: 'none',
+                      fontFamily: 'var(--font-body)',
+                      fontSize: '14px',
+                      display: 'block',
+                      transition: 'color 0.3s'
+                    }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = '#C28D10'}
+                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)'}
+                    onClick={(e) => handleProductClick(e, product.id)}
+                  >
+                    <span>{product.name}</span>
+                    <span style={{ fontSize: '10px', marginLeft: '10px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Product</span>
+                  </Link>
+                ))}
+
+                {BRANDS.filter(brand => brand.toLowerCase().includes(searchQuery.toLowerCase())).length === 0 && productResults.length === 0 && (
                   <div style={{ padding: '12px 20px', color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-body)', fontSize: '14px' }}>
-                    No brands found matching "{searchQuery}"
+                    No results found for "{searchQuery}"
                   </div>
                 )}
               </div>
