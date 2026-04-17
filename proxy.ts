@@ -22,7 +22,7 @@ export default clerkMiddleware(async (auth, request) => {
 
   // API routes for rate limiting
   if (request.nextUrl.pathname.startsWith("/api/")) {
-    const ip = request.ip ?? "127.0.0.1";
+    const ip = request.headers.get("x-forwarded-for") ?? "127.0.0.1";
 
     const { success, limit, reset, remaining } = await ratelimit.limit(ip);
 
