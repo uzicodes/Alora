@@ -79,8 +79,13 @@ export default function Navbar() {
     if (pathname === '/shop') {
       const el = document.getElementById(targetId);
       if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
         window.history.pushState(null, '', targetUrl);
+        // Add transient class for highlighting in case :target is missed by pushState
+        el.classList.remove('search-highlight-active');
+        void el.offsetWidth; // trigger reflow
+        el.classList.add('search-highlight-active');
+        setTimeout(() => el.classList.remove('search-highlight-active'), 2500);
       } else {
          router.push(targetUrl);
       }
