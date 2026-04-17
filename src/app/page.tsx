@@ -841,13 +841,13 @@ export default function Home() {
 
         {/* Large background heading - behind bottle */}
         <div className="hero-bg-heading">
-          <div className="bg-line" style={{ justifyContent: 'center', gap: 'clamp(180px, 22vw, 340px)' }}>
+          <div className="bg-line" style={{ justifyContent: 'space-between' }}>
             <span className="bg-word">SENSES</span>
-            <span className="bg-word">WITH</span>
+            <span className="bg-word" style={{ marginRight: '7vw' }}>MEET</span>
           </div>
-          <div className="bg-line">
+          <div className="bg-line" style={{ paddingLeft: 'clamp(80px, 10vw, 160px)', paddingRight: '0' }}>
             <span className="bg-word">RAW</span>
-            <span className="bg-word">RADIANT</span>
+            <span className="bg-word" style={{ marginRight: 'clamp(-80px, -6vw, -20px)' }}>RADIANT</span>
           </div>
           <div className="bg-line center-text">
             <span className="bg-word">PERFUMES</span>
