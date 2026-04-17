@@ -37,6 +37,12 @@ const kharaissa = localFont({
   display: "swap",
 });
 
+const blackKastile = localFont({
+  src: "../../public/fonts/Black Kastile Modern.otf",
+  variable: "--font-black-kastile",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "A L O R A",
   description: "Experience the essence of luxury with Alora's curated fragrance collection.",
@@ -70,7 +76,7 @@ export default function RootLayout({
           />
         </head>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} ${ubuntuFont.variable} ${davidLibre.variable} ${kharaissa.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} ${ubuntuFont.variable} ${davidLibre.variable} ${kharaissa.variable} ${blackKastile.variable} antialiased`}
         >
           <ScrollToTop />
           <Toaster position="bottom-right" />

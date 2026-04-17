@@ -71,7 +71,7 @@ export default function Home() {
           justify-content: center;
           overflow: hidden;
           background: #C2B280;
-          padding: 60px 40px 80px;
+          padding: 20px 40px 80px;
         }
 
         /* Ambient glow behind bottle */
@@ -205,6 +205,42 @@ export default function Home() {
         .hero-image-wrap.visible {
           opacity: 1;
           transform: translateY(0) scale(1);
+        }
+
+        /* Large background heading behind bottle */
+        .hero-bg-heading {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          z-index: 1;
+          width: 100%;
+          max-width: 1300px;
+          padding: 0 30px;
+          pointer-events: none;
+          user-select: none;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0;
+        }
+        .hero-bg-heading .bg-line {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          font-family: var(--font-black-kastile), sans-serif;
+          font-size: clamp(55px, 9.5vw, 150px);
+          font-weight: 400;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.25);
+          line-height: 1.05;
+          letter-spacing: 0.02em;
+        }
+        .hero-bg-heading .bg-line.center-text {
+          justify-content: center;
+        }
+        .hero-bg-heading .bg-word {
+          flex-shrink: 0;
         }
         .hero-image-inner {
           position: relative;
@@ -802,6 +838,21 @@ export default function Home() {
         <div className="hero-corner hc-bl"></div>
         <div className="hero-corner hc-br"></div>
 
+
+        {/* Large background heading - behind bottle */}
+        <div className="hero-bg-heading">
+          <div className="bg-line" style={{ justifyContent: 'center', gap: 'clamp(180px, 22vw, 340px)' }}>
+            <span className="bg-word">SENSES</span>
+            <span className="bg-word">WITH</span>
+          </div>
+          <div className="bg-line">
+            <span className="bg-word">RAW</span>
+            <span className="bg-word">RADIANT</span>
+          </div>
+          <div className="bg-line center-text">
+            <span className="bg-word">PERFUMES</span>
+          </div>
+        </div>
 
         {/* Hero Image - Center */}
         <div className={`hero-image-wrap ${heroVisible ? 'visible' : ''}`}>
