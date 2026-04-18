@@ -71,13 +71,13 @@ export default function Home() {
           justify-content: center;
           overflow: hidden;
           background: #C2B280;
-          padding: 20px 40px 80px;
+          padding: 0px 40px 160px;
         }
 
         /* Ambient glow behind bottle */
         .hero-glow {
           position: absolute;
-          top: 50%;
+          top: 42%;
           left: 50%;
           transform: translate(-50%, -50%);
           width: 700px;
@@ -204,13 +204,13 @@ export default function Home() {
         }
         .hero-image-wrap.visible {
           opacity: 1;
-          transform: translateY(0) scale(1);
+          transform: translateY(-20px) scale(1);
         }
 
         /* Large background heading behind bottle */
         .hero-bg-heading {
           position: absolute;
-          top: 50%;
+          top: 42%;
           left: 50%;
           transform: translate(-50%, -50%);
           z-index: 1;
