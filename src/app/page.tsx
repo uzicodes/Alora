@@ -190,6 +190,48 @@ export default function Home() {
           transform: translateY(-20px) scale(1);
         }
 
+        /* Hero butterfly images */
+        .hero-butterfly {
+          position: absolute;
+          z-index: 3;
+          pointer-events: none;
+          user-select: none;
+        }
+        .hero-butterfly img {
+          display: block;
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          mix-blend-mode: multiply;
+        }
+        .hero-butterfly-orange2 {
+          left: 5%;
+          bottom: 22%;
+          width: clamp(160px, 18vw, 250px);
+          height: auto;
+          transform: rotate(-10deg);
+          animation: butterflyFloat 6s ease-in-out infinite;
+        }
+        .hero-butterfly-orange {
+          right: 8%;
+          top: 10%;
+          width: clamp(180px, 20vw, 280px);
+          height: auto;
+          transform: rotate(5deg);
+          animation: butterflyFloat 7s ease-in-out infinite 1s;
+        }
+        @keyframes butterflyFloat {
+          0%, 100% { transform: translateY(0) rotate(-10deg); }
+          50% { transform: translateY(-12px) rotate(-6deg); }
+        }
+        .hero-butterfly-orange {
+          animation-name: butterflyFloatOrange;
+        }
+        @keyframes butterflyFloatOrange {
+          0%, 100% { transform: translateY(0) rotate(5deg); }
+          50% { transform: translateY(-14px) rotate(10deg); }
+        }
+
         /* Large background heading behind bottle */
         .hero-bg-heading {
           position: absolute;
@@ -784,6 +826,7 @@ export default function Home() {
           .alora-hero { padding: 40px 24px 60px; min-height: auto; }
           .hero-side-stats { display: none; }
           .hero-corner { display: none; }
+          .hero-butterfly { display: none; }
           .hero-image-inner {
             width: clamp(260px, 60vw, 400px) !important;
             height: clamp(320px, 72vw, 480px) !important;
@@ -821,6 +864,14 @@ export default function Home() {
         <div className="hero-corner hc-bl"></div>
         <div className="hero-corner hc-br"></div>
 
+
+        {/* Butterfly decorations */}
+        <div className="hero-butterfly hero-butterfly-orange2">
+          <Image src="/orange2.png" alt="" width={250} height={250} unoptimized style={{ background: 'transparent' }} />
+        </div>
+        <div className="hero-butterfly hero-butterfly-orange">
+          <Image src="/orange.png" alt="" width={280} height={280} unoptimized style={{ background: 'transparent' }} />
+        </div>
 
         {/* Large background heading - behind bottle */}
         <div className="hero-bg-heading">
