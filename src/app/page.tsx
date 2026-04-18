@@ -205,16 +205,16 @@ export default function Home() {
           mix-blend-mode: multiply;
         }
         .hero-butterfly-orange2 {
-          left: 5%;
-          bottom: 22%;
-          width: clamp(160px, 18vw, 250px);
+          left: 8%;
+          bottom: 25%;
+          width: clamp(100px, 16vw, 215px);
           height: auto;
           transform: rotate(-10deg);
           animation: butterflyFloat 6s ease-in-out infinite;
         }
         .hero-butterfly-orange {
-          right: 8%;
-          top: 10%;
+          right: 1%;
+          top: 4%;
           width: clamp(180px, 20vw, 280px);
           height: auto;
           transform: rotate(5deg);
@@ -867,7 +867,7 @@ export default function Home() {
 
         {/* Butterfly decorations */}
         <div className="hero-butterfly hero-butterfly-orange2">
-          <Image src="/orange2.png" alt="" width={250} height={250} unoptimized style={{ background: 'transparent' }} />
+          <Image src="/orange2.png" alt="" width={225} height={225} unoptimized style={{ background: 'transparent' }} />
         </div>
         <div className="hero-butterfly hero-butterfly-orange">
           <Image src="/orange.png" alt="" width={280} height={280} unoptimized style={{ background: 'transparent' }} />
