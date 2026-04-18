@@ -4,14 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 
-type Product = {
-  id: string;
-  name: string;
-  category: string;
-  price: string;
-  badge: string | null;
-  img: string;
-};
+
 
 type Pillar = {
   num: string;
@@ -19,16 +12,7 @@ type Pillar = {
   desc: string;
 };
 
-const products: Product[] = [
-  { id: "midnight-oud", name: "Midnight Oud", category: "Eau de Parfum", price: "$185", badge: "Bestseller", img: "/alora_BG2.png" },
-  { id: "velvet-rose", name: "Velvet Rose", category: "Extrait de Parfum", price: "$220", badge: "New", img: "/alora_BG2.png" },
-  { id: "golden-amber", name: "Golden Amber", category: "Eau de Parfum", price: "$165", badge: null, img: "/alora_BG2.png" },
-  { id: "silver-mist", name: "Silver Mist", category: "Eau de Cologne", price: "$145", badge: null, img: "/alora_BG2.png" },
-  { id: "rose-quartz", name: "Rose Quartz", category: "Eau de Parfum", price: "$210", badge: "Limited", img: "/alora_BG2.png" },
-  { id: "mystic-sandalwood", name: "Mystic Sandalwood", category: "Extrait de Parfum", price: "$195", badge: null, img: "/alora_BG2.png" },
-  { id: "azure-bloom", name: "Azure Bloom", category: "Eau de Parfum", price: "$175", badge: null, img: "/alora_BG2.png" },
-  { id: "nocturnal-jasmine", name: "Nocturnal Jasmine", category: "Eau de Parfum", price: "$190", badge: "Bestseller", img: "/alora_BG2.png" },
-];
+
 
 const pillars: Pillar[] = [
   { num: "01", label: "Hand-Sourced Ingredients", desc: "Rare botanicals harvested across five continents at peak potency." },
@@ -38,7 +22,6 @@ const pillars: Pillar[] = [
 ];
 
 export default function Home() {
-  const [hoveredProduct, setHoveredProduct] = useState<string | null>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
   const [heroVisible, setHeroVisible] = useState(false);
 
@@ -886,50 +869,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* ==================== FEATURED PRODUCTS ==================== */}
-      <section className="section-products">
-        <div className="section-heading-block">
-          <div>
-            <div className="section-tag-row">Curated Selection</div>
-            <h2 className="section-h2">Our Bestsellers</h2>
-          </div>
-          <Link href="/shop" className="view-all-link">
-            View All
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>
-          </Link>
-        </div>
-        <div className="products-grid">
-          {products.map((p) => (
-            <Link
-              key={p.id}
-              href={`/shop/${p.id}`}
-              className="product-cell"
-              onMouseEnter={() => setHoveredProduct(p.id)}
-              onMouseLeave={() => setHoveredProduct(null)}
-            >
-              <div className="product-cell-img">
-                <Image
-                  src={p.img}
-                  alt={p.name}
-                  fill
-                  sizes="25vw"
-                  style={{ objectFit: "cover" }}
-                />
-              </div>
-              <div className="product-overlay"></div>
-              {p.badge && <span className="product-badge">{p.badge}</span>}
-              <div className="product-info">
-                <p className="product-category">{p.category}</p>
-                <h3 className="product-name">{p.name}</h3>
-                <div className="product-price-row">
-                  <span className="product-price">{p.price}</span>
-                  <button className="product-add-btn" onClick={(e: React.MouseEvent<HTMLButtonElement>) => e.preventDefault()}>Add to Bag</button>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+
 
       {/* ==================== PILLARS ==================== */}
       <section className="pillars-section">
