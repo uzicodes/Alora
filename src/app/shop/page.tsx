@@ -27,13 +27,13 @@ export default async function ShopAllPage() {
     }));
 
   return (
-    <div className="min-h-screen bg-white text-black pb-32 pt-16 font-sans font-body">
+    <div className="min-h-screen bg-white text-black pb-32 pt-16 font-body">
       <div className="mx-auto w-full px-6 sm:px-10 md:px-16 lg:px-20">
         <header className="text-center" style={{ marginBottom: '50px' }}>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-david-libre uppercase tracking-[0.2em] mb-8 text-black">Brands Collections</h1>
         </header>
 
-        <div className="flex flex-col gap-[60px] md:gap-[80px] w-full">
+        <div className="flex flex-col gap-15 md:gap-20 w-full">
           {brandsData.map((brand) => (
             <section key={brand.name} id={`brand-${brand.name.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`} className="brand-section w-full scroll-mt-32">
               {/* Product cards grid */}
@@ -62,8 +62,8 @@ export default async function ShopAllPage() {
                   const formattedPrice = `BDT ${product.price}`;
 
                   return (
-                    <div key={product.id} id={`product-${product.id}`} className="group/card flex flex-col cursor-pointer h-full w-[185px]">
-                      <div className="relative aspect-[4/5] bg-[#f8f8f8] flex items-center justify-center border border-transparent transition-all duration-500 hover:border-[#C28D10] hover:shadow-[0_0_20px_rgba(194,141,16,0.1)]">
+                    <div key={product.id} id={`product-${product.id}`} className="group/card flex flex-col cursor-pointer h-full w-46.25">
+                      <div className="relative aspect-4/5 bg-[#f8f8f8] flex items-center justify-center border border-transparent transition-all duration-500 hover:border-[#C28D10] hover:shadow-[0_0_20px_rgba(194,141,16,0.1)]">
                         <div className="relative w-[90%] h-[90%]">    {/* ratio in product card */}
                           <Image
                             src={image}
@@ -87,7 +87,7 @@ export default async function ShopAllPage() {
                       </div>
 
                       {/* Details */}
-                      <div className="flex flex-col flex-grow text-center px-1 mt-5">
+                      <div className="flex flex-col grow text-center px-1 mt-5">
                         <h3 className="text-[13px] md:text-[14px] font-ubuntu font-semibold tracking-[0.05em] uppercase mb-1 text-neutral-900 group-hover/card:text-[#C28D10] transition-colors duration-300">
                           {product.name}
                         </h3>
