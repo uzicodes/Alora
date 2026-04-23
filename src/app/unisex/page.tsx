@@ -1,6 +1,9 @@
 import Image from "next/image";
 import prisma from "@/lib/prisma";
+import { normalizeImageUrl } from "@/lib/imageUrl";
 import AddToCartButton from "../components/AddToCartButton";
+
+export const dynamic = "force-dynamic";
 
 
 export default async function UnisexPage() {
@@ -26,7 +29,10 @@ export default async function UnisexPage() {
             }}
           >
             {products.map((product) => {
-              const image = product.imageUrls && product.imageUrls.length > 0 ? product.imageUrls[0] : "/alora_BG2.png";
+              const image =
+                product.imageUrls && product.imageUrls.length > 0
+                  ? normalizeImageUrl(product.imageUrls[0])
+                  : "/alora_BG2.png";
               const category = `${product.concentration} | ${product.brand} | ${product.sizeMl}ml`;
               const formattedPrice = `BDT ${product.price}`;
 

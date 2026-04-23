@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import prisma from "@/lib/prisma";
+import { normalizeImageUrls } from "@/lib/imageUrl";
 
 // Create a new product
 export async function POST(req: Request) {
@@ -22,7 +23,9 @@ export async function POST(req: Request) {
                 sizeMl: parseInt(sizeMl),
                 concentration,
                 gender,
-                imageUrls: Array.isArray(imageUrls) ? imageUrls : imageUrls ? [imageUrls] : [],
+                imageUrls: normalizeImageUrls(
+                    Array.isArray(imageUrls) ? imageUrls : imageUrls ? [imageUrls] : []
+                ),
             },
         });
 
@@ -58,7 +61,9 @@ export async function PUT(req: Request) {
                 sizeMl: parseInt(sizeMl),
                 concentration,
                 gender,
-                imageUrls: Array.isArray(imageUrls) ? imageUrls : imageUrls ? [imageUrls] : [],
+                imageUrls: normalizeImageUrls(
+                    Array.isArray(imageUrls) ? imageUrls : imageUrls ? [imageUrls] : []
+                ),
             },
         });
 
