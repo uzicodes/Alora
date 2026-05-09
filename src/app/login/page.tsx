@@ -5,6 +5,7 @@ import { useSignIn } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { toast } from "sonner";
 // @ts-ignore
 import styles from "./login.module.css";
 
@@ -25,16 +26,20 @@ export default function LoginPage() {
     e.preventDefault();
     if (!signIn) return;
     if (!email) {
-      setError("Please enter your email first");
+      toast.error("Please enter your email first");
       return;
     }
     setError("");
     try {
-      await signIn.resetPasswordEmailCode.sendCode({ emailAddress: email });
+      await signIn.create({
+        strategy: "reset_password_email_code",
+        identifier: email,
+      });
       setIsForgotPassword(true);
+      toast.success("Reset code sent to your email!");
     } catch (err: any) {
       console.error(err);
-      setError(err.errors?.[0]?.longMessage || err.errors?.[0]?.message || "An error occurred");
+      toast.error(err.errors?.[0]?.longMessage || err.errors?.[0]?.message || "An error occurred");
     }
   };
 
@@ -43,22 +48,23 @@ export default function LoginPage() {
     if (!signIn) return;
     setError("");
     try {
-      // Verify code 
-      await signIn.resetPasswordEmailCode.verifyCode({ code: resetCode });
+      const result = await signIn.attemptFirstFactor({
+        strategy: "reset_password_email_code",
+        code: resetCode,
+        password: newPassword,
+      });
 
-      // code OK? -> submit the new password
-      if (signIn.status === "needs_new_password") {
-        await signIn.resetPasswordEmailCode.submitPassword({ password: newPassword });
-      }
-
-      // Finalize the login & redirect
-      if (signIn.status === "complete") {
-        await signIn.finalize();
+      if (result.status === "complete") {
+        await setActive({ session: result.createdSessionId });
+        toast.success("Password reset successfully!");
         router.push("/shop");
+      } else {
+        console.error(result);
+        toast.error("Failed to reset password. Please try again.");
       }
     } catch (err: any) {
       console.error(err);
-      setError(err.errors?.[0]?.longMessage || err.errors?.[0]?.message || "Invalid code or weak password");
+      toast.error(err.errors?.[0]?.longMessage || err.errors?.[0]?.message || "Invalid code or weak password");
     }
   };
 
@@ -67,16 +73,18 @@ export default function LoginPage() {
     if (!signIn) return;
 
     try {
-      await signIn.password({
-        emailAddress: email,
-        password
+      const result = await signIn.create({
+        identifier: email,
+        password,
       });
 
-      if (signIn.status === 'complete') {
-        await signIn.finalize({ navigate: () => router.push('/') });
+      if (result.status === 'complete') {
+        await setActive({ session: result.createdSessionId });
+        toast.success("Logged in successfully!");
+        router.push('/');
       }
     } catch (err: any) {
-      alert(err.errors?.[0]?.longMessage || err.errors?.[0]?.message || "An error occurred during login");
+      toast.error(err.errors?.[0]?.longMessage || err.errors?.[0]?.message || "An error occurred during login");
     }
   };
 
