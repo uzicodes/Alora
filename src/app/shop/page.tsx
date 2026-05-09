@@ -33,19 +33,20 @@ export default async function ShopAllPage() {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-david-libre uppercase tracking-[0.2em] mb-8 text-black">Brands Collections</h1>
         </header>
 
-        <div className="flex flex-col gap-15 md:gap-20 w-full">
+        <div className="flex flex-col w-full" style={{ gap: '70px' }}>
           {brandsData.map((brand) => (
             <section key={brand.name} id={`brand-${brand.name.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`} className="brand-section w-full scroll-mt-32">
               {/* Product cards grid */}
               <div
-                className="grid gap-x-6 gap-y-8"
+                className="grid gap-x-6"
                 style={{
                   gridTemplateColumns: 'repeat(auto-fit, 185px)',
                   justifyContent: 'center',
+                  rowGap: '30px',
                 }}
               >
                 {/* Brand Header */}
-                <div className="col-span-full mb-1 flex items-center justify-center gap-4 md:gap-8">
+                <div className="col-span-full flex items-center justify-center gap-4 md:gap-8" style={{ paddingTop: '10px', paddingBottom: '20px' }}>
                   <hr className="flex-1 border-t-2 border-neutral-600" />
                   <h2 className="text-2xl md:text-3xl font-ubuntu uppercase tracking-[0.25em] text-[#C28D10] whitespace-nowrap text-center px-2">
                     {brand.name}
