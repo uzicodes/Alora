@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { useCart } from "./CartContext";
-import { createPortal } from "react-dom";
 import Image from "next/image";
+import { toast } from "sonner";
 
 type AddToCartButtonProps = {
   id: string;
@@ -16,61 +16,41 @@ type AddToCartButtonProps = {
   variant?: 'desktop' | 'mobile' | 'both';
 };
 
-/* ─── Toast Notification ─── */
-function CartToast({
-  productName,
-  productImage,
-  productPrice,
-  onClose,
-}: {
-  productName: string;
-  productImage: string;
-  productPrice: number;
-  onClose: () => void;
-}) {
-  const [exiting, setExiting] = useState(false);
+/* ─── Main Component ─── */
+export default function AddToCartButton({
+  id,
+  name,
+  price,
+  image,
+  category,
+  sizeMl,
+  concentration,
+  variant = "both",
+}: AddToCartButtonProps) {
+  const { addToCart } = useCart();
+  const [added, setAdded] = useState(false);
 
-  useEffect(() => {
-    const exitTimer = setTimeout(() => setExiting(true), 2400);
-    const closeTimer = setTimeout(onClose, 2800);
-    return () => {
-      clearTimeout(exitTimer);
-      clearTimeout(closeTimer);
-    };
-  }, [onClose]);
-
-  return createPortal(
-    <div
-      className={`fixed top-17.5px right-4 z-9999 transition-all duration-400 ${
-        exiting
-          ? "opacity-0 translate-x-7.5"
-          : "opacity-100 translate-x-0"
-      }`}
-      style={{
-        animation: exiting ? undefined : "toastSlideIn 0.45s cubic-bezier(0.16, 1, 0.3, 1)",
-      }}
-    >
-      <div className="bg-white rounded-xl shadow-[0_8px_40px_rgba(0,0,0,0.15)] border border-neutral-100 overflow-hidden w-75 sm:w-85">
+  const handleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart({ id, name, price, image, category, sizeMl, concentration });
+    setAdded(true);
+    
+    // Show Sonner custom toast
+    toast.custom((t) => (
+      <div className="bg-white rounded-xl shadow-[0_8px_40px_rgba(0,0,0,0.15)] border border-neutral-100 overflow-hidden w-75 sm:w-85 pointer-events-auto">
         {/* Top accent bar */}
         <div className="h-0.75 bg-linear-to-r from-[#C28D10] via-[#E2B84B] to-[#C28D10]" />
 
         <div className="p-4 flex items-center gap-3.5">
           {/* Checkmark circle */}
-          <div
-            className="shrink-0 w-9 h-9 rounded-full bg-[#13382C] flex items-center justify-center"
-            style={{
-              animation: "checkPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both",
-            }}
-          >
+          <div className="shrink-0 w-9 h-9 rounded-full bg-[#13382C] flex items-center justify-center">
             <svg
               width="16"
               height="16"
               viewBox="0 0 16 16"
               fill="none"
               className="text-white"
-              style={{
-                animation: "checkDraw 0.35s ease-out 0.4s both",
-              }}
             >
               <path
                 d="M3.5 8.5L6.5 11.5L12.5 4.5"
@@ -88,65 +68,29 @@ function CartToast({
               Added to Cart
             </p>
             <p className="text-[12px] text-neutral-700 font-medium truncate leading-tight">
-              {productName}
+              {name}
             </p>
             <p className="text-[11px] text-[#C28D10] font-semibold mt-0.5 tracking-wide">
-              BDT {productPrice}
+              BDT {price}
             </p>
           </div>
 
           {/* Product thumbnail */}
           <div className="shrink-0 w-12.5 h-15 bg-[#f8f8f8] rounded-lg overflow-hidden relative border border-neutral-100">
             <Image
-              src={productImage}
-              alt={productName}
+              src={image}
+              alt={name}
               fill
               className="object-contain p-1"
               sizes="50px"
             />
           </div>
         </div>
-
-        {/* Progress bar */}
-        <div className="h-[2.5px] bg-neutral-100 relative overflow-hidden">
-          <div
-            className="absolute inset-y-0 left-0 bg-linear-to-r from-[#C28D10] to-[#E2B84B]"
-            style={{
-              animation: "progressShrink 2.5s linear forwards",
-            }}
-          />
-        </div>
       </div>
-    </div>,
-    document.body
-  );
-}
+    ), { duration: 2500, position: 'bottom-right' });
 
-/* ─── Main Component ─── */
-export default function AddToCartButton({
-  id,
-  name,
-  price,
-  image,
-  category,
-  sizeMl,
-  concentration,
-  variant = "both",
-}: AddToCartButtonProps) {
-  const { addToCart } = useCart();
-  const [added, setAdded] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-
-  const handleClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    addToCart({ id, name, price, image, category, sizeMl, concentration });
-    setAdded(true);
-    setShowToast(true);
     setTimeout(() => setAdded(false), 2000);
   };
-
-  const closeToast = useCallback(() => setShowToast(false), []);
 
   /* ── Cart icon SVG ── */
   const cartIcon = (
@@ -217,15 +161,6 @@ export default function AddToCartButton({
         </button>
       )}
 
-      {/* Toast notification */}
-      {showToast && (
-        <CartToast
-          productName={name}
-          productImage={image}
-          productPrice={price}
-          onClose={closeToast}
-        />
-      )}
     </>
   );
 }

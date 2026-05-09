@@ -5,8 +5,7 @@ import "./globals.css";
 import ScrollToTop from "./components/ScrollToTop";
 import LayoutShell from "./components/LayoutShell";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Toaster } from "react-hot-toast";
-
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -79,7 +78,7 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} ${ubuntuFont.variable} ${davidLibre.variable} ${kharaissa.variable} ${blackKastile.variable} antialiased`}
         >
           <ScrollToTop />
-          <Toaster position="bottom-right" />
+          <Toaster position="bottom-right" richColors />
           <LayoutShell>
               {children}
           </LayoutShell>

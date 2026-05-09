@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useCart } from "../components/CartContext";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 
 export default function Cart() {
@@ -30,10 +30,6 @@ export default function Cart() {
           boxShadow: '4px 4px 0px #000',
           borderRadius: '0',
           fontSize: '14px',
-        },
-        iconTheme: {
-          primary: '#000',
-          secondary: '#fff',
         },
       });
       
