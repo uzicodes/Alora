@@ -38,8 +38,6 @@ Alora is a premium, full-stack e-commerce web application dedicated to exquisite
 </div>
 
 The repository is cleanly organized utilizing the Next.js App Router architecture:
-
-```text
 .
 ├── prisma/
 │   └── schema.prisma         # Database models (User, Product, Order)
@@ -65,6 +63,11 @@ src/app/api/webhooks/clerk/route.ts: A webhook listener that synchronizes Clerk'
 src/app/components/CartContext.tsx: Manages the global state of the user's shopping cart across the application using React Context.
 
 src/lib/mail.ts & email-templetes/: Houses the logic to dynamically generate and dispatch stylized transactional emails based on user actions.
+
+
+<div align="center">
+  <img src="https://img.shields.io/badge/Setup & Installation%20-purple?style=for-the-badge" alt="Setup & Installation" height="34">
+</div>
 
 To run Alora locally on your machine, follow these steps:
 
