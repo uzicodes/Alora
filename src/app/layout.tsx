@@ -42,6 +42,12 @@ const blackKastile = localFont({
   display: "swap",
 });
 
+const lumien = localFont({
+  src: "../../public/fonts/Lumien-Regular.otf",
+  variable: "--font-lumien",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "A L O R A",
   description: "Experience the essence of luxury with Alora's curated fragrance collection.",
@@ -75,7 +81,7 @@ export default function RootLayout({
           />
         </head>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} ${ubuntuFont.variable} ${davidLibre.variable} ${kharaissa.variable} ${blackKastile.variable} antialiased`}
+          className={`${geistSans.variable} ${geistMono.variable} ${ubuntuFont.variable} ${davidLibre.variable} ${kharaissa.variable} ${blackKastile.variable} ${lumien.variable} antialiased`}
         >
           <ScrollToTop />
           <Toaster position="bottom-right" richColors />

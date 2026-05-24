@@ -528,7 +528,7 @@ export default function Home() {
           background: #6b5a3e;
         }
         .section-h2 {
-          font-family: 'Cormorant Garamond', serif;
+          font-family: var(--font-lumien), 'Cormorant Garamond', serif;
           font-size: clamp(36px, 4vw, 60px);
           font-weight: 300;
           color: #1a1410;
@@ -708,6 +708,15 @@ export default function Home() {
           padding: 100px 60px;
           border-top: 1px solid rgba(26,20,16,0.1);
           background: #C2B280;
+        }
+        .pillars-header {
+          text-align: center;
+          margin-bottom: 64px;
+          position: relative;
+          z-index: 2;
+        }
+        .pillars-header .section-tag-row {
+          justify-content: center;
         }
         .pillars-grid {
           display: grid;
@@ -1329,9 +1338,9 @@ export default function Home() {
 
       {/* ==================== PILLARS ==================== */}
       <section className="pillars-section">
-        <div style={{ maxWidth: "600px" }}>
+        <div className="pillars-header">
           <div className="section-tag-row">The Alora Promise</div>
-          <h2 className="section-h2">Crafted Without Compromise</h2>
+          <h2 className="section-h2" style={{ whiteSpace: "nowrap" }}>crafted without compromise</h2>
         </div>
         <div className="pillars-grid">
           {pillars.map((p) => (
@@ -1349,7 +1358,7 @@ export default function Home() {
         <div className="sale-bg-text">SALE</div>
         <div className="sale-header">
           <div className="section-tag-row">Limited Time Offer</div>
-          <h2 className="section-h2">Exclusive Deals</h2>
+          <h2 className="section-h2">exclusive deals</h2>
         </div>
         <div className="sale-grid">
           {[
@@ -1392,7 +1401,7 @@ export default function Home() {
       <section className="perfume-finder-section">
         <div className="perfume-finder-header">
           <div className="section-tag-row">Collection</div>
-          <h2 className="section-h2">Find Your Perfume</h2>
+          <h2 className="section-h2" style={{ whiteSpace: "nowrap" }}>find your perfume</h2>
         </div>
         <div className="perfume-grid">
           {[
@@ -1436,7 +1445,7 @@ export default function Home() {
 
         <div className="testimonials-header">
           <div className="section-tag-row">What Our Clients Say</div>
-          <h2 className="section-h2">Our Testimonials</h2>
+          <h2 className="section-h2">our testimonials</h2>
         </div>
         <div className="testimonial-card">
           <div className="testimonial-img-col">
