@@ -752,6 +752,426 @@ export default function Home() {
           margin: 24px 0 0;
         }
 
+        /* ==================== SALE SECTION ==================== */
+        .sale-section {
+          padding: 100px 60px;
+          background: #1a1410;
+          position: relative;
+          overflow: hidden;
+        }
+        .sale-section::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(194,178,128,0.3), transparent);
+        }
+        .sale-bg-text {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(100px, 14vw, 220px);
+          font-weight: 300;
+          color: rgba(194,178,128,0.04);
+          white-space: nowrap;
+          pointer-events: none;
+          user-select: none;
+        }
+        .sale-header {
+          text-align: center;
+          margin-bottom: 60px;
+          position: relative;
+          z-index: 2;
+        }
+        .sale-header .section-tag-row {
+          justify-content: center;
+          color: rgba(194,178,128,0.6);
+        }
+        .sale-header .section-tag-row::after {
+          background: rgba(194,178,128,0.4);
+        }
+        .sale-header .section-h2 {
+          color: #f0ece6;
+        }
+        .sale-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 24px;
+          max-width: 1100px;
+          margin: 0 auto;
+          position: relative;
+          z-index: 2;
+        }
+        .sale-card {
+          position: relative;
+          border-radius: 4px;
+          overflow: hidden;
+          display: flex;
+          align-items: center;
+          background: linear-gradient(135deg, #2a2318 0%, #1e1a14 100%);
+          border: 1px solid rgba(194,178,128,0.1);
+          padding: 40px;
+          min-height: 280px;
+          transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), border-color 0.4s, box-shadow 0.4s;
+          cursor: pointer;
+        }
+        .sale-card:hover {
+          transform: translateY(-6px);
+          border-color: rgba(194,178,128,0.25);
+          box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .sale-card-shimmer {
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(194,178,128,0.03), transparent);
+          transition: left 0.6s;
+          pointer-events: none;
+        }
+        .sale-card:hover .sale-card-shimmer {
+          left: 100%;
+        }
+        .sale-card-img {
+          position: relative;
+          width: 200px;
+          height: 200px;
+          flex-shrink: 0;
+          margin-right: 32px;
+        }
+        .sale-card-content {
+          flex: 1;
+        }
+        .sale-card-label {
+          font-size: 9px;
+          font-weight: 300;
+          letter-spacing: 0.35em;
+          text-transform: uppercase;
+          color: rgba(194,178,128,0.5);
+          margin-bottom: 8px;
+        }
+        .sale-card-title {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 28px;
+          font-weight: 300;
+          color: #f0ece6;
+          margin-bottom: 16px;
+          line-height: 1.2;
+        }
+        .sale-discount-badge {
+          display: inline-flex;
+          align-items: baseline;
+          gap: 4px;
+          margin-bottom: 16px;
+        }
+        .sale-discount-num {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 56px;
+          font-weight: 300;
+          color: #c2b280;
+          line-height: 1;
+        }
+        .sale-discount-pct {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 24px;
+          font-weight: 300;
+          color: #c2b280;
+        }
+        .sale-discount-off {
+          font-size: 10px;
+          font-weight: 300;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: rgba(194,178,128,0.5);
+          margin-left: 8px;
+        }
+        .sale-card-cta {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 9px;
+          font-weight: 400;
+          letter-spacing: 0.25em;
+          text-transform: uppercase;
+          color: #c2b280;
+          text-decoration: none;
+          border-bottom: 1px solid rgba(194,178,128,0.3);
+          padding-bottom: 4px;
+          transition: color 0.3s, border-color 0.3s;
+        }
+        .sale-card-cta:hover {
+          color: #f0ece6;
+          border-color: #f0ece6;
+        }
+        .sale-card-cta svg {
+          transition: transform 0.3s;
+        }
+        .sale-card-cta:hover svg {
+          transform: translateX(4px);
+        }
+
+        /* ==================== FIND YOUR PERFUME ==================== */
+        .perfume-finder-section {
+          padding: 100px 60px;
+          background: #C2B280;
+          position: relative;
+          overflow: hidden;
+        }
+        .perfume-finder-bg-text {
+          position: absolute;
+          top: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(60px, 10vw, 140px);
+          font-weight: 300;
+          font-style: italic;
+          color: rgba(26,20,16,0.04);
+          white-space: nowrap;
+          pointer-events: none;
+          user-select: none;
+        }
+        .perfume-finder-header {
+          text-align: center;
+          margin-bottom: 64px;
+          position: relative;
+          z-index: 2;
+        }
+        .perfume-finder-header .section-tag-row {
+          justify-content: center;
+        }
+        .perfume-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 28px;
+          max-width: 1100px;
+          margin: 0 auto;
+          position: relative;
+          z-index: 2;
+        }
+        .perfume-card {
+          background: #b5a778;
+          border-radius: 4px;
+          overflow: hidden;
+          transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.4s;
+          cursor: pointer;
+          text-decoration: none;
+          display: block;
+        }
+        .perfume-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 20px 50px rgba(26,20,16,0.2);
+        }
+        .perfume-card-img-wrap {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 1/1;
+          overflow: hidden;
+          background: linear-gradient(135deg, #a89968, #c0b580);
+        }
+        .perfume-card-img-wrap img {
+          transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+        }
+        .perfume-card:hover .perfume-card-img-wrap img {
+          transform: scale(1.08);
+        }
+        .perfume-card-body {
+          padding: 24px 20px;
+        }
+        .perfume-card-name {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 20px;
+          font-weight: 400;
+          color: #1a1410;
+          margin-bottom: 8px;
+          line-height: 1.2;
+        }
+        .perfume-card-desc {
+          font-size: 11px;
+          font-weight: 300;
+          line-height: 1.7;
+          color: rgba(26,20,16,0.5);
+          margin-bottom: 16px;
+          letter-spacing: 0.02em;
+        }
+        .perfume-card-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 10px 24px;
+          background: #1a1410;
+          color: #f0ece6;
+          font-size: 8px;
+          font-weight: 400;
+          letter-spacing: 0.25em;
+          text-transform: uppercase;
+          text-decoration: none;
+          border: none;
+          cursor: pointer;
+          transition: background 0.3s, transform 0.3s;
+        }
+        .perfume-card-btn:hover {
+          background: #2e2820;
+          transform: translateY(-2px);
+        }
+
+        /* ==================== TESTIMONIALS ==================== */
+        .testimonials-section {
+          padding: 100px 60px;
+          background: #1a1410;
+          position: relative;
+          overflow: hidden;
+        }
+        .testimonials-section::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(194,178,128,0.3), transparent);
+        }
+        .testimonials-bg-text {
+          position: absolute;
+          top: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(60px, 10vw, 140px);
+          font-weight: 300;
+          font-style: italic;
+          color: rgba(194,178,128,0.04);
+          white-space: nowrap;
+          pointer-events: none;
+          user-select: none;
+        }
+        .testimonials-header {
+          text-align: center;
+          margin-bottom: 64px;
+          position: relative;
+          z-index: 2;
+        }
+        .testimonials-header .section-tag-row {
+          justify-content: center;
+          color: rgba(194,178,128,0.6);
+        }
+        .testimonials-header .section-tag-row::after {
+          background: rgba(194,178,128,0.4);
+        }
+        .testimonials-header .section-h2 {
+          color: #f0ece6;
+        }
+        .testimonial-card {
+          max-width: 900px;
+          margin: 0 auto;
+          display: flex;
+          align-items: center;
+          gap: 60px;
+          position: relative;
+          z-index: 2;
+        }
+        .testimonial-img-col {
+          flex-shrink: 0;
+          position: relative;
+        }
+        .testimonial-img-wrap {
+          width: 200px;
+          height: 200px;
+          border-radius: 50%;
+          overflow: hidden;
+          border: 2px solid rgba(194,178,128,0.2);
+          position: relative;
+        }
+        .testimonial-content-col {
+          flex: 1;
+          position: relative;
+        }
+        .testimonial-quote-mark {
+          position: absolute;
+          top: -30px;
+          right: 0;
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 140px;
+          font-weight: 300;
+          color: rgba(194,178,128,0.12);
+          line-height: 1;
+          pointer-events: none;
+          user-select: none;
+        }
+        .testimonial-stars {
+          display: flex;
+          gap: 4px;
+          margin-bottom: 20px;
+        }
+        .testimonial-star {
+          color: #c2b280;
+          font-size: 14px;
+        }
+        .testimonial-text {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(18px, 2.2vw, 24px);
+          font-weight: 300;
+          font-style: italic;
+          color: rgba(240,236,230,0.8);
+          line-height: 1.7;
+          margin-bottom: 32px;
+          letter-spacing: 0.02em;
+        }
+        .testimonial-author {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+        }
+        .testimonial-author-line {
+          width: 32px;
+          height: 1px;
+          background: rgba(194,178,128,0.3);
+        }
+        .testimonial-author-name {
+          font-size: 11px;
+          font-weight: 400;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #c2b280;
+        }
+        .testimonial-author-title {
+          font-size: 10px;
+          font-weight: 300;
+          color: rgba(194,178,128,0.4);
+          letter-spacing: 0.1em;
+          margin-top: 4px;
+        }
+        .testimonial-dots {
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+          margin-top: 48px;
+          position: relative;
+          z-index: 2;
+        }
+        .testimonial-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: rgba(194,178,128,0.15);
+          border: none;
+          cursor: pointer;
+          transition: background 0.3s, transform 0.3s;
+          padding: 0;
+        }
+        .testimonial-dot.active {
+          background: #c2b280;
+          transform: scale(1.3);
+        }
+        .testimonial-dot:hover {
+          background: rgba(194,178,128,0.4);
+        }
+
         /* ==================== EDITORIAL BANNER ==================== */
         .editorial-banner {
           position: relative;
@@ -839,6 +1259,17 @@ export default function Home() {
           .pillars-section { padding: 60px 32px; }
           .pillars-grid { grid-template-columns: repeat(2, 1fr); }
           .section-heading-block { flex-direction: column; align-items: flex-start; gap: 20px; }
+          .sale-section { padding: 60px 32px; }
+          .sale-grid { grid-template-columns: 1fr; }
+          .sale-card { padding: 28px; min-height: 220px; }
+          .sale-card-img { width: 140px; height: 140px; margin-right: 24px; }
+          .sale-discount-num { font-size: 42px; }
+          .perfume-finder-section { padding: 60px 32px; }
+          .perfume-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+          .testimonials-section { padding: 60px 32px; }
+          .testimonial-card { flex-direction: column; text-align: center; gap: 32px; }
+          .testimonial-author { justify-content: center; }
+          .testimonial-quote-mark { right: 50%; transform: translateX(50%); }
         }
         @media (max-width: 640px) {
           .hero-headline { font-size: clamp(32px, 10vw, 48px); }
@@ -848,6 +1279,10 @@ export default function Home() {
           }
           .products-grid { grid-template-columns: repeat(2, 1fr); }
           .pillars-grid { grid-template-columns: 1fr; }
+          .sale-card { flex-direction: column; text-align: center; padding: 28px 20px; }
+          .sale-card-img { margin-right: 0; margin-bottom: 20px; width: 160px; height: 160px; }
+          .perfume-grid { grid-template-columns: 1fr; }
+          .testimonial-img-wrap { width: 140px; height: 140px; }
         }
       `}</style>
 
@@ -937,6 +1372,156 @@ export default function Home() {
               <div className="pillar-line"></div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ==================== SALE SECTION ==================== */}
+      <section className="sale-section">
+        <div className="sale-bg-text">SALE</div>
+        <div className="sale-header">
+          <div className="section-tag-row">Limited Time Offer</div>
+          <h2 className="section-h2">Exclusive Deals</h2>
+        </div>
+        <div className="sale-grid">
+          {/* Sale Card 1 */}
+          <div className="sale-card">
+            <div className="sale-card-shimmer"></div>
+            <div className="sale-card-img">
+              <Image
+                src="/perfume_sale_1.png"
+                alt="Perfume on sale"
+                fill
+                unoptimized
+                style={{ objectFit: "contain" }}
+              />
+            </div>
+            <div className="sale-card-content">
+              <p className="sale-card-label">Perfume</p>
+              <h3 className="sale-card-title">Midnight Essence</h3>
+              <div className="sale-discount-badge">
+                <span className="sale-discount-num">30</span>
+                <span className="sale-discount-pct">%</span>
+                <span className="sale-discount-off">off</span>
+              </div>
+              <br />
+              <Link href="/shop" className="sale-card-cta">
+                <span>Shop Now</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </Link>
+            </div>
+          </div>
+          {/* Sale Card 2 */}
+          <div className="sale-card">
+            <div className="sale-card-shimmer"></div>
+            <div className="sale-card-img">
+              <Image
+                src="/perfume_sale_2.png"
+                alt="Perfume on sale"
+                fill
+                unoptimized
+                style={{ objectFit: "contain" }}
+              />
+            </div>
+            <div className="sale-card-content">
+              <p className="sale-card-label">Perfume</p>
+              <h3 className="sale-card-title">Velvet Bloom</h3>
+              <div className="sale-discount-badge">
+                <span className="sale-discount-num">15</span>
+                <span className="sale-discount-pct">%</span>
+                <span className="sale-discount-off">off</span>
+              </div>
+              <br />
+              <Link href="/shop" className="sale-card-cta">
+                <span>Shop Now</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ==================== FIND YOUR PERFUME ==================== */}
+      <section className="perfume-finder-section">
+        <div className="perfume-finder-bg-text">Product</div>
+        <div className="perfume-finder-header">
+          <div className="section-tag-row">Collection</div>
+          <h2 className="section-h2">Find Your Perfume</h2>
+        </div>
+        <div className="perfume-grid">
+          {[
+            { name: "Cool Winters", desc: "A crisp blend of frosted mint, white cedar and cool alpine air for the bold spirit.", img: "/perfume_cool_winters.png" },
+            { name: "Ex De Rose", desc: "Romantic Damascus rose petals layered with velvety musk and a hint of saffron warmth.", img: "/perfume_ex_de_rose.png" },
+            { name: "Warm Sakura", desc: "Delicate cherry blossom infused with soft sandalwood and a whisper of Japanese incense.", img: "/perfume_warm_sakura.png" },
+            { name: "Sweet Lavender", desc: "French lavender fields captured in a bottle with honey undertones and powdery violet.", img: "/perfume_sweet_lavender.png" },
+            { name: "Orange Delight", desc: "Sun-kissed Sicilian orange zest blended with neroli, warm amber and cedarwood.", img: "/perfume_orange_delight.png" },
+            { name: "Morning Scent", desc: "Fresh dewdrop florals meet golden sunlight with notes of bergamot and white tea.", img: "/perfume_morning_scent.png" },
+          ].map((perfume, idx) => (
+            <Link href="/shop" key={idx} className="perfume-card">
+              <div className="perfume-card-img-wrap">
+                <Image
+                  src={perfume.img}
+                  alt={perfume.name}
+                  fill
+                  unoptimized
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+              <div className="perfume-card-body">
+                <h3 className="perfume-card-name">{perfume.name}</h3>
+                <p className="perfume-card-desc">{perfume.desc}</p>
+                <span className="perfume-card-btn">
+                  Discover More
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ==================== TESTIMONIALS ==================== */}
+      <section className="testimonials-section">
+        <div className="testimonials-bg-text">Feedback</div>
+        <div className="testimonials-header">
+          <div className="section-tag-row">What Our Clients Say</div>
+          <h2 className="section-h2">Our Testimonials</h2>
+        </div>
+        <div className="testimonial-card">
+          <div className="testimonial-img-col">
+            <div className="testimonial-img-wrap">
+              <Image
+                src="/testimonial_avatar.png"
+                alt="Customer testimonial"
+                fill
+                unoptimized
+                style={{ objectFit: "cover" }}
+              />
+            </div>
+          </div>
+          <div className="testimonial-content-col">
+            <span className="testimonial-quote-mark">&rdquo;</span>
+            <div className="testimonial-stars">
+              {[...Array(5)].map((_, i) => (
+                <span key={i} className="testimonial-star">★</span>
+              ))}
+            </div>
+            <p className="testimonial-text">
+              &ldquo;Alora has completely transformed my fragrance journey. The quality is unmatched — every bottle feels like a work of art. 
+              The scent lasts all day and I constantly receive compliments. Truly a luxury experience from start to finish.&rdquo;
+            </p>
+            <div className="testimonial-author">
+              <div className="testimonial-author-line"></div>
+              <div>
+                <p className="testimonial-author-name">Sophia Laurent</p>
+                <p className="testimonial-author-title">Verified Buyer</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="testimonial-dots">
+          <button className="testimonial-dot active" aria-label="Testimonial 1"></button>
+          <button className="testimonial-dot" aria-label="Testimonial 2"></button>
+          <button className="testimonial-dot" aria-label="Testimonial 3"></button>
         </div>
       </section>
 
