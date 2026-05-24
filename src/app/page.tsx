@@ -976,6 +976,7 @@ export default function Home() {
         }
         .perfume-card-body {
           padding: 16px 16px;
+          text-align: center;
         }
         .perfume-card-name {
           font-family: 'Cormorant Garamond', serif;
@@ -1240,28 +1241,67 @@ export default function Home() {
           .section-heading-block { flex-direction: column; align-items: flex-start; gap: 20px; }
           .sale-section { padding: 60px 32px; }
           .sale-grid { grid-template-columns: 1fr; }
-          .sale-card { padding: 24px; min-height: 180px; }
-          .sale-card-img { width: 120px; height: 120px; margin-right: 20px; }
-          .sale-discount-num { font-size: 36px; }
+          .sale-card { padding: 20px; min-height: 140px; }
+          .sale-card-img { width: 100px; height: 100px; margin-right: 16px; }
+          .sale-discount-num { font-size: 32px; }
+          .sale-card-title { font-size: 20px; }
           .perfume-finder-section { padding: 60px 32px; }
-          .perfume-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+          .perfume-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+          .perfume-grid > :last-child:nth-child(odd) {
+            grid-column: 1 / -1;
+            width: calc(50% - 8px);
+            justify-self: center;
+          }
+          .perfume-card-body { padding: 12px; }
+          .perfume-card-name { font-size: 16px; }
+          .perfume-card-desc { font-size: 9px; margin-bottom: 8px; }
+          .perfume-card-btn { padding: 6px 14px; font-size: 6px; }
           .testimonials-section { padding: 60px 32px; }
           .testimonial-card { flex-direction: column; text-align: center; gap: 32px; }
           .testimonial-author { justify-content: center; }
           .testimonial-quote-mark { right: 50%; transform: translateX(50%); }
         }
         @media (max-width: 640px) {
+          .section-h2 {
+            font-size: clamp(22px, 6vw, 36px);
+            white-space: normal !important;
+            word-wrap: break-word;
+          }
+          .pillars-header .section-h2,
+          .sale-header .section-h2,
+          .perfume-finder-header .section-h2,
+          .testimonials-header .section-h2 {
+            white-space: normal !important;
+          }
           .hero-headline { font-size: clamp(32px, 10vw, 48px); }
           .hero-image-inner {
             width: clamp(220px, 70vw, 320px) !important;
             height: clamp(270px, 85vw, 400px) !important;
           }
           .products-grid { grid-template-columns: repeat(2, 1fr); }
+          .pillars-section { padding: 40px 16px; }
           .pillars-grid { grid-template-columns: 1fr; }
-          .sale-card { flex-direction: column; text-align: center; padding: 24px 16px; }
-          .sale-card-img { margin-right: 0; margin-bottom: 16px; width: 140px; height: 140px; }
-          .perfume-grid { grid-template-columns: 1fr; }
+          .pillar-card { padding: 32px 24px; }
+          .sale-section { padding: 40px 16px; }
+          .sale-card { flex-direction: column; text-align: center; padding: 16px; min-height: auto; }
+          .sale-card-img { margin-right: 0; margin-bottom: 12px; width: 100px; height: 100px; }
+          .sale-card-title { font-size: 18px; }
+          .sale-discount-num { font-size: 28px; }
+          .sale-card-label { font-size: 8px; }
+          .sale-grid { gap: 12px; }
+          .perfume-finder-section { padding: 40px 16px; }
+          .perfume-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+          .perfume-grid > :last-child:nth-child(odd) {
+            width: calc(50% - 5px);
+          }
+          .perfume-card-img-wrap { aspect-ratio: 1/1; }
+          .perfume-card-body { padding: 10px; }
+          .perfume-card-name { font-size: 14px; margin-bottom: 4px; }
+          .perfume-card-desc { font-size: 8px; margin-bottom: 6px; line-height: 1.5; }
+          .perfume-card-btn { padding: 5px 12px; font-size: 6px; gap: 5px; }
+          .testimonials-section { padding: 40px 16px; }
           .testimonial-img-wrap { width: 140px; height: 140px; }
+          .testimonial-text { font-size: 16px; }
         }
       `}</style>
 

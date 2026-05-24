@@ -401,7 +401,12 @@ body {
 
 @media (max-width: 768px) {
   .navbar {
-    padding: 0 20px;
+    left: 12px;
+    right: 12px;
+    top: 8px;
+    padding: 0 16px;
+    height: 50px;
+    border-radius: 20px;
   }
 
   .navbar-links {
@@ -409,11 +414,26 @@ body {
   }
 
   .navbar-icons {
-    gap: 16px;
+    gap: 14px;
+    border-left: none;
+    padding-left: 0;
+  }
+
+  .navbar-logo {
+    font-size: 24px;
+    letter-spacing: 3px;
+  }
+
+  .navbar-logo-img {
+    height: 26px;
   }
 
   .mobile-toggle {
     display: flex;
+  }
+
+  .navbar-right-group {
+    gap: 16px;
   }
 }
 
