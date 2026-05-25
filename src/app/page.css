@@ -968,140 +968,114 @@
 }
 
 /* ==================== TESTIMONIALS ==================== */
-.testimonials-section {
+/* ==================== ABOUT SECTION (homepage) ==================== */
+.about-section {
   padding: 100px 60px;
   background: #C2B280;
   position: relative;
   overflow: hidden;
   border-top: 1px solid rgba(26,20,16,0.1);
 }
-.testimonials-bg-text {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(60px, 10vw, 140px);
-  font-weight: 300;
-  font-style: italic;
-  color: rgba(26,20,16,0.04);
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
-}
-.testimonials-header {
+.about-header {
   text-align: center;
-  margin-bottom: 64px;
+  margin-bottom: 48px;
   position: relative;
   z-index: 2;
 }
-.testimonials-header .section-tag-row {
+.about-header .section-tag-row {
   justify-content: center;
 }
-.testimonial-card {
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 60px;
+.about-content {
+  max-width: 700px;
+  margin: 0 auto 60px;
   position: relative;
   z-index: 2;
 }
-.testimonial-img-col {
-  flex-shrink: 0;
-  position: relative;
-}
-.testimonial-img-wrap {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  overflow: hidden;
-  border: 2px solid rgba(26,20,16,0.12);
-  position: relative;
-}
-.testimonial-content-col {
-  flex: 1;
-  position: relative;
-}
-.testimonial-quote-mark {
-  position: absolute;
-  top: -30px;
-  right: 0;
+.about-story {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 140px;
-  font-weight: 300;
-  color: rgba(26,20,16,0.08);
-  line-height: 1;
-  pointer-events: none;
-  user-select: none;
-}
-.testimonial-stars {
-  display: flex;
-  gap: 4px;
-  margin-bottom: 20px;
-}
-.testimonial-star {
-  color: #6b5a3e;
-  font-size: 14px;
-}
-.testimonial-text {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(18px, 2.2vw, 24px);
+  font-size: clamp(17px, 2vw, 22px);
   font-weight: 300;
   font-style: italic;
-  color: rgba(26,20,16,0.65);
-  line-height: 1.7;
-  margin-bottom: 32px;
+  color: rgba(26,20,16,0.6);
+  line-height: 1.8;
+  text-align: center;
   letter-spacing: 0.02em;
 }
-.testimonial-author {
-  display: flex;
+
+/* Value cards */
+.about-values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  max-width: 960px;
+  margin: 0 auto 56px;
+  position: relative;
+  z-index: 2;
+}
+.about-value-card {
+  text-align: center;
+  padding: 36px 24px;
+  border: 1px solid rgba(26,20,16,0.1);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+.about-value-card:hover {
+  border-color: rgba(26,20,16,0.25);
+  transform: translateY(-4px);
+}
+.about-value-icon {
+  display: inline-flex;
   align-items: center;
-  gap: 16px;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(26,20,16,0.85);
+  color: #C2B280;
+  font-size: 18px;
+  margin-bottom: 20px;
 }
-.testimonial-author-line {
-  width: 32px;
-  height: 1px;
-  background: rgba(26,20,16,0.2);
+.about-value-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #1a1410;
+  margin-bottom: 12px;
 }
-.testimonial-author-name {
+.about-value-desc {
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 1.8;
+  color: rgba(26,20,16,0.5);
+  letter-spacing: 0.03em;
+}
+
+/* CTA link */
+.about-cta-wrap {
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+.about-cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Jost', sans-serif;
   font-size: 11px;
   font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #1a1410;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(26,20,16,0.25);
+  padding-bottom: 4px;
+  transition: color 0.3s ease, border-color 0.3s ease;
 }
-.testimonial-author-title {
-  font-size: 10px;
-  font-weight: 300;
-  color: rgba(26,20,16,0.4);
-  letter-spacing: 0.1em;
-  margin-top: 4px;
-}
-.testimonial-dots {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 48px;
-  position: relative;
-  z-index: 2;
-}
-.testimonial-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(26,20,16,0.12);
-  border: none;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.3s;
-  padding: 0;
-}
-.testimonial-dot.active {
-  background: #6b5a3e;
-  transform: scale(1.3);
-}
-.testimonial-dot:hover {
-  background: rgba(26,20,16,0.3);
+.about-cta-link:hover {
+  color: #6b5a3e;
+  border-color: #6b5a3e;
 }
 
 /* ==================== EDITORIAL BANNER ==================== */
@@ -1208,10 +1182,8 @@
   .perfume-card-name { font-size: 16px; }
   .perfume-card-desc { font-size: 9px; margin-bottom: 8px; }
   .perfume-card-btn { padding: 6px 14px; font-size: 6px; }
-  .testimonials-section { padding: 60px 32px; }
-  .testimonial-card { flex-direction: column; text-align: center; gap: 32px; }
-  .testimonial-author { justify-content: center; }
-  .testimonial-quote-mark { right: 50%; transform: translateX(50%); }
+  .about-section { padding: 60px 32px; }
+  .about-values-grid { grid-template-columns: 1fr; max-width: 400px; }
 }
 @media (max-width: 640px) {
   .section-h2 {
@@ -1222,7 +1194,7 @@
   .pillars-header .section-h2,
   .sale-header .section-h2,
   .perfume-finder-header .section-h2,
-  .testimonials-header .section-h2 {
+  .about-header .section-h2 {
     white-space: normal !important;
   }
   .hero-headline { font-size: clamp(32px, 10vw, 48px); }
@@ -1251,7 +1223,5 @@
   .perfume-card-name { font-size: 14px; margin-bottom: 4px; }
   .perfume-card-desc { font-size: 8px; margin-bottom: 6px; line-height: 1.5; }
   .perfume-card-btn { padding: 5px 12px; font-size: 6px; gap: 5px; }
-  .testimonials-section { padding: 40px 16px; }
-  .testimonial-img-wrap { width: 140px; height: 140px; }
-  .testimonial-text { font-size: 16px; }
+  .about-section { padding: 40px 16px; }
 }

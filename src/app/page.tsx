@@ -208,49 +208,34 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ==================== TESTIMONIALS ==================== */}
-      <section className="testimonials-section">
-
-        <div className="testimonials-header">
-          <div className="section-tag-row">What Our Clients Say</div>
-          <h2 className="section-h2">our testimonials</h2>
+      {/* ==================== ABOUT ==================== */}
+      <section className="about-section">
+        <div className="about-header">
+          <div className="section-tag-row">Who We Are</div>
+          <h2 className="section-h2">our story</h2>
         </div>
-        <div className="testimonial-card">
-          <div className="testimonial-img-col">
-            <div className="testimonial-img-wrap">
-              <Image
-                src="/testimonial_avatar.png"
-                alt="Customer testimonial"
-                fill
-                unoptimized
-                style={{ objectFit: "cover" }}
-              />
-            </div>
-          </div>
-          <div className="testimonial-content-col">
-            <span className="testimonial-quote-mark">&rdquo;</span>
-            <div className="testimonial-stars">
-              {[...Array(5)].map((_, i) => (
-                <span key={i} className="testimonial-star">★</span>
-              ))}
-            </div>
-            <p className="testimonial-text">
-              &ldquo;Alora has completely transformed my fragrance journey. The quality is unmatched — every bottle feels like a work of art.
-              The scent lasts all day and I constantly receive compliments. Truly a luxury experience from start to finish.&rdquo;
+        <div className="about-values-grid">
+          <div className="about-value-card">
+            <span className="about-value-icon">✦</span>
+            <h3 className="about-value-title">Authenticity</h3>
+            <p className="about-value-desc">
+              Every fragrance we offer is 100% authentic, sourced directly from the world&apos;s most prestigious perfume houses.
             </p>
-            <div className="testimonial-author">
-              <div className="testimonial-author-line"></div>
-              <div>
-                <p className="testimonial-author-name">Sophia Laurent</p>
-                <p className="testimonial-author-title">Verified Buyer</p>
-              </div>
-            </div>
           </div>
-        </div>
-        <div className="testimonial-dots">
-          <button className="testimonial-dot active" aria-label="Testimonial 1"></button>
-          <button className="testimonial-dot" aria-label="Testimonial 2"></button>
-          <button className="testimonial-dot" aria-label="Testimonial 3"></button>
+          <div className="about-value-card">
+            <span className="about-value-icon">◆</span>
+            <h3 className="about-value-title">Craftsmanship</h3>
+            <p className="about-value-desc">
+              We celebrate the art of perfumery — from rare ingredients harvested at peak potency to master blenders who perfect each composition.
+            </p>
+          </div>
+          <div className="about-value-card">
+            <span className="about-value-icon">★</span>
+            <h3 className="about-value-title">Experience</h3>
+            <p className="about-value-desc">
+              Each Alora scent is designed to evolve with you, revealing new layers and leaving an unforgettable impression.
+            </p>
+          </div>
         </div>
       </section>
 

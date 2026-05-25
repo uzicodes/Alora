@@ -110,8 +110,11 @@ export default function Navbar() {
     }
   }, [mobileOpen]);
 
+  if (pathname.startsWith("/admin")) return null;
+
   return (
     <>
+      <div style={{ height: 56 }} />
       <nav className={`navbar ${scrolled ? "scrolled" : ""}`} id="navbar">
         {/* Logo */}
         <Link href="/" className="navbar-logo" id="navbar-logo">
@@ -150,7 +153,7 @@ export default function Navbar() {
                 </div>
               </div>
             </li>
-            <li><Link href="/about" className={pathname === "/about" ? "active-link" : ""}>About</Link></li>
+
 
             {!isSignedIn && (
               <li>
@@ -321,7 +324,7 @@ export default function Navbar() {
         <Link href="/woman" onClick={() => setMobileOpen(false)}>Women</Link>
         <Link href="/unisex" onClick={() => setMobileOpen(false)}>Unisex</Link>
         <a href="#" onClick={(e) => e.preventDefault()}>Brands</a>
-        <Link href="/about" onClick={() => setMobileOpen(false)}>About</Link>
+
         <Link href="/contact" onClick={() => setMobileOpen(false)}>Contact</Link>
         {!isSignedIn && (
           <Link href="/login" onClick={() => setMobileOpen(false)} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>

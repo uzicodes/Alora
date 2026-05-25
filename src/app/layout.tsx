@@ -3,7 +3,9 @@ import { Geist, Geist_Mono, Ubuntu } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import ScrollToTop from "./components/ScrollToTop";
-import LayoutShell from "./components/LayoutShell";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import { CartProvider } from "./components/CartContext";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 
@@ -85,9 +87,13 @@ export default function RootLayout({
         >
           <ScrollToTop />
           <Toaster position="bottom-right" richColors />
-          <LayoutShell>
+          <CartProvider>
+            <Navbar />
+            <main>
               {children}
-          </LayoutShell>
+            </main>
+            <Footer />
+          </CartProvider>
         </body>
       </html>
     </ClerkProvider>

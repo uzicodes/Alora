@@ -1,7 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 export default function Footer() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
+
   return (
     <footer 
       className="footer bg-[#1a1f2e] text-white" 
@@ -53,7 +59,7 @@ export default function Footer() {
         <div className="footer-column">
           <h4 className="text-green-400 uppercase tracking-wider font-semibold mb-4">Our Services</h4>
           <ul className="flex flex-col gap-3">
-            <li><Link href="/about" className="text-gray-400 hover:text-white transition-colors text-sm">Track Order</Link></li>
+            <li><Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">Track Order</Link></li>
             <li><Link href="/contact" className="text-gray-400 hover:text-white transition-colors text-sm">Delivery Info</Link></li>
             <li><Link href="/careers" className="text-gray-400 hover:text-white transition-colors text-sm">Help & FAQs</Link></li>
             <li><Link href="/press" className="text-gray-400 hover:text-white transition-colors text-sm">Contact Support</Link></li>
