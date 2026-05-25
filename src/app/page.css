@@ -2,12 +2,6 @@
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-body {
-  font-family: 'Jost', sans-serif;
-  background: #C2B280;
-  color: #1a1410;
-  overflow-x: hidden;
-}
 
 /* ==================== HERO SECTION ==================== */
 .alora-hero {
@@ -20,6 +14,7 @@ body {
   overflow: hidden;
   background: #C2B280;
   padding: 0px 40px 160px;
+  margin-top: -56px;
 }
 
 /* Ambient glow behind bottle */
