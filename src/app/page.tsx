@@ -15,10 +15,10 @@ type Pillar = {
 
 
 const pillars: Pillar[] = [
-  { num: "01", label: "Hand-Sourced Ingredients", desc: "Rare botanicals harvested across five continents at peak potency." },
+  { num: "01", label: "Hand-Sourced Ingredients", desc: "Rare botanicals harvested across continents at peak potency." },
   { num: "02", label: "Master Perfumers", desc: "Crafted by artisans with decades of olfactory heritage." },
-  { num: "03", label: "Up to 3 Years", desc: "The meticulous blending process behind each signature scent." },
-  { num: "04", label: "Certified Luxury", desc: "Every bottle inspected and authenticated before it leaves our atelier." },
+  { num: "03", label: "Up to 3 Years", desc: "The meticulous blending behind each signature scent." },
+  { num: "04", label: "Certified Luxury", desc: "Every bottle inspected before it leaves our atelier." },
 ];
 
 export default function Home() {
@@ -520,13 +520,7 @@ export default function Home() {
           color: #6b5a3e;
           margin-bottom: 20px;
         }
-        .section-tag-row::after {
-          content: '';
-          display: block;
-          width: 48px;
-          height: 1px;
-          background: #6b5a3e;
-        }
+
         .section-h2 {
           font-family: var(--font-lumien), 'Cormorant Garamond', serif;
           font-size: clamp(36px, 4vw, 60px);
@@ -727,8 +721,12 @@ export default function Home() {
         }
         .pillar-card {
           background: #c8be8e;
-          padding: 48px 36px;
+          padding: 28px 20px;
           transition: background 0.3s;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
         }
         .pillar-card:hover { background: #d0c89c; }
         .pillar-num {
@@ -740,25 +738,19 @@ export default function Home() {
           margin-bottom: 28px;
         }
         .pillar-label {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 22px;
-          font-weight: 300;
+          font-family: var(--font-ubuntu), sans-serif;
+          font-size: 20px;
+          font-weight: 400;
           color: #1a1410;
           line-height: 1.2;
-          margin-bottom: 20px;
+          margin-bottom: 10px;
         }
         .pillar-desc {
           font-size: 12px;
           font-weight: 300;
           line-height: 1.8;
-          color: rgba(26,20,16,0.45);
+          color: rgba(26, 20, 16, 0.75);
           letter-spacing: 0.02em;
-        }
-        .pillar-line {
-          width: 32px;
-          height: 1px;
-          background: rgba(26,20,16,0.15);
-          margin: 24px 0 0;
         }
 
         /* ==================== SALE SECTION ==================== */
@@ -850,9 +842,9 @@ export default function Home() {
           margin-bottom: 8px;
         }
         .sale-card-title {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 24px;
-          font-weight: 300;
+          font-family: var(--font-ubuntu), sans-serif;
+          font-size: 22px;
+          font-weight: 400;
           color: #1a1410;
           margin-bottom: 12px;
           line-height: 1.2;
@@ -864,16 +856,16 @@ export default function Home() {
           margin-bottom: 12px;
         }
         .sale-discount-num {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 48px;
-          font-weight: 300;
+          font-family: var(--font-ubuntu), sans-serif;
+          font-size: 44px;
+          font-weight: 500;
           color: #6b5a3e;
           line-height: 1;
         }
         .sale-discount-pct {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 22px;
-          font-weight: 300;
+          font-family: var(--font-ubuntu), sans-serif;
+          font-size: 18px;
+          font-weight: 400;
           color: #6b5a3e;
         }
         .sale-discount-off {
@@ -979,8 +971,8 @@ export default function Home() {
           text-align: center;
         }
         .perfume-card-name {
-          font-family: 'Cormorant Garamond', serif;
-          font-size: 18px;
+          font-family: var(--font-ubuntu), sans-serif;
+          font-size: 16px;
           font-weight: 400;
           color: #1a1410;
           margin-bottom: 6px;
@@ -990,7 +982,7 @@ export default function Home() {
           font-size: 10px;
           font-weight: 300;
           line-height: 1.6;
-          color: rgba(26,20,16,0.5);
+          color: rgba(26, 20, 16, 0.8);
           margin-bottom: 12px;
           letter-spacing: 0.02em;
         }
@@ -1008,10 +1000,11 @@ export default function Home() {
           text-decoration: none;
           border: none;
           cursor: pointer;
-          transition: background 0.3s, transform 0.3s;
+          transition: background 0.3s, color 0.3s, transform 0.3s;
         }
         .perfume-card-btn:hover {
           background: #2e2820;
+          color: #22c55e;
           transform: translateY(-2px);
         }
 
@@ -1387,7 +1380,6 @@ export default function Home() {
             <div key={p.num} className="pillar-card">
               <h3 className="pillar-label">{p.label}</h3>
               <p className="pillar-desc">{p.desc}</p>
-              <div className="pillar-line"></div>
             </div>
           ))}
         </div>
