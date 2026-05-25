@@ -33,6 +33,7 @@ export default function Home() {
 
   return (
     <>
+      <style dangerouslySetInnerHTML={{ __html: `body { background: #C2B280 !important; }` }} />
       {/* ==================== HERO ==================== */}
       <section className="alora-hero">
         {/* Background elements */}
