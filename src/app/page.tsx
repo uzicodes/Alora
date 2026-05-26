@@ -123,17 +123,16 @@ export default function Home() {
 
       {/* ==================== SALE SECTION ==================== */}
       <section className="sale-section">
-        <div className="sale-bg-text">SALE</div>
         <div className="sale-header">
           <div className="section-tag-row">Limited Time Offer</div>
           <h2 className="section-h2">exclusive deals</h2>
         </div>
         <div className="sale-grid">
           {[
-            { name: "Midnight Essence", discount: 30, img: "/perfume_sale_1.png" },
-            { name: "Velvet Bloom", discount: 15, img: "/perfume_sale_2.png" },
-            { name: "Golden Dusk", discount: 25, img: "/perfume_morning_scent.png" },
-            { name: "Citrus Noir", discount: 20, img: "/perfume_orange_delight.png" },
+            { name: "Luis Viutton Classics", discount: 30, img: "/homepage_images/deals/LV.png" },
+            { name: "Hugo Boss Frontliners", discount: 15, img: "/homepage_images/deals/boss.png" },
+            { name: "Lattaffa Year-Combo", discount: 25, img: "/homepage_images/deals/lattaffa.png" },
+            { name: "Nishane Summer Picks", discount: 20, img: "/homepage_images/deals/nishane.png" },
           ].map((deal, idx) => (
             <div key={idx} className="sale-card">
               <div className="sale-card-shimmer"></div>
