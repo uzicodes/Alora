@@ -1115,24 +1115,12 @@
   text-transform: uppercase;
   color: rgba(26,20,16,0.35);
 }
-.editorial-border {
+.editorial-frame {
   position: absolute;
-  inset: 40px;
-  border: 1px solid rgba(26,20,16,0.1);
+  inset: 0;
+  z-index: 1;
   pointer-events: none;
 }
-.editorial-corner {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  border-color: rgba(26,20,16,0.25);
-  border-style: solid;
-  opacity: 0.5;
-}
-.ec-tl { top: 40px; left: 40px; border-width: 1px 0 0 1px; }
-.ec-tr { top: 40px; right: 40px; border-width: 1px 1px 0 0; }
-.ec-bl { bottom: 40px; left: 40px; border-width: 0 0 1px 1px; }
-.ec-br { bottom: 40px; right: 40px; border-width: 0 1px 1px 0; }
 
 /* ==================== ANIMATIONS ==================== */
 @keyframes fadeInUp {

@@ -241,11 +241,15 @@ export default function Home() {
       {/* ==================== EDITORIAL QUOTE ==================== */}
       <div className="editorial-banner">
         <div className="editorial-banner-bg"></div>
-        <div className="ec-tl editorial-corner"></div>
-        <div className="ec-tr editorial-corner"></div>
-        <div className="ec-bl editorial-corner"></div>
-        <div className="ec-br editorial-corner"></div>
-        <div className="editorial-border"></div>
+        <div className="editorial-frame">
+          <Image
+            src="/homepage_images/quote.png"
+            alt="Quote Frame"
+            fill
+            unoptimized
+            style={{ objectFit: 'fill', pointerEvents: 'none' }}
+          />
+        </div>
         <div className="editorial-content">
           <p className="editorial-quote">
             &ldquo;A fragrance is the invisible part of your personality that says the most about who you are.&rdquo;
