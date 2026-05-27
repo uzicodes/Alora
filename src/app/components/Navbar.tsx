@@ -324,8 +324,6 @@ export default function Navbar() {
         <Link href="/woman" onClick={() => setMobileOpen(false)}>Women</Link>
         <Link href="/unisex" onClick={() => setMobileOpen(false)}>Unisex</Link>
         <a href="#" onClick={(e) => e.preventDefault()}>Brands</a>
-
-        <Link href="/contact" onClick={() => setMobileOpen(false)}>Contact</Link>
         {!isSignedIn && (
           <Link href="/login" onClick={() => setMobileOpen(false)} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>
             LOGIN
