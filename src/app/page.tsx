@@ -22,6 +22,46 @@ const pillars: Pillar[] = [
   { num: "04", label: "Certified Luxury", desc: "Every bottle inspected before it leaves our atelier." },
 ];
 
+const PerfumeCardImage = ({ imgs, alt }: { imgs: string[]; alt: string }) => {
+  const [currentIdx, setCurrentIdx] = useState(0);
+
+  useEffect(() => {
+    if (imgs.length <= 1) return;
+    const interval = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % imgs.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [imgs]);
+
+  if (!imgs || imgs.length === 0) return null;
+
+  return (
+    <div className="perfume-card-img-wrap" style={{ overflow: "hidden", position: "relative" }}>
+      <div
+        style={{
+          display: "flex",
+          width: `${imgs.length * 100}%`,
+          height: "100%",
+          transform: `translateX(-${(currentIdx * 100) / imgs.length}%)`,
+          transition: "transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+        }}
+      >
+        {imgs.map((img, idx) => (
+          <div key={idx} style={{ width: `${100 / imgs.length}%`, height: "100%", position: "relative" }}>
+            <Image
+              src={img}
+              alt={alt}
+              fill
+              unoptimized
+              style={{ objectFit: "contain" }}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 export default function Home() {
   const marqueeRef = useRef<HTMLDivElement>(null);
   const [heroVisible, setHeroVisible] = useState(false);
@@ -172,26 +212,18 @@ export default function Home() {
         </div>
         <div className="perfume-grid">
           {[
-            { name: "Cool Winters", desc: "A crisp blend of frosted mint, white cedar and cool alpine air for the bold spirit.", img: "/perfume_cool_winters.png" },
-            { name: "Ex De Rose", desc: "Romantic Damascus rose petals layered with velvety musk and a hint of saffron warmth.", img: "/perfume_ex_de_rose.png" },
-            { name: "Warm Sakura", desc: "Delicate cherry blossom infused with soft sandalwood and a whisper of Japanese incense.", img: "/perfume_warm_sakura.png" },
-            { name: "Sweet Lavender", desc: "French lavender fields captured in a bottle with honey undertones and powdery violet.", img: "/perfume_sweet_lavender.png" },
-            { name: "Orange Delight", desc: "Sun-kissed Sicilian orange zest blended with neroli, warm amber and cedarwood.", img: "/perfume_orange_delight.png" },
-            { name: "Morning Scent", desc: "Fresh dewdrop florals meet golden sunlight with notes of bergamot and white tea.", img: "/perfume_morning_scent.png" },
-            { name: "Amber Oud", desc: "Rich Middle Eastern oud blended with warm amber, smoky incense and a touch of rose.", img: "/perfume_sale_1.png" },
-            { name: "Velvet Night", desc: "Dark plum and black currant wrapped in velvety musk with hints of vanilla bourbon.", img: "/perfume_sale_2.png" },
-            { name: "Mystic Breeze", desc: "Light oceanic notes meet white florals with a dry woody finish of driftwood and moss.", img: "/perfume_cool_winters.png" },
+            { name: "Cool Winters", desc: "A crisp blend of frosted mint, white cedar and cool alpine air for the bold spirit.", imgs: ["/homepage_images/picks/1/ck.png", "/homepage_images/picks/1/valentino.png"] },
+            { name: "Ex De Rose", desc: "Romantic Damascus rose petals layered with velvety musk and a hint of saffron warmth.", imgs: ["/perfume_ex_de_rose.png"] },
+            { name: "Warm Sakura", desc: "Delicate cherry blossom infused with soft sandalwood and a whisper of Japanese incense.", imgs: ["/perfume_warm_sakura.png"] },
+            { name: "Sweet Lavender", desc: "French lavender fields captured in a bottle with honey undertones and powdery violet.", imgs: ["/perfume_sweet_lavender.png"] },
+            { name: "Orange Delight", desc: "Sun-kissed Sicilian orange zest blended with neroli, warm amber and cedarwood.", imgs: ["/perfume_orange_delight.png"] },
+            { name: "Morning Scent", desc: "Fresh dewdrop florals meet golden sunlight with notes of bergamot and white tea.", imgs: ["/perfume_morning_scent.png"] },
+            { name: "Amber Oud", desc: "Rich Middle Eastern oud blended with warm amber, smoky incense and a touch of rose.", imgs: ["/perfume_sale_1.png"] },
+            { name: "Velvet Night", desc: "Dark plum and black currant wrapped in velvety musk with hints of vanilla bourbon.", imgs: ["/perfume_sale_2.png"] },
+            { name: "Mystic Breeze", desc: "Light oceanic notes meet white florals with a dry woody finish of driftwood and moss.", imgs: ["/perfume_cool_winters.png"] },
           ].map((perfume, idx) => (
             <Link href="/shop" key={idx} className="perfume-card">
-              <div className="perfume-card-img-wrap">
-                <Image
-                  src={perfume.img}
-                  alt={perfume.name}
-                  fill
-                  unoptimized
-                  style={{ objectFit: "cover" }}
-                />
-              </div>
+              <PerfumeCardImage imgs={perfume.imgs} alt={perfume.name} />
               <div className="perfume-card-body">
                 <h3 className="perfume-card-name">{perfume.name}</h3>
                 <p className="perfume-card-desc">{perfume.desc}</p>
