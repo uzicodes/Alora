@@ -63,8 +63,15 @@ export default async function ShopAllPage() {
                   const formattedPrice = `BDT ${product.price}`;
 
                   return (
-                    <div key={product.id} id={`product-${product.id}`} className="group/card flex flex-col cursor-pointer h-full w-[185px]">
-                      <div className="relative aspect-[4/5] bg-[#f8f8f8] flex items-center justify-center border border-transparent transition-all duration-500 hover:border-[#C28D10] hover:bg-[#f0fdf4] hover:shadow-[0_0_20px_rgba(194,141,16,0.1)]">
+                    <div key={product.id} id={`product-${product.id}`} className="group/card flex flex-col cursor-pointer h-full w-[185px] relative">
+                      {product.topNotes && product.topNotes.length > 0 && (
+                        <div className="absolute -top-5 left-0 right-0 z-10 flex justify-center opacity-0 transition-opacity duration-300 group-hover/card:opacity-100 pointer-events-none px-2">
+                          <span className="text-[8px] text-center text-neutral-700 tracking-wide font-light px-1 uppercase">
+                            {product.topNotes.join(' · ')}
+                          </span>
+                        </div>
+                      )}
+                      <div className="group relative aspect-[4/5] bg-[#f8f8f8] flex items-center justify-center border border-transparent transition-all duration-500 hover:border-[#C28D10] hover:bg-[#f0fdf4] hover:shadow-[0_0_20px_rgba(194,141,16,0.1)] overflow-hidden">
                         <div className="relative w-[90%] h-[90%]">    {/* ratio in product card */}
                           <Image
                             src={image}
