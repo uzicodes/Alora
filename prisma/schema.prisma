@@ -15,6 +15,7 @@ model Product {
   concentration String   
   gender        String   
   imageUrls     String[] 
+  topNotes      String[]
   
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
