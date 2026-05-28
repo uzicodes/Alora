@@ -212,9 +212,9 @@ export default function Home() {
         </div>
         <div className="perfume-grid">
           {[
-            { name: "Cool Winters", desc: "A crisp blend of frosted mint, white cedar and cool alpine air for the bold spirit.", imgs: ["/homepage_images/picks/1/ck.png", "/homepage_images/picks/1/valentino.png"] },
-            { name: "Ex De Rose", desc: "Romantic Damascus rose petals layered with velvety musk and a hint of saffron warmth.", imgs: ["/perfume_ex_de_rose.png"] },
-            { name: "Warm Sakura", desc: "Delicate cherry blossom infused with soft sandalwood and a whisper of Japanese incense.", imgs: ["/perfume_warm_sakura.png"] },
+            { name: "CITRUS BLASTS", desc: "A crisp blend of frosted mint, white cedar and cool alpine air for the bold spirit.", imgs: ["/homepage_images/picks/1/ck.png", "/homepage_images/picks/1/valentino.png", "/homepage_images/picks/1/versace.png", "/homepage_images/picks/1/tomford.png"] },
+            { name: "LATE NIGHTS", desc: "Romantic Damascus rose petals layered with velvety musk and a hint of saffron warmth.", imgs: ["/homepage_images/picks/2/1.png", "/homepage_images/picks/2/2.png", "/homepage_images/picks/2/3.png", "/homepage_images/picks/2/4.png"] },
+            { name: "VANILLA MUSK", desc: "Delicate cherry blossom infused with soft sandalwood and a whisper of Japanese incense.", imgs: ["/homepage_images/picks/3/1.png", "/homepage_images/picks/3/2.png", "/homepage_images/picks/3/3.png", "/homepage_images/picks/3/4.png"] },
             { name: "Sweet Lavender", desc: "French lavender fields captured in a bottle with honey undertones and powdery violet.", imgs: ["/perfume_sweet_lavender.png"] },
             { name: "Orange Delight", desc: "Sun-kissed Sicilian orange zest blended with neroli, warm amber and cedarwood.", imgs: ["/perfume_orange_delight.png"] },
             { name: "Morning Scent", desc: "Fresh dewdrop florals meet golden sunlight with notes of bergamot and white tea.", imgs: ["/perfume_morning_scent.png"] },
