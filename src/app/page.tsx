@@ -126,11 +126,11 @@ export default function Home() {
         <div className={`hero-image-wrap ${heroVisible ? 'visible' : ''}`}>
           <div className="hero-image-inner">
             <Image
-              src="/hero_image.png"
+              src="/hero_image.webp"
               alt="Alora luxury perfume bottle"
               fill
               priority
-              unoptimized
+              sizes="(max-width: 768px) 100vw, 50vw"
               style={{ objectFit: "contain" }}
             />
 
@@ -295,7 +295,7 @@ export default function Home() {
         </div>
         <div className="editorial-content">
           <p className="editorial-quote">
-            &ldquo;Fragrance, a invisible part of your personality that says the most about who you are.&rdquo;
+            &ldquo;Fragrance, an invisible part of your personality that says the most about who you are.&rdquo;
           </p>
         </div>
       </div>
