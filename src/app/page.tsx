@@ -62,6 +62,7 @@ const PerfumeCardImage = ({ imgs, alt }: { imgs: string[]; alt: string }) => {
               src={img}
               alt={`${alt}-${idx}`}
               fill
+              priority
               unoptimized
               style={{ objectFit: "contain" }}
             />
@@ -294,7 +295,7 @@ export default function Home() {
         </div>
         <div className="editorial-content">
           <p className="editorial-quote">
-            &ldquo;A fragrance is the invisible part of your personality that says the most about who you are.&rdquo;
+            &ldquo;Fragrance, a invisible part of your personality that says the most about who you are.&rdquo;
           </p>
         </div>
       </div>

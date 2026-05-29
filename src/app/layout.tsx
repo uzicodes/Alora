@@ -27,25 +27,25 @@ const ubuntuFont = Ubuntu({
 
 
 const davidLibre = localFont({
-  src: "../../public/fonts/DavidLibre.ttf",
+  src: "../../public/fonts/DavidLibre.woff2",
   variable: "--font-david-libre",
   display: "swap",
 });
 
 const kharaissa = localFont({
-  src: "../../public/fonts/Kharaissa.otf",
+  src: "../../public/fonts/Kharaissa.woff2",
   variable: "--font-kharaissa",
   display: "swap",
 });
 
 const blackKastile = localFont({
-  src: "../../public/fonts/Black Kastile Modern.otf",
+  src: "../../public/fonts/Black Kastile Modern.woff2",
   variable: "--font-black-kastile",
   display: "swap",
 });
 
 const lumien = localFont({
-  src: "../../public/fonts/Lumien-Regular.otf",
+  src: "../../public/fonts/Lumien-Regular.woff2",
   variable: "--font-lumien",
   display: "swap",
 });
@@ -78,7 +78,7 @@ export default function RootLayout({
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <link
-            href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
             rel="stylesheet"
           />
         </head>

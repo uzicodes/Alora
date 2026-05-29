@@ -66,7 +66,7 @@ export function generateOrderEmailHtml(order: any) {
   <style type="text/css">
   @font-face {
     font-family: 'Kharaissa';
-    src: url('https://aloraa.vercel.app/fonts/Kharaissa.otf') format('opentype');
+    src: url('https://aloraa.vercel.app/fonts/Kharaissa.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
   }

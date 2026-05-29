@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jost:wght@200;300;400;500&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -94,7 +94,7 @@
 
 /* Main headline */
 .hero-headline {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-david-libre), serif;
   font-size: clamp(42px, 5.5vw, 80px);
   font-weight: 300;
   line-height: 1.05;
@@ -383,7 +383,7 @@
   transform: translateX(0);
 }
 .side-stat-num {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-david-libre), serif;
   font-size: 32px;
   font-weight: 300;
   color: #6b5a3e;
@@ -410,7 +410,7 @@
   bottom: 10%;
   left: 50%;
   transform: translateX(-50%);
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-david-libre), serif;
   font-size: clamp(120px, 18vw, 280px);
   font-weight: 300;
   color: rgba(26,20,16,0.04);
@@ -481,7 +481,7 @@
 }
 
 .section-h2 {
-  font-family: var(--font-lumien), 'Cormorant Garamond', serif;
+  font-family: var(--font-lumien), var(--font-david-libre), serif;
   font-size: clamp(36px, 4vw, 60px);
   font-weight: 300;
   color: #1a1410;
@@ -563,7 +563,7 @@
 }
 .product-cell:hover .product-info { transform: translateY(0); }
 .product-name {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-david-libre), serif;
   font-size: 18px;
   font-weight: 300;
   color: #faf8f5;
@@ -584,7 +584,7 @@
   justify-content: space-between;
 }
 .product-price {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-david-libre), serif;
   font-size: 16px;
   font-weight: 400;
   color: #faf8f5;
@@ -636,7 +636,7 @@
   background: linear-gradient(to bottom, transparent, rgba(26,20,16,0.1), transparent);
 }
 .story-number {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-david-libre), serif;
   font-size: 120px;
   font-weight: 300;
   color: rgba(26,20,16,0.06);
@@ -689,7 +689,7 @@
 }
 .pillar-card:hover { background: #d0c89c; }
 .pillar-num {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-david-libre), serif;
   font-size: 13px;
   font-weight: 300;
   color: #6b5a3e;
@@ -725,7 +725,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-david-libre), serif;
   font-size: clamp(100px, 14vw, 220px);
   font-weight: 300;
   color: rgba(26,20,16,0.04);
@@ -872,7 +872,7 @@
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-david-libre), serif;
   font-size: clamp(60px, 10vw, 140px);
   font-weight: 300;
   font-style: italic;
@@ -992,7 +992,7 @@
   z-index: 2;
 }
 .about-story {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-david-libre), serif;
   font-size: clamp(17px, 2vw, 22px);
   font-weight: 300;
   font-style: italic;
@@ -1035,7 +1035,7 @@
   margin-bottom: 20px;
 }
 .about-value-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-ubuntu), sans-serif;
   font-size: 18px;
   font-weight: 400;
   letter-spacing: 0.15em;
@@ -1100,7 +1100,7 @@
   padding: 0 40px;
 }
 .editorial-quote {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: var(--font-lumien), sans-serif;
   font-size: clamp(28px, 4vw, 54px);
   font-weight: 300;
   font-style: italic;
