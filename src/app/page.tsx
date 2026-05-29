@@ -34,7 +34,6 @@ export default function Home() {
       {/* ==================== HERO ==================== */}
       <section className="alora-hero">
         {/* Background elements */}
-        <div className="hero-glow"></div>
         <div className="hero-noise"></div>
 
 

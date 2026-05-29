@@ -16,7 +16,7 @@ export default async function UnisexPage() {
     <div className="min-h-screen bg-white text-black pb-32 pt-16 font-sans">
       <div className="mx-auto w-full px-6 sm:px-10 md:px-16 lg:px-20">
         <header className="text-center" style={{ marginBottom: '50px', paddingTop: '60px' }}>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-david-libre uppercase tracking-[0.2em] mb-8 text-black underline underline-offset-10 decoration-[3px]">Unisex Collection</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-david-libre uppercase tracking-[0.2em] mb-8 text-black">Unisex Collection</h1>
         </header>
 
         <div className="w-full">
