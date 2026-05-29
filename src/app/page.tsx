@@ -62,8 +62,9 @@ const PerfumeCardImage = ({ imgs, alt }: { imgs: string[]; alt: string }) => {
               src={img}
               alt={`${alt}-${idx}`}
               fill
-              priority
-              unoptimized
+              priority={idx === 0}
+              quality={95}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               style={{ objectFit: "contain" }}
             />
           </div>
@@ -101,10 +102,10 @@ export default function Home() {
 
         {/* Butterfly decorations */}
         <div className="hero-butterfly hero-butterfly-orange2">
-          <Image src="/orange2.png" alt="" width={225} height={225} unoptimized style={{ background: 'transparent' }} />
+          <Image src="/orange2.png" alt="" width={225} height={225} quality={95} style={{ background: 'transparent' }} />
         </div>
         <div className="hero-butterfly hero-butterfly-orange">
-          <Image src="/orange.png" alt="" width={280} height={280} unoptimized style={{ background: 'transparent' }} />
+          <Image src="/orange.png" alt="" width={280} height={280} quality={95} style={{ background: 'transparent' }} />
         </div>
 
         {/* Large background heading - behind bottle */}
@@ -192,7 +193,7 @@ export default function Home() {
                   src={deal.img}
                   alt={deal.name}
                   fill
-                  unoptimized
+                  quality={95}
                   style={{ objectFit: "contain" }}
                 />
               </div>
@@ -289,7 +290,7 @@ export default function Home() {
             src="/homepage_images/quote.png"
             alt="Quote Frame"
             fill
-            unoptimized
+            quality={95}
             style={{ objectFit: 'fill', pointerEvents: 'none' }}
           />
         </div>
