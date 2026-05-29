@@ -141,12 +141,19 @@
   z-index: 2;
   margin-bottom: 50px;
   opacity: 0;
-  transform: translateY(40px) scale(0.95);
-  transition: all 1.1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s;
 }
-.hero-image-wrap.visible {
-  opacity: 1;
-  transform: translateY(-20px) scale(1);
+.hero-image-wrap.fade-in-css {
+  animation: heroFadeIn 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s forwards;
+}
+@keyframes heroFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-20px) scale(1);
+  }
 }
 
 /* Hero butterfly images */
