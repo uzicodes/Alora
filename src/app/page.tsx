@@ -125,10 +125,10 @@ export default function Home() {
         </div>
         <div className="sale-grid">
           {[
-            { name: "Luis Viutton Classics", discount: 30, img: "/homepage_images/deals/LV.png" },
-            { name: "Hugo Boss Frontliners", discount: 15, img: "/homepage_images/deals/boss.png" },
-            { name: "Lattaffa Year-Combo", discount: 25, img: "/homepage_images/deals/lattaffa.png" },
-            { name: "Nishane Summer Picks", discount: 20, img: "/homepage_images/deals/nishane.png" },
+            { name: "Luis Viutton Classics", discount: 30, img: "/homepage_images/deals/LV.webp" },
+            { name: "Hugo Boss Frontliners", discount: 15, img: "/homepage_images/deals/boss.webp" },
+            { name: "Lattaffa Year-Combo", discount: 25, img: "/homepage_images/deals/lattaffa.webp" },
+            { name: "Nishane Summer Picks", discount: 20, img: "/homepage_images/deals/nishane.webp" },
           ].map((deal, idx) => (
             <div key={idx} className="sale-card">
               <div className="sale-card-shimmer"></div>

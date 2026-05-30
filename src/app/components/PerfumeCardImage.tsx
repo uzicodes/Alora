@@ -10,8 +10,16 @@ const PerfumeCardImage = ({ imgs, alt }: { imgs: string[]; alt: string }) => {
   useEffect(() => {
     if (!imgs || imgs.length <= 1) return;
     const interval = setInterval(() => {
-      setIsTransitioning(true);
-      setCurrentIdx((prev) => prev + 1);
+      if (document.hidden) return;
+
+      setCurrentIdx((prev) => {
+        if (prev >= imgs.length) {
+          setIsTransitioning(false);
+          return 0;
+        }
+        setIsTransitioning(true);
+        return prev + 1;
+      });
     }, 2000);
     return () => clearInterval(interval);
   }, [imgs]);
