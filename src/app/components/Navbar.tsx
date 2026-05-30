@@ -22,6 +22,7 @@ export default function Navbar() {
 
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileBrandsOpen, setMobileBrandsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [productResults, setProductResults] = useState<any[]>([]);
@@ -107,6 +108,7 @@ export default function Navbar() {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
+      setTimeout(() => setMobileBrandsOpen(false), 300); // Reset after transition
     }
   }, [mobileOpen]);
 
@@ -323,7 +325,56 @@ export default function Navbar() {
         <Link href="/men" onClick={() => setMobileOpen(false)}>Men</Link>
         <Link href="/woman" onClick={() => setMobileOpen(false)}>Women</Link>
         <Link href="/unisex" onClick={() => setMobileOpen(false)}>Unisex</Link>
-        <a href="#" onClick={(e) => e.preventDefault()}>Brands</a>
+        <a 
+          href="#" 
+          onClick={(e) => { 
+            e.preventDefault(); 
+            setMobileBrandsOpen(!mobileBrandsOpen); 
+          }}
+          style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+        >
+          Brands
+          <svg 
+            width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" 
+            style={{ transform: mobileBrandsOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s' }}
+          >
+            <path d="M6 9l6 6 6-6"/>
+          </svg>
+        </a>
+        
+        {mobileBrandsOpen && (
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '16px',
+            width: '100%',
+            maxWidth: '300px',
+            maxHeight: '35vh',
+            overflowY: 'auto',
+            padding: '15px 10px',
+            borderTop: '1px solid rgba(255,255,255,0.1)',
+            borderBottom: '1px solid rgba(255,255,255,0.1)',
+            scrollbarWidth: 'thin'
+          }}>
+            {BRANDS.map((brand) => (
+              <Link
+                key={brand}
+                href={`/shop#brand-${brand.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`}
+                onClick={(e) => handleBrandClick(e, brand)}
+                style={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize: '14px',
+                  letterSpacing: '1px',
+                  textAlign: 'center',
+                  textTransform: 'none',
+                }}
+              >
+                {brand}
+              </Link>
+            ))}
+          </div>
+        )}
+
         {!isSignedIn && (
           <Link href="/login" onClick={() => setMobileOpen(false)} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>
             LOGIN
