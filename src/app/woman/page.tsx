@@ -22,11 +22,7 @@ export default async function WomanPage() {
         <div className="w-full">
           {/* Product cards grid */}
           <div
-            className="grid gap-x-6 gap-y-15 md:gap-y-20"
-            style={{
-              gridTemplateColumns: 'repeat(auto-fit, 185px)',
-              justifyContent: 'center',
-            }}
+            className="flex flex-wrap justify-center gap-x-2 gap-y-8 md:gap-x-6 md:gap-y-20"
           >
             {products.map((product) => {
               const image =
@@ -37,7 +33,7 @@ export default async function WomanPage() {
               const formattedPrice = `BDT ${product.price}`;
 
               return (
-                <div key={product.id} id={`product-${product.id}`} className="group/card flex flex-col cursor-pointer h-full w-[185px] relative">
+                <div key={product.id} id={`product-${product.id}`} className="group/card flex flex-col cursor-pointer h-full w-[calc(33.33%-6px)] sm:w-[calc(25%-6px)] md:w-[185px] relative">
                   {product.topNotes && product.topNotes.length > 0 && (
                     <div className="absolute -top-5 left-0 right-0 z-10 flex justify-center opacity-0 transition-opacity duration-300 group-hover/card:opacity-100 pointer-events-none px-2">
                       <span className="text-[8px] text-center text-neutral-700 tracking-wide font-light px-1 uppercase">
@@ -69,18 +65,18 @@ export default async function WomanPage() {
                   </div>
 
                   {/* Details */}
-                  <div className="flex flex-col grow text-center px-1 mt-5">
-                    <h3 className="text-[13px] md:text-[14px] font-ubuntu font-semibold tracking-[0.05em] uppercase mb-1 text-neutral-900 group-hover/card:text-[#C28D10] transition-colors duration-300">
+                  <div className="flex flex-col grow text-center px-0.5 md:px-1 mt-3 md:mt-5">
+                    <h3 className="text-[11px] md:text-[14px] leading-tight md:leading-normal font-ubuntu font-semibold tracking-[0.05em] uppercase mb-1 text-neutral-900 group-hover/card:text-[#C28D10] transition-colors duration-300">
                       {product.name}
                     </h3>
-                    <p className="text-[9px] text-neutral-500 mb-3 font-light tracking-wide uppercase flex flex-wrap items-center justify-center gap-1.5">
+                    <p className="text-[8px] md:text-[9px] text-neutral-500 mb-2 md:mb-3 font-light tracking-wide uppercase flex flex-wrap items-center justify-center gap-0.5 md:gap-1.5">
                       <span className="text-blue-500 font-medium">{product.concentration || ""}</span>
                       <span className="text-neutral-300">|</span>
-                      <span className="text-red-600 font-normal text-[11px]">{product.brand || ""}</span>
+                      <span className="text-red-600 font-normal text-[8px] md:text-[11px]">{product.brand || ""}</span>
                       <span className="text-neutral-300">|</span>
                       <span className="text-green-600 font-medium normal-case">{product.sizeMl}ml</span>
                     </p>
-                    <p className="text-[12px] font-medium mt-auto text-black tracking-widest">
+                    <p className="text-[10px] md:text-[12px] font-medium mt-auto text-black tracking-widest">
                       {formattedPrice}
                     </p>
                   </div>

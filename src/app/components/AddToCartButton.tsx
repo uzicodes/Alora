@@ -150,7 +150,7 @@ export default function AddToCartButton({
       {(variant === "both" || variant === "mobile") && (
         <button
           onClick={handleClick}
-          className={`lg:hidden mt-4 flex items-center justify-center gap-2 border uppercase text-[11px] font-bold tracking-[0.12em] py-2.5 px-4 transition-all duration-300 w-full rounded-sm ${
+          className={`lg:hidden mt-2 sm:mt-4 flex items-center justify-center gap-1 sm:gap-2 border uppercase text-[9px] sm:text-[11px] font-bold tracking-[0.1em] sm:tracking-[0.12em] py-1.5 sm:py-2.5 px-1 sm:px-4 transition-all duration-300 w-full rounded-sm ${
             added
               ? "border-[#13382C] bg-[#13382C] text-white shadow-[0_4px_12px_rgba(19,56,44,0.15)]"
               : "border-neutral-300 text-neutral-700 hover:border-[#13382C] hover:bg-[#13382C] hover:text-white hover:shadow-[0_4px_12px_rgba(19,56,44,0.15)]"
