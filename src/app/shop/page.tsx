@@ -77,6 +77,7 @@ export default async function ShopAllPage() {
                             src={image}
                             alt={product.name}
                             fill
+                            sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
                             className="object-contain transition-transform duration-700 ease-out group-hover/card:scale-110 drop-shadow-md"
                           />
                         </div>
