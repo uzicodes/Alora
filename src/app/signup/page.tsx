@@ -110,6 +110,7 @@ export default function SignupPage() {
 
           <input
             type="text"
+            aria-label="Verification Code"
             className={styles.input}
             placeholder="Verification Code"
             value={code}
@@ -141,6 +142,7 @@ export default function SignupPage() {
 
         <input
           type="text"
+          aria-label="Full Name"
           className={styles.input}
           placeholder="Full Name"
           value={name}
@@ -150,6 +152,7 @@ export default function SignupPage() {
 
         <input
           type="email"
+          aria-label="Email"
           className={styles.input}
           placeholder="Email"
           value={email}
@@ -159,6 +162,7 @@ export default function SignupPage() {
 
         <input
           type="tel"
+          aria-label="Phone"
           className={styles.input}
           placeholder="Phone"
           value={phone}
@@ -168,6 +172,7 @@ export default function SignupPage() {
         <div className={styles.inputGroup}>
           <input
             type={showPassword ? "text" : "password"}
+            aria-label="Password"
             className={styles.input}
             placeholder="Password"
             value={password}

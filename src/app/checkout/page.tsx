@@ -211,18 +211,18 @@ export default function CheckoutPage() {
             </div>
 
             <div className="form-group">
-              <label className="checkout-label">Full Name</label>
-              <input type="text" name="fullName" className="checkout-input" value={formData.fullName} onChange={handleChange} required readOnly={!!isSignedIn} style={isSignedIn ? { backgroundColor: '#ebebeb', color: '#777', cursor: 'not-allowed', borderColor: '#aaa' } : {}} />
+              <label htmlFor="fullName" className="checkout-label">Full Name</label>
+              <input id="fullName" type="text" name="fullName" className="checkout-input" value={formData.fullName} onChange={handleChange} required readOnly={!!isSignedIn} style={isSignedIn ? { backgroundColor: '#ebebeb', color: '#777', cursor: 'not-allowed', borderColor: '#aaa' } : {}} />
             </div>
 
             <div className="form-row">
               <div className="form-group">
-                <label className="checkout-label">Email Address</label>
-                <input type="email" name="email" className="checkout-input" value={formData.email} onChange={handleChange} required readOnly={!!isSignedIn} style={isSignedIn ? { backgroundColor: '#ebebeb', color: '#777', cursor: 'not-allowed', borderColor: '#aaa' } : {}} />
+                <label htmlFor="email" className="checkout-label">Email Address</label>
+                <input id="email" type="email" name="email" className="checkout-input" value={formData.email} onChange={handleChange} required readOnly={!!isSignedIn} style={isSignedIn ? { backgroundColor: '#ebebeb', color: '#777', cursor: 'not-allowed', borderColor: '#aaa' } : {}} />
               </div>
               <div className="form-group">
-                <label className="checkout-label">Phone Number</label>
-                <input type="text" name="phone" className="checkout-input" value={formData.phone} onChange={handlePhoneChange} required readOnly={!!isSignedIn} style={isSignedIn ? { backgroundColor: '#ebebeb', color: '#777', cursor: 'not-allowed', borderColor: '#aaa' } : {}} />
+                <label htmlFor="phone" className="checkout-label">Phone Number</label>
+                <input id="phone" type="text" name="phone" className="checkout-input" value={formData.phone} onChange={handlePhoneChange} required readOnly={!!isSignedIn} style={isSignedIn ? { backgroundColor: '#ebebeb', color: '#777', cursor: 'not-allowed', borderColor: '#aaa' } : {}} />
               </div>
             </div>
 
@@ -231,16 +231,16 @@ export default function CheckoutPage() {
             </h2>
             <div className="form-row">
               <div className="form-group" style={{ flex: 2 }}>
-                <label className="checkout-label">Street / House <span style={{ color: '#e81c1cff' }}>*</span></label>
-                <input type="text" name="street" className="checkout-input" value={formData.street} onChange={handleChange} required />
+                <label htmlFor="street" className="checkout-label">Street / House <span style={{ color: '#e81c1cff' }}>*</span></label>
+                <input id="street" type="text" name="street" className="checkout-input" value={formData.street} onChange={handleChange} required />
               </div>
               <div className="form-group" style={{ flex: 1 }}>
-                <label className="checkout-label">City <span style={{ color: '#e81c1cff' }}>*</span></label>
-                <input type="text" name="city" className="checkout-input" value={formData.city} onChange={handleChange} required />
+                <label htmlFor="city" className="checkout-label">City <span style={{ color: '#e81c1cff' }}>*</span></label>
+                <input id="city" type="text" name="city" className="checkout-input" value={formData.city} onChange={handleChange} required />
               </div>
               <div className="form-group" style={{ flex: 1 }}>
-                <label className="checkout-label">Post Code <span style={{ color: '#e81c1cff' }}>*</span></label>
-                <input type="text" name="postCode" className="checkout-input" value={formData.postCode} onChange={handleChange} required />
+                <label htmlFor="postCode" className="checkout-label">Post Code <span style={{ color: '#e81c1cff' }}>*</span></label>
+                <input id="postCode" type="text" name="postCode" className="checkout-input" value={formData.postCode} onChange={handleChange} required />
               </div>
             </div>
 

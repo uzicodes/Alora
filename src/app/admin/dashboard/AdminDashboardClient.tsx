@@ -17,7 +17,7 @@ type Order = {
     email: string;
     phone: string | null;
     address: string;
-    orderTime: string;
+    orderTime: Date;
     items: any;
     totalCost: number;
     paymentType: string;
@@ -35,7 +35,9 @@ type Product = {
     concentration: string;
     gender: string;
     imageUrls: string[];
-    createdAt: string;
+    topNotes: string[];
+    createdAt: Date;
+    updatedAt: Date;
 };
 
 
@@ -45,8 +47,9 @@ type Customer = {
     email: string;
     phone: string | null;
     address: string | null;
-    createdAt: string;
-    orders: { id: string; orderTime: string }[];
+    createdAt: Date;
+    updatedAt: Date;
+    orders: { id: string; orderTime: Date }[];
     _count: {
         orders: number;
     };
@@ -102,7 +105,7 @@ function ItemsDropdown({ items }: { items: any[] }) {
 
             {isOpen && createPortal(
                 <div className="fixed inset-0 z-[9999]">
-                    <div className="absolute inset-0 bg-transparent" onClick={() => setIsOpen(false)}></div>
+                    <div className="absolute inset-0 bg-transparent" role="button" tabIndex={0} aria-label="Close dropdown" onClick={() => setIsOpen(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setIsOpen(false); }}></div>
 
                     <div
                         className="fixed w-72 bg-white border-2 border-black shadow-[10px_10px_0px_0px_#000] p-4 text-left animate-in fade-in slide-in-from-top-2 duration-200"
@@ -139,7 +142,7 @@ function ItemsDropdown({ items }: { items: any[] }) {
     );
 }
 
-function UserOrdersDropdown({ orders }: { orders: { id: string; orderTime: string }[] }) {
+function UserOrdersDropdown({ orders }: { orders: { id: string; orderTime: Date }[] }) {
     const [isOpen, setIsOpen] = useState(false);
     const buttonRef = useRef<HTMLButtonElement>(null);
     const [coords, setCoords] = useState({ top: 0, left: 0 });
@@ -184,7 +187,7 @@ function UserOrdersDropdown({ orders }: { orders: { id: string; orderTime: strin
 
             {isOpen && createPortal(
                 <div className="fixed inset-0 z-[9999]">
-                    <div className="absolute inset-0 bg-transparent" onClick={() => setIsOpen(false)}></div>
+                    <div className="absolute inset-0 bg-transparent" role="button" tabIndex={0} aria-label="Close dropdown" onClick={() => setIsOpen(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setIsOpen(false); }}></div>
                     <div
                         className="fixed w-48 bg-white border-2 border-black shadow-[10px_10px_0px_0px_#000] p-4 text-left animate-in fade-in slide-in-from-top-2 duration-200"
                         style={{
@@ -423,7 +426,7 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
             {/* ─── Product Dialog (Add / Edit) ─── */}
             {showDialog && createPortal(
                 <div className="fixed inset-0 z-[9999] flex items-center justify-center">
-                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => { setShowDialog(false); resetForm(); setEditMode(false); }}></div>
+                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" role="button" tabIndex={0} aria-label="Close dialog" onClick={() => { setShowDialog(false); resetForm(); setEditMode(false); }} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { setShowDialog(false); resetForm(); setEditMode(false); } }}></div>
                     <div className="relative bg-white border-4 border-black shadow-[12px_12px_0px_0px_#000] p-8 w-full max-w-lg max-h-[90vh] overflow-y-auto animate-in fade-in slide-in-from-bottom-4 duration-300">
                         <div className="mb-6 pb-3 border-b-4 border-black flex items-center justify-between">
                             <h3 className="text-2xl font-black uppercase tracking-tight">
@@ -435,8 +438,9 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
                         <div className="space-y-4">
                             {/* Brand Dropdown */}
                             <div>
-                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Brand</label>
+                                <label htmlFor="brand-select" className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Brand</label>
                                 <select
+                                    id="brand-select"
                                     value={form.brand}
                                     onChange={(e) => setForm(prev => ({ ...prev, brand: e.target.value }))}
                                     className="w-full border-2 border-black p-3 font-bold text-sm focus:shadow-[4px_4px_0px_0px_#000] outline-none transition-all bg-white appearance-none cursor-pointer"
@@ -450,8 +454,9 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
 
                             {/* Name */}
                             <div>
-                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Name</label>
+                                <label htmlFor="product-name" className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Name</label>
                                 <input
+                                    id="product-name"
                                     type="text"
                                     value={form.name}
                                     onChange={(e) => setForm(prev => ({ ...prev, name: e.target.value }))}
@@ -462,8 +467,9 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
 
                             {/* Price */}
                             <div>
-                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Price (BDT)</label>
+                                <label htmlFor="product-price" className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Price (BDT)</label>
                                 <input
+                                    id="product-price"
                                     type="number"
                                     value={form.price}
                                     onChange={(e) => setForm(prev => ({ ...prev, price: e.target.value }))}
@@ -474,7 +480,7 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
 
                             {/* Gender Toggle Buttons */}
                             <div>
-                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Gender</label>
+                                <span className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Gender</span>
                                 <div className="flex gap-2">
                                     {["Men", "Women", "Unisex"].map(g => (
                                         <button
@@ -494,8 +500,9 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
 
                             {/* Concentration */}
                             <div>
-                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Concentration</label>
+                                <label htmlFor="product-concentration" className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Concentration</label>
                                 <input
+                                    id="product-concentration"
                                     type="text"
                                     value={form.concentration}
                                     onChange={(e) => setForm(prev => ({ ...prev, concentration: e.target.value }))}
@@ -506,8 +513,9 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
 
                             {/* Size (ML) */}
                             <div>
-                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Size (ML)</label>
+                                <label htmlFor="product-size" className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Size (ML)</label>
                                 <input
+                                    id="product-size"
                                     type="number"
                                     value={form.sizeMl}
                                     onChange={(e) => setForm(prev => ({ ...prev, sizeMl: e.target.value }))}
@@ -518,8 +526,9 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
 
                             {/* Image URLs */}
                             <div>
-                                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Image URLs (comma separated)</label>
+                                <label htmlFor="product-images" className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Image URLs (comma separated)</label>
                                 <input
+                                    id="product-images"
                                     type="text"
                                     value={form.imageUrls}
                                     onChange={(e) => setForm(prev => ({ ...prev, imageUrls: e.target.value }))}

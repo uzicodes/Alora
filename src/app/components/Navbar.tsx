@@ -250,8 +250,10 @@ export default function Navbar() {
             <div
               className={`mobile-toggle ${mobileOpen ? "active" : ""}`}
               onClick={() => setMobileOpen(!mobileOpen)}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setMobileOpen(!mobileOpen); }}
               id="mobile-toggle"
               role="button"
+              tabIndex={0}
               aria-label="Toggle menu"
             >
               <span></span>
@@ -266,6 +268,7 @@ export default function Navbar() {
           <div className="search-container">
             <input
               type="text"
+              aria-label="Search"
               placeholder="Search for fragrances, brands..."
               autoFocus={searchOpen}
               className="search-input"

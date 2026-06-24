@@ -183,6 +183,7 @@ export default function ProfilePage() {
                 {isEditing ? (
                   <input
                     type="text"
+                    aria-label="Phone Number"
                     className="edit-input"
                     placeholder="Enter phone..."
                     value={phone}
@@ -198,6 +199,7 @@ export default function ProfilePage() {
                   <div className="address-inputs">
                     <input
                       type="text"
+                      aria-label="Street or House"
                       className="edit-input"
                       placeholder="Street/House"
                       value={street}
@@ -205,6 +207,7 @@ export default function ProfilePage() {
                     />
                     <input
                       type="text"
+                      aria-label="City"
                       className="edit-input"
                       placeholder="City"
                       value={city}
@@ -212,6 +215,7 @@ export default function ProfilePage() {
                     />
                     <input
                       type="text"
+                      aria-label="Country"
                       className="edit-input"
                       placeholder="Country"
                       value={country}

@@ -120,6 +120,7 @@ export default function LoginPage() {
 
         <input
           type="email"
+          aria-label="Email"
           className={styles.input}
           placeholder="Email"
           value={email}
@@ -132,6 +133,7 @@ export default function LoginPage() {
             <div className={styles.inputGroup}>
               <input
                 type={showPassword ? "text" : "password"}
+                aria-label="Password"
                 className={styles.input}
                 placeholder="Password"
                 value={password}
@@ -153,12 +155,13 @@ export default function LoginPage() {
             </div>
 
             <div className="w-full max-w-[300px] flex justify-end mb-2 mt-1 pr-4">
-              <span
-                className="text-[10px] text-gray-500 hover:text-black cursor-pointer"
+              <button
+                type="button"
+                className="text-[10px] text-gray-500 hover:text-black cursor-pointer bg-transparent border-none p-0"
                 onClick={handleForgotPasswordClick}
               >
                 Forgot password?
-              </span>
+              </button>
             </div>
 
             {/* Captcha element for Clerk Bot Protection */}
@@ -172,6 +175,7 @@ export default function LoginPage() {
           <>
             <input
               type="text"
+              aria-label="Reset Code"
               className={styles.input}
               placeholder="Enter 6-digit Reset Code"
               value={resetCode}
@@ -182,6 +186,7 @@ export default function LoginPage() {
             <div className={styles.inputGroup} style={{ marginTop: '16px' }}>
               <input
                 type={showPassword ? "text" : "password"}
+                aria-label="New Password"
                 className={styles.input}
                 placeholder="Enter New Password"
                 value={newPassword}
@@ -212,15 +217,16 @@ export default function LoginPage() {
             </button>
 
             <div className="w-full text-center mt-4">
-              <span
-                className="text-sm text-gray-500 hover:text-black cursor-pointer"
+              <button
+                type="button"
+                className="text-sm text-gray-500 hover:text-black cursor-pointer bg-transparent border-none p-0"
                 onClick={() => {
                   setIsForgotPassword(false);
                   setError("");
                 }}
               >
                 Back to login
-              </span>
+              </button>
             </div>
           </>
         )}
