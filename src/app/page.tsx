@@ -46,10 +46,10 @@ export default function Home() {
 
         {/* Butterfly decorations */}
         <div className="hero-butterfly hero-butterfly-orange2">
-          <Image src="/orange2.png" alt="" width={225} height={225} quality={95} style={{ background: 'transparent' }} />
+          <Image src="/orange2.png" alt="" width={225} height={225} quality={95} style={{ background: 'transparent', width: 'auto', height: 'auto' }} />
         </div>
         <div className="hero-butterfly hero-butterfly-orange">
-          <Image src="/orange.png" alt="" width={280} height={280} quality={95} style={{ background: 'transparent' }} />
+          <Image src="/orange.png" alt="" width={280} height={280} quality={95} style={{ background: 'transparent', width: 'auto', height: 'auto' }} />
         </div>
 
         {/* Large background heading - behind bottle */}
@@ -137,6 +137,7 @@ export default function Home() {
                   src={deal.img}
                   alt={deal.name}
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   quality={95}
                   style={{ objectFit: "contain" }}
                 />
