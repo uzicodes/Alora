@@ -1,9 +1,14 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { auth } from "@clerk/nextjs/server";
 
 export async function getUserProfile(clerkId: string) {
   try {
+    const { userId } = await auth();
+    if (!userId || userId !== clerkId) {
+      throw new Error("Unauthorized");
+    }
     const user = await prisma.user.findUnique({
       where: { id: clerkId },
       select: { phone: true, address: true },
@@ -17,6 +22,10 @@ export async function getUserProfile(clerkId: string) {
 
 export async function updateUserProfile(clerkId: string, phone: string, address: string) {
   try {
+    const { userId } = await auth();
+    if (!userId || userId !== clerkId) {
+      throw new Error("Unauthorized");
+    }
     await prisma.user.update({
       where: { id: clerkId },
       data: { phone, address },
@@ -30,6 +39,10 @@ export async function updateUserProfile(clerkId: string, phone: string, address:
 
 export async function getUserOrders(clerkId: string) {
   try {
+    const { userId } = await auth();
+    if (!userId || userId !== clerkId) {
+      throw new Error("Unauthorized");
+    }
     const orders = await prisma.order.findMany({
       where: { userId: clerkId },
       orderBy: { orderTime: 'desc' },
