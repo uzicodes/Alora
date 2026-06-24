@@ -129,8 +129,8 @@ export default function Home() {
             { name: "Hugo Boss Frontliners", discount: 15, img: "/homepage_images/deals/boss.webp" },
             { name: "Lattaffa Year-Combo", discount: 25, img: "/homepage_images/deals/lattaffa.webp" },
             { name: "Nishane Summer Picks", discount: 20, img: "/homepage_images/deals/nishane.webp" },
-          ].map((deal, idx) => (
-            <div key={idx} className="sale-card">
+          ].map((deal) => (
+            <div key={deal.name} className="sale-card">
               <div className="sale-card-shimmer"></div>
               <div className="sale-card-img">
                 <Image
@@ -178,8 +178,8 @@ export default function Home() {
             { name: "CASUAL 24/7", desc: "Clean, effortless everyday fragrance that sits perfectly in the background, making sure you always smell approachable.", imgs: ["/homepage_images/picks/7/1.png", "/homepage_images/picks/7/2.png", "/homepage_images/picks/7/3.png", "/homepage_images/picks/7/4.png"] },
             { name: "TROPICAL BLISS", desc: "Vibrant, sun-soaked getaway in a bottle that instantly transports your senses straight to a relaxing island vacation.", imgs: ["/homepage_images/picks/8/1.png", "/homepage_images/picks/8/2.png", "/homepage_images/picks/8/3.png", "/homepage_images/picks/8/4.png"] },
             { name: "FEELS A MILLIONAIR", desc: "Ultra-luxurious, bold statement fragrance that exudes pure wealth, power, and undeniable success everywhere you walk.", imgs: ["/homepage_images/picks/9/1.png", "/homepage_images/picks/9/2.png", "/homepage_images/picks/9/3.png", "/homepage_images/picks/9/4.png"] },
-          ].map((perfume, idx) => (
-            <Link href="/shop" key={idx} className="perfume-card">
+          ].map((perfume) => (
+            <Link href="/shop" key={perfume.name} className="perfume-card">
               <PerfumeCardImage imgs={perfume.imgs} alt={perfume.name} />
               <div className="perfume-card-body">
                 <h3 className="perfume-card-name">{perfume.name}</h3>

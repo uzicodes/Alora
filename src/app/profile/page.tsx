@@ -21,6 +21,7 @@ function OrderItemDropdown({ items }: { items: any }) {
   return (
     <div className="order-items-dropdown-container">
       <button 
+        type="button"
         className={`dropdown-toggle-btn ${isOpen ? 'active' : ''}`}
         onClick={() => setIsOpen(!isOpen)}
       >
@@ -36,8 +37,8 @@ function OrderItemDropdown({ items }: { items: any }) {
       
       {isOpen && (
         <div className="dropdown-content animate-slide-down">
-          {items.map((item: any, i: number) => (
-            <div key={i} className="dropdown-item">
+          {items.map((item: any) => (
+            <div key={item.name} className="dropdown-item">
               <span className="item-qty">{item.quantity}x</span>
               <span className="item-name">{item.name}</span>
             </div>
@@ -134,6 +135,7 @@ export default function ProfilePage() {
         <aside className="profile-sidebar">
           <div className="identity-card">
             <button 
+              type="button"
               className="edit-profile-btn" 
               onClick={toggleEdit} 
               disabled={isSaving} 
@@ -209,7 +211,7 @@ export default function ProfilePage() {
               </div>
             </div>
 
-            <button className="logout-btn" onClick={() => {
+            <button type="button" className="logout-btn" onClick={() => {
               clearCart();
               signOut({ redirectUrl: '/' });
             }}>

@@ -72,6 +72,7 @@ function SuccessContent() {
 
         <div style={{ display: 'flex', gap: '15px', marginTop: '20px', width: '100%', flexDirection: 'row' }}>
           <button
+            type="button"
             onClick={() => router.push('/shop')}
             style={{
               flex: 1,
@@ -92,6 +93,7 @@ function SuccessContent() {
           </button>
 
           <button
+            type="button"
             onClick={() => router.push('/')}
             style={{
               flex: 1,

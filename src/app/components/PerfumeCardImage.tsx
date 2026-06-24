@@ -46,7 +46,7 @@ const PerfumeCardImage = ({ imgs, alt }: { imgs: string[]; alt: string }) => {
         }}
       >
         {displayImgs.map((img, idx) => (
-          <div key={idx} style={{ width: `${100 / displayImgs.length}%`, height: "100%", position: "relative" }}>
+          <div key={`${img}-${idx}`} style={{ width: `${100 / displayImgs.length}%`, height: "100%", position: "relative" }}>
             <Image
               src={img}
               alt={`${alt}-${idx}`}

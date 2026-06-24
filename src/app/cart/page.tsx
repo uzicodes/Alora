@@ -113,6 +113,7 @@ export default function Cart() {
                   <div className="cart-item-bottom">
                     <div className="quantity-selector" style={{ border: '2px solid #000', borderRadius: '4px' }}>
                       <button
+                        type="button"
                         className="quantity-btn decrease"
                         aria-label="Decrease quantity"
                         onClick={() => updateItemQuantity(item.id, item.quantity - 1)}
@@ -123,6 +124,7 @@ export default function Cart() {
                       </button>
                       <span className="quantity-num" style={{ fontWeight: 'bold' }}>{item.quantity}</span>
                       <button
+                        type="button"
                         className="quantity-btn increase"
                         aria-label="Increase quantity"
                         onClick={() => updateItemQuantity(item.id, item.quantity + 1)}
@@ -132,6 +134,7 @@ export default function Cart() {
                       </button>
                     </div>
                     <button
+                      type="button"
                       className="remove-btn-styled"
                       onClick={() => removeFromCart(item.id)}
                       style={{
@@ -184,6 +187,7 @@ export default function Cart() {
             </div>
 
             <button 
+              type="button"
               onClick={handleCheckout}
               className="btn-primary" 
               style={{ 
@@ -214,6 +218,7 @@ export default function Cart() {
             </div>
 
             <button 
+              type="button"
               onClick={clearCart}
               style={{
                 display: 'block',

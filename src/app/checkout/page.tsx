@@ -162,6 +162,7 @@ export default function CheckoutPage() {
     <div className="checkout-page">
       <div className="checkout-header" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
         <button
+          type="button"
           onClick={() => router.back()}
           className="back-btn"
           aria-label="Go back"

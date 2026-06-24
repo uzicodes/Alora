@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Ubuntu } from "next/font/google";
+import { Ubuntu } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import ScrollToTop from "./components/ScrollToTop";
@@ -9,15 +9,6 @@ import { CartProvider } from "./components/CartContext";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 const ubuntuFont = Ubuntu({
   variable: "--font-ubuntu",
@@ -83,7 +74,7 @@ export default function RootLayout({
           />
         </head>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} ${ubuntuFont.variable} ${davidLibre.variable} ${kharaissa.variable} ${blackKastile.variable} ${lumien.variable} antialiased`}
+          className={`${ubuntuFont.variable} ${davidLibre.variable} ${kharaissa.variable} ${blackKastile.variable} ${lumien.variable} antialiased`}
           suppressHydrationWarning
         >
           <ScrollToTop />

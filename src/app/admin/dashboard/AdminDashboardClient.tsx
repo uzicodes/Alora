@@ -88,6 +88,7 @@ function ItemsDropdown({ items }: { items: any[] }) {
     return (
         <div className="relative">
             <button
+                type="button"
                 ref={buttonRef}
                 onClick={toggleDropdown}
                 className="font-bold text-[10px] bg-black text-white px-3 py-1.5 rounded-none border-2 border-black hover:bg-gray-800 transition-all active:translate-y-0.5 active:translate-x-0.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] flex items-center gap-2"
@@ -115,8 +116,8 @@ function ItemsDropdown({ items }: { items: any[] }) {
                             <h4 className="text-[10px] font-black uppercase tracking-widest text-gray-400">Order Contents</h4>
                         </div>
                         <div className="space-y-3 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
-                            {items.map((item: any, idx: number) => (
-                                <div key={idx} className="bg-gray-50 border-2 border-black p-2 shadow-[2px_2px_0px_0px_#000]">
+                            {items.map((item: any) => (
+                                <div key={item.name} className="bg-gray-50 border-2 border-black p-2 shadow-[2px_2px_0px_0px_#000]">
                                     <p className="font-black text-[11px] uppercase leading-tight mb-1">{item.name}</p>
                                     <div className="flex justify-between items-center text-[9px] font-bold uppercase tracking-widest">
                                         <span className="text-gray-500">QTY: <span className="text-black">{item.quantity}</span></span>
@@ -172,6 +173,7 @@ function UserOrdersDropdown({ orders }: { orders: { id: string; orderTime: strin
     return (
         <div className="relative">
             <button
+                type="button"
                 ref={buttonRef}
                 onClick={toggleDropdown}
                 className="bg-black text-white px-3 py-1 font-black text-xs hover:bg-gray-800 transition-all active:translate-y-0.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] flex items-center gap-2"
@@ -195,8 +197,8 @@ function UserOrdersDropdown({ orders }: { orders: { id: string; orderTime: strin
                             <h4 className="text-[9px] font-black uppercase tracking-widest text-gray-400">Order History</h4>
                         </div>
                         <div className="space-y-2 max-h-48 overflow-y-auto pr-1 custom-scrollbar">
-                            {orders.map((order, idx) => (
-                                <div key={idx} className="flex flex-col border-b border-gray-100 last:border-0 pb-1 mb-1">
+                            {orders.map((order) => (
+                                <div key={order.id} className="flex flex-col border-b border-gray-100 last:border-0 pb-1 mb-1">
                                     <span className="font-mono text-[10px] font-black uppercase">#{order.id.slice(-8)}</span>
                                     <span className="text-[8px] text-gray-400 uppercase">{new Date(order.orderTime).toLocaleDateString()}</span>
                                 </div>
@@ -264,8 +266,8 @@ function OrdersSection({ orders }: { orders: Order[] }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {orders.map((o, i) => (
-                                <tr key={i} className="border-b border-gray-100 hover:bg-gray-50 transition-colors text-center">
+                            {orders.map((o) => (
+                                <tr key={o.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors text-center">
                                     <td className="px-5 py-4 font-mono font-bold text-xs whitespace-nowrap border-r-2 border-black last:border-r-0" title={o.id}>
                                         {o.id.slice(-8)}
                                     </td>
@@ -404,12 +406,12 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
                 ))}
 
                 {/* Add Item Button */}
-                <button onClick={handleAddClick} className="bg-transparent text-green-600 p-5 border-2 border-green-600 transition-all hover:bg-green-600 hover:text-white active:translate-y-1 group">
+                <button type="button" onClick={handleAddClick} className="bg-transparent text-green-600 p-5 border-2 border-green-600 transition-all hover:bg-green-600 hover:text-white active:translate-y-1 group">
                     <span className="text-xl font-black uppercase tracking-tighter truncate w-full">+ Add Item</span>
                 </button>
 
                 {/* Edit Item Button */}
-                <button onClick={handleEditClick} className={`p-5 border-2 transition-all active:translate-y-1 group ${editMode ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700" : "bg-transparent text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white"}`}>
+                <button type="button" onClick={handleEditClick} className={`p-5 border-2 transition-all active:translate-y-1 group ${editMode ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700" : "bg-transparent text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white"}`}>
                     <span className="text-xl font-black uppercase tracking-tighter truncate w-full">{editMode ? "Cancel Edit" : "Edit Item"}</span>
                 </button>
             </div>
@@ -423,7 +425,7 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
                             <h3 className="text-2xl font-black uppercase tracking-tight">
                                 {selectedId ? "Edit Product" : "Add New Product"}
                             </h3>
-                            <button onClick={() => { setShowDialog(false); resetForm(); setEditMode(false); }} className="w-8 h-8 bg-black text-white flex items-center justify-center font-black hover:bg-red-600 transition-colors text-sm">✕</button>
+                            <button type="button" onClick={() => { setShowDialog(false); resetForm(); setEditMode(false); }} className="w-8 h-8 bg-black text-white flex items-center justify-center font-black hover:bg-red-600 transition-colors text-sm">✕</button>
                         </div>
 
                         <div className="space-y-4">
@@ -525,6 +527,7 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
 
                         <div className="mt-8 flex gap-3">
                             <button
+                                type="button"
                                 onClick={handleSave}
                                 disabled={saving || !form.name || !form.brand || !form.price}
                                 className="flex-1 bg-black text-white py-4 font-black uppercase tracking-widest text-xs border-2 border-black hover:bg-emerald-600 hover:border-emerald-600 transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-[4px_4px_0px_0px_#000] active:translate-y-1 active:shadow-none"
@@ -532,6 +535,7 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
                                 {saving ? "SAVING..." : selectedId ? "UPDATE PRODUCT" : "ADD PRODUCT"}
                             </button>
                             <button
+                                type="button"
                                 onClick={() => { setShowDialog(false); resetForm(); setEditMode(false); }}
                                 className="px-6 py-4 border-2 border-black font-black uppercase tracking-widest text-xs hover:bg-gray-100 transition-colors"
                             >
@@ -568,9 +572,9 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
                             </tr>
                         </thead>
                         <tbody>
-                            {products.map((p, i) => (
+                            {products.map((p) => (
                                 <tr
-                                    key={i}
+                                    key={p.id}
                                     className={`border-b border-gray-100 hover:bg-gray-50 transition-colors text-center font-bold ${editMode ? "cursor-pointer" : ""} ${selectedId === p.id ? "bg-blue-50 border-blue-300" : ""}`}
                                     onClick={() => editMode && handleSelectForEdit(p)}
                                 >
@@ -671,8 +675,8 @@ function CustomersSection({ customers }: { customers: Customer[] }) {
                             </tr>
                         </thead>
                         <tbody>
-                            {customers.map((u, i) => (
-                                <tr key={i} className="border-b border-gray-100 hover:bg-gray-50 transition-colors text-center font-bold">
+                            {customers.map((u) => (
+                                <tr key={u.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors text-center font-bold">
                                     <td className="px-5 py-4 font-mono text-[10px] text-gray-400 border-r-2 border-black last:border-r-0" title={u.id}>
                                         {u.id.slice(-8)}
                                     </td>
@@ -748,6 +752,7 @@ export default function AdminDashboardClient({ initialOrders, initialProducts, i
                 <nav className="space-y-2 flex-1">
                     {tabs.map(tab => (
                         <button
+                            type="button"
                             key={tab.id}
                             onClick={() => setActive(tab.id)}
                             className={`w-full text-left p-4 border-2 font-bold tracking-widest uppercase text-sm transition-all duration-200 ${active === tab.id
@@ -762,6 +767,7 @@ export default function AdminDashboardClient({ initialOrders, initialProducts, i
 
                 <div className="mt-auto pt-8 border-t-2 border-white/20">
                     <button
+                        type="button"
                         onClick={handleLogout}
                         className="mx-auto w-fit px-10 bg-red-600 text-white py-3 border-2 border-red-600 font-black uppercase tracking-widest text-[10px] hover:bg-red-700 hover:border-red-700 transition-all duration-300 shadow-[4px_4px_0px_0px_rgba(255,0,0,0.3)] active:translate-y-1 active:shadow-none flex items-center gap-3 group"
                     >
@@ -777,6 +783,7 @@ export default function AdminDashboardClient({ initialOrders, initialProducts, i
             <div className="md:hidden fixed bottom-0 left-0 right-0 bg-black border-t-2 border-white/20 flex z-50">
                 {tabs.map(tab => (
                     <button
+                        type="button"
                         key={tab.id}
                         onClick={() => setActive(tab.id)}
                         className={`flex-1 py-4 text-xs font-black uppercase tracking-widest transition-colors ${active === tab.id ? "text-white bg-white/10" : "text-gray-500"

@@ -133,6 +133,7 @@ export default function AddToCartButton({
       {(variant === "both" || variant === "desktop") && (
         <div className="absolute inset-x-0 bottom-0 p-3 opacity-0 transform translate-y-2 transition-all duration-300 ease-in-out group-hover/card:opacity-100 group-hover/card:translate-y-0 hidden lg:flex justify-center z-10">
           <button
+            type="button"
             onClick={handleClick}
             className={`flex items-center justify-center gap-2 uppercase text-[11px] font-bold tracking-[0.12em] py-2.5 px-4 w-full transition-all duration-300 rounded-sm ${
               added
@@ -149,6 +150,7 @@ export default function AddToCartButton({
       {/* Mobile / Tablet button */}
       {(variant === "both" || variant === "mobile") && (
         <button
+          type="button"
           onClick={handleClick}
           className={`lg:hidden mt-2 sm:mt-4 flex items-center justify-center gap-1 sm:gap-2 border uppercase text-[9px] sm:text-[11px] font-bold tracking-[0.1em] sm:tracking-[0.12em] py-1.5 sm:py-2.5 px-1 sm:px-4 transition-all duration-300 w-full rounded-sm ${
             added
