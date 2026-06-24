@@ -29,7 +29,7 @@ export async function POST(req: Request) {
             },
         });
 
-        return NextResponse.json({ success: true, product: JSON.parse(JSON.stringify(product)) });
+        return NextResponse.json({ success: true, product: structuredClone(product) });
     } catch (error) {
         console.error("Error creating product:", error);
         return NextResponse.json({ success: false, message: "Server error" }, { status: 500 });
@@ -67,7 +67,7 @@ export async function PUT(req: Request) {
             },
         });
 
-        return NextResponse.json({ success: true, product: JSON.parse(JSON.stringify(product)) });
+        return NextResponse.json({ success: true, product: structuredClone(product) });
     } catch (error) {
         console.error("Error updating product:", error);
         return NextResponse.json({ success: false, message: "Server error" }, { status: 500 });

@@ -300,7 +300,9 @@ export default function Navbar() {
                   padding: '10px 0'
                 }}
               >
-                {BRANDS.filter(brand => brand.toLowerCase().includes(searchQuery.toLowerCase())).map(brand => (
+                {BRANDS.reduce<React.ReactNode[]>((acc, brand) => {
+                  if (brand.toLowerCase().includes(searchQuery.toLowerCase())) {
+                    acc.push(
                   <Link
                     key={brand}
                     href={`/shop#brand-${brand.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`}
@@ -320,7 +322,10 @@ export default function Navbar() {
                     <span>{brand}</span>
                     <span style={{ fontSize: '10px', marginLeft: '10px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Brand</span>
                   </Link>
-                ))}
+                    );
+                  }
+                  return acc;
+                }, [])}
 
                 {productResults.map(product => (
                   <Link

@@ -36,9 +36,9 @@ export default async function AdminDashboard() {
 
     return (
         <AdminDashboardClient 
-            initialOrders={JSON.parse(JSON.stringify(orders))} 
-            initialProducts={JSON.parse(JSON.stringify(products))} 
-            initialUsers={JSON.parse(JSON.stringify(users))}
+            initialOrders={structuredClone(orders)} 
+            initialProducts={structuredClone(products)} 
+            initialUsers={structuredClone(users)}
         />
     );
 }
