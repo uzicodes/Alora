@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useUser, useClerk } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import Image from "next/image";
 import "./profile.css";
 import { getUserProfile, updateUserProfile, getUserOrders } from "./actions";
@@ -52,7 +52,6 @@ function OrderItemDropdown({ items }: { items: any }) {
 export default function ProfilePage() {
   const { isLoaded, isSignedIn, user } = useUser();
   const { signOut } = useClerk();
-  const router = useRouter();
   const { clearCart } = useCart();
 
   const [isEditing, setIsEditing] = useState(false);
@@ -63,12 +62,6 @@ export default function ProfilePage() {
   const [isSaving, setIsSaving] = useState(false);
   const [initialDataLoaded, setInitialDataLoaded] = useState(false);
   const [orders, setOrders] = useState<any[]>([]);
-
-  useEffect(() => {
-    if (isLoaded && !isSignedIn) {
-      router.push("/login");
-    }
-  }, [isLoaded, isSignedIn, router]);
 
   useEffect(() => {
     if (isLoaded && isSignedIn && user && !initialDataLoaded) {
@@ -92,6 +85,10 @@ export default function ProfilePage() {
       });
     }
   }, [isLoaded, isSignedIn, user, initialDataLoaded]);
+
+  if (isLoaded && !isSignedIn) {
+    redirect("/login");
+  }
 
   if (!isLoaded || !isSignedIn || !initialDataLoaded) {
     return <Loader />;

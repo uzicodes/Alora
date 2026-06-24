@@ -61,48 +61,55 @@ function getStoredCart(): CartItem[] {
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [hydrated, setHydrated] = useState(false);
   const { isSignedIn } = useAuth();
   const prevIsSignedIn = useRef(isSignedIn);
 
   // Hydrate from localStorage on mount
   useEffect(() => {
     setCartItems(getStoredCart());
-    setHydrated(true);
   }, []);
 
-  // Persist to localStorage
-  useEffect(() => {
-    if (hydrated) {
+  const persistCart = (items: CartItem[]) => {
+    if (typeof window !== "undefined") {
       const dataToStore = {
-        items: cartItems,
+        items,
         timestamp: Date.now(),
       };
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(dataToStore));
     }
-  }, [cartItems, hydrated]);
+  };
 
   const addToCart = useCallback((item: Omit<CartItem, "quantity">) => {
     setCartItems((prev) => {
       const existing = prev.find((i) => i.id === item.id);
+      let newItems;
       if (existing) {
-        return prev.map((i) =>
+        newItems = prev.map((i) =>
           i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
         );
+      } else {
+        newItems = [...prev, { ...item, quantity: 1 }];
       }
-      return [...prev, { ...item, quantity: 1 }];
+      persistCart(newItems);
+      return newItems;
     });
   }, []);
 
   const removeFromCart = useCallback((id: string) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+    setCartItems((prev) => {
+      const newItems = prev.filter((item) => item.id !== id);
+      persistCart(newItems);
+      return newItems;
+    });
   }, []);
 
   const updateItemQuantity = useCallback((id: string, quantity: number) => {
     if (quantity < 1) return;
-    setCartItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, quantity } : item))
-    );
+    setCartItems((prev) => {
+      const newItems = prev.map((item) => (item.id === id ? { ...item, quantity } : item));
+      persistCart(newItems);
+      return newItems;
+    });
   }, []);
 
   const clearCart = useCallback(() => {
