@@ -66,7 +66,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   // Hydrate from localStorage on mount
   useEffect(() => {
-    setCartItems(getStoredCart());
+    let mounted = true;
+    Promise.resolve().then(() => {
+      if (mounted) setCartItems(getStoredCart());
+    });
+    return () => { mounted = false; };
   }, []);
 
   const persistCart = (items: CartItem[]) => {

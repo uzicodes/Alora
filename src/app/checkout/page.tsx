@@ -26,17 +26,26 @@ export default function CheckoutPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
+    let mounted = true;
     if (isLoaded && isSignedIn && user) {
-      setFormData(prev => ({
-        ...prev,
-        fullName: user.fullName || "",
-        email: user.primaryEmailAddress?.emailAddress || "",
-        phone: user.primaryPhoneNumber?.phoneNumber || "",
-      }));
+      const initialFullName = user.fullName || "";
+      const initialEmail = user.primaryEmailAddress?.emailAddress || "";
+      const initialPhone = user.primaryPhoneNumber?.phoneNumber || "";
+
+      Promise.resolve().then(() => {
+        if (mounted) {
+          setFormData(prev => ({
+            ...prev,
+            fullName: initialFullName,
+            email: initialEmail,
+            phone: prev.phone || initialPhone,
+          }));
+        }
+      });
 
       // Fetch profile data from database
       getUserProfile(user.id).then((data) => {
-        if (data && data.phone) {
+        if (mounted && data && data.phone) {
           setFormData(prev => ({
             ...prev,
             phone: data.phone as string
@@ -44,6 +53,7 @@ export default function CheckoutPage() {
         }
       });
     }
+    return () => { mounted = false; };
   }, [isLoaded, isSignedIn, user]);
 
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);

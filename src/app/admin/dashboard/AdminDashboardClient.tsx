@@ -380,16 +380,19 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
                 } else {
                     setProducts(prev => [data.product, ...prev]);
                 }
-                setShowDialog(false);
-                setEditMode(false);
-                resetForm();
+                setForm({ name: "", brand: "", price: "", sizeMl: "", concentration: "", gender: "", imageUrls: "" });
             } else {
-                alert("Error: " + (data.message || "Failed to save"));
+                alert(data.error || "Failed to save product.");
             }
-        } catch (err) {
-            alert("Network error. Please try again.");
-        } finally {
             setSaving(false);
+            setShowDialog(false);
+            setSelectedId(null);
+        } catch (error) {
+            console.error("Failed to save product:", error);
+            alert("Failed to save product.");
+            setSaving(false);
+            setShowDialog(false);
+            setSelectedId(null);
         }
     };
 

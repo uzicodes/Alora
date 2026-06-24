@@ -28,9 +28,9 @@ export default function AdminLogin() {
             } else {
                 setError("Incorrect password. Access denied.");
             }
+            setLoading(false);
         } catch (err) {
             setError("Something went wrong.");
-        } finally {
             setLoading(false);
         }
     };

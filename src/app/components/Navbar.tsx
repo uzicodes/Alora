@@ -46,7 +46,10 @@ function useProductSearch(searchQuery: string) {
         clearTimeout(timeoutId);
       };
     } else {
-      setProductResults([]);
+      let active = true;
+      Promise.resolve().then(() => {
+        if (active) setProductResults([]);
+      });
       return () => {
         active = false;
         controller.abort();

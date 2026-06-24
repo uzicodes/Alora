@@ -6,19 +6,16 @@ import { auth } from "@clerk/nextjs/server";
 export async function getUserProfile(clerkId: string) {
   try {
     const { userId } = await auth();
-    console.log("[getUserProfile] auth userId:", userId, "| client clerkId:", clerkId);
     if (!userId || userId !== clerkId) {
-      console.log("[getUserProfile] UNAUTHORIZED — mismatch or null");
       throw new Error("Unauthorized");
     }
     const user = await prisma.user.findUnique({
       where: { id: clerkId },
       select: { phone: true, address: true },
     });
-    console.log("[getUserProfile] DB result:", user);
     return user;
   } catch (error) {
-    console.error("[getUserProfile] ERROR:", error);
+    console.error("Error fetching user profile:", error);
     return null;
   }
 }
@@ -43,19 +40,16 @@ export async function updateUserProfile(clerkId: string, phone: string, address:
 export async function getUserOrders(clerkId: string) {
   try {
     const { userId } = await auth();
-    console.log("[getUserOrders] auth userId:", userId, "| client clerkId:", clerkId);
     if (!userId || userId !== clerkId) {
-      console.log("[getUserOrders] UNAUTHORIZED — mismatch or null");
       throw new Error("Unauthorized");
     }
     const orders = await prisma.order.findMany({
       where: { userId: clerkId },
       orderBy: { orderTime: 'desc' },
     });
-    console.log("[getUserOrders] Found", orders.length, "orders");
     return orders;
   } catch (error) {
-    console.error("[getUserOrders] ERROR:", error);
+    console.error("Error fetching user orders:", error);
     return [];
   }
 }
