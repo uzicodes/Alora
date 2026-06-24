@@ -104,12 +104,16 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
     if (mobileOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
-      setTimeout(() => setMobileBrandsOpen(false), 300); // Reset after transition
+      timeoutId = setTimeout(() => setMobileBrandsOpen(false), 300); // Reset after transition
     }
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+    };
   }, [mobileOpen]);
 
   if (pathname.startsWith("/admin")) return null;
