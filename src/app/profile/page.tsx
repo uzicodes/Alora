@@ -156,7 +156,7 @@ export default function ProfilePage() {
               )}
             </button>
             <div className="avatar-wrapper">
-              <img src={user.imageUrl} alt="Profile" className="avatar-img" />
+              <Image src={user.imageUrl} alt="Profile" width={100} height={100} className="avatar-img" />
             </div>
             <h2 className="user-name">{user.fullName}</h2>
             <p className="user-email">{user.primaryEmailAddress?.emailAddress}</p>

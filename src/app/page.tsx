@@ -235,6 +235,7 @@ export default function Home() {
             src="/homepage_images/quote.png"
             alt="Quote Frame"
             fill
+            sizes="100vw"
             quality={95}
             style={{ objectFit: 'fill', pointerEvents: 'none' }}
           />

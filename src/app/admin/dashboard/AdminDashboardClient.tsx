@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 
 
@@ -599,8 +600,8 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
                                     <td className="px-5 py-4 border-r-2 border-black last:border-r-0">
                                         <div className="flex justify-center">
                                             {p.imageUrls[0] ? (
-                                                <div className="w-10 h-10 border-2 border-black overflow-hidden">
-                                                    <img src={p.imageUrls[0]} alt={p.name} className="w-full h-full object-cover" />
+                                                <div className="w-10 h-10 border-2 border-black overflow-hidden relative">
+                                                    <Image src={p.imageUrls[0]} alt={p.name} fill sizes="40px" className="object-cover" />
                                                 </div>
                                             ) : (
                                                 <span className="text-gray-300 text-[10px]">NO IMG</span>

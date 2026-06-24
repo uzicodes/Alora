@@ -15,6 +15,48 @@ const BRANDS = [
   "YSL", "Zara"
 ];
 
+function useProductSearch(searchQuery: string) {
+  const [productResults, setProductResults] = useState<any[]>([]);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    let active = true;
+
+    if (searchQuery.trim().length > 0) {
+      const fetchProducts = async () => {
+        try {
+          const res = await fetch(`/api/products/search?q=${encodeURIComponent(searchQuery)}`, {
+            signal: controller.signal
+          });
+          if (res.ok) {
+            const data = await res.json();
+            if (active) setProductResults(data);
+          }
+        } catch (error: any) {
+          if (error.name !== 'AbortError') {
+            console.error("Error fetching products:", error);
+          }
+        }
+      };
+
+      const timeoutId = setTimeout(fetchProducts, 300);
+      return () => {
+        active = false;
+        controller.abort();
+        clearTimeout(timeoutId);
+      };
+    } else {
+      setProductResults([]);
+      return () => {
+        active = false;
+        controller.abort();
+      };
+    }
+  }, [searchQuery]);
+
+  return productResults;
+}
+
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
@@ -27,26 +69,11 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState("");
   const [productResults, setProductResults] = useState<any[]>([]);
 
-  useEffect(() => {
-    if (searchQuery.trim().length > 0) {
-      const fetchProducts = async () => {
-        try {
-          const res = await fetch(`/api/products/search?q=${encodeURIComponent(searchQuery)}`);
-          if (res.ok) {
-            const data = await res.json();
-            setProductResults(data);
-          }
-        } catch (error) {
-          console.error("Error fetching products:", error);
-        }
-      };
+  const productResultsSearch = useProductSearch(searchQuery);
 
-      const timeoutId = setTimeout(fetchProducts, 300);
-      return () => clearTimeout(timeoutId);
-    } else {
-      setProductResults([]);
-    }
-  }, [searchQuery]);
+  useEffect(() => {
+    setProductResults(productResultsSearch);
+  }, [productResultsSearch]);
 
   const handleBrandClick = (e: React.MouseEvent<HTMLAnchorElement>, brand: string) => {
     e.preventDefault();
@@ -194,8 +221,8 @@ export default function Navbar() {
             {/* Profile Icon / Avatar */}
             {isSignedIn && user ? (
               <Link href="/profile" className="navbar-icon" id="navbar-account" aria-label="Account" style={{ display: 'flex', alignItems: 'center', padding: 0, justifyContent: 'center' }}>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid black', overflow: 'hidden' }}>
-                  <img src={user.imageUrl} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid black', overflow: 'hidden', position: 'relative' }}>
+                  <Image src={user.imageUrl} alt="Profile" fill sizes="32px" style={{ objectFit: 'cover' }} />
                 </div>
               </Link>
             ) : (

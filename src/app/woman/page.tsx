@@ -47,6 +47,7 @@ export default async function WomanPage() {
                         src={image}
                         alt={product.name}
                         fill
+                        sizes="(max-width: 768px) 33vw, (max-width: 1024px) 25vw, 185px"
                         className="object-contain transition-transform duration-700 ease-out group-hover/card:scale-110 drop-shadow-md"
                       />
                     </div>
