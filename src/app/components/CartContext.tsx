@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useCallback, useRef, type ReactNode } from "react";
+import { createContext, useContext, useState, useEffect, useCallback, useRef, useMemo, type ReactNode } from "react";
 import { useAuth } from "@clerk/nextjs";
 
 
@@ -127,12 +127,15 @@ export function CartProvider({ children }: { children: ReactNode }) {
     prevIsSignedIn.current = isSignedIn;
   }, [isSignedIn, clearCart]);
 
-  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const cartCount = useMemo(() => cartItems.reduce((sum, item) => sum + item.quantity, 0), [cartItems]);
+
+  const value = useMemo(
+    () => ({ cartItems, addToCart, removeFromCart, updateItemQuantity, clearCart, cartCount }),
+    [cartItems, addToCart, removeFromCart, updateItemQuantity, clearCart, cartCount]
+  );
 
   return (
-    <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, updateItemQuantity, clearCart, cartCount }}
-    >
+    <CartContext.Provider value={value}>
       {children}
     </CartContext.Provider>
   );

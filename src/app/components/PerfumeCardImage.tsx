@@ -4,21 +4,19 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 
 const PerfumeCardImage = ({ imgs, alt }: { imgs: string[]; alt: string }) => {
-  const [currentIdx, setCurrentIdx] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [state, setState] = useState({ currentIdx: 0, isTransitioning: true });
+  const { currentIdx, isTransitioning } = state;
 
   useEffect(() => {
     if (!imgs || imgs.length <= 1) return;
     const interval = setInterval(() => {
       if (document.hidden) return;
 
-      setCurrentIdx((prev) => {
-        if (prev >= imgs.length) {
-          setIsTransitioning(false);
-          return 0;
+      setState((prev) => {
+        if (prev.currentIdx >= imgs.length) {
+          return { currentIdx: 0, isTransitioning: false };
         }
-        setIsTransitioning(true);
-        return prev + 1;
+        return { currentIdx: prev.currentIdx + 1, isTransitioning: true };
       });
     }, 2000);
     return () => clearInterval(interval);
@@ -33,8 +31,7 @@ const PerfumeCardImage = ({ imgs, alt }: { imgs: string[]; alt: string }) => {
       <div
         onTransitionEnd={() => {
           if (currentIdx === imgs.length) {
-            setIsTransitioning(false);
-            setCurrentIdx(0);
+            setState({ currentIdx: 0, isTransitioning: false });
           }
         }}
         style={{

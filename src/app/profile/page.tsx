@@ -55,13 +55,16 @@ export default function ProfilePage() {
   const { clearCart } = useCart();
 
   const [isEditing, setIsEditing] = useState(false);
-  const [phone, setPhone] = useState("");
-  const [street, setStreet] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
   const [isSaving, setIsSaving] = useState(false);
-  const [initialDataLoaded, setInitialDataLoaded] = useState(false);
-  const [orders, setOrders] = useState<any[]>([]);
+  const [state, setState] = useState({
+    phone: "",
+    street: "",
+    city: "",
+    country: "",
+    orders: [] as any[],
+    initialDataLoaded: false,
+  });
+  const { phone, street, city, country, orders, initialDataLoaded } = state;
 
   useEffect(() => {
     if (isLoaded && isSignedIn && user && !initialDataLoaded) {
@@ -69,19 +72,32 @@ export default function ProfilePage() {
         getUserProfile(user.id),
         getUserOrders(user.id)
       ]).then(([data, fetchedOrders]) => {
-        if (data) {
-          setPhone(data.phone || "");
-          if (data.address) {
-            const parts = data.address.split(",").map((p) => p.trim());
-            setStreet(parts[0] || "");
-            setCity(parts[1] || "");
-            setCountry(parts[2] || "");
+        setState((prev) => {
+          let newPhone = prev.phone;
+          let newStreet = prev.street;
+          let newCity = prev.city;
+          let newCountry = prev.country;
+          
+          if (data) {
+            newPhone = data.phone || "";
+            if (data.address) {
+              const parts = data.address.split(",").map((p: string) => p.trim());
+              newStreet = parts[0] || "";
+              newCity = parts[1] || "";
+              newCountry = parts[2] || "";
+            }
           }
-        }
-        if (fetchedOrders) {
-          setOrders(fetchedOrders);
-        }
-        setInitialDataLoaded(true);
+          
+          return {
+            ...prev,
+            phone: newPhone,
+            street: newStreet,
+            city: newCity,
+            country: newCountry,
+            orders: fetchedOrders || prev.orders,
+            initialDataLoaded: true
+          };
+        });
       });
     }
   }, [isLoaded, isSignedIn, user, initialDataLoaded]);
@@ -97,7 +113,7 @@ export default function ProfilePage() {
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let val = e.target.value.replace(/[a-zA-Z]/g, "");
     if (val.length > 15) val = val.slice(0, 15);
-    setPhone(val);
+    setState(prev => ({ ...prev, phone: val }));
   };
 
   const toggleEdit = async () => {
@@ -185,21 +201,21 @@ export default function ProfilePage() {
                       className="edit-input"
                       placeholder="Street/House"
                       value={street}
-                      onChange={(e) => setStreet(e.target.value)}
+                      onChange={(e) => setState(prev => ({ ...prev, street: e.target.value }))}
                     />
                     <input
                       type="text"
                       className="edit-input"
                       placeholder="City"
                       value={city}
-                      onChange={(e) => setCity(e.target.value)}
+                      onChange={(e) => setState(prev => ({ ...prev, city: e.target.value }))}
                     />
                     <input
                       type="text"
                       className="edit-input"
                       placeholder="Country"
                       value={country}
-                      onChange={(e) => setCountry(e.target.value)}
+                      onChange={(e) => setState(prev => ({ ...prev, country: e.target.value }))}
                     />
                   </div>
                 ) : (
