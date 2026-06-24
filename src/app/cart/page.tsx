@@ -152,7 +152,9 @@ export default function Cart() {
                       onMouseDown={(e) => { e.currentTarget.style.transform = 'translate(2px, 2px)'; e.currentTarget.style.boxShadow = '0px 0px 0px #000'; }}
                       onMouseUp={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '2px 2px 0px #000'; }}
                       onMouseOut={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '2px 2px 0px #000'; e.currentTarget.style.backgroundColor = '#fff'; e.currentTarget.style.color = '#000'; }}
+                      onBlur={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '2px 2px 0px #000'; e.currentTarget.style.backgroundColor = '#fff'; e.currentTarget.style.color = '#000'; }}
                       onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#ff4d4d'; e.currentTarget.style.color = '#fff'; }}
+                      onFocus={(e) => { e.currentTarget.style.backgroundColor = '#ff4d4d'; e.currentTarget.style.color = '#fff'; }}
                     >
                       Remove
                     </button>
@@ -238,7 +240,9 @@ export default function Cart() {
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translate(2px, 2px)'; e.currentTarget.style.boxShadow = '0px 0px 0px #ef4444'; }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '2px 2px 0px #ef4444'; }}
               onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#ef4444'; e.currentTarget.style.color = '#fff'; }}
+              onFocus={(e) => { e.currentTarget.style.backgroundColor = '#ef4444'; e.currentTarget.style.color = '#fff'; }}
               onMouseOut={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '2px 2px 0px #ef4444'; e.currentTarget.style.backgroundColor = '#fff'; e.currentTarget.style.color = '#ef4444'; }}
+              onBlur={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '2px 2px 0px #ef4444'; e.currentTarget.style.backgroundColor = '#fff'; e.currentTarget.style.color = '#ef4444'; }}
             >
               Clear Cart
             </button>

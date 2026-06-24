@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useCallback, useRef, useMemo, type ReactNode } from "react";
+import { createContext, use, useState, useEffect, useCallback, useRef, useMemo, type ReactNode } from "react";
 import { useAuth } from "@clerk/nextjs";
 
 
@@ -151,7 +151,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 }
 
 export function useCart() {
-  const context = useContext(CartContext);
+  const context = use(CartContext);
   if (!context) {
     throw new Error("useCart must be used within a CartProvider");
   }
