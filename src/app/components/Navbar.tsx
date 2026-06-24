@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useUser, useClerk } from "@clerk/nextjs";
+import { useCart } from "./CartContext";
 
 const BRANDS = [
   "Afnan", "Armaf", "Burberry", "Calvin Klein", "Chanel", "Creed",
@@ -64,6 +65,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const { isSignedIn, user } = useUser();
+  const { cartCount } = useCart();
 
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -238,12 +240,31 @@ export default function Navbar() {
             )}
 
             {/* Cart (Always Visible) */}
-            <Link href="/cart" className="navbar-icon" id="navbar-cart" aria-label="Cart">
+            <Link href="/cart" className="navbar-icon" id="navbar-cart" aria-label="Cart" style={{ position: 'relative' }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" />
                 <line x1="3" y1="6" x2="21" y2="6" />
                 <path d="M16 10a4 4 0 0 1-8 0" />
               </svg>
+              {cartCount > 0 && (
+                <span style={{
+                  position: 'absolute',
+                  top: '-12px',
+                  right: '-9px',
+                  backgroundColor: '#24aa41ff',
+                  color: '#fff',
+                  fontSize: '10px',
+                  fontWeight: 'bold',
+                  width: '16px',
+                  height: '16px',
+                  borderRadius: '50%',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  {cartCount}
+                </span>
+              )}
             </Link>
 
             {/* Mobile Toggle */}
@@ -306,25 +327,25 @@ export default function Navbar() {
                 {BRANDS.reduce<React.ReactNode[]>((acc, brand) => {
                   if (brand.toLowerCase().includes(searchQuery.toLowerCase())) {
                     acc.push(
-                  <Link
-                    key={brand}
-                    href={`/shop#brand-${brand.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`}
-                    style={{
-                      padding: '12px 20px',
-                      color: 'rgba(255, 255, 255, 0.8)',
-                      textDecoration: 'none',
-                      fontFamily: 'var(--font-body)',
-                      fontSize: '14px',
-                      display: 'block',
-                      transition: 'color 0.3s'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.color = '#C28D10'}
-                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)'}
-                    onClick={(e) => handleBrandClick(e, brand)}
-                  >
-                    <span>{brand}</span>
-                    <span style={{ fontSize: '10px', marginLeft: '10px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Brand</span>
-                  </Link>
+                      <Link
+                        key={brand}
+                        href={`/shop#brand-${brand.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`}
+                        style={{
+                          padding: '12px 20px',
+                          color: 'rgba(255, 255, 255, 0.8)',
+                          textDecoration: 'none',
+                          fontFamily: 'var(--font-body)',
+                          fontSize: '14px',
+                          display: 'block',
+                          transition: 'color 0.3s'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.color = '#C28D10'}
+                        onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)'}
+                        onClick={(e) => handleBrandClick(e, brand)}
+                      >
+                        <span>{brand}</span>
+                        <span style={{ fontSize: '10px', marginLeft: '10px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Brand</span>
+                      </Link>
                     );
                   }
                   return acc;
@@ -369,23 +390,23 @@ export default function Navbar() {
         <Link href="/men" onClick={() => setMobileOpen(false)}>Men</Link>
         <Link href="/woman" onClick={() => setMobileOpen(false)}>Women</Link>
         <Link href="/unisex" onClick={() => setMobileOpen(false)}>Unisex</Link>
-        <a 
-          href="#" 
-          onClick={(e) => { 
-            e.preventDefault(); 
-            setMobileBrandsOpen(!mobileBrandsOpen); 
+        <a
+          href="#"
+          onClick={(e) => {
+            e.preventDefault();
+            setMobileBrandsOpen(!mobileBrandsOpen);
           }}
           style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
         >
           Brands
-          <svg 
-            width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" 
+          <svg
+            width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
             style={{ transform: mobileBrandsOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s' }}
           >
-            <path d="M6 9l6 6 6-6"/>
+            <path d="M6 9l6 6 6-6" />
           </svg>
         </a>
-        
+
         {mobileBrandsOpen && (
           <div style={{
             display: 'grid',
