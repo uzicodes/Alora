@@ -83,7 +83,7 @@ function SuccessContent() {
               fontWeight: 800,
               border: '2px solid #000',
               cursor: 'pointer',
-              transition: 'all 0.1s ease',
+              transition: 'transform 0.1s ease, background-color 0.1s ease',
               textTransform: 'uppercase',
             }}
             onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#333'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
@@ -104,7 +104,7 @@ function SuccessContent() {
               fontWeight: 800,
               border: '2px solid #000',
               cursor: 'pointer',
-              transition: 'all 0.1s ease',
+              transition: 'transform 0.1s ease, background-color 0.1s ease',
               textTransform: 'uppercase',
             }}
             onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f9f9f9'; e.currentTarget.style.transform = 'translateY(-2px)'; }}

@@ -61,8 +61,12 @@ function getStoredCart(): CartItem[] {
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const { isSignedIn } = useAuth();
-  const prevIsSignedIn = useRef(isSignedIn);
+  const authState = useAuth();
+  const isSignedInRef = useRef(authState.isSignedIn);
+  const prevIsSignedIn = useRef(authState.isSignedIn);
+
+  // Keep the ref in sync without triggering re-renders
+  isSignedInRef.current = authState.isSignedIn;
 
   // Hydrate from localStorage on mount
   useEffect(() => {
@@ -125,11 +129,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   // Clear cart when the user logs out
   useEffect(() => {
-    if (prevIsSignedIn.current === true && isSignedIn === false) {
+    const currentIsSignedIn = isSignedInRef.current;
+    if (prevIsSignedIn.current === true && currentIsSignedIn === false) {
       clearCart();
     }
-    prevIsSignedIn.current = isSignedIn;
-  }, [isSignedIn, clearCart]);
+    prevIsSignedIn.current = currentIsSignedIn;
+  }, [authState.isSignedIn, clearCart]);
 
   const cartCount = useMemo(() => cartItems.reduce((sum, item) => sum + item.quantity, 0), [cartItems]);
 

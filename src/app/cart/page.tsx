@@ -146,7 +146,7 @@ export default function Cart() {
                         letterSpacing: '1px',
                         cursor: 'pointer',
                         backgroundColor: '#fff',
-                        transition: 'all 0.1s',
+                        transition: 'transform 0.1s, box-shadow 0.1s, background-color 0.1s, color 0.1s',
                         fontWeight: 'bold'
                       }}
                       onMouseDown={(e) => { e.currentTarget.style.transform = 'translate(2px, 2px)'; e.currentTarget.style.boxShadow = '0px 0px 0px #000'; }}
@@ -199,7 +199,7 @@ export default function Cart() {
                 backgroundColor: 'beige',
                 color: '#000',
                 fontWeight: '900',
-                transition: 'all 0.1s',
+                transition: 'transform 0.1s, box-shadow 0.1s, background-color 0.1s, color 0.1s',
                 cursor: 'pointer'
               }}
             >
@@ -233,7 +233,7 @@ export default function Cart() {
                 border: '2px solid #ef4444',
                 boxShadow: '2px 2px 0px #ef4444',
                 cursor: 'pointer',
-                transition: 'all 0.1s'
+                transition: 'transform 0.1s, box-shadow 0.1s, background-color 0.1s, color 0.1s'
               }}
               onMouseDown={(e) => { e.currentTarget.style.transform = 'translate(2px, 2px)'; e.currentTarget.style.boxShadow = '0px 0px 0px #ef4444'; }}
               onMouseUp={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '2px 2px 0px #ef4444'; }}
