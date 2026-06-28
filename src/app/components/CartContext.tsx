@@ -1,8 +1,7 @@
 "use client";
 
 import { createContext, use, useState, useEffect, useCallback, useRef, useMemo, type ReactNode } from "react";
-import { useAuth } from "@clerk/nextjs";
-
+import { useAuth, ClerkLoaded } from "@clerk/nextjs";
 
 export type CartItem = {
   id: string;
@@ -59,14 +58,23 @@ function getStoredCart(): CartItem[] {
   }
 }
 
-export function CartProvider({ children }: { children: ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+function CartAuthSync({ clearCart }: { clearCart: () => void }) {
   const authState = useAuth();
-  const isSignedInRef = useRef(authState.isSignedIn);
   const prevIsSignedIn = useRef(authState.isSignedIn);
 
-  // Keep the ref in sync without triggering re-renders
-  isSignedInRef.current = authState.isSignedIn;
+  useEffect(() => {
+    const currentIsSignedIn = authState.isSignedIn;
+    if (prevIsSignedIn.current === true && currentIsSignedIn === false) {
+      clearCart();
+    }
+    prevIsSignedIn.current = currentIsSignedIn;
+  }, [authState.isSignedIn, clearCart]);
+
+  return null;
+}
+
+export function CartProvider({ children }: { children: ReactNode }) {
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
   // Hydrate from localStorage on mount
   useEffect(() => {
@@ -127,15 +135,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   }, []);
 
-  // Clear cart when the user logs out
-  useEffect(() => {
-    const currentIsSignedIn = isSignedInRef.current;
-    if (prevIsSignedIn.current === true && currentIsSignedIn === false) {
-      clearCart();
-    }
-    prevIsSignedIn.current = currentIsSignedIn;
-  }, [authState.isSignedIn, clearCart]);
-
   const cartCount = useMemo(() => cartItems.reduce((sum, item) => sum + item.quantity, 0), [cartItems]);
 
   const value = useMemo(
@@ -145,6 +144,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   return (
     <CartContext.Provider value={value}>
+      <ClerkLoaded>
+        <CartAuthSync clearCart={clearCart} />
+      </ClerkLoaded>
       {children}
     </CartContext.Provider>
   );

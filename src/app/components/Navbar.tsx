@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { useUser, useClerk } from "@clerk/nextjs";
+import { useUser, ClerkLoaded, ClerkLoading } from "@clerk/nextjs";
 import { useCart } from "./CartContext";
 
 const BRANDS = [
@@ -61,10 +61,60 @@ function useProductSearch(searchQuery: string) {
   return productResults;
 }
 
+function DesktopLoginLink({ pathname }: { pathname: string }) {
+  const { isSignedIn } = useUser();
+  if (isSignedIn) return null;
+  return (
+    <li>
+      <Link href="/login" className={pathname === "/login" ? "active-link" : ""} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+        LOGIN
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M7 17L17 7" />
+          <path d="M7 7h10v10" />
+        </svg>
+      </Link>
+    </li>
+  );
+}
+
+function AccountNavButton() {
+  const { isSignedIn, user } = useUser();
+  if (isSignedIn && user) {
+    return (
+      <Link href="/profile" className="navbar-icon" id="navbar-account" aria-label="Account" style={{ display: 'flex', alignItems: 'center', padding: 0, justifyContent: 'center' }}>
+        <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid black', overflow: 'hidden', position: 'relative' }}>
+          <Image src={user.imageUrl} alt="Profile" fill sizes="32px" style={{ objectFit: 'cover' }} />
+        </div>
+      </Link>
+    );
+  }
+  return (
+    <Link href="/login" className="navbar-icon" id="navbar-account" aria-label="Account">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
+      </svg>
+    </Link>
+  );
+}
+
+function MobileLoginLink({ onClick }: { onClick: () => void }) {
+  const { isSignedIn } = useUser();
+  if (isSignedIn) return null;
+  return (
+    <Link href="/login" onClick={onClick} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>
+      LOGIN
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M7 17L17 7" />
+        <path d="M7 7h10v10" />
+      </svg>
+    </Link>
+  );
+}
+
 export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { isSignedIn, user } = useUser();
   const { cartCount } = useCart();
 
   const [scrolled, setScrolled] = useState(false);
@@ -194,7 +244,7 @@ export default function Navbar() {
             </li>
 
 
-            {!isSignedIn && (
+            <ClerkLoading>
               <li>
                 <Link href="/login" className={pathname === "/login" ? "active-link" : ""} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                   LOGIN
@@ -204,7 +254,10 @@ export default function Navbar() {
                   </svg>
                 </Link>
               </li>
-            )}
+            </ClerkLoading>
+            <ClerkLoaded>
+              <DesktopLoginLink pathname={pathname} />
+            </ClerkLoaded>
           </ul>
 
           {/* Icons */}
@@ -224,20 +277,17 @@ export default function Navbar() {
             </button>
 
             {/* Profile Icon / Avatar */}
-            {isSignedIn && user ? (
-              <Link href="/profile" className="navbar-icon" id="navbar-account" aria-label="Account" style={{ display: 'flex', alignItems: 'center', padding: 0, justifyContent: 'center' }}>
-                <div style={{ width: '32px', height: '32px', borderRadius: '50%', border: '1px solid black', overflow: 'hidden', position: 'relative' }}>
-                  <Image src={user.imageUrl} alt="Profile" fill sizes="32px" style={{ objectFit: 'cover' }} />
-                </div>
-              </Link>
-            ) : (
+            <ClerkLoading>
               <Link href="/login" className="navbar-icon" id="navbar-account" aria-label="Account">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
                   <circle cx="12" cy="7" r="4" />
                 </svg>
               </Link>
-            )}
+            </ClerkLoading>
+            <ClerkLoaded>
+              <AccountNavButton />
+            </ClerkLoaded>
 
             {/* Cart (Always Visible) */}
             <Link href="/cart" className="navbar-icon" id="navbar-cart" aria-label="Cart" style={{ position: 'relative' }}>
@@ -440,7 +490,7 @@ export default function Navbar() {
           </div>
         )}
 
-        {!isSignedIn && (
+        <ClerkLoading>
           <Link href="/login" onClick={() => setMobileOpen(false)} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>
             LOGIN
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -448,7 +498,10 @@ export default function Navbar() {
               <path d="M7 7h10v10" />
             </svg>
           </Link>
-        )}
+        </ClerkLoading>
+        <ClerkLoaded>
+          <MobileLoginLink onClick={() => setMobileOpen(false)} />
+        </ClerkLoaded>
       </div>
     </>
   );
