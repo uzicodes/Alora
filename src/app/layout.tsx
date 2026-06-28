@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Ubuntu } from "next/font/google";
+import { Ubuntu, Inter, Jost } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import ScrollToTop from "./components/ScrollToTop";
@@ -9,13 +9,24 @@ import { CartProvider } from "./components/CartContext";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 
-
 const ubuntuFont = Ubuntu({
   variable: "--font-ubuntu",
   weight: ["300", "400", "500", "700"],
   subsets: ["latin"],
+  display: "swap",
 });
 
+const interFont = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const jostFont = Jost({
+  variable: "--font-jost",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 const davidLibre = localFont({
   src: "../../public/fonts/DavidLibre.woff2",
@@ -65,16 +76,8 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
-        <head>
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-          <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
-            rel="stylesheet"
-          />
-        </head>
         <body
-          className={`${ubuntuFont.variable} ${davidLibre.variable} ${kharaissa.variable} ${blackKastile.variable} ${lumien.variable} antialiased`}
+          className={`${interFont.variable} ${jostFont.variable} ${ubuntuFont.variable} ${davidLibre.variable} ${kharaissa.variable} ${blackKastile.variable} ${lumien.variable} antialiased`}
           suppressHydrationWarning
         >
           <ScrollToTop />
