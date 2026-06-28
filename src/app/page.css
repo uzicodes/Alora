@@ -719,6 +719,119 @@
   letter-spacing: 0.02em;
 }
 
+/* ==================== CAMPAIGN VIDEO ==================== */
+.campaign-video-section {
+  position: relative;
+  width: 100%;
+  padding: 40px 60px;
+  background: #C2B280;
+}
+
+/* Inner frame that holds the video */
+.cv-video-frame {
+  position: relative;
+  width: 100%;
+  height: 600px;
+  overflow: hidden;
+  border: 1px solid rgba(184,149,106,0.25);
+  box-shadow:
+    inset 0 0 60px rgba(0,0,0,0.15),
+    0 4px 30px rgba(26,20,16,0.12);
+  transition: border-color 0.5s, box-shadow 0.5s;
+}
+.campaign-video-section:hover .cv-video-frame {
+  border-color: rgba(184,149,106,0.45);
+  box-shadow:
+    inset 0 0 60px rgba(0,0,0,0.15),
+    0 8px 40px rgba(26,20,16,0.18);
+}
+
+/* The video itself */
+.cv-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Gold corner accents — inset from the border */
+.cv-corner {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-color: rgba(184,149,106,0.4);
+  border-style: solid;
+  z-index: 4;
+  pointer-events: none;
+  transition: border-color 0.5s, width 0.5s, height 0.5s;
+}
+/* Diamond accent dot at each corner */
+.cv-corner::after {
+  content: '◆';
+  position: absolute;
+  font-size: 5px;
+  color: rgba(184,149,106,0.5);
+  transition: color 0.5s;
+}
+.campaign-video-section:hover .cv-corner {
+  border-color: rgba(184,149,106,0.75);
+  width: 70px;
+  height: 70px;
+}
+.campaign-video-section:hover .cv-corner::after {
+  color: rgba(184,149,106,0.85);
+}
+
+/* Corner positions — inset 20px from the frame edge */
+.cv-corner-tl { top: 20px; left: 20px; border-width: 1px 0 0 1px; }
+.cv-corner-tr { top: 20px; right: 20px; border-width: 1px 1px 0 0; }
+.cv-corner-bl { bottom: 20px; left: 20px; border-width: 0 0 1px 1px; }
+.cv-corner-br { bottom: 20px; right: 20px; border-width: 0 1px 1px 0; }
+
+/* Diamond dot positions per corner */
+.cv-corner-tl::after { top: -3px; left: -3px; }
+.cv-corner-tr::after { top: -3px; right: -3px; }
+.cv-corner-bl::after { bottom: -3px; left: -3px; }
+.cv-corner-br::after { bottom: -3px; right: -3px; }
+
+/* Gradient vignettes for cinematic depth */
+.cv-vignette {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 120px;
+  pointer-events: none;
+  z-index: 2;
+}
+.cv-vignette-top {
+  top: 0;
+  background: linear-gradient(to bottom, rgba(10,8,5,0.45) 0%, transparent 100%);
+}
+.cv-vignette-bottom {
+  bottom: 0;
+  background: linear-gradient(to top, rgba(10,8,5,0.5) 0%, transparent 100%);
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .campaign-video-section {
+    padding: 24px 20px;
+  }
+  .cv-video-frame {
+    height: 400px;
+  }
+  .cv-corner {
+    width: 32px;
+    height: 32px;
+  }
+  .cv-vignette {
+    height: 100px;
+  }
+}
+
 /* ==================== SALE SECTION ==================== */
 .sale-section {
   padding: 100px 60px;
