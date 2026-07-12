@@ -17,7 +17,7 @@ type Pillar = {
 
 
 const pillars: Pillar[] = [
-  { num: "01", label: "Hand-Sourced Ingredients", desc: "Rare botanicals harvested across continents at peak potency." },
+  { num: "01", label: "Hand-Sourced Ingredients", desc: "Rare botanicals harvested with peak potency." },
   { num: "02", label: "Master Perfumers", desc: "Crafted by artisans with decades of olfactory heritage." },
   { num: "03", label: "Up to 3 Years", desc: "The meticulous blending behind each signature scent." },
   { num: "04", label: "Certified Luxury", desc: "Every bottle inspected before it leaves our atelier." },

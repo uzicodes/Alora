@@ -448,14 +448,14 @@
 }
 .marquee-text {
   font-size: 9px;
-  font-weight: 300;
+  font-weight: 500;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: rgba(26,20,16,0.4);
+  color: #1a1410;
   padding: 0 40px;
 }
 .marquee-diamond {
-  color: #6b5a3e;
+  color: #4a3d28;
   font-size: 6px;
 }
 @keyframes marqueeScroll {
@@ -685,22 +685,52 @@
   background: rgba(26,20,16,0.08);
 }
 .pillar-card {
+  position: relative;
   background: #c8be8e;
-  padding: 28px 20px;
-  transition: background 0.3s;
+  padding: 36px 24px;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 2px;
 }
-.pillar-card:hover { background: #d0c89c; }
+.pillar-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: #1a1410;
+  transform: scaleX(0);
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.pillar-card:hover::before {
+  transform: scaleX(1);
+  background: #C2B280;
+}
+.pillar-card:hover {
+  background: #1a1410;
+  transform: translateY(-8px) scale(1.04);
+  box-shadow: 0 24px 60px rgba(26, 20, 16, 0.35), 0 8px 24px rgba(26, 20, 16, 0.2);
+  z-index: 10;
+  border-radius: 6px;
+}
 .pillar-num {
   font-family: var(--font-david-libre), serif;
-  font-size: 13px;
-  font-weight: 300;
+  font-size: 14px;
+  font-weight: 400;
   color: #6b5a3e;
-  letter-spacing: 0.1em;
-  margin-bottom: 28px;
+  letter-spacing: 0.15em;
+  margin-bottom: 20px;
+  transition: color 0.4s, transform 0.4s;
+}
+.pillar-card:hover .pillar-num {
+  color: #C2B280;
+  transform: scale(1.15);
 }
 .pillar-label {
   font-family: var(--font-ubuntu), sans-serif;
@@ -708,7 +738,11 @@
   font-weight: 400;
   color: #1a1410;
   line-height: 1.2;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  transition: color 0.4s;
+}
+.pillar-card:hover .pillar-label {
+  color: #faf8f5;
 }
 .pillar-desc {
   font-size: 12px;
@@ -716,6 +750,10 @@
   line-height: 1.8;
   color: rgba(26, 20, 16, 0.75);
   letter-spacing: 0.02em;
+  transition: color 0.4s;
+}
+.pillar-card:hover .pillar-desc {
+  color: rgba(250, 248, 245, 0.85);
 }
 
 /* ==================== CAMPAIGN VIDEO ==================== */
@@ -877,16 +915,19 @@
   display: flex;
   align-items: center;
   background: #b5a778;
-  border: 1px solid rgba(26,20,16,0.08);
+  border: 1px solid rgba(26,20,16,0.1);
   padding: 32px;
   min-height: 240px;
-  transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), border-color 0.4s, box-shadow 0.4s;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: pointer;
+  z-index: 1;
 }
 .sale-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(26,20,16,0.15);
-  box-shadow: 0 20px 60px rgba(26,20,16,0.15);
+  transform: translateY(-10px) scale(1.035);
+  background: linear-gradient(135deg, #c4b584 0%, #a09060 100%);
+  border-color: #1a1410;
+  box-shadow: 0 30px 70px rgba(26, 20, 16, 0.35), 0 0 0 1px #1a1410;
+  z-index: 5;
 }
 .sale-card-shimmer {
   position: absolute;
@@ -894,9 +935,10 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.06), transparent);
-  transition: left 0.6s;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transition: left 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   pointer-events: none;
+  z-index: 2;
 }
 .sale-card:hover .sale-card-shimmer {
   left: 100%;
@@ -907,9 +949,19 @@
   height: 180px;
   flex-shrink: 0;
   margin-right: 28px;
+  z-index: 3;
+}
+.sale-card-img img {
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.6s !important;
+}
+.sale-card:hover .sale-card-img img {
+  transform: scale(1.18) rotate(-6deg) !important;
+  filter: drop-shadow(0 18px 25px rgba(26, 20, 16, 0.35));
 }
 .sale-card-content {
   flex: 1;
+  position: relative;
+  z-index: 3;
 }
 .sale-card-label {
   font-size: 9px;
@@ -926,12 +978,21 @@
   color: #1a1410;
   margin-bottom: 12px;
   line-height: 1.2;
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.sale-card:hover .sale-card-title {
+  transform: translateX(6px);
 }
 .sale-discount-badge {
   display: inline-flex;
   align-items: baseline;
   gap: 4px;
   margin-bottom: 12px;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: left center;
+}
+.sale-card:hover .sale-discount-badge {
+  transform: scale(1.15) translateX(4px);
 }
 .sale-discount-num {
   font-family: var(--font-ubuntu), sans-serif;
@@ -939,6 +1000,10 @@
   font-weight: 500;
   color: #6b5a3e;
   line-height: 1;
+  transition: color 0.4s;
+}
+.sale-card:hover .sale-discount-num {
+  color: #1a1410;
 }
 .sale-discount-pct {
   font-family: var(--font-ubuntu), sans-serif;
@@ -966,11 +1031,14 @@
   text-decoration: none;
   border-bottom: 1px solid rgba(26,20,16,0.25);
   padding-bottom: 4px;
-  transition: color 0.3s, border-color 0.3s;
+  transition: all 0.3s;
 }
 .sale-card-cta:hover {
   color: #6b5a3e;
   border-color: #6b5a3e;
+}
+.sale-card:hover .sale-card-cta {
+  letter-spacing: 0.32em;
 }
 .sale-card-cta svg {
   transition: transform 0.3s;
@@ -1019,17 +1087,20 @@
   z-index: 2;
 }
 .perfume-card {
+  position: relative;
   background: #b5a778;
   border-radius: 4px;
   overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.4s;
+  border: 1px solid rgba(26,20,16,0.1);
+  transition: all 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
   cursor: pointer;
   text-decoration: none;
   display: block;
 }
 .perfume-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 20px 50px rgba(26,20,16,0.2);
+  border-color: #1a1410;
+  box-shadow: 0 24px 60px rgba(26,20,16,0.25), 0 0 0 1px #1a1410;
 }
 .perfume-card-img-wrap {
   position: relative;
