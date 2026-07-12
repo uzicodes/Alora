@@ -37,6 +37,13 @@ body {
   overflow-x: hidden;
 }
 
+/* Khaki background only when homepage hero is in the DOM */
+html:has(.alora-hero),
+body:has(.alora-hero),
+body:has(.alora-hero) > main {
+  background: #C2B280 !important;
+}
+
 /* Elegant selection color */
 ::selection {
   background: #111111;

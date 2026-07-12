@@ -202,7 +202,7 @@ export default function Navbar() {
 
   return (
     <>
-      <div style={{ height: 56 }} />
+      {pathname !== '/' && <div style={{ height: 56 }} />}
       <nav className={`navbar ${scrolled ? "scrolled" : ""}`} id="navbar">
         {/* Logo */}
         <Link href="/" className="navbar-logo" id="navbar-logo">
