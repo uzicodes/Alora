@@ -1612,8 +1612,12 @@
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 1024px) {
   .alora-hero {
-    padding: 40px 24px 60px;
+    padding: 100px 24px 40px;
     min-height: auto;
+  }
+
+  .hero-bg-heading {
+    top: 55%;
   }
 
   .hero-side-stats {
@@ -1750,6 +1754,14 @@
   .perfume-finder-header .section-h2,
   .about-header .section-h2 {
     white-space: normal !important;
+  }
+
+  .alora-hero {
+    padding: 110px 16px 30px;
+  }
+
+  .hero-bg-heading {
+    top: 56%;
   }
 
   .hero-headline {
