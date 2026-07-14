@@ -1229,8 +1229,9 @@
   transition: color 0.4s;
 }
 
-.sale-card:hover .sale-discount-num {
-  color: #1a1410;
+.sale-card:hover .sale-discount-num,
+.sale-card:hover .sale-discount-pct {
+  color: #920505;
 }
 
 .sale-discount-pct {
@@ -1238,6 +1239,7 @@
   font-size: 18px;
   font-weight: 400;
   color: #6b5a3e;
+  transition: color 0.4s;
 }
 
 .sale-discount-off {

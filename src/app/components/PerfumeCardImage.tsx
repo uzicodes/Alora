@@ -18,7 +18,7 @@ const PerfumeCardImage = ({ imgs, alt }: { imgs: string[]; alt: string }) => {
         }
         return { currentIdx: prev.currentIdx + 1, isTransitioning: true };
       });
-    }, 2000);
+    }, 1800);
     return () => clearInterval(interval);
   }, [imgs]);
 
@@ -39,7 +39,7 @@ const PerfumeCardImage = ({ imgs, alt }: { imgs: string[]; alt: string }) => {
           width: `${displayImgs.length * 100}%`,
           height: "100%",
           transform: `translateX(-${(currentIdx * 100) / displayImgs.length}%)`,
-          transition: isTransitioning ? "transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)" : "none",
+          transition: isTransitioning ? "transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)" : "none",
         }}
       >
         {displayImgs.map((img, idx) => (
