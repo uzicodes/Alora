@@ -216,6 +216,36 @@
   height: 100%;
   object-fit: contain;
   mix-blend-mode: multiply;
+  transform-origin: center center;
+  animation: butterflyWingFlap 2.6s ease-in-out infinite;
+}
+
+.hero-butterfly-orange img {
+  animation: butterflyWingFlap 3.2s ease-in-out infinite 0.6s;
+}
+
+@keyframes butterflyWingFlap {
+  0%, 35%, 100% {
+    transform: scaleX(1) scaleY(1) rotateZ(0deg);
+  }
+  42% {
+    transform: scaleX(0.25) scaleY(0.96) rotateZ(-3deg);
+  }
+  49% {
+    transform: scaleX(1.02) scaleY(1.02) rotateZ(2deg);
+  }
+  56% {
+    transform: scaleX(0.3) scaleY(0.97) rotateZ(-2deg);
+  }
+  63% {
+    transform: scaleX(1.01) scaleY(1.01) rotateZ(1deg);
+  }
+  70% {
+    transform: scaleX(0.35) scaleY(0.98) rotateZ(-1deg);
+  }
+  77% {
+    transform: scaleX(1) scaleY(1) rotateZ(0deg);
+  }
 }
 
 .hero-butterfly-orange2 {
