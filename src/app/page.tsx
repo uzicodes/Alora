@@ -57,11 +57,11 @@ export default function Home() {
             <span className="bg-word">SENSES</span>
             <span className="bg-word" style={{ marginRight: '7vw' }}>MEET</span>
           </div>
-          <div className="bg-line" style={{ paddingLeft: 'clamp(80px, 10vw, 160px)', paddingRight: '0' }}>
+          <div className="bg-line" style={{ paddingLeft: 'clamp(80px, 10vw, 160px)', paddingRight: '0', transform: 'translateY(clamp(20px, 3vw, 45px))' }}>
             <span className="bg-word">RAW</span>
             <span className="bg-word" style={{ marginRight: 'clamp(-80px, -6vw, -20px)' }}>RADIANT</span>
           </div>
-          <div className="bg-line center-text">
+          <div className="bg-line center-text" style={{ transform: 'translateY(clamp(40px, 6vw, 90px))' }}>
             <span className="bg-word">PERFUMES</span>
           </div>
         </div>
