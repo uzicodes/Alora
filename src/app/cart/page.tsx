@@ -137,24 +137,6 @@ export default function Cart() {
                       type="button"
                       className="remove-btn-styled"
                       onClick={() => removeFromCart(item.id)}
-                      style={{
-                        padding: '6px 16px',
-                        border: '2px solid #000',       
-                        boxShadow: '2px 2px 0px #000',  
-                        fontSize: '10px',
-                        textTransform: 'uppercase',
-                        letterSpacing: '1px',
-                        cursor: 'pointer',
-                        backgroundColor: '#fff',
-                        transition: 'transform 0.1s, box-shadow 0.1s, background-color 0.1s, color 0.1s',
-                        fontWeight: 'bold'
-                      }}
-                      onMouseDown={(e) => { e.currentTarget.style.transform = 'translate(2px, 2px)'; e.currentTarget.style.boxShadow = '0px 0px 0px #000'; }}
-                      onMouseUp={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '2px 2px 0px #000'; }}
-                      onMouseOut={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '2px 2px 0px #000'; e.currentTarget.style.backgroundColor = '#fff'; e.currentTarget.style.color = '#000'; }}
-                      onBlur={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '2px 2px 0px #000'; e.currentTarget.style.backgroundColor = '#fff'; e.currentTarget.style.color = '#000'; }}
-                      onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#ff4d4d'; e.currentTarget.style.color = '#fff'; }}
-                      onFocus={(e) => { e.currentTarget.style.backgroundColor = '#ff4d4d'; e.currentTarget.style.color = '#fff'; }}
                     >
                       Remove
                     </button>
@@ -165,14 +147,7 @@ export default function Cart() {
           </div>
 
           {/* Right: Order Summary */}
-          <div className="cart-summary animate-fade-in-up delay-300" style={{ 
-            backgroundColor: '#1DC475', 
-            color: '#111',
-            border: '2px solid #000',      
-            boxShadow: '6px 6px 0px #000', 
-            borderRadius: '5px',
-            padding: '24px'
-          }}>
+          <div className="cart-summary cart-summary-card animate-fade-in-up delay-300">
             <h2 className="summary-title" style={{ color: '#111', borderBottom: '2px solid #000', fontWeight: '900' }}>Order Summary</h2>
             <div className="summary-row" style={{ fontWeight: '600' }}>
               <span>Subtotal</span>
@@ -191,19 +166,7 @@ export default function Cart() {
             <button 
               type="button"
               onClick={handleCheckout}
-              className="btn-primary" 
-              style={{ 
-                width: '100%', 
-                marginTop: '24px', 
-                justifyContent: 'center',
-                border: '2px solid #000',
-                boxShadow: '4px 4px 0px #000',
-                backgroundColor: 'beige',
-                color: '#000',
-                fontWeight: '900',
-                transition: 'transform 0.1s, box-shadow 0.1s, background-color 0.1s, color 0.1s',
-                cursor: 'pointer'
-              }}
+              className="btn-primary summary-checkout-btn"
             >
               Proceed to Checkout
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginLeft: '8px' }}>
@@ -222,27 +185,7 @@ export default function Cart() {
             <button 
               type="button"
               onClick={clearCart}
-              style={{
-                display: 'block',
-                margin: '24px auto 0',
-                padding: '6px 16px',
-                fontSize: '10px',
-                textTransform: 'uppercase',
-                letterSpacing: '1px',
-                fontWeight: 'bold',
-                color: '#ef4444',
-                backgroundColor: '#fff',
-                border: '2px solid #ef4444',
-                boxShadow: '2px 2px 0px #ef4444',
-                cursor: 'pointer',
-                transition: 'transform 0.1s, box-shadow 0.1s, background-color 0.1s, color 0.1s'
-              }}
-              onMouseDown={(e) => { e.currentTarget.style.transform = 'translate(2px, 2px)'; e.currentTarget.style.boxShadow = '0px 0px 0px #ef4444'; }}
-              onMouseUp={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '2px 2px 0px #ef4444'; }}
-              onMouseOver={(e) => { e.currentTarget.style.backgroundColor = '#ef4444'; e.currentTarget.style.color = '#fff'; }}
-              onFocus={(e) => { e.currentTarget.style.backgroundColor = '#ef4444'; e.currentTarget.style.color = '#fff'; }}
-              onMouseOut={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '2px 2px 0px #ef4444'; e.currentTarget.style.backgroundColor = '#fff'; e.currentTarget.style.color = '#ef4444'; }}
-              onBlur={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '2px 2px 0px #ef4444'; e.currentTarget.style.backgroundColor = '#fff'; e.currentTarget.style.color = '#ef4444'; }}
+              className="clear-cart-btn"
             >
               Clear Cart
             </button>

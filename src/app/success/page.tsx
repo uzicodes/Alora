@@ -26,33 +26,8 @@ function SuccessContent() {
       padding: '20px',
       fontFamily: 'inherit'
     }}>
-      <div
-        className="animate-fade-in-up"
-        style={{
-          backgroundColor: '#dcfce7',
-          border: '3px solid #000',
-          boxShadow: '8px 8px 0px #000',
-          padding: '50px 30px',
-          maxWidth: '500px',
-          width: '100%',
-          textAlign: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: '20px'
-        }}
-      >
-        <div style={{
-          width: '80px',
-          height: '80px',
-          borderRadius: '50%',
-          backgroundColor: '#22c55e',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          border: '3px solid #000',
-          boxShadow: '4px 4px 0px #000'
-        }}>
+      <div className="animate-fade-in-up success-card">
+        <div className="success-icon">
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="20 6 9 17 4 12"></polyline>
           </svg>
@@ -74,20 +49,7 @@ function SuccessContent() {
           <button
             type="button"
             onClick={() => router.push('/shop')}
-            style={{
-              flex: 1,
-              padding: '15px',
-              backgroundColor: '#000',
-              color: '#fff',
-              fontSize: '1rem',
-              fontWeight: 800,
-              border: '2px solid #000',
-              cursor: 'pointer',
-              transition: 'transform 0.1s ease, background-color 0.1s ease',
-              textTransform: 'uppercase',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#333'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#000'; e.currentTarget.style.transform = 'translateY(0)'; }}
+            className="shop-more-btn"
           >
             Shop More
           </button>
@@ -95,20 +57,7 @@ function SuccessContent() {
           <button
             type="button"
             onClick={() => router.push('/')}
-            style={{
-              flex: 1,
-              padding: '15px',
-              backgroundColor: '#fff',
-              color: '#000',
-              fontSize: '1rem',
-              fontWeight: 800,
-              border: '2px solid #000',
-              cursor: 'pointer',
-              transition: 'transform 0.1s ease, background-color 0.1s ease',
-              textTransform: 'uppercase',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#f9f9f9'; e.currentTarget.style.transform = 'translateY(-2px)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#fff'; e.currentTarget.style.transform = 'translateY(0)'; }}
+            className="back-home-btn"
           >
             Go Home
           </button>

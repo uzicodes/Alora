@@ -297,21 +297,7 @@ export default function Navbar() {
                 <path d="M16 10a4 4 0 0 1-8 0" />
               </svg>
               {cartCount > 0 && (
-                <span style={{
-                  position: 'absolute',
-                  top: '-12px',
-                  right: '-9px',
-                  backgroundColor: '#24aa41ff',
-                  color: '#fff',
-                  fontSize: '10px',
-                  fontWeight: 'bold',
-                  width: '16px',
-                  height: '16px',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center'
-                }}>
+                <span className="cart-badge-count">
                   {cartCount}
                 </span>
               )}
@@ -354,25 +340,7 @@ export default function Navbar() {
             </button>
 
             {searchQuery.trim().length > 0 && (
-              <div
-                className="search-results"
-                style={{
-                  position: 'absolute',
-                  top: '100%',
-                  left: 0,
-                  right: 0,
-                  backgroundColor: '#000000',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
-                  borderTop: 'none',
-                  maxHeight: '300px',
-                  overflowY: 'auto',
-                  marginTop: '10px',
-                  zIndex: 10,
-                  display: 'flex',
-                  flexDirection: 'column',
-                  padding: '10px 0'
-                }}
-              >
+              <div className="search-results navbar-search-results">
                 {BRANDS.reduce<React.ReactNode[]>((acc, brand) => {
                   if (brand.toLowerCase().includes(searchQuery.toLowerCase())) {
                     acc.push(
@@ -457,19 +425,7 @@ export default function Navbar() {
         </a>
 
         {mobileBrandsOpen && (
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '16px',
-            width: '100%',
-            maxWidth: '300px',
-            maxHeight: '35vh',
-            overflowY: 'auto',
-            padding: '15px 10px',
-            borderTop: '1px solid rgba(255,255,255,0.1)',
-            borderBottom: '1px solid rgba(255,255,255,0.1)',
-            scrollbarWidth: 'thin'
-          }}>
+          <div className="navbar-mobile-brands">
             {BRANDS.map((brand) => (
               <Link
                 key={brand}

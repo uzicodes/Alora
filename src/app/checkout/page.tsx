@@ -174,21 +174,8 @@ export default function CheckoutPage() {
         <button
           type="button"
           onClick={() => router.back()}
-          className="back-btn"
+          className="back-btn checkout-back-btn"
           aria-label="Go back"
-          style={{
-            background: 'none',
-            border: '2px solid #000',
-            padding: '5px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '2px 2px 0px #000',
-            transition: '0.1s'
-          }}
-          onMouseDown={(e) => { e.currentTarget.style.transform = 'translate(1px, 1px)'; e.currentTarget.style.boxShadow = '1px 1px 0px #000'; }}
-          onMouseUp={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '2px 2px 0px #000'; }}
         >
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="15 18 9 12 15 6"></polyline>
@@ -247,19 +234,19 @@ export default function CheckoutPage() {
             <h2 className="checkout-section-title" style={{ marginTop: '30px' }}>Payment Method</h2>
             <div className="form-row">
               <div className="form-group" style={{ flex: 1 }}>
-                <label htmlFor="cod" style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '15px', border: '2px solid #000', backgroundColor: paymentMethod === 'cod' ? '#dcfce7' : '#f9f9f9', fontWeight: 'bold', cursor: 'pointer', height: '100%', fontSize: '12px' }}>
+                <label htmlFor="cod" className={`checkout-payment-label ${paymentMethod === 'cod' ? 'checkout-payment-label-active' : 'checkout-payment-label-inactive'}`}>
                   <input type="radio" name="payment" value="cod" id="cod" checked={paymentMethod === 'cod'} onChange={handlePaymentChange} style={{ accentColor: '#000', width: '18px', height: '18px' }} />
                   Cash on Delivery (COD)
                 </label>
               </div>
               <div className="form-group" style={{ flex: 1 }}>
-                <label htmlFor="card" style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '15px', border: '2px solid #000', backgroundColor: paymentMethod === 'card' ? '#dcfce7' : '#f9f9f9', fontWeight: 'bold', cursor: 'pointer', height: '100%', fontSize: '12px' }}>
+                <label htmlFor="card" className={`checkout-payment-label ${paymentMethod === 'card' ? 'checkout-payment-label-active' : 'checkout-payment-label-inactive'}`}>
                   <input type="radio" name="payment" value="card" id="card" checked={paymentMethod === 'card'} onChange={handlePaymentChange} style={{ accentColor: '#000', width: '18px', height: '18px' }} />
                   Credit / Debit Card
                 </label>
               </div>
               <div className="form-group" style={{ flex: 1 }}>
-                <label htmlFor="mobile" style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '15px', border: '2px solid #000', backgroundColor: paymentMethod === 'mobile' ? '#dcfce7' : '#f9f9f9', fontWeight: 'bold', cursor: 'pointer', height: '100%', fontSize: '12px' }}>
+                <label htmlFor="mobile" className={`checkout-payment-label ${paymentMethod === 'mobile' ? 'checkout-payment-label-active' : 'checkout-payment-label-inactive'}`}>
                   <input type="radio" name="payment" value="mobile" id="mobile" checked={paymentMethod === 'mobile'} onChange={handlePaymentChange} style={{ accentColor: '#000', width: '18px', height: '18px' }} />
                   Mobile Banking
                 </label>
