@@ -321,57 +321,73 @@ export default function Navbar() {
         </div>
 
         {/* Search Bar Popup */}
-        <div className={`search-popup ${searchOpen ? "open" : ""}`} id="search-popup">
-          <div className="search-container">
-            <input
-              type="text"
-              aria-label="Search"
-              placeholder="Search for fragrances, brands..."
-              autoFocus={searchOpen}
-              className="search-input"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button type="button" className="search-close" onClick={() => { setSearchOpen(false); setSearchQuery(''); }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
+        <NavbarSearchPopup
+          searchOpen={searchOpen}
+          setSearchOpen={setSearchOpen}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          productResults={productResults}
+          handleBrandClick={handleBrandClick}
+          handleProductClick={handleProductClick}
+        />
+      </nav>
 
-            {searchQuery.trim().length > 0 && (
-              <div className="search-results navbar-search-results">
-                {BRANDS.reduce<React.ReactNode[]>((acc, brand) => {
-                  if (brand.toLowerCase().includes(searchQuery.toLowerCase())) {
-                    acc.push(
-                      <Link
-                        key={brand}
-                        href={`/shop#brand-${brand.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`}
-                        style={{
-                          padding: '12px 20px',
-                          color: 'rgba(255, 255, 255, 0.8)',
-                          textDecoration: 'none',
-                          fontFamily: 'var(--font-body)',
-                          fontSize: '14px',
-                          display: 'block',
-                          transition: 'color 0.3s'
-                        }}
-                        onMouseEnter={(e) => e.currentTarget.style.color = '#C28D10'}
-                        onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)'}
-                        onClick={(e) => handleBrandClick(e, brand)}
-                      >
-                        <span>{brand}</span>
-                        <span style={{ fontSize: '10px', marginLeft: '10px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Brand</span>
-                      </Link>
-                    );
-                  }
-                  return acc;
-                }, [])}
+      {/* Mobile Menu Overlay */}
+      <NavbarMobileMenu
+        mobileOpen={mobileOpen}
+        setMobileOpen={setMobileOpen}
+        mobileBrandsOpen={mobileBrandsOpen}
+        setMobileBrandsOpen={setMobileBrandsOpen}
+        handleBrandClick={handleBrandClick}
+      />
+    </>
+  );
+}
 
-                {productResults.map(product => (
+function NavbarSearchPopup({
+  searchOpen,
+  setSearchOpen,
+  searchQuery,
+  setSearchQuery,
+  productResults,
+  handleBrandClick,
+  handleProductClick,
+}: {
+  searchOpen: boolean;
+  setSearchOpen: (o: boolean) => void;
+  searchQuery: string;
+  setSearchQuery: (q: string) => void;
+  productResults: any[];
+  handleBrandClick: (e: React.MouseEvent<HTMLAnchorElement>, brand: string) => void;
+  handleProductClick: (e: React.MouseEvent<HTMLAnchorElement>, id: string) => void;
+}) {
+  return (
+    <div className={`search-popup ${searchOpen ? "open" : ""}`} id="search-popup">
+      <div className="search-container">
+        <input
+          type="text"
+          aria-label="Search"
+          placeholder="Search for fragrances, brands..."
+          autoFocus={searchOpen}
+          className="search-input"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <button type="button" className="search-close" onClick={() => { setSearchOpen(false); setSearchQuery(''); }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+
+        {searchQuery.trim().length > 0 && (
+          <div className="search-results navbar-search-results">
+            {BRANDS.reduce<React.ReactNode[]>((acc, brand) => {
+              if (brand.toLowerCase().includes(searchQuery.toLowerCase())) {
+                acc.push(
                   <Link
-                    key={product.id}
-                    href={`/shop#product-${product.id}`}
+                    key={brand}
+                    href={`/shop#brand-${brand.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`}
                     style={{
                       padding: '12px 20px',
                       color: 'rgba(255, 255, 255, 0.8)',
@@ -383,81 +399,119 @@ export default function Navbar() {
                     }}
                     onMouseEnter={(e) => e.currentTarget.style.color = '#C28D10'}
                     onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)'}
-                    onClick={(e) => handleProductClick(e, product.id)}
+                    onClick={(e) => handleBrandClick(e, brand)}
                   >
-                    <span>{product.name}</span>
-                    <span style={{ fontSize: '10px', marginLeft: '10px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Product</span>
+                    <span>{brand}</span>
+                    <span style={{ fontSize: '10px', marginLeft: '10px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Brand</span>
                   </Link>
-                ))}
+                );
+              }
+              return acc;
+            }, [])}
 
-                {BRANDS.filter(brand => brand.toLowerCase().includes(searchQuery.toLowerCase())).length === 0 && productResults.length === 0 && (
-                  <div style={{ padding: '12px 20px', color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-body)', fontSize: '14px' }}>
-                    No results found for "{searchQuery}"
-                  </div>
-                )}
+            {productResults.map(product => (
+              <Link
+                key={product.id}
+                href={`/shop#product-${product.id}`}
+                style={{
+                  padding: '12px 20px',
+                  color: 'rgba(255, 255, 255, 0.8)',
+                  textDecoration: 'none',
+                  fontFamily: 'var(--font-body)',
+                  fontSize: '14px',
+                  display: 'block',
+                  transition: 'color 0.3s'
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.color = '#C28D10'}
+                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255, 255, 255, 0.8)'}
+                onClick={(e) => handleProductClick(e, product.id)}
+              >
+                <span>{product.name}</span>
+                <span style={{ fontSize: '10px', marginLeft: '10px', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>Product</span>
+              </Link>
+            ))}
+
+            {BRANDS.filter(brand => brand.toLowerCase().includes(searchQuery.toLowerCase())).length === 0 && productResults.length === 0 && (
+              <div style={{ padding: '12px 20px', color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-body)', fontSize: '14px' }}>
+                No results found for "{searchQuery}"
               </div>
             )}
           </div>
-        </div>
-      </nav>
-
-      {/* Mobile Menu Overlay */}
-      <div className={`mobile-menu ${mobileOpen ? "active" : ""}`} id="mobile-menu">
-        <Link href="/shop" onClick={() => setMobileOpen(false)}>Shop</Link>
-        <Link href="/men" onClick={() => setMobileOpen(false)}>Men</Link>
-        <Link href="/woman" onClick={() => setMobileOpen(false)}>Women</Link>
-        <Link href="/unisex" onClick={() => setMobileOpen(false)}>Unisex</Link>
-        <a
-          href="#"
-          onClick={(e) => {
-            e.preventDefault();
-            setMobileBrandsOpen(!mobileBrandsOpen);
-          }}
-          style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
-        >
-          Brands
-          <svg
-            width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
-            style={{ transform: mobileBrandsOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s' }}
-          >
-            <path d="M6 9l6 6 6-6" />
-          </svg>
-        </a>
-
-        {mobileBrandsOpen && (
-          <div className="navbar-mobile-brands">
-            {BRANDS.map((brand) => (
-              <Link
-                key={brand}
-                href={`/shop#brand-${brand.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`}
-                onClick={(e) => handleBrandClick(e, brand)}
-                style={{
-                  fontFamily: 'var(--font-body)',
-                  fontSize: '14px',
-                  letterSpacing: '1px',
-                  textAlign: 'center',
-                  textTransform: 'none',
-                }}
-              >
-                {brand}
-              </Link>
-            ))}
-          </div>
         )}
-
-        <ClerkLoading>
-          <Link href="/login" onClick={() => setMobileOpen(false)} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>
-            LOGIN
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M7 17L17 7" />
-              <path d="M7 7h10v10" />
-            </svg>
-          </Link>
-        </ClerkLoading>
-        <ClerkLoaded>
-          <MobileLoginLink onClick={() => setMobileOpen(false)} />
-        </ClerkLoaded>
       </div>
-    </>
+    </div>
+  );
+}
+
+function NavbarMobileMenu({
+  mobileOpen,
+  setMobileOpen,
+  mobileBrandsOpen,
+  setMobileBrandsOpen,
+  handleBrandClick,
+}: {
+  mobileOpen: boolean;
+  setMobileOpen: (o: boolean) => void;
+  mobileBrandsOpen: boolean;
+  setMobileBrandsOpen: (o: boolean) => void;
+  handleBrandClick: (e: React.MouseEvent<HTMLAnchorElement>, brand: string) => void;
+}) {
+  return (
+    <div className={`mobile-menu ${mobileOpen ? "active" : ""}`} id="mobile-menu">
+      <Link href="/shop" onClick={() => setMobileOpen(false)}>Shop</Link>
+      <Link href="/men" onClick={() => setMobileOpen(false)}>Men</Link>
+      <Link href="/woman" onClick={() => setMobileOpen(false)}>Women</Link>
+      <Link href="/unisex" onClick={() => setMobileOpen(false)}>Unisex</Link>
+      <a
+        href="#"
+        onClick={(e) => {
+          e.preventDefault();
+          setMobileBrandsOpen(!mobileBrandsOpen);
+        }}
+        style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+      >
+        Brands
+        <svg
+          width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+          style={{ transform: mobileBrandsOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.3s' }}
+        >
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </a>
+
+      {mobileBrandsOpen && (
+        <div className="navbar-mobile-brands">
+          {BRANDS.map((brand) => (
+            <Link
+              key={brand}
+              href={`/shop#brand-${brand.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`}
+              onClick={(e) => handleBrandClick(e, brand)}
+              style={{
+                fontFamily: 'var(--font-body)',
+                fontSize: '14px',
+                letterSpacing: '1px',
+                textAlign: 'center',
+                textTransform: 'none',
+              }}
+            >
+              {brand}
+            </Link>
+          ))}
+        </div>
+      )}
+
+      <ClerkLoading>
+        <Link href="/login" onClick={() => setMobileOpen(false)} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', justifyContent: 'center' }}>
+          LOGIN
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M7 17L17 7" />
+            <path d="M7 7h10v10" />
+          </svg>
+        </Link>
+      </ClerkLoading>
+      <ClerkLoaded>
+        <MobileLoginLink onClick={() => setMobileOpen(false)} />
+      </ClerkLoaded>
+    </div>
   );
 }
