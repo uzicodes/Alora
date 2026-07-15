@@ -1109,11 +1109,15 @@
 
 /* ==================== SALE SECTION ==================== */
 .sale-section {
-  padding: 100px 60px;
+  padding: 80px 0;
   background: #C2B280;
   position: relative;
   overflow: hidden;
   border-top: 1px solid rgba(26, 20, 16, 0.1);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .sale-bg-text {
@@ -1139,6 +1143,30 @@
 
 .sale-header .section-tag-row {
   justify-content: center;
+}
+
+.sale-track-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: visible;
+  z-index: 2;
+}
+
+.sale-track {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 32px;
+  width: max-content;
+  position: relative;
+  z-index: 2;
+  will-change: transform;
+}
+
+.sale-track .sale-card {
+  width: clamp(380px, 45vw, 540px);
+  flex-shrink: 0;
+  min-height: 240px;
 }
 
 .sale-grid {
@@ -1705,7 +1733,12 @@
   }
 
   .sale-section {
-    padding: 60px 32px;
+    padding: 60px 0;
+    min-height: 100vh;
+  }
+
+  .sale-track .sale-card {
+    width: clamp(280px, 85vw, 360px);
   }
 
   .sale-grid {
