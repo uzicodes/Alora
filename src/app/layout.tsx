@@ -6,6 +6,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { CartProvider } from "./components/CartContext";
+import SmoothScroll from "./components/SmoothScroll";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 
@@ -83,11 +84,13 @@ export default function RootLayout({
           <ScrollToTop />
           <Toaster position="bottom-right" richColors />
           <CartProvider>
-            <Navbar />
-            <main>
-              {children}
-            </main>
-            <Footer />
+            <SmoothScroll>
+              <Navbar />
+              <main>
+                {children}
+              </main>
+              <Footer />
+            </SmoothScroll>
           </CartProvider>
         </body>
       </html>

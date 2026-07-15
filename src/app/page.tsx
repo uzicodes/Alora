@@ -4,7 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useRef } from "react";
 import dynamic from "next/dynamic";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import "./page.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 
 
@@ -26,10 +31,201 @@ const pillars: Pillar[] = [
 const PerfumeCardImage = dynamic(() => import("./components/PerfumeCardImage"));
 
 export default function Home() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const marqueeRef = useRef<HTMLDivElement>(null);
 
+  useGSAP(() => {
+    // 1. Hero Section Entrance
+    gsap.fromTo(
+      ".hero-bg-heading",
+      { opacity: 0 },
+      { opacity: 1, duration: 1.4, ease: "power2.out" }
+    );
+    gsap.fromTo(
+      ".hero-image-wrap",
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, duration: 1.4, ease: "power3.out", force3D: true, delay: 0.15 }
+    );
+
+    // 2. The Alora Promise Pillars Section
+    gsap.fromTo(
+      ".pillars-header",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        force3D: true,
+        scrollTrigger: {
+          trigger: ".pillars-section",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+    gsap.fromTo(
+      ".pillar-card",
+      { opacity: 0, y: 45 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        stagger: 0.15,
+        ease: "power3.out",
+        force3D: true,
+        scrollTrigger: {
+          trigger: ".pillars-grid",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    // 3. Campaign Video Section
+    gsap.fromTo(
+      ".cv-video-frame",
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.1,
+        ease: "power3.out",
+        force3D: true,
+        scrollTrigger: {
+          trigger: ".campaign-video-section",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    // 4. Exclusive Deals / Sale Section
+    gsap.fromTo(
+      ".sale-header",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        force3D: true,
+        scrollTrigger: {
+          trigger: ".sale-section",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+    gsap.fromTo(
+      ".sale-card",
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        stagger: 0.15,
+        ease: "power3.out",
+        force3D: true,
+        scrollTrigger: {
+          trigger: ".sale-grid",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    // 5. Find Your Perfume / Perfume Grid Section
+    gsap.fromTo(
+      ".perfume-finder-header",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        force3D: true,
+        scrollTrigger: {
+          trigger: ".perfume-finder-section",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+    gsap.fromTo(
+      ".perfume-card",
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.1,
+        ease: "power3.out",
+        force3D: true,
+        scrollTrigger: {
+          trigger: ".perfume-grid",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    // 6. Our Story / About Section
+    gsap.fromTo(
+      ".about-header",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        force3D: true,
+        scrollTrigger: {
+          trigger: ".about-section",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+    gsap.fromTo(
+      ".about-value-card",
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.9,
+        stagger: 0.15,
+        ease: "power3.out",
+        force3D: true,
+        scrollTrigger: {
+          trigger: ".about-values-grid",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+
+    // 7. Editorial Banner
+    gsap.fromTo(
+      ".editorial-content",
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1.1,
+        ease: "power3.out",
+        force3D: true,
+        scrollTrigger: {
+          trigger: ".editorial-banner",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+  }, { scope: containerRef });
+
   return (
-    <>
+    <div ref={containerRef}>
       {/* ==================== HERO ==================== */}
       <section className="alora-hero">
         {/* Background elements */}
@@ -67,7 +263,7 @@ export default function Home() {
         </div>
 
         {/* Hero Image - Center */}
-        <div className="hero-image-wrap fade-in-css">
+        <div className="hero-image-wrap">
           <div className="hero-image-inner">
             <Image
               src="/hero_image.webp"
@@ -108,7 +304,7 @@ export default function Home() {
         </div>
         <div className="pillars-grid">
           {pillars.map((p) => (
-            <div key={p.num} className="pillar-card">
+            <div key={p.num} className="pillar-card will-change-transform">
               <h3 className="pillar-label">{p.label}</h3>
               <p className="pillar-desc">{p.desc}</p>
             </div>
@@ -164,7 +360,7 @@ export default function Home() {
             { name: "Lattaffa Year-Combo", discount: 25, img: "/homepage_images/deals/lattaffa.webp" },
             { name: "Nishane Summer Picks", discount: 20, img: "/homepage_images/deals/nishane.webp" },
           ].map((deal) => (
-            <div key={deal.name} className="sale-card">
+            <div key={deal.name} className="sale-card will-change-transform">
               <div className="sale-card-shimmer"></div>
               <div className="sale-card-img">
                 <Image
@@ -213,7 +409,7 @@ export default function Home() {
             { name: "TROPICAL BLISS", desc: "Vibrant, sun-soaked getaway in a bottle that instantly transports your senses straight to a relaxing island vacation.", imgs: ["/homepage_images/picks/8/1.png", "/homepage_images/picks/8/2.png", "/homepage_images/picks/8/3.png", "/homepage_images/picks/8/4.png"] },
             { name: "FEELS A MILLIONAIR", desc: "Ultra-luxurious, bold statement fragrance that exudes pure wealth, power, and undeniable success everywhere you walk.", imgs: ["/homepage_images/picks/9/1.png", "/homepage_images/picks/9/2.png", "/homepage_images/picks/9/3.png", "/homepage_images/picks/9/4.png"] },
           ].map((perfume) => (
-            <Link href="/shop" key={perfume.name} className="perfume-card">
+            <Link href="/shop" key={perfume.name} className="perfume-card will-change-transform">
               <PerfumeCardImage imgs={perfume.imgs} alt={perfume.name} />
               <div className="perfume-card-body">
                 <h3 className="perfume-card-name">{perfume.name}</h3>
@@ -237,21 +433,21 @@ export default function Home() {
           <h2 className="section-h2">our story</h2>
         </div>
         <div className="about-values-grid">
-          <div className="about-value-card">
+          <div className="about-value-card will-change-transform">
             <span className="about-value-icon">✦</span>
             <h3 className="about-value-title">Authenticity</h3>
             <p className="about-value-desc">
               Every fragrance we offer is 100% authentic, sourced directly from the world&apos;s most prestigious perfume houses.
             </p>
           </div>
-          <div className="about-value-card">
+          <div className="about-value-card will-change-transform">
             <span className="about-value-icon">◆</span>
             <h3 className="about-value-title">Craftsmanship</h3>
             <p className="about-value-desc">
               We celebrate the art of perfumery — from rare ingredients harvested at peak potency to master blenders who perfect each composition.
             </p>
           </div>
-          <div className="about-value-card">
+          <div className="about-value-card will-change-transform">
             <span className="about-value-icon">★</span>
             <h3 className="about-value-title">Experience</h3>
             <p className="about-value-desc">
@@ -280,6 +476,6 @@ export default function Home() {
           </p>
         </div>
       </div>
-    </>
+    </div>
   );
 }
