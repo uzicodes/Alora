@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, use, useState, useEffect, useCallback, useRef, useMemo, type ReactNode } from "react";
+import { createContext, use, useState, useEffect, useRef, type ReactNode } from "react";
 import { useAuth, ClerkLoaded } from "@clerk/nextjs";
 
 export type CartItem = {
@@ -35,7 +35,7 @@ function getStoredCart(): CartItem[] {
 
     const parsed = JSON.parse(stored);
 
-    // Check if it's the new format with timestamp
+    // Check if it's the format with timestamp
     if (parsed && typeof parsed === "object" && "timestamp" in parsed && "items" in parsed) {
       const now = Date.now();
       const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
@@ -47,7 +47,7 @@ function getStoredCart(): CartItem[] {
       return parsed.items || [];
     }
 
-    // Fallback for old format
+    // Fallback for array format
     if (Array.isArray(parsed)) {
       return parsed;
     }
@@ -59,29 +59,39 @@ function getStoredCart(): CartItem[] {
 }
 
 function CartAuthSync({ clearCart }: { clearCart: () => void }) {
-  const authState = useAuth();
-  const prevIsSignedIn = useRef(authState.isSignedIn);
+  const { isSignedIn, isLoaded } = useAuth();
+  const prevSignedIn = useRef<boolean | undefined>(undefined);
 
   useEffect(() => {
-    const currentIsSignedIn = authState.isSignedIn;
-    if (prevIsSignedIn.current === true && currentIsSignedIn === false) {
+    if (!isLoaded) return;
+    if (prevSignedIn.current !== undefined && prevSignedIn.current !== isSignedIn) {
       clearCart();
     }
-    prevIsSignedIn.current = currentIsSignedIn;
-  }, [authState.isSignedIn, clearCart]);
+    prevSignedIn.current = isSignedIn;
+  }, [isSignedIn, isLoaded, clearCart]);
 
   return null;
 }
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<CartItem[]>(getStoredCart);
 
-  // Hydrate from localStorage on mount
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === CART_STORAGE_KEY) {
+        setCartItems(getStoredCart());
+      }
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
+
   useEffect(() => {
     let mounted = true;
-    Promise.resolve().then(() => {
-      if (mounted) setCartItems(getStoredCart());
-    });
+    const items = getStoredCart();
+    if (mounted && items.length > 0) {
+      setCartItems(items);
+    }
     return () => { mounted = false; };
   }, []);
 
@@ -95,7 +105,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const addToCart = useCallback((item: Omit<CartItem, "quantity">) => {
+  const addToCart = (item: Omit<CartItem, "quantity">) => {
     setCartItems((prev) => {
       const existing = prev.find((i) => i.id === item.id);
       let newItems;
@@ -109,38 +119,35 @@ export function CartProvider({ children }: { children: ReactNode }) {
       persistCart(newItems);
       return newItems;
     });
-  }, []);
+  };
 
-  const removeFromCart = useCallback((id: string) => {
+  const removeFromCart = (id: string) => {
     setCartItems((prev) => {
       const newItems = prev.filter((item) => item.id !== id);
       persistCart(newItems);
       return newItems;
     });
-  }, []);
+  };
 
-  const updateItemQuantity = useCallback((id: string, quantity: number) => {
+  const updateItemQuantity = (id: string, quantity: number) => {
     if (quantity < 1) return;
     setCartItems((prev) => {
       const newItems = prev.map((item) => (item.id === id ? { ...item, quantity } : item));
       persistCart(newItems);
       return newItems;
     });
-  }, []);
+  };
 
-  const clearCart = useCallback(() => {
+  const clearCart = () => {
     setCartItems([]);
     if (typeof window !== "undefined") {
       localStorage.removeItem(CART_STORAGE_KEY);
     }
-  }, []);
+  };
 
-  const cartCount = useMemo(() => cartItems.reduce((sum, item) => sum + item.quantity, 0), [cartItems]);
+  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
-  const value = useMemo(
-    () => ({ cartItems, addToCart, removeFromCart, updateItemQuantity, clearCart, cartCount }),
-    [cartItems, addToCart, removeFromCart, updateItemQuantity, clearCart, cartCount]
-  );
+  const value = { cartItems, addToCart, removeFromCart, updateItemQuantity, clearCart, cartCount };
 
   return (
     <CartContext.Provider value={value}>
