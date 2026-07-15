@@ -366,7 +366,10 @@ function ProductsSection({ products, setProducts }: { products: Product[], setPr
         try {
             const payload = {
                 ...form,
-                imageUrls: form.imageUrls.split(",").map(s => s.trim()).filter(Boolean),
+                imageUrls: form.imageUrls.split(",").flatMap(s => {
+                    const trimmed = s.trim();
+                    return trimmed ? [trimmed] : [];
+                }),
                 ...(selectedId ? { id: selectedId } : {})
             };
 

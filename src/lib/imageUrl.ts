@@ -21,5 +21,8 @@ export function normalizeImageUrl(url: string): string {
 }
 
 export function normalizeImageUrls(urls: string[]): string[] {
-  return urls.map(normalizeImageUrl).filter(Boolean);
+  return urls.flatMap((url) => {
+    const normalized = normalizeImageUrl(url);
+    return normalized ? [normalized] : [];
+  });
 }
