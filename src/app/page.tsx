@@ -353,7 +353,7 @@ export default function Home() {
             <span className="bg-word" style={{ marginRight: 'clamp(-80px, -6vw, -20px)' }}>RADIANT</span>
           </div>
           <div className="bg-line center-text" style={{ transform: 'translateY(clamp(40px, 6vw, 90px))' }}>
-            <span className="bg-word">PERFUMES</span>
+            <span className="bg-word bg-word-perfumes">PERFUMES</span>
           </div>
         </div>
 
