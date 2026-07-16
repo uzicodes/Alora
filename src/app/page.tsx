@@ -395,7 +395,7 @@ export default function Home() {
       <section className="pillars-section">
         <div className="pillars-header">
           <div className="section-tag-row">The Alora Promise</div>
-          <h2 className="section-h2" style={{ whiteSpace: "nowrap" }}>crafted without compromise</h2>
+          <h2 className="section-h2">crafted without compromise</h2>
         </div>
         <div className="pillars-grid">
           {pillars.map((p) => (
@@ -506,8 +506,8 @@ function PerfumeFinderSection() {
   return (
     <section className="perfume-finder-section">
       <div className="perfume-finder-header">
-        <div className="section-tag-row">Collection</div>
-        <h2 className="section-h2" style={{ whiteSpace: "nowrap" }}>find your perfume</h2>
+        <div className="section-tag-row">Collections</div>
+        <h2 className="section-h2">find your perfume</h2>
       </div>
       <div className="perfume-grid">
         {[
