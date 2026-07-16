@@ -35,7 +35,7 @@ export default function Home() {
   const marqueeRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    // 1. Hero Section Entrance
+    // Hero Section 
     gsap.fromTo(
       ".hero-bg-heading",
       { opacity: 0 },
@@ -47,14 +47,15 @@ export default function Home() {
       { opacity: 1, y: 0, duration: 1.4, ease: "power3.out", force3D: true, delay: 0.15 }
     );
 
-    // 2. The Alora Promise Pillars Section
+    // Promise Pillars Section - 3D Perspective Fold & Parallax Wave
     gsap.fromTo(
       ".pillars-header",
-      { opacity: 0, y: 30 },
+      { opacity: 0, y: 35, scale: 0.96 },
       {
         opacity: 1,
         y: 0,
-        duration: 1,
+        scale: 1,
+        duration: 1.2,
         ease: "power3.out",
         force3D: true,
         scrollTrigger: {
@@ -64,25 +65,64 @@ export default function Home() {
         },
       }
     );
+
+    // Set 3D perspective on grid container for realistic depth
+    gsap.set(".pillars-grid", { perspective: 1400 });
+
+    // 3D Perspective Deck Reveal & Cascade Entrance
     gsap.fromTo(
       ".pillar-card",
-      { opacity: 0, y: 45 },
+      {
+        opacity: 0,
+        y: 110,
+        z: -180,
+        rotationX: 32,
+        rotationY: (i) => (i % 2 === 0 ? -12 : 12),
+        scale: 0.88,
+      },
       {
         opacity: 1,
         y: 0,
-        duration: 0.9,
-        stagger: 0.15,
-        ease: "power3.out",
+        z: 0,
+        rotationX: 0,
+        rotationY: 0,
+        scale: 1,
+        duration: 1.25,
+        stagger: 0.16,
+        ease: "power4.out",
         force3D: true,
+        clearProps: "transform", // Clear transforms after entrance so CSS hover states work seamlessly
         scrollTrigger: {
           trigger: ".pillars-grid",
-          start: "top 85%",
+          start: "top 82%",
           toggleActions: "play none none reverse",
         },
       }
     );
 
-    // 3. Campaign Video Section
+    // Continuous Scroll-Scrubbed Parallax Wave (Floating depth while scrolling through section)
+    const pillarInners = gsap.utils.toArray<HTMLElement>(".pillar-card-inner");
+    pillarInners.forEach((inner, i) => {
+      // Odd cards float up slightly, even cards drift down slightly as user scrolls
+      const yOffset = i % 2 === 0 ? -32 : 32;
+      gsap.fromTo(
+        inner,
+        { y: -yOffset * 0.6 },
+        {
+          y: yOffset,
+          ease: "none",
+          force3D: true,
+          scrollTrigger: {
+            trigger: ".pillars-section",
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.2,
+          },
+        }
+      );
+    });
+
+    // Campaign Video Section
     gsap.fromTo(
       ".cv-video-frame",
       { opacity: 0, y: 40 },
@@ -100,7 +140,7 @@ export default function Home() {
       }
     );
 
-    // 4. Exclusive Deals / Sale Section - Horizontal Pinned Scroll
+    // Exclusive Deals / Sale Section - Horizontal Pinned Scroll
     gsap.fromTo(
       ".sale-header",
       { opacity: 0, y: 30 },
@@ -154,7 +194,7 @@ export default function Home() {
       );
     }
 
-    // 5. Find Your Perfume / Perfume Grid Section
+    // Find Your Perfume / Perfume Grid Section
     gsap.fromTo(
       ".perfume-finder-header",
       { opacity: 0, y: 30 },
@@ -189,14 +229,15 @@ export default function Home() {
       }
     );
 
-    // 6. Our Story / About Section
+    // Our Story / About Section 
     gsap.fromTo(
       ".about-header",
-      { opacity: 0, y: 30 },
+      { opacity: 0, y: 35, scale: 0.96 },
       {
         opacity: 1,
         y: 0,
-        duration: 1,
+        scale: 1,
+        duration: 1.2,
         ease: "power3.out",
         force3D: true,
         scrollTrigger: {
@@ -206,23 +247,58 @@ export default function Home() {
         },
       }
     );
-    gsap.fromTo(
-      ".about-value-card",
-      { opacity: 0, y: 40 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.9,
-        stagger: 0.15,
-        ease: "power3.out",
-        force3D: true,
-        scrollTrigger: {
-          trigger: ".about-values-grid",
-          start: "top 85%",
-          toggleActions: "play none none reverse",
-        },
-      }
-    );
+
+    const storyCards = gsap.utils.toArray<HTMLElement>(".about-value-card");
+    if (storyCards.length === 3) {
+      // Left card sweeps in from left angle
+      gsap.fromTo(storyCards[0],
+        { opacity: 0, x: -130, y: 55, rotationZ: -9, scale: 0.86 },
+        {
+          opacity: 1, x: 0, y: 0, rotationZ: 0, scale: 1,
+          duration: 1.35, ease: "power4.out", force3D: true, clearProps: "transform",
+          scrollTrigger: { trigger: ".about-values-grid", start: "top 82%", toggleActions: "play none none reverse" }
+        }
+      );
+      // Center card descends from elevated gallery spotlight
+      gsap.fromTo(storyCards[1],
+        { opacity: 0, y: -80, scale: 1.15 },
+        {
+          opacity: 1, y: 0, scale: 1,
+          duration: 1.35, delay: 0.1, ease: "power4.out", force3D: true, clearProps: "transform",
+          scrollTrigger: { trigger: ".about-values-grid", start: "top 82%", toggleActions: "play none none reverse" }
+        }
+      );
+      // Right card sweeps in from right angle
+      gsap.fromTo(storyCards[2],
+        { opacity: 0, x: 130, y: 55, rotationZ: 9, scale: 0.86 },
+        {
+          opacity: 1, x: 0, y: 0, rotationZ: 0, scale: 1,
+          duration: 1.35, delay: 0.05, ease: "power4.out", force3D: true, clearProps: "transform",
+          scrollTrigger: { trigger: ".about-values-grid", start: "top 82%", toggleActions: "play none none reverse" }
+        }
+      );
+    } else {
+      // Fallback if card count changes in future
+      gsap.fromTo(".about-value-card",
+        { opacity: 0, y: 60, scale: 0.9 },
+        { opacity: 1, y: 0, scale: 1, duration: 1.2, stagger: 0.15, ease: "power4.out", clearProps: "transform", scrollTrigger: { trigger: ".about-values-grid", start: "top 82%", toggleActions: "play none none reverse" } }
+      );
+    }
+
+    // Continuous Scrubbed Horizon Parallax on inner wrappers
+    const storyInners = gsap.utils.toArray<HTMLElement>(".about-value-inner");
+    storyInners.forEach((inner, i) => {
+      const yFloat = i === 1 ? 30 : -30;
+      gsap.fromTo(inner,
+        { y: -yFloat * 0.6 },
+        {
+          y: yFloat,
+          ease: "none",
+          force3D: true,
+          scrollTrigger: { trigger: ".about-section", start: "top bottom", end: "bottom top", scrub: 1.2 }
+        }
+      );
+    });
 
     // 7. Editorial Banner
     gsap.fromTo(
@@ -323,9 +399,11 @@ export default function Home() {
         </div>
         <div className="pillars-grid">
           {pillars.map((p) => (
-            <div key={p.num} className="pillar-card will-change-transform">
-              <h3 className="pillar-label">{p.label}</h3>
-              <p className="pillar-desc">{p.desc}</p>
+            <div key={p.num} className="pillar-card will-change-transform" style={{ transformStyle: "preserve-3d" }}>
+              <div className="pillar-card-inner" style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <h3 className="pillar-label">{p.label}</h3>
+                <p className="pillar-desc">{p.desc}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -471,25 +549,31 @@ function AboutSection() {
       </div>
       <div className="about-values-grid">
         <div className="about-value-card will-change-transform">
-          <span className="about-value-icon">✦</span>
-          <h3 className="about-value-title">Authenticity</h3>
-          <p className="about-value-desc">
-            Every fragrance we offer is 100% authentic, sourced directly from the world&apos;s most prestigious perfume houses.
-          </p>
+          <div className="about-value-inner" style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <span className="about-value-icon">✦</span>
+            <h3 className="about-value-title">Authenticity</h3>
+            <p className="about-value-desc">
+              Every fragrance we offer is 100% authentic, sourced directly from the world&apos;s most prestigious perfume houses.
+            </p>
+          </div>
         </div>
         <div className="about-value-card will-change-transform">
-          <span className="about-value-icon">◆</span>
-          <h3 className="about-value-title">Craftsmanship</h3>
-          <p className="about-value-desc">
-            We celebrate the art of perfumery — from rare ingredients harvested at peak potency to master blenders who perfect each composition.
-          </p>
+          <div className="about-value-inner" style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <span className="about-value-icon">◆</span>
+            <h3 className="about-value-title">Craftsmanship</h3>
+            <p className="about-value-desc">
+              We celebrate the art of perfumery — from rare ingredients harvested at peak potency to master blenders who perfect each composition.
+            </p>
+          </div>
         </div>
         <div className="about-value-card will-change-transform">
-          <span className="about-value-icon">★</span>
-          <h3 className="about-value-title">Experience</h3>
-          <p className="about-value-desc">
-            Each Alora scent is designed to evolve with you, revealing new layers and leaving an unforgettable impression.
-          </p>
+          <div className="about-value-inner" style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <span className="about-value-icon">★</span>
+            <h3 className="about-value-title">Experience</h3>
+            <p className="about-value-desc">
+              Each Alora scent is designed to evolve with you, revealing new layers and leaving an unforgettable impression.
+            </p>
+          </div>
         </div>
       </div>
     </section>

@@ -873,55 +873,44 @@
 .pillar-card {
   position: relative;
   background: #c8be8e;
-  padding: 36px 24px;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 1px solid transparent;
+  padding: 44px 28px;
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   cursor: pointer;
   overflow: hidden;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
+/* Top border glow line that expands symmetrically from center */
 .pillar-card::before {
   content: '';
   position: absolute;
   top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: #1a1410;
-  transform: scaleX(0);
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  left: 50%;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #dfd5a8, #C2B280, transparent);
+  transform: translateX(-50%);
+  transition: width 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .pillar-card:hover::before {
-  transform: scaleX(1);
-  background: #C2B280;
+  width: 100%;
 }
 
 .pillar-card:hover {
-  background: #1a1410;
-  transform: translateY(-8px) scale(1.04);
-  box-shadow: 0 24px 60px rgba(26, 20, 16, 0.35), 0 8px 24px rgba(26, 20, 16, 0.2);
+  background: linear-gradient(145deg, #1f1813 0%, #2e231b 100%);
+  border-color: rgba(223, 213, 168, 0.45);
+  transform: translateY(-12px) scale(1.035);
+  box-shadow: 
+    0 28px 60px rgba(26, 20, 16, 0.45),
+    0 0 35px rgba(194, 178, 128, 0.22);
   z-index: 10;
-  border-radius: 6px;
-}
-
-.pillar-num {
-  font-family: var(--font-david-libre), serif;
-  font-size: 14px;
-  font-weight: 400;
-  color: #6b5a3e;
-  letter-spacing: 0.15em;
-  margin-bottom: 20px;
-  transition: color 0.4s, transform 0.4s;
-}
-
-.pillar-card:hover .pillar-num {
-  color: #C2B280;
-  transform: scale(1.15);
+  border-radius: 8px;
 }
 
 .pillar-label {
@@ -929,26 +918,28 @@
   font-size: 20px;
   font-weight: 400;
   color: #1a1410;
-  line-height: 1.2;
-  margin-bottom: 12px;
-  transition: color 0.4s;
+  line-height: 1.25;
+  margin-bottom: 14px;
+  transition: color 0.4s ease, transform 0.4s ease;
 }
 
 .pillar-card:hover .pillar-label {
-  color: #faf8f5;
+  color: #dfd5a8;
+  transform: translateY(-2px);
 }
 
 .pillar-desc {
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 300;
   line-height: 1.8;
-  color: rgba(26, 20, 16, 0.75);
+  color: rgba(26, 20, 16, 0.78);
   letter-spacing: 0.02em;
-  transition: color 0.4s;
+  transition: color 0.4s ease, transform 0.4s ease;
 }
 
 .pillar-card:hover .pillar-desc {
-  color: rgba(250, 248, 245, 0.85);
+  color: rgba(250, 248, 245, 0.92);
+  transform: translateY(-1px);
 }
 
 /* ==================== CAMPAIGN VIDEO ==================== */
@@ -1517,27 +1508,47 @@
 
 .about-value-card {
   text-align: center;
-  padding: 36px 24px;
-  border: 1px solid rgba(26, 20, 16, 0.1);
-  transition: border-color 0.3s ease, transform 0.3s ease;
+  padding: 44px 28px;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(194, 178, 128, 0.25);
+  border-radius: 6px;
+  box-shadow: 0 12px 32px rgba(26, 20, 16, 0.05);
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
 }
 
 .about-value-card:hover {
-  border-color: rgba(26, 20, 16, 0.25);
-  transform: translateY(-4px);
+  background: linear-gradient(145deg, #1c1511 0%, #2c211a 100%);
+  border-color: rgba(223, 213, 168, 0.55);
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 
+    0 28px 60px rgba(26, 20, 16, 0.45),
+    0 0 40px rgba(194, 178, 128, 0.22);
+  z-index: 10;
 }
 
 .about-value-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 54px;
+  height: 54px;
   border-radius: 50%;
-  background: rgba(26, 20, 16, 0.85);
+  background: rgba(26, 20, 16, 0.88);
   color: #C2B280;
-  font-size: 18px;
-  margin-bottom: 20px;
+  font-size: 20px;
+  margin-bottom: 22px;
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.about-value-card:hover .about-value-icon {
+  background: linear-gradient(135deg, #dfd5a8 0%, #C2B280 100%);
+  color: #1a1410;
+  transform: scale(1.16) rotate(180deg);
+  box-shadow: 0 0 25px rgba(223, 213, 168, 0.6);
 }
 
 .about-value-title {
@@ -1547,16 +1558,28 @@
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: #1a1410;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
+  transition: color 0.4s ease, transform 0.4s ease;
+}
+
+.about-value-card:hover .about-value-title {
+  color: #dfd5a8;
+  transform: translateY(-2px);
 }
 
 .about-value-desc {
   font-family: 'Jost', sans-serif;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 300;
-  line-height: 1.8;
-  color: rgba(26, 20, 16, 0.5);
+  line-height: 1.85;
+  color: rgba(26, 20, 16, 0.7);
   letter-spacing: 0.03em;
+  transition: color 0.4s ease, transform 0.4s ease;
+}
+
+.about-value-card:hover .about-value-desc {
+  color: rgba(250, 248, 245, 0.92);
+  transform: translateY(-1px);
 }
 
 /* CTA link */
