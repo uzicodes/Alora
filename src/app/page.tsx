@@ -47,81 +47,6 @@ export default function Home() {
       { opacity: 1, y: 0, duration: 1.4, ease: "power3.out", force3D: true, delay: 0.15 }
     );
 
-    // Promise Pillars Section - 3D Perspective Fold & Parallax Wave
-    gsap.fromTo(
-      ".pillars-header",
-      { opacity: 0, y: 35, scale: 0.96 },
-      {
-        opacity: 1,
-        y: 0,
-        scale: 1,
-        duration: 1.2,
-        ease: "power3.out",
-        force3D: true,
-        scrollTrigger: {
-          trigger: ".pillars-section",
-          start: "top 85%",
-          toggleActions: "play none none reverse",
-        },
-      }
-    );
-
-    // Set 3D perspective on grid container for realistic depth
-    gsap.set(".pillars-grid", { perspective: 1400 });
-
-    // 3D Perspective Deck Reveal & Cascade Entrance
-    gsap.fromTo(
-      ".pillar-card",
-      {
-        opacity: 0,
-        y: 110,
-        z: -180,
-        rotationX: 32,
-        rotationY: (i) => (i % 2 === 0 ? -12 : 12),
-        scale: 0.88,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        z: 0,
-        rotationX: 0,
-        rotationY: 0,
-        scale: 1,
-        duration: 1.25,
-        stagger: 0.16,
-        ease: "power4.out",
-        force3D: true,
-        clearProps: "transform", // Clear transforms after entrance so CSS hover states work seamlessly
-        scrollTrigger: {
-          trigger: ".pillars-grid",
-          start: "top 82%",
-          toggleActions: "play none none reverse",
-        },
-      }
-    );
-
-    // Continuous Scroll-Scrubbed Parallax Wave (Floating depth while scrolling through section)
-    const pillarInners = gsap.utils.toArray<HTMLElement>(".pillar-card-inner");
-    pillarInners.forEach((inner, i) => {
-      // Odd cards float up slightly, even cards drift down slightly as user scrolls
-      const yOffset = i % 2 === 0 ? -32 : 32;
-      gsap.fromTo(
-        inner,
-        { y: -yOffset * 0.6 },
-        {
-          y: yOffset,
-          ease: "none",
-          force3D: true,
-          scrollTrigger: {
-            trigger: ".pillars-section",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.2,
-          },
-        }
-      );
-    });
-
     // Campaign Video Section
     gsap.fromTo(
       ".cv-video-frame",
@@ -399,7 +324,7 @@ export default function Home() {
         </div>
         <div className="pillars-grid">
           {pillars.map((p) => (
-            <div key={p.num} className="pillar-card will-change-transform" style={{ transformStyle: "preserve-3d" }}>
+            <div key={p.num} className="pillar-card">
               <div className="pillar-card-inner" style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <h3 className="pillar-label">{p.label}</h3>
                 <p className="pillar-desc">{p.desc}</p>
