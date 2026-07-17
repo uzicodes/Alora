@@ -122,13 +122,7 @@ export default function Navbar() {
   const [mobileBrandsOpen, setMobileBrandsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [productResults, setProductResults] = useState<any[]>([]);
-
-  const productResultsSearch = useProductSearch(searchQuery);
-
-  useEffect(() => {
-    setProductResults(productResultsSearch);
-  }, [productResultsSearch]);
+  const productResults = useProductSearch(searchQuery);
 
   const handleBrandClick = (e: React.MouseEvent<HTMLAnchorElement>, brand: string) => {
     e.preventDefault();
