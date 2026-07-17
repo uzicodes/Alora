@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, use, useState, useEffect, useRef, type ReactNode } from "react";
+import { createContext, use, useCallback, useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
 import { useAuth, ClerkLoaded } from "@clerk/nextjs";
 
 export type CartItem = {
@@ -26,12 +26,24 @@ type CartContextType = {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 const CART_STORAGE_KEY = "alora-cart";
+const EMPTY_CART: CartItem[] = [];
 
-function getStoredCart(): CartItem[] {
-  if (typeof window === "undefined") return [];
+// Caching structure to maintain reference stability required by useSyncExternalStore
+let cachedRawString: string | null = null;
+let cachedSnapshot: CartItem[] = EMPTY_CART;
+
+function getStoredCartSnapshot(): CartItem[] {
+  if (typeof window === "undefined") return EMPTY_CART;
   try {
     const stored = localStorage.getItem(CART_STORAGE_KEY);
-    if (!stored) return [];
+    if (stored === cachedRawString) {
+      return cachedSnapshot;
+    }
+    cachedRawString = stored;
+    if (!stored) {
+      cachedSnapshot = EMPTY_CART;
+      return cachedSnapshot;
+    }
 
     const parsed = JSON.parse(stored);
 
@@ -42,24 +54,51 @@ function getStoredCart(): CartItem[] {
 
       if (now - parsed.timestamp > TWENTY_FOUR_HOURS) {
         localStorage.removeItem(CART_STORAGE_KEY);
-        return [];
+        cachedSnapshot = EMPTY_CART;
+        return cachedSnapshot;
       }
-      return parsed.items || [];
+      cachedSnapshot = parsed.items || EMPTY_CART;
+      return cachedSnapshot;
     }
 
     // Fallback for array format
     if (Array.isArray(parsed)) {
-      return parsed;
+      cachedSnapshot = parsed;
+      return cachedSnapshot;
     }
 
-    return [];
+    cachedSnapshot = EMPTY_CART;
+    return cachedSnapshot;
   } catch {
-    return [];
+    cachedSnapshot = EMPTY_CART;
+    return cachedSnapshot;
   }
 }
 
-function CartAuthSync({ clearCart }: { clearCart: () => void }) {
+function getServerSnapshot(): CartItem[] {
+  return EMPTY_CART;
+}
+
+function subscribeToCart(callback: () => void): () => void {
+  const handleStorageChange = (e: StorageEvent) => {
+    if (e.key === CART_STORAGE_KEY) {
+      callback();
+    }
+  };
+  const handleCustomUpdate = () => callback();
+
+  window.addEventListener("storage", handleStorageChange);
+  window.addEventListener("cart-storage-update", handleCustomUpdate);
+
+  return () => {
+    window.removeEventListener("storage", handleStorageChange);
+    window.removeEventListener("cart-storage-update", handleCustomUpdate);
+  };
+}
+
+function CartAuthSync() {
   const { isSignedIn, isLoaded } = useAuth();
+  const { clearCart } = useCart();
   const prevSignedIn = useRef<boolean | undefined>(undefined);
 
   useEffect(() => {
@@ -74,76 +113,56 @@ function CartAuthSync({ clearCart }: { clearCart: () => void }) {
 }
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>(getStoredCart);
+  const cartItems = useSyncExternalStore(
+    subscribeToCart,
+    getStoredCartSnapshot,
+    getServerSnapshot
+  );
 
-  useEffect(() => {
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === CART_STORAGE_KEY) {
-        setCartItems(getStoredCart());
-      }
-    };
-    window.addEventListener("storage", handleStorageChange);
-    return () => window.removeEventListener("storage", handleStorageChange);
-  }, []);
-
-  useEffect(() => {
-    let mounted = true;
-    const items = getStoredCart();
-    if (mounted && items.length > 0) {
-      setCartItems(items);
-    }
-    return () => { mounted = false; };
-  }, []);
-
-  const persistCart = (items: CartItem[]) => {
+  const persistCart = useCallback((items: CartItem[]) => {
     if (typeof window !== "undefined") {
       const dataToStore = {
         items,
         timestamp: Date.now(),
       };
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(dataToStore));
+      window.dispatchEvent(new Event("cart-storage-update"));
     }
-  };
+  }, []);
 
-  const addToCart = (item: Omit<CartItem, "quantity">) => {
-    setCartItems((prev) => {
-      const existing = prev.find((i) => i.id === item.id);
-      let newItems;
-      if (existing) {
-        newItems = prev.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
-        );
-      } else {
-        newItems = [...prev, { ...item, quantity: 1 }];
-      }
-      persistCart(newItems);
-      return newItems;
-    });
-  };
+  const addToCart = useCallback((item: Omit<CartItem, "quantity">) => {
+    const current = getStoredCartSnapshot();
+    const existing = current.find((i) => i.id === item.id);
+    let newItems: CartItem[];
+    if (existing) {
+      newItems = current.map((i) =>
+        i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+      );
+    } else {
+      newItems = [...current, { ...item, quantity: 1 }];
+    }
+    persistCart(newItems);
+  }, [persistCart]);
 
-  const removeFromCart = (id: string) => {
-    setCartItems((prev) => {
-      const newItems = prev.filter((item) => item.id !== id);
-      persistCart(newItems);
-      return newItems;
-    });
-  };
+  const removeFromCart = useCallback((id: string) => {
+    const current = getStoredCartSnapshot();
+    const newItems = current.filter((item) => item.id !== id);
+    persistCart(newItems);
+  }, [persistCart]);
 
-  const updateItemQuantity = (id: string, quantity: number) => {
+  const updateItemQuantity = useCallback((id: string, quantity: number) => {
     if (quantity < 1) return;
-    setCartItems((prev) => {
-      const newItems = prev.map((item) => (item.id === id ? { ...item, quantity } : item));
-      persistCart(newItems);
-      return newItems;
-    });
-  };
+    const current = getStoredCartSnapshot();
+    const newItems = current.map((item) => (item.id === id ? { ...item, quantity } : item));
+    persistCart(newItems);
+  }, [persistCart]);
 
-  const clearCart = () => {
-    setCartItems([]);
+  const clearCart = useCallback(() => {
     if (typeof window !== "undefined") {
       localStorage.removeItem(CART_STORAGE_KEY);
+      window.dispatchEvent(new Event("cart-storage-update"));
     }
-  };
+  }, []);
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -152,7 +171,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   return (
     <CartContext.Provider value={value}>
       <ClerkLoaded>
-        <CartAuthSync clearCart={clearCart} />
+        <CartAuthSync />
       </ClerkLoaded>
       {children}
     </CartContext.Provider>
