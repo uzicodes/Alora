@@ -53,14 +53,16 @@ export default function AdminLogin() {
                     </p>
 
                     <div className="space-y-5">
-                        <label className="block text-center text-sm font-bold uppercase tracking-widest text-gray-700">
+                        <label htmlFor="security-key" className="block text-center text-sm font-bold uppercase tracking-widest text-gray-700">
                             Security Key
                         </label>
 
                         <input
+                            id="security-key"
                             type="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
+                            aria-label="Security Key"
                             className="w-full border-2 border-gray-300 bg-gray-50 p-4 mt-2 font-mono text-lg focus:border-black focus:bg-white focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none transition-all duration-200 rounded-none placeholder-gray-400 text-center"
                             placeholder="••••••••••••"
                             required

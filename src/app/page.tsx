@@ -350,6 +350,7 @@ export default function Home() {
           {/* Video element */}
           <video
             className="cv-video"
+            aria-label="Promotional campaign background video"
             autoPlay
             loop
             muted
@@ -364,6 +365,13 @@ export default function Home() {
             <source
               src="https://res.cloudinary.com/dihvgsjh5/video/upload/v1782658374/video1_mrmp7s.mp4"
               type="video/mp4"
+            />
+            <track
+              kind="captions"
+              src="/captions.vtt"
+              srcLang="en"
+              label="English captions"
+              default
             />
           </video>
         </div>

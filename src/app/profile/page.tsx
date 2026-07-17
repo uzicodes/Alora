@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useUser, useClerk } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import Image from "next/image";
@@ -56,57 +56,68 @@ export default function ProfilePage() {
 
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoadingData, setIsLoadingData] = useState(true);
   const [state, setState] = useState({
     phone: "",
     street: "",
     city: "",
     country: "",
     orders: [] as any[],
-    initialDataLoaded: false,
   });
-  const { phone, street, city, country, orders, initialDataLoaded } = state;
+  const { phone, street, city, country, orders } = state;
+  const fetchedForUserId = useRef<string | null>(null);
 
   useEffect(() => {
-    if (isLoaded && isSignedIn && user && !initialDataLoaded) {
-      Promise.all([
-        getUserProfile(user.id),
-        getUserOrders(user.id)
-      ]).then(([data, fetchedOrders]) => {
-        setState((prev) => {
-          let newPhone = prev.phone;
-          let newStreet = prev.street;
-          let newCity = prev.city;
-          let newCountry = prev.country;
-          
-          if (data) {
-            newPhone = data.phone || "";
-            if (data.address) {
-              const parts = data.address.split(",").map((p: string) => p.trim());
-              newStreet = parts[0] || "";
-              newCity = parts[1] || "";
-              newCountry = parts[2] || "";
-            }
+    if (!isLoaded || !isSignedIn || !user) return;
+    if (fetchedForUserId.current === user.id) return;
+    fetchedForUserId.current = user.id;
+
+    let isMounted = true;
+    setIsLoadingData(true);
+
+    Promise.all([
+      getUserProfile(user.id),
+      getUserOrders(user.id)
+    ]).then(([data, fetchedOrders]) => {
+      if (!isMounted) return;
+      setState((prev) => {
+        let newPhone = prev.phone;
+        let newStreet = prev.street;
+        let newCity = prev.city;
+        let newCountry = prev.country;
+        
+        if (data) {
+          newPhone = data.phone || "";
+          if (data.address) {
+            const parts = data.address.split(",").map((p: string) => p.trim());
+            newStreet = parts[0] || "";
+            newCity = parts[1] || "";
+            newCountry = parts[2] || "";
           }
-          
-          return {
-            ...prev,
-            phone: newPhone,
-            street: newStreet,
-            city: newCity,
-            country: newCountry,
-            orders: fetchedOrders || prev.orders,
-            initialDataLoaded: true
-          };
-        });
+        }
+        
+        return {
+          ...prev,
+          phone: newPhone,
+          street: newStreet,
+          city: newCity,
+          country: newCountry,
+          orders: fetchedOrders || prev.orders,
+        };
       });
-    }
-  }, [isLoaded, isSignedIn, user, initialDataLoaded]);
+      setIsLoadingData(false);
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isLoaded, isSignedIn, user]);
 
   if (isLoaded && !isSignedIn) {
     redirect("/login");
   }
 
-  if (!isLoaded || !isSignedIn || !initialDataLoaded) {
+  if (!isLoaded || !isSignedIn || isLoadingData) {
     return <Loader />;
   }
 

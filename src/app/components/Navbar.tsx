@@ -354,19 +354,18 @@ function NavbarSearchPopup({
   handleProductClick: (e: React.MouseEvent<HTMLAnchorElement>, id: string) => void;
 }) {
   return (
-    <div className={`search-popup ${searchOpen ? "open" : ""}`} id="search-popup">
+    <div className={`search-popup ${searchOpen ? "open" : ""}`} id="search-popup" role="search" aria-hidden={!searchOpen}>
       <div className="search-container">
         <input
           type="text"
           aria-label="Search"
           placeholder="Search for fragrances, brands..."
-          autoFocus={searchOpen}
           className="search-input"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
-        <button type="button" className="search-close" onClick={() => { setSearchOpen(false); setSearchQuery(''); }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <button type="button" className="search-close" aria-label="Close search" onClick={() => { setSearchOpen(false); setSearchQuery(''); }}>
+          <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
           </svg>
