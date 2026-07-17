@@ -105,7 +105,12 @@ function ItemsDropdown({ items }: { items: any[] }) {
 
             {isOpen && createPortal(
                 <div className="fixed inset-0 z-[9999]">
-                    <div className="absolute inset-0 bg-transparent" role="button" tabIndex={0} aria-label="Close dropdown" onClick={() => setIsOpen(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setIsOpen(false); }}></div>
+                    <button
+                        type="button"
+                        className="absolute inset-0 bg-transparent w-full h-full border-0 p-0 m-0 cursor-default focus:outline-none"
+                        aria-label="Close dropdown"
+                        onClick={() => setIsOpen(false)}
+                    />
 
                     <div
                         className="fixed w-72 bg-white border-2 border-black shadow-[10px_10px_0px_0px_#000] p-4 text-left animate-in fade-in slide-in-from-top-2 duration-200"
@@ -187,7 +192,12 @@ function UserOrdersDropdown({ orders }: { orders: { id: string; orderTime: Date 
 
             {isOpen && createPortal(
                 <div className="fixed inset-0 z-[9999]">
-                    <div className="absolute inset-0 bg-transparent" role="button" tabIndex={0} aria-label="Close dropdown" onClick={() => setIsOpen(false)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setIsOpen(false); }}></div>
+                    <button
+                        type="button"
+                        className="absolute inset-0 bg-transparent w-full h-full border-0 p-0 m-0 cursor-default focus:outline-none"
+                        aria-label="Close dropdown"
+                        onClick={() => setIsOpen(false)}
+                    />
                     <div
                         className="fixed w-48 bg-white border-2 border-black shadow-[10px_10px_0px_0px_#000] p-4 text-left animate-in fade-in slide-in-from-top-2 duration-200"
                         style={{
@@ -348,7 +358,12 @@ function ProductFormDialog({
 
     return createPortal(
         <div className="fixed inset-0 z-[9999] flex items-center justify-center">
-            <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" role="button" tabIndex={0} aria-label="Close dialog" onClick={() => { setShowDialog(false); resetForm(); setEditMode(false); }} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { setShowDialog(false); resetForm(); setEditMode(false); } }}></div>
+            <button
+                type="button"
+                className="absolute inset-0 bg-black/60 backdrop-blur-sm w-full h-full border-0 p-0 m-0 cursor-default focus:outline-none"
+                aria-label="Close dialog"
+                onClick={() => { setShowDialog(false); resetForm(); setEditMode(false); }}
+            />
             <div className="relative bg-white border-4 border-black shadow-[12px_12px_0px_0px_#000] p-8 w-full max-w-lg max-h-[90vh] overflow-y-auto animate-in fade-in slide-in-from-bottom-4 duration-300">
                 <div className="mb-6 pb-3 border-b-4 border-black flex items-center justify-between">
                     <h3 className="text-2xl font-black uppercase tracking-tight">

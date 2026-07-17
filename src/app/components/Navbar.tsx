@@ -303,20 +303,18 @@ export default function Navbar() {
               )}
             </Link>
 
-            {/* Mobile Toggle */}
-            <div
-              className={`mobile-toggle ${mobileOpen ? "active" : ""}`}
+            <button
+              type="button"
+              className={`mobile-toggle border-0 bg-transparent p-1 ${mobileOpen ? "active" : ""}`}
               onClick={() => setMobileOpen(!mobileOpen)}
-              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setMobileOpen(!mobileOpen); }}
               id="mobile-toggle"
-              role="button"
-              tabIndex={0}
               aria-label="Toggle menu"
+              aria-expanded={mobileOpen}
             >
               <span></span>
               <span></span>
               <span></span>
-            </div>
+            </button>
           </div>
         </div>
 
