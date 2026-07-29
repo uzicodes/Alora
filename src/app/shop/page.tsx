@@ -43,7 +43,7 @@ export default async function ShopAllPage() {
                 {/* Brand Header */}
                 <div className="w-full flex items-center justify-center gap-4 md:gap-8" style={{ paddingTop: '10px', paddingBottom: '20px' }}>
                   <hr className="flex-1 border-t-2 border-neutral-600" />
-                  <h2 className="text-2xl md:text-3xl font-ubuntu uppercase tracking-[0.25em] text-[#C28D10] whitespace-nowrap text-center px-2">
+                  <h2 className="text-2xl md:text-3xl font-space-grotesk uppercase tracking-[0.25em] text-[#C28D10] whitespace-nowrap text-center px-2">
                     {brand.name}
                   </h2>
                   <hr className="flex-1 border-t-2 border-neutral-600" />
@@ -92,7 +92,7 @@ export default async function ShopAllPage() {
 
                       {/* Details */}
                       <div className="flex flex-col grow text-center px-0.5 md:px-1 mt-3 md:mt-5">
-                        <h3 className="text-[11px] md:text-[14px] leading-tight md:leading-normal font-ubuntu font-semibold tracking-[0.05em] uppercase mb-1 text-neutral-900 group-hover/card:text-[#C28D10] transition-colors duration-300">
+                        <h3 className="text-[11px] md:text-[14px] leading-tight md:leading-normal font-space-grotesk font-semibold tracking-[0.05em] uppercase mb-1 text-neutral-900 group-hover/card:text-[#C28D10] transition-colors duration-300">
                           {product.name}
                         </h3>
                         <p className="text-[8px] md:text-[9px] text-neutral-500 mb-2 md:mb-3 font-light tracking-wide uppercase flex flex-wrap items-center justify-center gap-0.5 md:gap-1.5">

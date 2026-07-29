@@ -17,14 +17,13 @@ function SuccessContent() {
   }, [clearCart]);
 
   return (
-    <div style={{
+    <div className="font-space-grotesk" style={{
       minHeight: '80vh',
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
       justifyContent: 'center',
       padding: '20px',
-      fontFamily: 'inherit'
     }}>
       <div className="animate-fade-in-up success-card">
         <div className="success-icon">

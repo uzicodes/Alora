@@ -933,7 +933,7 @@
 }
 
 .pillar-label {
-  font-family: var(--font-ubuntu), sans-serif;
+  font-family: var(--font-space-grotesk), sans-serif;
   font-size: 20px;
   font-weight: 400;
   color: #1a1410;
@@ -1262,7 +1262,7 @@
 }
 
 .sale-card-title {
-  font-family: var(--font-ubuntu), sans-serif;
+  font-family: var(--font-space-grotesk), sans-serif;
   font-size: 22px;
   font-weight: 400;
   color: #1a1410;
@@ -1289,7 +1289,7 @@
 }
 
 .sale-discount-num {
-  font-family: var(--font-ubuntu), sans-serif;
+  font-family: var(--font-space-grotesk), sans-serif;
   font-size: 44px;
   font-weight: 500;
   color: #6b5a3e;
@@ -1303,7 +1303,7 @@
 }
 
 .sale-discount-pct {
-  font-family: var(--font-ubuntu), sans-serif;
+  font-family: var(--font-space-grotesk), sans-serif;
   font-size: 18px;
   font-weight: 400;
   color: #6b5a3e;
@@ -1435,7 +1435,7 @@
 }
 
 .perfume-card-name {
-  font-family: var(--font-ubuntu), sans-serif;
+  font-family: var(--font-space-grotesk), sans-serif;
   font-size: 16px;
   font-weight: 400;
   color: #1a1410;
@@ -1571,7 +1571,7 @@
 }
 
 .about-value-title {
-  font-family: var(--font-ubuntu), sans-serif;
+  font-family: var(--font-space-grotesk), sans-serif;
   font-size: 18px;
   font-weight: 400;
   letter-spacing: 0.15em;
@@ -1587,7 +1587,7 @@
 }
 
 .about-value-desc {
-  font-family: 'Jost', sans-serif;
+  font-family: var(--font-space-grotesk), sans-serif;
   font-size: 13px;
   font-weight: 300;
   line-height: 1.85;
@@ -1612,7 +1612,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: 'Jost', sans-serif;
+  font-family: var(--font-space-grotesk), sans-serif;
   font-size: 11px;
   font-weight: 400;
   letter-spacing: 0.2em;

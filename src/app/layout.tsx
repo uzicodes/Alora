@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Ubuntu, Inter, Jost } from "next/font/google";
+import { Space_Grotesk, Inter, Jost } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import ScrollToTop from "./components/ScrollToTop";
@@ -10,9 +10,9 @@ import SmoothScroll from "./components/SmoothScroll";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "sonner";
 
-const ubuntuFont = Ubuntu({
-  variable: "--font-ubuntu",
-  weight: ["300", "400", "500", "700"],
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
   display: "swap",
 });
@@ -78,7 +78,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
         <body
-          className={`${interFont.variable} ${jostFont.variable} ${ubuntuFont.variable} ${davidLibre.variable} ${kharaissa.variable} ${blackKastile.variable} ${lumien.variable} antialiased`}
+          className={`${interFont.variable} ${jostFont.variable} ${spaceGrotesk.variable} ${davidLibre.variable} ${kharaissa.variable} ${blackKastile.variable} ${lumien.variable} antialiased`}
           suppressHydrationWarning
         >
           <ScrollToTop />

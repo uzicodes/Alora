@@ -32,7 +32,7 @@ export default function Cart() {
           fontSize: '14px',
         },
       });
-      
+
       // Delay navigation a bit so the user can see the toast
       setTimeout(() => {
         router.push("/login");
@@ -47,20 +47,20 @@ export default function Cart() {
   const total = subtotal;
 
   return (
-    <div className="cart-page" style={{ paddingTop: '10px', paddingBottom: '40px', minHeight: '100vh', paddingLeft: '20px', paddingRight: '20px' }}>
+    <div className="cart-page font-space-grotesk" style={{ paddingTop: '10px', paddingBottom: '40px', minHeight: '100vh', paddingLeft: '20px', paddingRight: '20px' }}>
       <div className="cart-header">
-        <h1 className="cart-title text-lg animate-fade-in-up" style={{ fontWeight: '900', letterSpacing: '2px' }}>Your Cart</h1>
+        <h1 className="cart-title text-lg animate-fade-in-up" style={{ fontWeight: '900', letterSpacing: '2px' }}>YOUR CART</h1>
       </div>
 
       {cartItems.length === 0 ? (
-        <div className="text-center py-20 animate-fade-in-up" style={{ 
-          border: '2px solid #000', 
-          boxShadow: '6px 6px 0px #000', 
-          backgroundColor: 'beige', 
-          padding: '40px', 
-          borderRadius: '5px', 
-          maxWidth: '500px', 
-          margin: '0 auto' 
+        <div className="text-center py-20 animate-fade-in-up" style={{
+          border: '2px solid #000',
+          boxShadow: '6px 6px 0px #000',
+          backgroundColor: 'beige',
+          padding: '40px',
+          borderRadius: '5px',
+          maxWidth: '500px',
+          margin: '0 auto'
         }}>
           <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ margin: '0 auto 20px' }}>
             <circle cx="9" cy="21" r="1" />
@@ -69,7 +69,7 @@ export default function Cart() {
           </svg>
           <p className="text-gray-500 mb-2 font-body uppercase tracking-wider" style={{ color: '#000', fontWeight: 'bold', fontSize: '14px' }}>Your cart is currently empty</p>
           <p className="mb-8 font-body" style={{ color: '#555', fontSize: '12px', letterSpacing: '0.5px' }}>Looks like you haven&apos;t added any fragrances yet.</p>
-          <Link href="/shop" className="btn-primary" style={{ 
+          <Link href="/shop" className="btn-primary" style={{
             display: 'inline-flex',
             marginTop: '24px',
             border: '2px solid #000',
@@ -85,12 +85,12 @@ export default function Cart() {
           {/* Left: Cart Items */}
           <div className="cart-items animate-fade-in-up delay-200">
             {cartItems.map((item) => (
-              <div key={item.id} className="cart-item" style={{ 
-                backgroundColor: '#ffffff', 
-                padding: '12px 16px', 
-                marginBottom: '16px', 
-                border: '2px solid #000',     
-                boxShadow: '4px 4px 0px #000', 
+              <div key={item.id} className="cart-item" style={{
+                backgroundColor: '#ffffff',
+                padding: '12px 16px',
+                marginBottom: '16px',
+                border: '2px solid #000',
+                boxShadow: '4px 4px 0px #000',
                 borderRadius: '5px'
               }}>
                 <div className="cart-item-image" style={{ border: '2px solid #000' }}>
@@ -163,7 +163,7 @@ export default function Cart() {
               <span>BDT {total}</span>
             </div>
 
-            <button 
+            <button
               type="button"
               onClick={handleCheckout}
               className="btn-primary summary-checkout-btn"
@@ -182,7 +182,7 @@ export default function Cart() {
               <span>Secure Checkout</span>
             </div>
 
-            <button 
+            <button
               type="button"
               onClick={clearCart}
               className="clear-cart-btn"

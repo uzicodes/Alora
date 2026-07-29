@@ -197,7 +197,7 @@ export default function Navbar() {
   return (
     <>
       {pathname !== '/' && <div style={{ height: 56 }} />}
-      <nav className={`navbar ${scrolled ? "scrolled" : ""}`} id="navbar">
+      <nav className={`navbar ${scrolled ? "scrolled" : ""} font-space-grotesk`} id="navbar">
         {/* Logo */}
         <Link href="/" className="navbar-logo" id="navbar-logo">
           <Image
@@ -383,7 +383,7 @@ function NavbarSearchPopup({
                       padding: '12px 20px',
                       color: 'rgba(255, 255, 255, 0.8)',
                       textDecoration: 'none',
-                      fontFamily: 'var(--font-body)',
+                      fontFamily: 'var(--font-space-grotesk)',
                       fontSize: '14px',
                       display: 'block',
                       transition: 'color 0.3s'
@@ -408,7 +408,7 @@ function NavbarSearchPopup({
                   padding: '12px 20px',
                   color: 'rgba(255, 255, 255, 0.8)',
                   textDecoration: 'none',
-                  fontFamily: 'var(--font-body)',
+                  fontFamily: 'var(--font-space-grotesk)',
                   fontSize: '14px',
                   display: 'block',
                   transition: 'color 0.3s'
@@ -423,7 +423,7 @@ function NavbarSearchPopup({
             ))}
 
             {BRANDS.filter(brand => brand.toLowerCase().includes(searchQuery.toLowerCase())).length === 0 && productResults.length === 0 && (
-              <div style={{ padding: '12px 20px', color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-body)', fontSize: '14px' }}>
+              <div style={{ padding: '12px 20px', color: 'rgba(255, 255, 255, 0.5)', fontFamily: 'var(--font-space-grotesk)', fontSize: '14px' }}>
                 No results found for "{searchQuery}"
               </div>
             )}
@@ -448,7 +448,7 @@ function NavbarMobileMenu({
   handleBrandClick: (e: React.MouseEvent<HTMLAnchorElement>, brand: string) => void;
 }) {
   return (
-    <div className={`mobile-menu ${mobileOpen ? "active" : ""}`} id="mobile-menu">
+    <div className={`mobile-menu ${mobileOpen ? "active" : ""} font-space-grotesk`} id="mobile-menu">
       <Link href="/shop" onClick={() => setMobileOpen(false)}>Shop</Link>
       <Link href="/men" onClick={() => setMobileOpen(false)}>Men</Link>
       <Link href="/woman" onClick={() => setMobileOpen(false)}>Women</Link>
@@ -478,7 +478,7 @@ function NavbarMobileMenu({
               href={`/shop#brand-${brand.toLowerCase().replace(/ /g, "-").replace(/'/g, "")}`}
               onClick={(e) => handleBrandClick(e, brand)}
               style={{
-                fontFamily: 'var(--font-body)',
+                fontFamily: 'var(--font-space-grotesk)',
                 fontSize: '14px',
                 letterSpacing: '1px',
                 textAlign: 'center',

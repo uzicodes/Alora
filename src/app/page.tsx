@@ -245,7 +245,7 @@ export default function Home() {
   }, { scope: containerRef });
 
   return (
-    <div ref={containerRef}>
+    <div ref={containerRef} className="font-space-grotesk">
       {/* ==================== HERO ==================== */}
       <section className="alora-hero">
         {/* Background elements */}
@@ -486,7 +486,7 @@ function AboutSection() {
             <span className="about-value-icon">✦</span>
             <h3 className="about-value-title">Authenticity</h3>
             <p className="about-value-desc">
-              Every fragrance we offer is 100% authentic, sourced directly from the world&apos;s most prestigious perfume houses.
+              Every fragrance we offer is sourced directly from the world&apos;s most prestigious perfume houses.
             </p>
           </div>
         </div>
@@ -495,7 +495,7 @@ function AboutSection() {
             <span className="about-value-icon">◆</span>
             <h3 className="about-value-title">Craftsmanship</h3>
             <p className="about-value-desc">
-              We celebrate the art of perfumery — from rare ingredients harvested at peak potency to master blenders who perfect each composition.
+              Celebrating the art of perfumery from rare ingredients harvested at peak potency.
             </p>
           </div>
         </div>
@@ -504,7 +504,7 @@ function AboutSection() {
             <span className="about-value-icon">★</span>
             <h3 className="about-value-title">Experience</h3>
             <p className="about-value-desc">
-              Each Alora scent is designed to evolve with you, revealing new layers and leaving an unforgettable impression.
+              Each bottle is designed to evolve with you leaving an unforgettable impression.
             </p>
           </div>
         </div>

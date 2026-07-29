@@ -10,7 +10,7 @@ export default function Footer() {
 
   return (
     <footer 
-      className="footer bg-[#1a1f2e] text-white" 
+      className="footer bg-[#1a1f2e] text-white font-space-grotesk" 
       id="footer"
       style={{
         margin: '24px',

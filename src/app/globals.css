@@ -9,9 +9,15 @@
   --font-body: var(--font-inter), sans-serif;
   --font-inter: var(--font-inter);
   --font-jost: var(--font-jost);
-  --font-ubuntu: var(--font-ubuntu);
+  --font-space-grotesk: var(--font-space-grotesk);
   --font-david-libre: var(--font-david-libre);
   --font-kharaissa: var(--font-kharaissa);
+}
+
+.font-space-grotesk, 
+.font-space-grotesk * {
+  --font-body: var(--font-space-grotesk), sans-serif;
+  --font-sans: var(--font-space-grotesk), sans-serif;
 }
 
 :root {
@@ -149,7 +155,7 @@ body:has(.alora-hero)>main {
 }
 
 .navbar-links a {
-  font-family: var(--font-body);
+  font-family: var(--font-space-grotesk);
   font-size: 12px;
   font-weight: 400;
   letter-spacing: 1.5px;
@@ -216,7 +222,7 @@ body:has(.alora-hero)>main {
 }
 
 .dropdown-header h5 {
-  font-family: var(--font-body);
+  font-family: var(--font-space-grotesk);
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 2px;
@@ -231,7 +237,7 @@ body:has(.alora-hero)>main {
 }
 
 .brand-link {
-  font-family: var(--font-body);
+  font-family: var(--font-space-grotesk);
   font-size: 9px;
   color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
@@ -311,7 +317,7 @@ body:has(.alora-hero)>main {
   border: none;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   padding: 12px 0;
-  font-family: var(--font-serif);
+  font-family: var(--font-space-grotesk);
   font-size: 24px;
   color: #fff;
   letter-spacing: 1px;
@@ -325,7 +331,7 @@ body:has(.alora-hero)>main {
 
 .search-input::placeholder {
   color: rgba(255, 255, 255, 0.3);
-  font-family: var(--font-body);
+  font-family: var(--font-space-grotesk);
   font-size: 14px;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -411,7 +417,7 @@ body:has(.alora-hero)>main {
 }
 
 .mobile-menu a {
-  font-family: var(--font-serif);
+  font-family: var(--font-space-grotesk);
   font-size: 28px;
   font-weight: 400;
   letter-spacing: 4px;
@@ -1051,7 +1057,7 @@ body:has(.alora-hero)>main {
 }
 
 .cart-title {
-  font-family: var(--font-david-libre);
+  font-family: var(--font-space-grotesk);
   font-size: clamp(32px, 4vw, 48px);
   font-weight: 300;
   color: #111;
@@ -1101,7 +1107,7 @@ body:has(.alora-hero)>main {
 }
 
 .cart-item-name {
-  font-family: var(--font-david-libre);
+  font-family: var(--font-space-grotesk);
   font-size: 16px;
   font-weight: 400;
   color: #111;
@@ -1194,7 +1200,7 @@ body:has(.alora-hero)>main {
 }
 
 .summary-title {
-  font-family: var(--font-david-libre);
+  font-family: var(--font-space-grotesk);
   font-size: 24px;
   font-weight: 400;
   color: #111;

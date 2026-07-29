@@ -156,7 +156,7 @@ export default function CheckoutPage() {
 
   if (cartItems.length === 0 && !isSubmitting) {
     return (
-      <div className="checkout-page" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      <div className="checkout-page font-space-grotesk" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
         <h1 className="checkout-title">Checkout</h1>
         <div style={{ marginTop: '40px', textAlign: 'center', border: '2px solid #000', padding: '40px', backgroundColor: 'beige', boxShadow: '6px 6px 0px #000' }}>
           <p style={{ fontWeight: 'bold', marginBottom: '20px' }}>Your cart is empty. You cannot proceed to checkout.</p>
@@ -169,7 +169,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="checkout-page">
+    <div className="checkout-page font-space-grotesk">
       <div className="checkout-header" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
         <button
           type="button"

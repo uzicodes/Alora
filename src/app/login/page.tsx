@@ -102,7 +102,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-start justify-center p-4 bg-white" style={{ paddingTop: '140px' }}>
+    <div className="flex min-h-screen items-start justify-center p-4 bg-white font-space-grotesk" style={{ paddingTop: '140px' }}>
       <form className={styles.form} onSubmit={isForgotPassword ? handleResetPassword : handleEmailLogin}>
         <div className={styles.title} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>

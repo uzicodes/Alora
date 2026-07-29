@@ -101,7 +101,7 @@ export default function SignupPage() {
 
   if (pendingVerification) {
     return (
-      <div className="flex min-h-screen items-start justify-center p-4 bg-white" style={{ paddingTop: '140px' }}>
+      <div className="flex min-h-screen items-start justify-center p-4 bg-white font-space-grotesk" style={{ paddingTop: '140px' }}>
         <form className={styles.form} onSubmit={onPressVerify}>
           <div className={styles.title} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
             <span style={{ fontSize: '1.2em' }}>Verify your email</span>
@@ -130,7 +130,7 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-start justify-center p-4 bg-white" style={{ paddingTop: '140px' }}>
+    <div className="flex min-h-screen items-start justify-center p-4 bg-white font-space-grotesk" style={{ paddingTop: '140px' }}>
       <form className={styles.form} onSubmit={handleEmailSignup}>
         <div className={styles.title} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
