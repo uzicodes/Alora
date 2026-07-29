@@ -30,7 +30,7 @@ export default async function ShopAllPage() {
     <div className="min-h-screen bg-white text-black pb-32 pt-16 font-body">
       <div className="mx-auto w-full px-6 sm:px-10 md:px-16 lg:px-20">
         <header className="text-center" style={{ marginBottom: '50px', paddingTop: '60px' }}>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-david-libre uppercase tracking-[0.2em] mb-8 text-black">Brands Collections</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-space-grotesk font-bold uppercase tracking-[0.02em] mb-8 text-black">Brands Collections</h1>
         </header>
 
         <div className="flex flex-col w-full" style={{ gap: '70px' }}>
@@ -43,7 +43,7 @@ export default async function ShopAllPage() {
                 {/* Brand Header */}
                 <div className="w-full flex items-center justify-center gap-4 md:gap-8" style={{ paddingTop: '10px', paddingBottom: '20px' }}>
                   <hr className="flex-1 border-t-2 border-neutral-600" />
-                  <h2 className="text-2xl md:text-3xl font-space-grotesk uppercase tracking-[0.25em] text-[#C28D10] whitespace-nowrap text-center px-2">
+                  <h2 className="text-3xl md:text-4xl font-space-grotesk font-bold uppercase tracking-[0.05em] text-[#166534] whitespace-nowrap text-center px-2">
                     {brand.name}
                   </h2>
                   <hr className="flex-1 border-t-2 border-neutral-600" />
@@ -61,7 +61,7 @@ export default async function ShopAllPage() {
                     <div key={product.id} id={`product-${product.id}`} className="group/card flex flex-col cursor-pointer h-full w-[calc(33.33%-6px)] sm:w-[calc(25%-6px)] md:w-[185px] relative">
                       {product.topNotes && product.topNotes.length > 0 && (
                         <div className="absolute -top-5 left-0 right-0 z-10 flex justify-center opacity-0 transition-opacity duration-300 group-hover/card:opacity-100 pointer-events-none px-2">
-                          <span className="text-[8px] text-center text-neutral-700 tracking-wide font-light px-1 uppercase">
+                          <span className="text-[8px] text-center text-black tracking-wide font-semibold px-1 uppercase">
                             {product.topNotes.join(' · ')}
                           </span>
                         </div>

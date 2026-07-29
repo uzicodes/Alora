@@ -153,7 +153,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="profile-page-wrapper">
+    <div className="profile-page-wrapper font-space-grotesk">
       <div className="profile-dashboard">
         {/* LEFT COLUMN: IDENTITY */}
         <aside className="profile-sidebar">

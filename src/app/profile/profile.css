@@ -37,7 +37,7 @@
   box-shadow: 2px 2px 0px #000;
   padding: 4px 8px;
   font-size: 10px;
-  font-weight: 800;
+  font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -73,7 +73,7 @@
 
 .user-name {
   font-size: 22px;
-  font-weight: 900;
+  font-weight: 700;
   margin: 0;
   text-align: center;
 }
@@ -140,7 +140,7 @@
   background: beige;
   border: 2px solid #000;
   box-shadow: 4px 4px 0px #000;
-  font-weight: 900;
+  font-weight: 700;
   cursor: pointer;
   transition: 0.2s;
 }
@@ -172,8 +172,8 @@
 }
 
 .section-title {
-  font-size: 18px;
-  font-weight: 900;
+  font-size: 24px;
+  font-weight: 700;
   letter-spacing: 2px;
 }
 
@@ -188,6 +188,7 @@
   padding: 15px;
   background: #f0f0f0;
   border-bottom: 2px solid #000;
+  color: #ef4444;
 }
 
 .orders-table td {
@@ -285,7 +286,7 @@
 }
 
 .dropdown-item .item-qty {
-  color: #e81c1c;
+  color: #166534;
   flex-shrink: 0;
 }
 
@@ -331,4 +332,11 @@
     font-size: 12px;
     word-break: break-all;
   }
+}
+
+.profile-page-wrapper button,
+.profile-page-wrapper input,
+.profile-page-wrapper select,
+.profile-page-wrapper textarea {
+  font-family: inherit;
 }
