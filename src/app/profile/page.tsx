@@ -65,12 +65,9 @@ export default function ProfilePage() {
     orders: [] as any[],
   });
   const { phone, street, city, country, orders } = state;
-  const fetchedForUserId = useRef<string | null>(null);
 
   useEffect(() => {
     if (!isLoaded || !isSignedIn || !user) return;
-    if (fetchedForUserId.current === user.id) return;
-    fetchedForUserId.current = user.id;
 
     let isMounted = true;
     setIsLoadingData(true);
@@ -111,7 +108,7 @@ export default function ProfilePage() {
     return () => {
       isMounted = false;
     };
-  }, [isLoaded, isSignedIn, user]);
+  }, [isLoaded, isSignedIn, user?.id]);
 
   if (isLoaded && !isSignedIn) {
     redirect("/login");
