@@ -53,7 +53,19 @@ export default function CheckoutPage() {
         }
       });
     }
-    return () => { mounted = false; };
+
+    // Handle browser back button (bfcache) to reset the submit button state
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) {
+        setIsSubmitting(false);
+      }
+    };
+    window.addEventListener('pageshow', handlePageShow);
+
+    return () => { 
+      mounted = false; 
+      window.removeEventListener('pageshow', handlePageShow);
+    };
   }, [isLoaded, isSignedIn, user]);
 
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price * item.quantity), 0);
