@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, Inter, Jost } from "next/font/google";
+import { Space_Grotesk, Jost } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 import ScrollToTop from "./components/ScrollToTop";
@@ -17,11 +17,6 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
-const interFont = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  display: "swap",
-});
 
 const jostFont = Jost({
   variable: "--font-jost",
@@ -78,7 +73,7 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning data-scroll-behavior="smooth">
         <body
-          className={`${interFont.variable} ${jostFont.variable} ${spaceGrotesk.variable} ${davidLibre.variable} ${kharaissa.variable} ${blackKastile.variable} ${lumien.variable} antialiased`}
+          className={`${jostFont.variable} ${spaceGrotesk.variable} ${davidLibre.variable} ${kharaissa.variable} ${blackKastile.variable} ${lumien.variable} antialiased`}
           suppressHydrationWarning
         >
           <ScrollToTop />
