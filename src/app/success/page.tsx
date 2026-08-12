@@ -4,12 +4,15 @@ import React, { useEffect } from "react";
 import { useCart } from "../components/CartContext";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+// @ts-ignore
+import styles from "./success.module.css";
 
 function SuccessContent() {
   const { clearCart } = useCart();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const transactionId = searchParams.get('tran_id') || searchParams.get('id') || "N/A";
+  const transactionId =
+    searchParams.get("tran_id") || searchParams.get("id") || "N/A";
 
   useEffect(() => {
     // Clear cart when landing on success page
@@ -17,46 +20,52 @@ function SuccessContent() {
   }, [clearCart]);
 
   return (
-    <div className="font-space-grotesk" style={{
-      minHeight: '80vh',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '20px',
-    }}>
-      <div className="animate-fade-in-up success-card">
-        <div className="success-icon">
-          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+    <div className={styles.container}>
+      <div className={`${styles.card} animate-fade-in-up`}>
+        <div className={styles.iconWrapper}>
+          <svg
+            width="34"
+            height="34"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="#c8ea32"
+            strokeWidth="3.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <polyline points="20 6 9 17 4 12"></polyline>
           </svg>
         </div>
 
-        <h1 style={{ fontSize: '2.2rem', margin: '10px 0 0 0', fontWeight: 900, textTransform: 'uppercase', lineHeight: '1.1' }}>
-          {transactionId.startsWith('COD-') ? 'Order Successful' : 'Payment Successful!'}
+        <h1 className={styles.title}>
+          {transactionId.startsWith("COD-")
+            ? "Order Successful"
+            : "Payment Successful!"}
         </h1>
 
-        <p style={{ fontSize: '0.9rem', fontWeight: 600, color: '#222', margin: 0, padding: '0 10px' }}>
-          Thank you for your order. We are processing it. Check your mailbox for the Order Details.
+        <p className={styles.description}>
+          Thank you for your order. We are processing it. Check your mailbox for
+          the order details.
         </p>
 
-        <p style={{ fontSize: '0.9rem', fontWeight: 700, color: '#333', margin: '15px 0 0 0', textAlign: 'center' }}>
-          <span style={{ color: 'red' }}>Transaction ID:</span> <span style={{ fontWeight: 900, fontFamily: 'monospace', textDecoration: 'underline' }}>{transactionId}</span>
-        </p>
+        <div className={styles.transactionBox}>
+          <span className={styles.transactionLabel}>Transaction ID:</span>
+          <span className={styles.transactionVal}>{transactionId}</span>
+        </div>
 
-        <div style={{ display: 'flex', gap: '15px', marginTop: '20px', width: '100%', flexDirection: 'row' }}>
+        <div className={styles.btnGroup}>
           <button
             type="button"
-            onClick={() => router.push('/shop')}
-            className="shop-more-btn"
+            onClick={() => router.push("/shop")}
+            className={styles.shopMoreBtn}
           >
             Shop More
           </button>
 
           <button
             type="button"
-            onClick={() => router.push('/')}
-            className="back-home-btn"
+            onClick={() => router.push("/")}
+            className={styles.backHomeBtn}
           >
             Go Home
           </button>
@@ -68,7 +77,13 @@ function SuccessContent() {
 
 export default function SuccessPage() {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense
+      fallback={
+        <div className="loader-container">
+          <div className="loader"></div>
+        </div>
+      }
+    >
       <SuccessContent />
     </Suspense>
   );

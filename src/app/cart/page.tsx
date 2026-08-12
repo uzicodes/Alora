@@ -51,9 +51,11 @@ export default function Cart() {
 
   return (
     <div className="cart-page font-space-grotesk">
-      <div className="cart-header">
-        <h1 className="cart-title animate-fade-in-up">YOUR CART</h1>
-      </div>
+      {cartItems.length > 0 && (
+        <div className="cart-header">
+          <h1 className="cart-title animate-fade-in-up">YOUR CART</h1>
+        </div>
+      )}
 
       {cartItems.length === 0 ? (
         <div className="cart-empty-box animate-fade-in-up">
