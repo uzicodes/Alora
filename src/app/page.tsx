@@ -65,7 +65,40 @@ export default function Home() {
       }
     );
 
-    // Exclusive Deals / Sale Section - Horizontal Pinned Scroll
+    // Find Your Scent Section
+    gsap.fromTo(
+      ".fys-heading",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out",
+        force3D: true,
+        scrollTrigger: {
+          trigger: ".find-your-scent-section",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
+    gsap.fromTo(
+      ".fys-card",
+      { opacity: 0, y: 50 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out",
+        force3D: true,
+        scrollTrigger: {
+          trigger: ".fys-grid",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      }
+    );
     gsap.fromTo(
       ".sale-header",
       { opacity: 0, y: 30 },
@@ -377,6 +410,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ==================== FIND YOUR SCENT ==================== */}
+      <FindYourScentSection />
+
       {/* ==================== SALE SECTION ==================== */}
       <section className="sale-section">
         <div className="sale-header">
@@ -432,6 +468,70 @@ export default function Home() {
       {/* ==================== EDITORIAL QUOTE ==================== */}
       <EditorialQuoteBanner />
     </div>
+  );
+}
+
+function FindYourScentSection() {
+  const cards = [
+    {
+      badge: "TOP PICKS",
+      title: "FOR HIM",
+      desc: "Confident. Bold. Unforgettable.",
+      cta: "SHOP HIM",
+      href: "/men",
+      img: "/male.jpg",
+    },
+    {
+      badge: "TRENDING",
+      title: "FOR HER",
+      desc: "Elegant. Feminine. Irresistible.",
+      cta: "SHOP HER",
+      href: "/woman",
+      img: "/female.jpg",
+    },
+    {
+      badge: "UNISEX",
+      title: "FOR ALL",
+      desc: "Made for everyone.",
+      cta: "SHOP ALL",
+      href: "/unisex",
+      img: "/unisex.jpg",
+    },
+  ];
+
+  return (
+    <section className="find-your-scent-section">
+      <div className="fys-heading">
+        <h2 className="fys-title">
+          FIND YOUR <span className="fys-title-accent">SCENT</span>
+        </h2>
+      </div>
+      <div className="fys-grid">
+        {cards.map((card) => (
+          <Link key={card.title} href={card.href} className="fys-card will-change-transform">
+            <div className="fys-card-img-wrap">
+              <Image
+                src={card.img}
+                alt={card.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                quality={90}
+                style={{ objectFit: "cover" }}
+              />
+              <div className="fys-card-overlay" />
+            </div>
+            <span className="fys-badge">{card.badge}</span>
+            <div className="fys-card-content">
+              <h3 className="fys-card-title">{card.title}</h3>
+              <p className="fys-card-desc">{card.desc}</p>
+              <span className="fys-card-cta">
+                {card.cta} →
+              </span>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 }
 
