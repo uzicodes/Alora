@@ -8,21 +8,21 @@ const cards = [
     desc: "Confident. Bold. Unforgettable.",
     cta: "SHOP HIM",
     href: "/men",
-    img: "/male.jpg",
+    img: "/male.webp",
   },
   {
     title: "FOR HER",
     desc: "Elegant. Feminine. Irresistible.",
     cta: "SHOP HER",
     href: "/woman",
-    img: "/female.jpg",
+    img: "/female.webp",
   },
   {
     title: "FOR ALL",
     desc: "Made for everyone.",
     cta: "SHOP ALL",
     href: "/unisex",
-    img: "/unisex.jpg",
+    img: "/unisex.webp",
   },
 ];
 
