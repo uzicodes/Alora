@@ -104,8 +104,8 @@ export default function SignupPage() {
       <div className="flex min-h-screen items-start justify-center p-4 bg-white font-space-grotesk" style={{ paddingTop: '140px' }}>
         <form className={styles.form} onSubmit={onPressVerify}>
           <div className={styles.title} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
-            <span style={{ fontSize: '1.2em' }}>Verify your email</span>
-            <span style={{ fontSize: '0.8em', textAlign: 'center', marginTop: '8px' }}>We sent a code to {email}</span>
+            <span style={{ fontSize: '1.2em', color: '#c8ea32' }}>Verify your email</span>
+            <span style={{ fontSize: '0.8em', textAlign: 'center', marginTop: '8px', color: 'rgba(240, 236, 230, 0.7)' }}>We sent a code to {email}</span>
           </div>
 
           <input
@@ -135,9 +135,9 @@ export default function SignupPage() {
         <div className={styles.title} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
             <Image src="/alora_BG.png" alt="Alora Logo" width={32} height={32} className="rounded-full" priority />
-            <span style={{ fontFamily: 'var(--font-kharaissa), sans-serif', letterSpacing: '4px', fontWeight: 'normal', color: '#636B06', fontSize: '1.2em' }}>ALORA</span>
+            <span style={{ fontFamily: 'var(--font-kharaissa), sans-serif', letterSpacing: '4px', fontWeight: 'normal', color: '#c8ea32', fontSize: '1.2em' }}>ALORA</span>
           </div>
-          <span style={{ marginTop: '4px', fontSize: '0.75rem' }}>CREATE YOUR ACCOUNT</span>
+          <span style={{ marginTop: '4px', fontSize: '0.75rem', color: 'rgba(240, 236, 230, 0.7)' }}>CREATE YOUR ACCOUNT</span>
         </div>
 
         <input
@@ -200,7 +200,7 @@ export default function SignupPage() {
           {isLoading ? "Creating..." : "Sign Up →"}
         </button>
 
-        <div className="w-full mt-4 text-sm font-semibold text-gray-700 text-center">
+        <div className="w-full mt-4 text-sm font-medium text-gray-300 text-center">
           Or continue with
         </div>
 
@@ -215,8 +215,8 @@ export default function SignupPage() {
           </button>
         </div>
 
-        <div className="w-full mt-2 text-sm font-semibold text-gray-700 text-center">
-          Already have an account? <Link href="/login" className="text-black underline">Log In</Link>
+        <div className="w-full mt-2 text-sm font-medium text-gray-300 text-center">
+          Already have an account? <Link href="/login" className="text-[#c8ea32] underline hover:text-[#d8f542] transition-colors">Log In</Link>
         </div>
       </form>
     </div>

@@ -238,45 +238,45 @@ function CheckoutForm({
   return (
     <div className="checkout-form-container animate-fade-in-up delay-200">
       <form id="checkout-form" onSubmit={handlePlaceOrder}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderBottom: '2px solid #000', paddingBottom: '6px', marginBottom: '12px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderBottom: '1px solid rgba(194, 178, 128, 0.2)', paddingBottom: '8px', marginBottom: '16px' }}>
           <h2 className="checkout-section-title" style={{ borderBottom: 'none', paddingBottom: 0, marginBottom: 0 }}>Contact Details</h2>
           {isSignedIn && (
-            <span style={{ fontSize: '10px', fontWeight: 'bold', color: '#555', marginBottom: '2px' }}>
-              If needed, update in <Link href="/profile" style={{ textDecoration: 'underline', color: '#e81c1cff' }}>Profile</Link>
+            <span style={{ fontSize: '11px', fontWeight: '500', color: 'rgba(240, 236, 230, 0.6)', marginBottom: '2px' }}>
+              If needed, update in <Link href="/profile" style={{ textDecoration: 'underline', color: '#c8ea32' }}>Profile</Link>
             </span>
           )}
         </div>
 
         <div className="form-group">
           <label htmlFor="fullName" className="checkout-label">Full Name</label>
-          <input id="fullName" type="text" name="fullName" className="checkout-input" value={formData.fullName} onChange={handleChange} required readOnly={isSignedIn} style={isSignedIn ? { backgroundColor: '#ebebeb', color: '#777', cursor: 'not-allowed', borderColor: '#aaa' } : {}} />
+          <input id="fullName" type="text" name="fullName" className="checkout-input" value={formData.fullName} onChange={handleChange} required readOnly={isSignedIn} style={isSignedIn ? { backgroundColor: 'rgba(18, 56, 44, 0.5)', color: 'rgba(240, 236, 230, 0.6)', cursor: 'not-allowed', borderColor: 'rgba(194, 178, 128, 0.15)' } : {}} />
         </div>
 
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="email" className="checkout-label">Email Address</label>
-            <input id="email" type="email" name="email" className="checkout-input" value={formData.email} onChange={handleChange} required readOnly={isSignedIn} style={isSignedIn ? { backgroundColor: '#ebebeb', color: '#777', cursor: 'not-allowed', borderColor: '#aaa' } : {}} />
+            <input id="email" type="email" name="email" className="checkout-input" value={formData.email} onChange={handleChange} required readOnly={isSignedIn} style={isSignedIn ? { backgroundColor: 'rgba(18, 56, 44, 0.5)', color: 'rgba(240, 236, 230, 0.6)', cursor: 'not-allowed', borderColor: 'rgba(194, 178, 128, 0.15)' } : {}} />
           </div>
           <div className="form-group">
             <label htmlFor="phone" className="checkout-label">Phone Number</label>
-            <input id="phone" type="text" name="phone" className="checkout-input" value={formData.phone} onChange={handlePhoneChange} required readOnly={isSignedIn} style={isSignedIn ? { backgroundColor: '#ebebeb', color: '#777', cursor: 'not-allowed', borderColor: '#aaa' } : {}} />
+            <input id="phone" type="text" name="phone" className="checkout-input" value={formData.phone} onChange={handlePhoneChange} required readOnly={isSignedIn} style={isSignedIn ? { backgroundColor: 'rgba(18, 56, 44, 0.5)', color: 'rgba(240, 236, 230, 0.6)', cursor: 'not-allowed', borderColor: 'rgba(194, 178, 128, 0.15)' } : {}} />
           </div>
         </div>
 
         <h2 className="checkout-section-title" style={{ marginTop: '30px' }}>
-          Shipping Address <span style={{ color: '#e81c1cff' }}>*</span>
+          Shipping Address <span style={{ color: '#f87171' }}>*</span>
         </h2>
         <div className="form-row">
           <div className="form-group" style={{ flex: 2 }}>
-            <label htmlFor="street" className="checkout-label">Street / House <span style={{ color: '#e81c1cff' }}>*</span></label>
+            <label htmlFor="street" className="checkout-label">Street / House <span style={{ color: '#f87171' }}>*</span></label>
             <input id="street" type="text" name="street" className="checkout-input" value={formData.street} onChange={handleChange} required />
           </div>
           <div className="form-group" style={{ flex: 1 }}>
-            <label htmlFor="city" className="checkout-label">City <span style={{ color: '#e81c1cff' }}>*</span></label>
+            <label htmlFor="city" className="checkout-label">City <span style={{ color: '#f87171' }}>*</span></label>
             <input id="city" type="text" name="city" className="checkout-input" value={formData.city} onChange={handleChange} required />
           </div>
           <div className="form-group" style={{ flex: 1 }}>
-            <label htmlFor="postCode" className="checkout-label">Post Code <span style={{ color: '#e81c1cff' }}>*</span></label>
+            <label htmlFor="postCode" className="checkout-label">Post Code <span style={{ color: '#f87171' }}>*</span></label>
             <input id="postCode" type="text" name="postCode" className="checkout-input" value={formData.postCode} onChange={handleChange} required />
           </div>
         </div>
@@ -285,19 +285,19 @@ function CheckoutForm({
         <div className="form-row">
           <div className="form-group" style={{ flex: 1 }}>
             <label htmlFor="cod" className={`checkout-payment-label ${paymentMethod === 'cod' ? 'checkout-payment-label-active' : 'checkout-payment-label-inactive'}`}>
-              <input type="radio" name="payment" value="cod" id="cod" checked={paymentMethod === 'cod'} onChange={handlePaymentChange} style={{ accentColor: '#000', width: '18px', height: '18px' }} />
+              <input type="radio" name="payment" value="cod" id="cod" checked={paymentMethod === 'cod'} onChange={handlePaymentChange} style={{ accentColor: '#c8ea32', width: '16px', height: '16px' }} />
               Cash on Delivery (COD)
             </label>
           </div>
           <div className="form-group" style={{ flex: 1 }}>
             <label htmlFor="card" className={`checkout-payment-label ${paymentMethod === 'card' ? 'checkout-payment-label-active' : 'checkout-payment-label-inactive'}`}>
-              <input type="radio" name="payment" value="card" id="card" checked={paymentMethod === 'card'} onChange={handlePaymentChange} style={{ accentColor: '#000', width: '18px', height: '18px' }} />
+              <input type="radio" name="payment" value="card" id="card" checked={paymentMethod === 'card'} onChange={handlePaymentChange} style={{ accentColor: '#c8ea32', width: '16px', height: '16px' }} />
               Credit / Debit Card
             </label>
           </div>
           <div className="form-group" style={{ flex: 1 }}>
             <label htmlFor="mobile" className={`checkout-payment-label ${paymentMethod === 'mobile' ? 'checkout-payment-label-active' : 'checkout-payment-label-inactive'}`}>
-              <input type="radio" name="payment" value="mobile" id="mobile" checked={paymentMethod === 'mobile'} onChange={handlePaymentChange} style={{ accentColor: '#000', width: '18px', height: '18px' }} />
+              <input type="radio" name="payment" value="mobile" id="mobile" checked={paymentMethod === 'mobile'} onChange={handlePaymentChange} style={{ accentColor: '#c8ea32', width: '16px', height: '16px' }} />
               Mobile Banking
             </label>
           </div>
@@ -320,7 +320,7 @@ function CheckoutOrderSummary({
 }) {
   return (
     <div className="checkout-summary animate-fade-in-up delay-300">
-      <h2 className="checkout-section-title" style={{ borderBottomColor: '#000', textAlign: 'center', fontSize: '20px', paddingBottom: '10px', marginBottom: '20px', textTransform: 'uppercase' }}>Order Summary</h2>
+      <h2 className="checkout-section-title" style={{ textAlign: 'center', fontSize: '18px', paddingBottom: '12px', marginBottom: '20px', textTransform: 'uppercase' }}>Order Summary</h2>
 
       <div style={{ marginBottom: '20px' }}>
         {cartItems.map((item) => (
@@ -328,14 +328,14 @@ function CheckoutOrderSummary({
             <div className="summary-item-name">
               {item.quantity}x {item.name}
             </div>
-            <div>BDT {item.price * item.quantity}</div>
+            <div style={{ color: '#c8ea32', fontWeight: '700' }}>BDT {item.price * item.quantity}</div>
           </div>
         ))}
       </div>
 
-      <div className="summary-item" style={{ border: 'none', color: '#000' }}>
+      <div className="summary-item" style={{ border: 'none' }}>
         <span>Shipping</span>
-        <span>Complimentary</span>
+        <span style={{ color: '#c8ea32' }}>Complimentary</span>
       </div>
 
       <div className="summary-total">
@@ -348,12 +348,11 @@ function CheckoutOrderSummary({
         form="checkout-form"
         className="place-order-btn"
         disabled={isSubmitting || cartItems.length === 0 || !isFormValid}
-        style={(!isFormValid && !isSubmitting && cartItems.length > 0) ? { backgroundColor: '#ccc', cursor: 'not-allowed', filter: 'grayscale(1)' } : {}}
       >
         {isSubmitting ? "PROCESSING..." : "PLACE ORDER"}
       </button>
       <p className="place-order-info">
-        By placing your order, you agree to Alora's Terms & Conditions and Privacy Policy.
+        By placing your order, you agree to Alora&apos;s Terms & Conditions and Privacy Policy.
       </p>
     </div>
   );

@@ -253,7 +253,7 @@ export default function ProfilePage() {
 
           <div className="orders-container">
             {orders.length === 0 ? (
-              <div style={{ textAlign: 'center', padding: '40px', backgroundColor: '#f9f9f9', border: '2px solid #000' }}>
+              <div className="empty-orders-box">
                 <p style={{ fontWeight: 'bold' }}>You have no recent orders.</p>
               </div>
             ) : (

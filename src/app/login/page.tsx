@@ -107,13 +107,13 @@ export default function LoginPage() {
         <div className={styles.title} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
             <Image src="/alora_BG.png" alt="Alora Logo" width={32} height={32} className="rounded-full" priority />
-            <span style={{ fontFamily: 'var(--font-kharaissa), sans-serif', letterSpacing: '4px', fontWeight: 'normal', color: '#636B06', fontSize: '1.2em' }}>ALORA</span>
+            <span style={{ fontFamily: 'var(--font-kharaissa), sans-serif', letterSpacing: '4px', fontWeight: 'normal', color: '#c8ea32', fontSize: '1.2em' }}>ALORA</span>
           </div>
-          <span style={{ marginTop: '4px', fontSize: '0.75rem' }}>WELCOME BACK</span>
+          <span style={{ marginTop: '4px', fontSize: '0.75rem', color: 'rgba(240, 236, 230, 0.7)' }}>WELCOME BACK</span>
         </div>
 
         {error && (
-          <div className="w-full text-red-500 text-sm mb-2 text-center font-medium">
+          <div className="w-full text-red-400 text-sm mb-2 text-center font-medium">
             {error}
           </div>
         )}
@@ -157,7 +157,7 @@ export default function LoginPage() {
             <div className="w-full max-w-[300px] flex justify-end mb-2 mt-1 pr-4">
               <button
                 type="button"
-                className="text-[10px] text-gray-500 hover:text-black cursor-pointer bg-transparent border-none p-0"
+                className="text-[10px] text-gray-400 hover:text-[#c8ea32] cursor-pointer bg-transparent border-none p-0 transition-colors"
                 onClick={handleForgotPasswordClick}
               >
                 Forgot password?
@@ -219,7 +219,7 @@ export default function LoginPage() {
             <div className="w-full text-center mt-4">
               <button
                 type="button"
-                className="text-sm text-gray-500 hover:text-black cursor-pointer bg-transparent border-none p-0"
+                className="text-sm text-gray-400 hover:text-[#c8ea32] cursor-pointer bg-transparent border-none p-0 transition-colors"
                 onClick={() => {
                   setIsForgotPassword(false);
                   setError("");
@@ -231,7 +231,7 @@ export default function LoginPage() {
           </>
         )}
 
-        <div className="w-full mt-4 text-sm font-semibold text-gray-700 text-center">
+        <div className="w-full mt-4 text-sm font-medium text-gray-300 text-center">
           Or continue with
         </div>
 
@@ -246,8 +246,8 @@ export default function LoginPage() {
           </button>
         </div>
 
-        <div className="w-full mt-2 text-sm font-semibold text-gray-700 text-center">
-          Don't have an account? <Link href="/signup" className="text-black underline">Sign Up</Link>
+        <div className="w-full mt-2 text-sm font-medium text-gray-300 text-center">
+          Don't have an account? <Link href="/signup" className="text-[#c8ea32] underline hover:text-[#d8f542] transition-colors">Sign Up</Link>
         </div>
       </form>
     </div>
