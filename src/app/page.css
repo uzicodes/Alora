@@ -1204,7 +1204,7 @@
   top: 20px;
   left: 20px;
   z-index: 3;
-  background: #c8e64c;
+  background: #c8ea32;
   color: #1a1410;
   font-family: var(--font-space-grotesk), sans-serif;
   font-size: 10px;
@@ -1254,7 +1254,7 @@
   align-items: center;
   align-self: flex-start;
   gap: 6px;
-  background: #c8e64c;
+  background: #c8ea32;
   color: #1a1410;
   font-family: var(--font-space-grotesk), sans-serif;
   font-size: 11px;
@@ -1313,36 +1313,22 @@
   }
 }
 
-/* ==================== SALE SECTION ==================== */
+/* ==================== SALE SECTION (Cinematic Showcase) ==================== */
 .sale-section {
-  padding: 80px 0;
+  padding: 0;
   background: #C2B280;
   position: relative;
   overflow: hidden;
-  border-top: 1px solid rgba(26, 20, 16, 0.1);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.sale-bg-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: var(--font-david-libre), serif;
-  font-size: clamp(100px, 14vw, 220px);
-  font-weight: 300;
-  color: rgba(26, 20, 16, 0.04);
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
-}
-
 .sale-header {
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 50px;
+  padding: 80px 60px 0;
   position: relative;
   z-index: 2;
 }
@@ -1362,50 +1348,78 @@
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  gap: 32px;
+  gap: 40px;
   width: max-content;
   position: relative;
   z-index: 2;
   will-change: transform;
+  padding: 40px 0 60px;
 }
 
 .sale-track .sale-card {
-  width: clamp(380px, 45vw, 540px);
+  width: clamp(420px, 50vw, 620px);
   flex-shrink: 0;
-  min-height: 240px;
-}
-
-.sale-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  max-width: 1100px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
+  min-height: 320px;
 }
 
 .sale-card {
   position: relative;
-  border-radius: 4px;
+  border-radius: 20px;
   overflow: hidden;
   display: flex;
   align-items: center;
-  background: #b5a778;
-  border: 1px solid rgba(26, 20, 16, 0.1);
-  padding: 32px;
-  min-height: 240px;
+  background: linear-gradient(145deg, #1e1b16 0%, #151310 50%, #1a1714 100%);
+  border: 1px solid rgba(194, 178, 128, 0.12);
+  padding: 40px;
+  min-height: 320px;
   transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: pointer;
   z-index: 1;
 }
 
+.sale-card::before {
+  content: '';
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  width: 40px;
+  height: 40px;
+  border-left: 1px solid rgba(194, 178, 128, 0.2);
+  border-top: 1px solid rgba(194, 178, 128, 0.2);
+  pointer-events: none;
+  z-index: 4;
+  transition: all 0.4s ease;
+}
+
+.sale-card::after {
+  content: '';
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 40px;
+  height: 40px;
+  border-right: 1px solid rgba(194, 178, 128, 0.2);
+  border-bottom: 1px solid rgba(194, 178, 128, 0.2);
+  pointer-events: none;
+  z-index: 4;
+  transition: all 0.4s ease;
+}
+
 .sale-card:hover {
-  transform: translateY(-10px) scale(1.035);
-  background: linear-gradient(135deg, #c4b584 0%, #a09060 100%);
-  border-color: #1a1410;
-  box-shadow: 0 30px 70px rgba(26, 20, 16, 0.35), 0 0 0 1px #1a1410;
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(194, 178, 128, 0.35);
+  box-shadow:
+    0 30px 80px rgba(0, 0, 0, 0.5),
+    0 0 60px rgba(194, 141, 16, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
   z-index: 5;
+}
+
+.sale-card:hover::before,
+.sale-card:hover::after {
+  width: 50px;
+  height: 50px;
+  border-color: rgba(194, 178, 128, 0.45);
 }
 
 .sale-card-shimmer {
@@ -1414,8 +1428,8 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-  transition: left 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  background: linear-gradient(90deg, transparent, rgba(194, 178, 128, 0.06), transparent);
+  transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   pointer-events: none;
   z-index: 2;
 }
@@ -1426,20 +1440,42 @@
 
 .sale-card-img {
   position: relative;
-  width: 180px;
-  height: 180px;
+  width: 200px;
+  height: 200px;
   flex-shrink: 0;
-  margin-right: 28px;
+  margin-right: 36px;
   z-index: 3;
+}
+
+.sale-card-img::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 160px;
+  height: 160px;
+  background: radial-gradient(circle, rgba(194, 141, 16, 0.12) 0%, transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  transition: all 0.6s ease;
+  z-index: 0;
+}
+
+.sale-card:hover .sale-card-img::before {
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(194, 141, 16, 0.2) 0%, transparent 70%);
 }
 
 .sale-card-img img {
   transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.6s !important;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.4));
 }
 
 .sale-card:hover .sale-card-img img {
-  transform: scale(1.18) rotate(-6deg) !important;
-  filter: drop-shadow(0 18px 25px rgba(26, 20, 16, 0.35));
+  transform: scale(1.15) rotate(-4deg) !important;
+  filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.5)) brightness(1.05);
 }
 
 .sale-card-content {
@@ -1450,19 +1486,19 @@
 
 .sale-card-label {
   font-size: 9px;
-  font-weight: 300;
+  font-weight: 500;
   letter-spacing: 0.35em;
   text-transform: uppercase;
-  color: rgba(26, 20, 16, 0.4);
-  margin-bottom: 8px;
+  color: rgba(194, 178, 128, 0.45);
+  margin-bottom: 10px;
 }
 
 .sale-card-title {
   font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 22px;
-  font-weight: 400;
-  color: #1a1410;
-  margin-bottom: 12px;
+  font-size: 24px;
+  font-weight: 500;
+  color: #f0ece6;
+  margin-bottom: 16px;
   line-height: 1.2;
   transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
@@ -1475,68 +1511,73 @@
   display: inline-flex;
   align-items: baseline;
   gap: 4px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   transform-origin: left center;
 }
 
 .sale-card:hover .sale-discount-badge {
-  transform: scale(1.15) translateX(4px);
+  transform: scale(1.12) translateX(4px);
 }
 
 .sale-discount-num {
   font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 44px;
-  font-weight: 500;
-  color: #6b5a3e;
+  font-size: 52px;
+  font-weight: 600;
+  color: #c8ea32;
   line-height: 1;
-  transition: color 0.4s;
+  transition: color 0.4s, text-shadow 0.4s;
 }
 
-.sale-card:hover .sale-discount-num,
-.sale-card:hover .sale-discount-pct {
-  color: #920505;
+.sale-card:hover .sale-discount-num {
+  text-shadow: 0 0 30px rgba(200, 234, 50, 0.3);
 }
 
 .sale-discount-pct {
   font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 18px;
-  font-weight: 400;
-  color: #6b5a3e;
+  font-size: 20px;
+  font-weight: 500;
+  color: #c8ea32;
   transition: color 0.4s;
 }
 
 .sale-discount-off {
   font-size: 10px;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(26, 20, 16, 0.4);
-  margin-left: 8px;
+  color: rgba(194, 178, 128, 0.4);
+  margin-left: 10px;
 }
 
 .sale-card-cta {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.25em;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: #1a1410;
+  color: #f0ece6;
   text-decoration: none;
-  border-bottom: 1px solid rgba(26, 20, 16, 0.25);
-  padding-bottom: 4px;
-  transition: all 0.3s;
+  padding: 10px 22px;
+  background: rgba(194, 178, 128, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(194, 178, 128, 0.2);
+  border-radius: 6px;
+  transition: all 0.35s ease;
 }
 
 .sale-card-cta:hover {
-  color: #6b5a3e;
-  border-color: #6b5a3e;
+  background: rgba(194, 178, 128, 0.2);
+  border-color: rgba(194, 178, 128, 0.45);
+  color: #f0ece6;
+  box-shadow: 0 4px 20px rgba(194, 178, 128, 0.15);
 }
 
 .sale-card:hover .sale-card-cta {
-  letter-spacing: 0.32em;
+  letter-spacing: 0.26em;
 }
 
 .sale-card-cta svg {
@@ -1547,27 +1588,62 @@
   transform: translateX(4px);
 }
 
+/* Sale section responsive */
+@media (max-width: 1024px) {
+  .sale-header {
+    padding: 60px 40px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .sale-header {
+    padding: 48px 20px 0;
+    margin-bottom: 24px;
+  }
+
+  .sale-track {
+    gap: 20px;
+    padding: 20px 0 40px;
+  }
+
+  .sale-track .sale-card {
+    width: clamp(300px, 85vw, 400px);
+    min-height: auto;
+  }
+
+  .sale-card {
+    flex-direction: column;
+    text-align: center;
+    padding: 28px 24px;
+    border-radius: 16px;
+  }
+
+  .sale-card-img {
+    margin-right: 0;
+    margin-bottom: 16px;
+    width: 140px;
+    height: 140px;
+  }
+
+  .sale-card-title {
+    font-size: 20px;
+  }
+
+  .sale-discount-num {
+    font-size: 40px;
+  }
+
+  .sale-card-label {
+    font-size: 8px;
+  }
+}
+
 /* ==================== FIND YOUR PERFUME ==================== */
 .perfume-finder-section {
   padding: 100px 60px;
   background: #C2B280;
   position: relative;
   overflow: hidden;
-}
-
-.perfume-finder-bg-text {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: var(--font-david-libre), serif;
-  font-size: clamp(60px, 10vw, 140px);
-  font-weight: 300;
-  font-style: italic;
-  color: rgba(26, 20, 16, 0.04);
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
 }
 
 .perfume-finder-header {
@@ -1593,20 +1669,22 @@
 
 .perfume-card {
   position: relative;
-  background: #b5a778;
-  border-radius: 4px;
+  background: linear-gradient(145deg, #1e1b16 0%, #151310 50%, #1a1714 100%);
+  border-radius: 16px;
   overflow: hidden;
-  border: 1px solid rgba(26, 20, 16, 0.1);
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 1px solid rgba(194, 178, 128, 0.1);
+  transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   cursor: pointer;
   text-decoration: none;
   display: block;
 }
 
 .perfume-card:hover {
-  transform: translateY(-8px);
-  border-color: #1a1410;
-  box-shadow: 0 24px 60px rgba(26, 20, 16, 0.25), 0 0 0 1px #1a1410;
+  transform: translateY(-10px);
+  border-color: rgba(194, 178, 128, 0.3);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.35),
+    0 0 40px rgba(194, 141, 16, 0.06);
 }
 
 .perfume-card-img-wrap {
@@ -1614,7 +1692,19 @@
   width: 100%;
   aspect-ratio: 4/3;
   overflow: hidden;
-  background: linear-gradient(135deg, #a89968, #c0b580);
+  background: linear-gradient(145deg, rgba(30, 27, 22, 0.8), rgba(20, 18, 14, 0.9));
+}
+
+.perfume-card-img-wrap::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  background: linear-gradient(to top, rgba(15, 13, 10, 0.5) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .perfume-card-img-wrap img {
@@ -1622,29 +1712,30 @@
 }
 
 .perfume-card:hover .perfume-card-img-wrap img {
-  transform: scale(1.08);
+  transform: scale(1.1);
 }
 
 .perfume-card-body {
-  padding: 16px 16px;
+  padding: 18px 20px 22px;
   text-align: center;
 }
 
 .perfume-card-name {
   font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  color: #1a1410;
-  margin-bottom: 6px;
+  font-size: clamp(18px, 1.4vw, 22px);
+  font-weight: 700;
+  color: #c8ea32;
+  margin-bottom: 8px;
   line-height: 1.2;
+  letter-spacing: 0.05em;
 }
 
 .perfume-card-desc {
   font-size: 10px;
   font-weight: 300;
-  line-height: 1.6;
-  color: rgba(26, 20, 16, 0.8);
-  margin-bottom: 12px;
+  line-height: 1.65;
+  color: rgba(240, 236, 230, 0.7);
+  margin-bottom: 14px;
   letter-spacing: 0.02em;
 }
 
@@ -1652,23 +1743,87 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 8px 18px;
-  background: #1a1410;
-  color: #f0ece6;
-  font-size: 7px;
-  font-weight: 400;
-  letter-spacing: 0.25em;
+  padding: 9px 18px;
+  background: #0A2A1F;
+  color: #c8ea32;
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
   text-decoration: none;
-  border: none;
+  border: 1px solid rgba(200, 234, 50, 0.3);
+  border-radius: 6px;
   cursor: pointer;
-  transition: background 0.3s, color 0.3s, transform 0.3s;
+  transition: all 0.3s ease;
 }
 
 .perfume-card-btn:hover {
-  background: #2e2820;
-  color: #22c55e;
+  background: #0f3d2e;
+  border-color: #c8ea32;
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(10, 42, 31, 0.5), 0 0 12px rgba(200, 234, 50, 0.25);
   transform: translateY(-2px);
+}
+
+/* Perfume finder responsive */
+@media (max-width: 1024px) {
+  .perfume-finder-section {
+    padding: 60px 32px;
+  }
+
+  .perfume-grid {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .perfume-finder-section {
+    padding: 40px 16px;
+  }
+
+  .perfume-finder-header {
+    margin-bottom: 32px;
+  }
+
+  .perfume-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .perfume-grid > :last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    width: calc(50% - 6px);
+    justify-self: center;
+  }
+
+  .perfume-card {
+    border-radius: 12px;
+  }
+
+  .perfume-card-img-wrap {
+    aspect-ratio: 1/1;
+  }
+
+  .perfume-card-body {
+    padding: 12px 14px 16px;
+  }
+
+  .perfume-card-name {
+    font-size: 15px;
+    margin-bottom: 6px;
+  }
+
+  .perfume-card-desc {
+    font-size: 8px;
+    margin-bottom: 8px;
+    line-height: 1.55;
+  }
+
+  .perfume-card-btn {
+    padding: 7px 14px;
+    font-size: 7px;
+    gap: 5px;
+  }
 }
 
 /* ==================== TESTIMONIALS ==================== */
@@ -1970,71 +2125,6 @@
     gap: 20px;
   }
 
-  .sale-section {
-    padding: 60px 0;
-    min-height: 100vh;
-  }
-
-  .sale-track .sale-card {
-    width: clamp(280px, 85vw, 360px);
-  }
-
-  .sale-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .sale-card {
-    padding: 20px;
-    min-height: 140px;
-  }
-
-  .sale-card-img {
-    width: 100px;
-    height: 100px;
-    margin-right: 16px;
-  }
-
-  .sale-discount-num {
-    font-size: 32px;
-  }
-
-  .sale-card-title {
-    font-size: 20px;
-  }
-
-  .perfume-finder-section {
-    padding: 60px 32px;
-  }
-
-  .perfume-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
-  }
-
-  .perfume-grid> :last-child:nth-child(odd) {
-    grid-column: 1 / -1;
-    width: calc(50% - 8px);
-    justify-self: center;
-  }
-
-  .perfume-card-body {
-    padding: 12px;
-  }
-
-  .perfume-card-name {
-    font-size: 16px;
-  }
-
-  .perfume-card-desc {
-    font-size: 9px;
-    margin-bottom: 8px;
-  }
-
-  .perfume-card-btn {
-    padding: 6px 14px;
-    font-size: 6px;
-  }
-
   .about-section {
     padding: 60px 32px;
   }
@@ -2096,78 +2186,6 @@
 
   .pillar-card {
     padding: 32px 24px;
-  }
-
-  .sale-section {
-    padding: 40px 16px;
-  }
-
-  .sale-card {
-    flex-direction: column;
-    text-align: center;
-    padding: 16px;
-    min-height: auto;
-  }
-
-  .sale-card-img {
-    margin-right: 0;
-    margin-bottom: 12px;
-    width: 100px;
-    height: 100px;
-  }
-
-  .sale-card-title {
-    font-size: 18px;
-  }
-
-  .sale-discount-num {
-    font-size: 28px;
-  }
-
-  .sale-card-label {
-    font-size: 8px;
-  }
-
-  .sale-grid {
-    gap: 12px;
-  }
-
-  .perfume-finder-section {
-    padding: 40px 16px;
-  }
-
-  .perfume-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-  .perfume-grid> :last-child:nth-child(odd) {
-    width: calc(50% - 5px);
-  }
-
-  .perfume-card-img-wrap {
-    aspect-ratio: 1/1;
-  }
-
-  .perfume-card-body {
-    padding: 10px;
-  }
-
-  .perfume-card-name {
-    font-size: 14px;
-    margin-bottom: 4px;
-  }
-
-  .perfume-card-desc {
-    font-size: 8px;
-    margin-bottom: 6px;
-    line-height: 1.5;
-  }
-
-  .perfume-card-btn {
-    padding: 5px 12px;
-    font-size: 6px;
-    gap: 5px;
   }
 
   .about-section {
