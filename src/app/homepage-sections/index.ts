@@ -1,0 +1,9 @@
+export { default as HeroSection } from "./HeroSection";
+export { default as MarqueeSection } from "./MarqueeSection";
+export { default as PillarsSection } from "./PillarsSection";
+export { default as CampaignVideoSection } from "./CampaignVideoSection";
+export { default as FindYourScentSection } from "./FindYourScentSection";
+export { default as ExclusiveDealsSection } from "./ExclusiveDealsSection";
+export { default as PerfumeFinderSection } from "./PerfumeFinderSection";
+export { default as AboutSection } from "./AboutSection";
+export { default as EditorialQuoteBanner } from "./EditorialQuoteBanner";
