@@ -1893,16 +1893,29 @@
 /* ==================== TESTIMONIALS ==================== */
 /* ==================== ABOUT SECTION (homepage) ==================== */
 .about-section {
-  padding: 100px 60px;
+  padding: 120px 60px;
   background: #C2B280;
   position: relative;
   overflow: hidden;
   border-top: 1px solid rgba(26, 20, 16, 0.1);
 }
 
+.about-bg-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 900px;
+  height: 900px;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.22) 0%, rgba(194, 178, 128, 0) 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+}
+
 .about-header {
   text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: 60px;
   position: relative;
   z-index: 2;
 }
@@ -1911,109 +1924,117 @@
   justify-content: center;
 }
 
-.about-content {
-  max-width: 700px;
-  margin: 0 auto 60px;
-  position: relative;
-  z-index: 2;
-}
-
-.about-story {
-  font-family: var(--font-david-libre), serif;
-  font-size: clamp(17px, 2vw, 22px);
-  font-weight: 300;
-  font-style: italic;
-  color: rgba(26, 20, 16, 0.6);
-  line-height: 1.8;
-  text-align: center;
-  letter-spacing: 0.02em;
-}
-
-/* Value cards */
+/* Value cards grid */
 .about-values-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  max-width: 960px;
-  margin: 0 auto 56px;
+  gap: 36px;
+  max-width: 1080px;
+  margin: 0 auto 64px;
   position: relative;
   z-index: 2;
 }
 
 .about-value-card {
-  text-align: center;
-  padding: 44px 28px;
-  background: rgba(255, 255, 255, 0.35);
-  backdrop-filter: blur(16px);
-  border: 1px solid rgba(194, 178, 128, 0.25);
-  border-radius: 6px;
-  box-shadow: 0 12px 32px rgba(26, 20, 16, 0.05);
-  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
   position: relative;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.32);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(26, 20, 16, 0.14);
+  padding: 40px 32px;
+  box-shadow:
+    0 16px 40px rgba(26, 20, 16, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
   overflow: hidden;
   cursor: pointer;
 }
 
+.about-value-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(26, 20, 16, 0.3), transparent);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
 .about-value-card:hover {
-  background: linear-gradient(145deg, #1c1511 0%, #2c211a 100%);
-  border-color: rgba(223, 213, 168, 0.55);
-  transform: translateY(-12px) scale(1.03);
+  background: linear-gradient(145deg, #ffffff 0%, #f5eedc 100%);
+  border-color: #0A2A1F;
+  transform: translateY(-12px) scale(1.02);
   box-shadow:
-    0 28px 60px rgba(26, 20, 16, 0.45),
-    0 0 40px rgba(194, 178, 128, 0.22);
+    0 30px 70px rgba(10, 42, 31, 0.15),
+    0 0 40px rgba(200, 234, 50, 0.3);
   z-index: 10;
 }
 
-.about-value-icon {
-  display: inline-flex;
+.about-value-card:hover::before {
+  opacity: 1;
+  background: linear-gradient(90deg, transparent, #0A2A1F, transparent);
+}
+
+.about-value-inner {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.about-value-icon-box {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(26, 20, 16, 0.9);
+  color: #C2B280;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
-  background: rgba(26, 20, 16, 0.88);
-  color: #C2B280;
-  font-size: 20px;
-  margin-bottom: 22px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 24px rgba(26, 20, 16, 0.15);
   transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.about-value-card:hover .about-value-icon {
-  background: linear-gradient(135deg, #dfd5a8 0%, #C2B280 100%);
-  color: #1a1410;
-  transform: scale(1.16) rotate(180deg);
-  box-shadow: 0 0 25px rgba(223, 213, 168, 0.6);
+.about-value-card:hover .about-value-icon-box {
+  background: #c8ea32;
+  color: #0A2A1F;
+  transform: scale(1.12) rotate(360deg);
+  box-shadow: 0 0 30px rgba(200, 234, 50, 0.6);
 }
 
 .about-value-title {
   font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 18px;
-  font-weight: 400;
-  letter-spacing: 0.15em;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: #1a1410;
   margin-bottom: 14px;
-  transition: color 0.4s ease, transform 0.4s ease;
+  transition: all 0.4s ease;
 }
 
 .about-value-card:hover .about-value-title {
-  color: #dfd5a8;
-  transform: translateY(-2px);
+  color: #0A2A1F;
+  letter-spacing: 0.16em;
 }
 
 .about-value-desc {
   font-family: var(--font-space-grotesk), sans-serif;
   font-size: 13px;
   font-weight: 300;
-  line-height: 1.85;
-  color: rgba(26, 20, 16, 0.7);
-  letter-spacing: 0.03em;
-  transition: color 0.4s ease, transform 0.4s ease;
+  line-height: 1.8;
+  color: rgba(26, 20, 16, 0.75);
+  letter-spacing: 0.02em;
+  transition: color 0.4s ease;
 }
 
 .about-value-card:hover .about-value-desc {
-  color: rgba(250, 248, 245, 0.92);
-  transform: translateY(-1px);
+  color: rgba(10, 42, 31, 0.85);
 }
 
 /* CTA link */
@@ -2026,22 +2047,35 @@
 .about-cta-link {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   font-family: var(--font-space-grotesk), sans-serif;
   font-size: 11px;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #1a1410;
   text-decoration: none;
-  border-bottom: 1px solid rgba(26, 20, 16, 0.25);
-  padding-bottom: 4px;
-  transition: color 0.3s ease, border-color 0.3s ease;
+  padding: 12px 28px;
+  background: rgba(26, 20, 16, 0.08);
+  border: 1px solid rgba(26, 20, 16, 0.2);
+  border-radius: 30px;
+  transition: all 0.4s ease;
 }
 
 .about-cta-link:hover {
-  color: #6b5a3e;
-  border-color: #6b5a3e;
+  background: #1a1410;
+  color: #C2B280;
+  border-color: #1a1410;
+  box-shadow: 0 8px 25px rgba(26, 20, 16, 0.25);
+  transform: translateY(-2px);
+}
+
+.about-cta-link svg {
+  transition: transform 0.3s ease;
+}
+
+.about-cta-link:hover svg {
+  transform: translateX(4px);
 }
 
 /* ==================== EDITORIAL BANNER ==================== */

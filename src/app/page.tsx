@@ -177,12 +177,11 @@ export default function Home() {
       // Our Story / About Section
       gsap.fromTo(
         ".about-header",
-        { opacity: 0, y: 35, scale: 0.96 },
+        { opacity: 0, y: 30 },
         {
           opacity: 1,
           y: 0,
-          scale: 1,
-          duration: 1.2,
+          duration: 1,
           ease: "power3.out",
           force3D: true,
           scrollTrigger: {
@@ -193,115 +192,24 @@ export default function Home() {
         }
       );
 
-      const storyCards = gsap.utils.toArray<HTMLElement>(".about-value-card");
-      if (storyCards.length === 3) {
-        // Left card sweeps in from left angle
-        gsap.fromTo(
-          storyCards[0],
-          { opacity: 0, x: -130, y: 55, rotationZ: -9, scale: 0.86 },
-          {
-            opacity: 1,
-            x: 0,
-            y: 0,
-            rotationZ: 0,
-            scale: 1,
-            duration: 1.35,
-            ease: "power4.out",
-            force3D: true,
-            clearProps: "transform",
-            scrollTrigger: {
-              trigger: ".about-values-grid",
-              start: "top 82%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-        // Center card descends from elevated gallery spotlight
-        gsap.fromTo(
-          storyCards[1],
-          { opacity: 0, y: -80, scale: 1.15 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 1.35,
-            delay: 0.1,
-            ease: "power4.out",
-            force3D: true,
-            clearProps: "transform",
-            scrollTrigger: {
-              trigger: ".about-values-grid",
-              start: "top 82%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-        // Right card sweeps in from right angle
-        gsap.fromTo(
-          storyCards[2],
-          { opacity: 0, x: 130, y: 55, rotationZ: 9, scale: 0.86 },
-          {
-            opacity: 1,
-            x: 0,
-            y: 0,
-            rotationZ: 0,
-            scale: 1,
-            duration: 1.35,
-            delay: 0.05,
-            ease: "power4.out",
-            force3D: true,
-            clearProps: "transform",
-            scrollTrigger: {
-              trigger: ".about-values-grid",
-              start: "top 82%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      } else {
-        // Fallback if card count changes in future
-        gsap.fromTo(
-          ".about-value-card",
-          { opacity: 0, y: 60, scale: 0.9 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 1.2,
-            stagger: 0.15,
-            ease: "power4.out",
-            clearProps: "transform",
-            scrollTrigger: {
-              trigger: ".about-values-grid",
-              start: "top 82%",
-              toggleActions: "play none none reverse",
-            },
-          }
-        );
-      }
-
-      // Continuous Scrubbed Horizon Parallax on inner wrappers
-      const storyInners = gsap.utils.toArray<HTMLElement>(
-        ".about-value-inner"
+      gsap.fromTo(
+        ".about-value-card",
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.12,
+          ease: "power3.out",
+          force3D: true,
+          clearProps: "transform",
+          scrollTrigger: {
+            trigger: ".about-values-grid",
+            start: "top 85%",
+            toggleActions: "play none none reverse",
+          },
+        }
       );
-      storyInners.forEach((inner, i) => {
-        const yFloat = i === 1 ? 30 : -30;
-        gsap.fromTo(
-          inner,
-          { y: -yFloat * 0.6 },
-          {
-            y: yFloat,
-            ease: "none",
-            force3D: true,
-            scrollTrigger: {
-              trigger: ".about-section",
-              start: "top bottom",
-              end: "bottom top",
-              scrub: 1.2,
-            },
-          }
-        );
-      });
 
       // 7. Editorial Banner
       gsap.fromTo(
