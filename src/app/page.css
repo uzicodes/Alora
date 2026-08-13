@@ -1484,26 +1484,86 @@
   z-index: 3;
 }
 
-.sale-card-label {
+/* Brand tag badge */
+.sale-card-header-row {
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.sale-brand-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.35em;
+  font-weight: 600;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
-  color: rgba(194, 178, 128, 0.45);
-  margin-bottom: 10px;
+  color: #c2b280;
+  background: rgba(194, 178, 128, 0.08);
+  border: 1px solid rgba(194, 178, 128, 0.22);
+  padding: 4px 10px;
+  border-radius: 20px;
+  transition: all 0.4s ease;
 }
 
-.sale-card-title {
-  font-family: var(--font-space-grotesk), sans-serif;
-  font-size: 24px;
-  font-weight: 500;
-  color: #f0ece6;
+.sale-brand-tag-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #c8ea32;
+  box-shadow: 0 0 8px rgba(200, 234, 50, 0.8);
+}
+
+.sale-card:hover .sale-brand-tag {
+  background: rgba(194, 178, 128, 0.16);
+  border-color: rgba(194, 178, 128, 0.45);
+  box-shadow: 0 0 12px rgba(194, 178, 128, 0.15);
+}
+
+/* Brand block & typography */
+.sale-card-brand-block {
   margin-bottom: 16px;
-  line-height: 1.2;
-  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.sale-card:hover .sale-card-title {
+.sale-card-brand-name {
+  font-family: var(--font-space-grotesk), sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, #FFFFFF 0%, #F5E8C7 40%, #C2B280 75%, #EADBAC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.15;
+  margin: 0;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.6));
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.sale-card-collection {
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+  font-size: 14px;
+  font-style: italic;
+  letter-spacing: 0.05em;
+  color: rgba(240, 236, 230, 0.7);
+  margin-top: 4px;
+  margin-bottom: 0;
+  transition: all 0.4s ease;
+}
+
+.sale-card:hover .sale-card-brand-name {
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFF3B0 30%, #E5C468 70%, #FFFDF8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 20px rgba(229, 196, 104, 0.4));
+  transform: translateX(6px);
+}
+
+.sale-card:hover .sale-card-collection {
+  color: rgba(255, 255, 255, 0.95);
   transform: translateX(6px);
 }
 
@@ -1625,16 +1685,20 @@
     height: 140px;
   }
 
-  .sale-card-title {
-    font-size: 20px;
+  .sale-card-header-row {
+    justify-content: center;
+  }
+
+  .sale-card-brand-name {
+    font-size: 22px;
+  }
+
+  .sale-card-collection {
+    font-size: 13px;
   }
 
   .sale-discount-num {
     font-size: 40px;
-  }
-
-  .sale-card-label {
-    font-size: 8px;
   }
 }
 

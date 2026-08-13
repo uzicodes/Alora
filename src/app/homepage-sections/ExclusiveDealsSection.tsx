@@ -4,22 +4,30 @@ import React from "react";
 
 const deals = [
   {
-    name: "Luis Viutton Classics",
+    brand: "Louis Vuitton",
+    collection: "Classics Collection",
+    tag: "HAUTE PARFUMERIE",
     discount: 30,
     img: "/homepage_images/deals/LV.webp",
   },
   {
-    name: "Hugo Boss Frontliners",
+    brand: "Hugo Boss",
+    collection: "Frontliners Edition",
+    tag: "SIGNATURE HOUSE",
     discount: 15,
     img: "/homepage_images/deals/boss.webp",
   },
   {
-    name: "Lattaffa Year-Combo",
+    brand: "Lattafa",
+    collection: "Year-Combo Selection",
+    tag: "OUD & AMBER",
     discount: 25,
     img: "/homepage_images/deals/lattaffa.webp",
   },
   {
-    name: "Nishane Summer Picks",
+    brand: "Nishane",
+    collection: "Summer Picks Extrait",
+    tag: "EXTRAIT DE PARFUM",
     discount: 20,
     img: "/homepage_images/deals/nishane.webp",
   },
@@ -35,12 +43,13 @@ export default function ExclusiveDealsSection() {
       <div className="sale-track-wrapper">
         <div className="sale-track">
           {deals.map((deal) => (
-            <div key={deal.name} className="sale-card will-change-transform">
+            <div key={deal.brand} className="sale-card will-change-transform">
               <div className="sale-card-shimmer"></div>
+
               <div className="sale-card-img">
                 <Image
                   src={deal.img}
-                  alt={deal.name}
+                  alt={`${deal.brand} - ${deal.collection}`}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   quality={95}
@@ -48,8 +57,18 @@ export default function ExclusiveDealsSection() {
                 />
               </div>
               <div className="sale-card-content">
-                <p className="sale-card-label">Perfume</p>
-                <h3 className="sale-card-title">{deal.name}</h3>
+                <div className="sale-card-header-row">
+                  <span className="sale-brand-tag">
+                    <span className="sale-brand-tag-dot"></span>
+                    {deal.tag}
+                  </span>
+                </div>
+
+                <div className="sale-card-brand-block">
+                  <h3 className="sale-card-title sale-card-brand-name">{deal.brand}</h3>
+                  <p className="sale-card-collection">{deal.collection}</p>
+                </div>
+
                 <div className="sale-discount-badge">
                   <span className="sale-discount-num">{deal.discount}</span>
                   <span className="sale-discount-pct">%</span>
@@ -77,3 +96,4 @@ export default function ExclusiveDealsSection() {
     </section>
   );
 }
+
