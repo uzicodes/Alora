@@ -67,43 +67,54 @@ export default function ProfilePage() {
   const { phone, street, city, country, orders } = state;
 
   useEffect(() => {
-    if (!isLoaded || !isSignedIn || !user) return;
+    if (!isLoaded || !isSignedIn || !user?.id) return;
 
     let isMounted = true;
-    setIsLoadingData(true);
 
-    Promise.all([
-      getUserProfile(user.id),
-      getUserOrders(user.id)
-    ]).then(([data, fetchedOrders]) => {
-      if (!isMounted) return;
-      setState((prev) => {
-        let newPhone = prev.phone;
-        let newStreet = prev.street;
-        let newCity = prev.city;
-        let newCountry = prev.country;
-        
-        if (data) {
-          newPhone = data.phone || "";
-          if (data.address) {
-            const parts = data.address.split(",").map((p: string) => p.trim());
-            newStreet = parts[0] || "";
-            newCity = parts[1] || "";
-            newCountry = parts[2] || "";
+    async function loadUserData(userId: string) {
+      try {
+        const [data, fetchedOrders] = await Promise.all([
+          getUserProfile(userId),
+          getUserOrders(userId),
+        ]);
+
+        if (!isMounted) return;
+
+        setState((prev) => {
+          let newPhone = prev.phone;
+          let newStreet = prev.street;
+          let newCity = prev.city;
+          let newCountry = prev.country;
+
+          if (data) {
+            newPhone = data.phone || "";
+            if (data.address) {
+              const parts = data.address.split(",").map((p: string) => p.trim());
+              newStreet = parts[0] || "";
+              newCity = parts[1] || "";
+              newCountry = parts[2] || "";
+            }
           }
+
+          return {
+            ...prev,
+            phone: newPhone,
+            street: newStreet,
+            city: newCity,
+            country: newCountry,
+            orders: fetchedOrders || prev.orders,
+          };
+        });
+      } catch (error) {
+        console.error("Failed to fetch user profile data:", error);
+      } finally {
+        if (isMounted) {
+          setIsLoadingData(false);
         }
-        
-        return {
-          ...prev,
-          phone: newPhone,
-          street: newStreet,
-          city: newCity,
-          country: newCountry,
-          orders: fetchedOrders || prev.orders,
-        };
-      });
-      setIsLoadingData(false);
-    });
+      }
+    }
+
+    loadUserData(user.id);
 
     return () => {
       isMounted = false;
