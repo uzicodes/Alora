@@ -20,42 +20,36 @@ function useProductSearch(searchQuery: string) {
   const [productResults, setProductResults] = useState<any[]>([]);
 
   useEffect(() => {
-    const controller = new AbortController();
-    let active = true;
-
-    if (searchQuery.trim().length > 0) {
-      const fetchProducts = async () => {
-        try {
-          const res = await fetch(`/api/products/search?q=${encodeURIComponent(searchQuery)}`, {
-            signal: controller.signal
-          });
-          if (res.ok) {
-            const data = await res.json();
-            if (active) setProductResults(data);
-          }
-        } catch (error: any) {
-          if (error.name !== 'AbortError') {
-            console.error("Error fetching products:", error);
-          }
-        }
-      };
-
-      const timeoutId = setTimeout(fetchProducts, 300);
-      return () => {
-        active = false;
-        controller.abort();
-        clearTimeout(timeoutId);
-      };
-    } else {
-      let active = true;
-      Promise.resolve().then(() => {
-        if (active) setProductResults([]);
-      });
-      return () => {
-        active = false;
-        controller.abort();
-      };
+    const trimmed = searchQuery.trim();
+    if (!trimmed) {
+      setProductResults([]);
+      return;
     }
+
+    const controller = new AbortController();
+    let isMounted = true;
+
+    const timeoutId = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/products/search?q=${encodeURIComponent(trimmed)}`, {
+          signal: controller.signal,
+        });
+        if (res.ok && isMounted) {
+          const data = await res.json();
+          setProductResults(data);
+        }
+      } catch (error: any) {
+        if (error.name !== "AbortError") {
+          console.error("Error fetching products:", error);
+        }
+      }
+    }, 300);
+
+    return () => {
+      isMounted = false;
+      clearTimeout(timeoutId);
+      controller.abort();
+    };
   }, [searchQuery]);
 
   return productResults;
@@ -220,7 +214,7 @@ export default function Navbar() {
             <li><Link href="/woman" className={pathname === "/woman" ? "active-link" : ""}>Women</Link></li>
             <li><Link href="/unisex" className={pathname === "/unisex" ? "active-link" : ""}>Unisex</Link></li>
             <li className="nav-item-dropdown">
-              <a href="#" onClick={(e) => e.preventDefault()}>Brands</a>
+              <button type="button" className="nav-dropdown-btn" aria-haspopup="true" aria-expanded="false">Brands</button>
               <div className="dropdown-menu">
                 <div className="brands-grid">
                   {BRANDS.map((brand) => (
@@ -453,13 +447,23 @@ function NavbarMobileMenu({
       <Link href="/men" onClick={() => setMobileOpen(false)}>Men</Link>
       <Link href="/woman" onClick={() => setMobileOpen(false)}>Women</Link>
       <Link href="/unisex" onClick={() => setMobileOpen(false)}>Unisex</Link>
-      <a
-        href="#"
-        onClick={(e) => {
-          e.preventDefault();
-          setMobileBrandsOpen(!mobileBrandsOpen);
+      <button
+        type="button"
+        onClick={() => setMobileBrandsOpen(!mobileBrandsOpen)}
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          background: 'none',
+          border: 'none',
+          color: 'inherit',
+          font: 'inherit',
+          cursor: 'pointer',
+          padding: 0,
+          textTransform: 'inherit',
+          letterSpacing: 'inherit',
         }}
-        style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+        aria-expanded={mobileBrandsOpen}
       >
         Brands
         <svg
@@ -468,7 +472,7 @@ function NavbarMobileMenu({
         >
           <path d="M6 9l6 6 6-6" />
         </svg>
-      </a>
+      </button>
 
       {mobileBrandsOpen && (
         <div className="navbar-mobile-brands">
