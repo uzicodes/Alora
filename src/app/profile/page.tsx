@@ -66,16 +66,19 @@ export default function ProfilePage() {
   });
   const { phone, street, city, country, orders } = state;
 
+  const userId = user?.id;
+
   useEffect(() => {
-    if (!isLoaded || !isSignedIn || !user?.id) return;
+    if (!isLoaded || !isSignedIn || !userId) return;
 
     let isMounted = true;
+    const currentUserId = userId;
 
-    async function loadUserData(userId: string) {
+    async function loadUserData(id: string) {
       try {
         const [data, fetchedOrders] = await Promise.all([
-          getUserProfile(userId),
-          getUserOrders(userId),
+          getUserProfile(id),
+          getUserOrders(id),
         ]);
 
         if (!isMounted) return;
@@ -114,12 +117,12 @@ export default function ProfilePage() {
       }
     }
 
-    loadUserData(user.id);
+    loadUserData(currentUserId);
 
     return () => {
       isMounted = false;
     };
-  }, [isLoaded, isSignedIn, user?.id]);
+  }, [isLoaded, isSignedIn, userId]);
 
   if (isLoaded && !isSignedIn) {
     redirect("/login");
