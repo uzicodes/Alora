@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, use, useCallback, useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
+import { createContext, use, useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
 import { useAuth, ClerkLoaded } from "@clerk/nextjs";
 
 export type CartItem = {
@@ -119,7 +119,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     getServerSnapshot
   );
 
-  const persistCart = useCallback((items: CartItem[]) => {
+  function persistCart(items: CartItem[]) {
     if (typeof window !== "undefined") {
       const dataToStore = {
         items,
@@ -128,9 +128,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(dataToStore));
       window.dispatchEvent(new Event("cart-storage-update"));
     }
-  }, []);
+  }
 
-  const addToCart = useCallback((item: Omit<CartItem, "quantity">) => {
+  function addToCart(item: Omit<CartItem, "quantity">) {
     const current = getStoredCartSnapshot();
     const existing = current.find((i) => i.id === item.id);
     let newItems: CartItem[];
@@ -142,27 +142,27 @@ export function CartProvider({ children }: { children: ReactNode }) {
       newItems = [...current, { ...item, quantity: 1 }];
     }
     persistCart(newItems);
-  }, [persistCart]);
+  }
 
-  const removeFromCart = useCallback((id: string) => {
+  function removeFromCart(id: string) {
     const current = getStoredCartSnapshot();
     const newItems = current.filter((item) => item.id !== id);
     persistCart(newItems);
-  }, [persistCart]);
+  }
 
-  const updateItemQuantity = useCallback((id: string, quantity: number) => {
+  function updateItemQuantity(id: string, quantity: number) {
     if (quantity < 1) return;
     const current = getStoredCartSnapshot();
     const newItems = current.map((item) => (item.id === id ? { ...item, quantity } : item));
     persistCart(newItems);
-  }, [persistCart]);
+  }
 
-  const clearCart = useCallback(() => {
+  function clearCart() {
     if (typeof window !== "undefined") {
       localStorage.removeItem(CART_STORAGE_KEY);
       window.dispatchEvent(new Event("cart-storage-update"));
     }
-  }, []);
+  }
 
   const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
