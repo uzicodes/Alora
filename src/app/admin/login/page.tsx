@@ -36,24 +36,26 @@ export default function AdminLogin() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-[#F4F4F5] p-4 relative overflow-hidden">
-            <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-gray-200 rounded-full blur-3xl opacity-50 z-0"></div>
-            <div className="absolute bottom-[-10%] right-[-10%] w-96 h-96 bg-gray-300 rounded-full blur-3xl opacity-50 z-0"></div>
+        <div className="flex items-center justify-center min-h-screen bg-[#FAFAFA] p-4 relative overflow-hidden font-sans">
+            <div className="absolute top-[-15%] left-[-10%] w-[500px] h-[500px] bg-[#C2B280]/20 rounded-full blur-[100px] opacity-60 z-0 pointer-events-none"></div>
+            <div className="absolute bottom-[-15%] right-[-10%] w-[500px] h-[500px] bg-gray-200 rounded-full blur-[100px] opacity-60 z-0 pointer-events-none"></div>
 
-            <div className="bg-white px-10 py-12 min-h-[480px] z-10 w-full max-w-md border-[3px] border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] rounded-none transition-all duration-300 hover:shadow-[15px_15px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-2 hover:-translate-x-1 flex flex-col justify-center">
-                <div className="flex justify-center mb-10"></div>
+            <div className="bg-white/80 backdrop-blur-xl px-10 py-12 min-h-[480px] z-10 w-full max-w-md border border-white/50 shadow-2xl rounded-3xl transition-all duration-500 hover:shadow-3xl flex flex-col justify-center">
+                <div className="flex justify-center mb-6">
+                    <h2 className="text-xl font-medium tracking-[0.2em] text-[#C2B280] uppercase">Alora</h2>
+                </div>
 
-                <h1 className="text-4xl font-black mb-4 text-center uppercase tracking-tighter">
+                <h1 className="text-3xl font-light mb-2 text-center tracking-wide text-gray-900">
                     Admin Portal
                 </h1>
-
-                <form onSubmit={handleLogin} className="flex flex-col items-center gap-8">
-                    <p className="text-red-500 text-center text-[10px] font-bold uppercase tracking-widest leading-relaxed mb-6">
-                        Authorized personnel only.
+                
+                <form onSubmit={handleLogin} className="flex flex-col items-center gap-8 mt-6">
+                    <p className="text-gray-400 text-xs font-medium uppercase tracking-widest leading-relaxed mb-4 text-center">
+                        Authorized personnel only
                     </p>
 
-                    <div className="space-y-5">
-                        <label htmlFor="security-key" className="block text-center text-sm font-bold uppercase tracking-widest text-gray-700">
+                    <div className="space-y-3 w-full">
+                        <label htmlFor="security-key" className="block text-center text-[11px] font-semibold uppercase tracking-widest text-gray-500">
                             Security Key
                         </label>
 
@@ -63,28 +65,18 @@ export default function AdminLogin() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             aria-label="Security Key"
-                            className="w-full border-2 border-gray-300 bg-gray-50 p-4 mt-2 font-mono text-lg focus:border-black focus:bg-white focus:shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none transition-all duration-200 rounded-none placeholder-gray-400 text-center"
+                            className="w-full border border-gray-200 bg-white/50 p-4 mt-2 font-mono text-lg focus:border-[#C2B280] focus:ring-1 focus:ring-[#C2B280] outline-none transition-all duration-300 rounded-xl placeholder-gray-300 text-center shadow-inner"
                             placeholder="••••••••••••"
                             required
                         />
                     </div>
 
                     {error && (
-                        <div className="border border-red-500 bg-red-50 p-4 mt-2 flex items-center justify-center gap-3 animate-pulse">
-                            <svg
-                                className="w-6 h-6 text-red-500"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                                />
+                        <div className="w-full bg-red-50/50 border border-red-100 p-4 rounded-xl flex items-center justify-center gap-3 animate-in fade-in slide-in-from-bottom-2 duration-300">
+                            <svg className="w-5 h-5 text-red-500/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                             </svg>
-                            <p className="text-red-700 text-sm font-bold tracking-wide uppercase">
+                            <p className="text-red-600 text-xs font-medium tracking-wide">
                                 {error}
                             </p>
                         </div>
@@ -93,23 +85,18 @@ export default function AdminLogin() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-2/3 mx-auto mt-4 bg-black text-white p-5 font-bold tracking-[0.2em] uppercase border-2 border-black hover:bg-green-800 hover:border-green-800 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed group relative overflow-hidden"
+                        className="w-full mt-4 bg-gray-900 text-white p-4 font-medium tracking-widest uppercase rounded-xl hover:bg-[#C2B280] transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed group relative overflow-hidden shadow-lg hover:shadow-xl hover:-translate-y-0.5"
                     >
-                        <span className="relative z-10 flex items-center justify-center gap-3">
-                            {loading ? "AUTHENTICATING..." : "AUTHORIZE ACCESS"}
+                        <span className="relative z-10 flex items-center justify-center gap-3 text-sm">
+                            {loading ? "Authenticating..." : "Authorize Access"}
                             {!loading && (
                                 <svg
-                                    className="w-5 h-5 group-hover:translate-x-2 transition-transform"
+                                    className="w-4 h-4 group-hover:translate-x-1 transition-transform opacity-70"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
                                 >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M14 5l7 7m0 0l-7 7m7-7H3"
-                                    />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
                                 </svg>
                             )}
                         </span>

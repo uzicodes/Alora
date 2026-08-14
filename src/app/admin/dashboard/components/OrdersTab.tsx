@@ -40,11 +40,11 @@ function ItemsDropdown({ items }: { items: any[] }) {
                 type="button"
                 ref={buttonRef}
                 onClick={toggleDropdown}
-                className="font-bold text-[10px] bg-black text-white px-3 py-1.5 rounded-none border-2 border-black hover:bg-gray-800 transition-all active:translate-y-0.5 active:translate-x-0.5 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] flex items-center gap-2"
+                className="font-medium text-[11px] bg-white text-gray-700 px-3 py-1.5 rounded-none border border-gray-200 hover:bg-gray-50 transition-all shadow-sm flex items-center gap-2"
             >
-                {items.length} ITEMS
+                {items.length} Items
                 <svg className={`w-3 h-3 transition-transform ${isOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
                 </svg>
             </button>
 
@@ -58,7 +58,7 @@ function ItemsDropdown({ items }: { items: any[] }) {
                     />
 
                     <div
-                        className="fixed w-72 bg-white border-2 border-black shadow-[10px_10px_0px_0px_#000] p-4 text-left animate-in fade-in slide-in-from-top-2 duration-200"
+                        className="fixed w-72 bg-white/95 backdrop-blur-md border border-gray-100 shadow-xl rounded-none p-4 text-left animate-in fade-in zoom-in-95 duration-200"
                         style={{
                             top: `${coords.top}px`,
                             left: `${coords.left}px`,
@@ -66,23 +66,23 @@ function ItemsDropdown({ items }: { items: any[] }) {
                         }}
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div className="mb-3 pb-2 border-b-2 border-black">
-                            <h4 className="text-[10px] font-black uppercase tracking-widest text-gray-400">Order Contents</h4>
+                        <div className="mb-3 pb-2 border-b border-gray-100">
+                            <h4 className="text-[10px] font-semibold uppercase tracking-widest text-gray-500">Order Contents</h4>
                         </div>
                         <div className="space-y-3 max-h-64 overflow-y-auto pr-2 custom-scrollbar">
                             {items.map((item: any) => (
-                                <div key={item.name} className="bg-gray-50 border-2 border-black p-2 shadow-[2px_2px_0px_0px_#000]">
-                                    <p className="font-black text-[11px] uppercase leading-tight mb-1">{item.name}</p>
-                                    <div className="flex justify-between items-center text-[9px] font-bold uppercase tracking-widest">
-                                        <span className="text-gray-500">QTY: <span className="text-black">{item.quantity}</span></span>
-                                        <span className="bg-black text-white px-1.5 py-0.5">BDT {(item.price * item.quantity).toLocaleString()}</span>
+                                <div key={item.name} className="bg-gray-50/50 rounded-none p-2.5">
+                                    <p className="font-medium text-[12px] text-gray-800 leading-tight mb-1.5">{item.name}</p>
+                                    <div className="flex justify-between items-center text-[10px] font-medium tracking-wide">
+                                        <span className="text-gray-500">Qty: <span className="text-gray-900 font-semibold">{item.quantity}</span></span>
+                                        <span className="text-[#C2B280] font-semibold">BDT {(item.price * item.quantity).toLocaleString()}</span>
                                     </div>
                                 </div>
                             ))}
                         </div>
-                        <div className="mt-4 pt-3 border-t-2 border-black flex justify-between items-center">
-                            <span className="text-[10px] font-black uppercase">Total Items</span>
-                            <span className="text-sm font-black">{items.reduce((acc, i) => acc + (i.quantity || 1), 0)}</span>
+                        <div className="mt-4 pt-3 border-t border-gray-100 flex justify-between items-center">
+                            <span className="text-[11px] font-medium text-gray-500 uppercase tracking-widest">Total Items</span>
+                            <span className="text-sm font-semibold text-gray-900">{items.reduce((acc, i) => acc + (i.quantity || 1), 0)}</span>
                         </div>
                     </div>
                 </div>,
@@ -95,26 +95,26 @@ function ItemsDropdown({ items }: { items: any[] }) {
 export function OrdersTab({ orders }: { orders: Order[] }) {
     return (
         <div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 {[
                     { label: "Total Orders", value: orders.length.toString() },
                     { label: "Revenue", value: `BDT ${orders.reduce((acc, o) => acc + (o.paymentStatus === 'PAID' ? o.totalCost : 0), 0).toLocaleString()}` },
                 ].map(s => (
-                    <div key={s.label} className="bg-white border-2 border-black p-5 shadow-[4px_4px_0px_0px_#000]">
-                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2">{s.label}</p>
-                        <p className="text-3xl font-black tracking-tight">{s.value}</p>
+                    <div key={s.label} className="bg-white rounded-none border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow text-center flex flex-col items-center justify-center">
+                        <p className="text-[11px] font-medium uppercase tracking-widest text-gray-400 mb-2">{s.label}</p>
+                        <p className="text-3xl font-light text-gray-900">{s.value}</p>
                     </div>
                 ))}
             </div>
 
-            <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#000]">
-                <div className="px-6 py-4 border-b-2 border-black flex items-center justify-between bg-black text-white">
-                    <h3 className="font-black uppercase tracking-widest text-sm">All Orders</h3>
+            <div className="bg-white rounded-none border border-gray-300 shadow-sm overflow-hidden">
+                <div className="px-6 py-5 border-b border-gray-200 flex items-center justify-between bg-white">
+                    <h3 className="font-medium uppercase tracking-widest text-sm text-gray-800">All Orders</h3>
                 </div>
                 <div className="overflow-x-auto">
-                    <table className="w-full text-sm">
+                    <table className="w-full text-sm text-center">
                         <thead>
-                            <tr className="border-b-2 border-black bg-gray-50">
+                            <tr className="bg-gray-50/50 border-b border-gray-300 divide-x divide-gray-300">
                                 {[
                                     "OrderID",
                                     "User ID",
@@ -128,28 +128,28 @@ export function OrdersTab({ orders }: { orders: Order[] }) {
                                     "Payment",
                                     "TrxID"
                                 ].map(h => (
-                                    <th key={h} className="px-5 py-3 text-center text-[10px] font-black uppercase tracking-widest text-red-600 whitespace-nowrap border-r-2 border-black last:border-r-0">{h}</th>
+                                    <th key={h} className="px-6 py-4 text-[10px] font-semibold uppercase tracking-widest text-red-600 whitespace-nowrap text-center">{h}</th>
                                 ))}
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody className="divide-y divide-gray-200">
                             {orders.map((o) => (
-                                <tr key={o.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors text-center">
-                                    <td className="px-5 py-4 font-mono font-bold text-xs whitespace-nowrap border-r-2 border-black last:border-r-0" title={o.id}>
+                                <tr key={o.id} className="hover:bg-gray-50/50 transition-colors divide-x divide-gray-300 text-center">
+                                    <td className="px-6 py-4 font-mono text-xs text-gray-600 whitespace-nowrap text-center" title={o.id}>
                                         {o.id.slice(-8)}
                                     </td>
-                                    <td className="px-5 py-4 font-mono text-[10px] text-gray-400 whitespace-nowrap border-r-2 border-black last:border-r-0" title={o.userId}>
+                                    <td className="px-6 py-4 font-mono text-[10px] text-gray-400 whitespace-nowrap text-center" title={o.userId}>
                                         {o.userId.slice(-8)}
                                     </td>
-                                    <td className="px-5 py-4 font-semibold whitespace-nowrap border-r-2 border-black last:border-r-0">{o.name}</td>
-                                    <td className="px-5 py-4 text-gray-600 whitespace-nowrap border-r-2 border-black last:border-r-0">{o.email}</td>
-                                    <td className="px-5 py-4 text-gray-500 whitespace-nowrap border-r-2 border-black last:border-r-0">{o.phone || "-"}</td>
-                                    <td className="px-5 py-4 text-gray-600 whitespace-nowrap border-r-2 border-black last:border-r-0 truncate max-w-[150px] text-[10px]" title={o.address}>{o.address}</td>
-                                    <td className="px-5 py-4 text-gray-400 text-xs whitespace-nowrap border-r-2 border-black last:border-r-0">
+                                    <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap text-center">{o.name}</td>
+                                    <td className="px-6 py-4 text-gray-500 whitespace-nowrap text-center">{o.email}</td>
+                                    <td className="px-6 py-4 text-gray-500 whitespace-nowrap text-center">{o.phone || "-"}</td>
+                                    <td className="px-6 py-4 text-gray-500 whitespace-nowrap truncate max-w-[150px] text-xs text-center" title={o.address}>{o.address}</td>
+                                    <td className="px-6 py-4 text-gray-400 text-xs whitespace-nowrap text-center">
                                         {new Date(o.orderTime).toLocaleString()}
                                     </td>
-                                    <td className="px-5 py-4 border-r-2 border-black last:border-r-0">
-                                        <div className="flex flex-col items-center gap-1">
+                                    <td className="px-6 py-4 text-center">
+                                        <div className="flex flex-col items-center justify-center gap-1">
                                             {Array.isArray(o.items) ? (
                                                 <ItemsDropdown items={o.items} />
                                             ) : (
@@ -157,9 +157,9 @@ export function OrdersTab({ orders }: { orders: Order[] }) {
                                             )}
                                         </div>
                                     </td>
-                                    <td className="px-5 py-4 font-black whitespace-nowrap border-r-2 border-black last:border-r-0">BDT {o.totalCost.toLocaleString()}</td>
-                                    <td className="px-5 py-4 text-[10px] font-bold uppercase tracking-tighter text-gray-400 border-r-2 border-black last:border-r-0">{o.paymentType}</td>
-                                    <td className="px-5 py-4 font-mono text-[10px] text-blue-600 font-bold whitespace-nowrap border-r-2 border-black last:border-r-0">{o.trxId || "N/A"}</td>
+                                    <td className="px-6 py-4 font-semibold text-gray-900 whitespace-nowrap text-center">BDT {o.totalCost.toLocaleString()}</td>
+                                    <td className="px-6 py-4 text-[10px] font-semibold uppercase tracking-wider text-gray-500 whitespace-nowrap text-center">{o.paymentType}</td>
+                                    <td className="px-6 py-4 font-mono text-xs text-[#C2B280] whitespace-nowrap text-center">{o.trxId || "N/A"}</td>
                                 </tr>
                             ))}
                         </tbody>

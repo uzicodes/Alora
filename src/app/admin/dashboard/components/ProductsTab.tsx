@@ -38,23 +38,23 @@ function ProductFormDialog({
                 aria-label="Close dialog"
                 onClick={() => { setShowDialog(false); resetForm(); setEditMode(false); }}
             />
-            <div className="relative bg-white border-4 border-black shadow-[12px_12px_0px_0px_#000] p-8 w-full max-w-lg max-h-[90vh] overflow-y-auto animate-in fade-in slide-in-from-bottom-4 duration-300">
-                <div className="mb-6 pb-3 border-b-4 border-black flex items-center justify-between">
-                    <h3 className="text-2xl font-black uppercase tracking-tight">
+            <div className="relative bg-white border border-gray-100 shadow-2xl rounded-none p-8 w-full max-w-lg max-h-[90vh] overflow-y-auto animate-in fade-in slide-in-from-bottom-4 duration-300">
+                <div className="mb-6 pb-4 border-b border-gray-100 flex items-center justify-between">
+                    <h3 className="text-2xl font-light tracking-wide text-gray-900">
                         {selectedId ? "Edit Product" : "Add New Product"}
                     </h3>
-                    <button type="button" onClick={() => { setShowDialog(false); resetForm(); setEditMode(false); }} className="w-8 h-8 bg-black text-white flex items-center justify-center font-black hover:bg-red-600 transition-colors text-sm">✕</button>
+                    <button type="button" onClick={() => { setShowDialog(false); resetForm(); setEditMode(false); }} className="w-8 h-8 rounded-full bg-gray-50 text-gray-500 flex items-center justify-center hover:bg-gray-100 hover:text-gray-900 transition-colors text-sm">Ã¢Å“â€¢</button>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-5">
                     {/* Brand Dropdown */}
                     <div>
-                        <label htmlFor="brand-select" className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Brand</label>
+                        <label htmlFor="brand-select" className="block text-[11px] font-semibold uppercase tracking-widest text-gray-500 mb-2">Brand</label>
                         <select
                             id="brand-select"
                             value={form.brand}
                             onChange={(e) => setForm(prev => ({ ...prev, brand: e.target.value }))}
-                            className="w-full border-2 border-black p-3 font-bold text-sm focus:shadow-[4px_4px_0px_0px_#000] outline-none transition-all bg-white appearance-none cursor-pointer"
+                            className="w-full border border-gray-200 rounded-none p-3.5 font-medium text-sm focus:border-[#C2B280] focus:ring-1 focus:ring-[#C2B280] outline-none transition-all bg-gray-50/50 appearance-none cursor-pointer"
                         >
                             <option value="">Select a brand...</option>
                             {Array.from(new Set(products.map(p => p.brand))).sort().map(brand => (
@@ -65,42 +65,42 @@ function ProductFormDialog({
 
                     {/* Name */}
                     <div>
-                        <label htmlFor="product-name" className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Name</label>
+                        <label htmlFor="product-name" className="block text-[11px] font-semibold uppercase tracking-widest text-gray-500 mb-2">Name</label>
                         <input
                             id="product-name"
                             type="text"
                             value={form.name}
                             onChange={(e) => setForm(prev => ({ ...prev, name: e.target.value }))}
                             placeholder="e.g. Eros EDP"
-                            className="w-full border-2 border-black p-3 font-bold text-sm focus:shadow-[4px_4px_0px_0px_#000] outline-none transition-all placeholder-gray-300"
+                            className="w-full border border-gray-200 rounded-none p-3.5 font-medium text-sm focus:border-[#C2B280] focus:ring-1 focus:ring-[#C2B280] outline-none transition-all bg-gray-50/50 placeholder-gray-400"
                         />
                     </div>
 
                     {/* Price */}
                     <div>
-                        <label htmlFor="product-price" className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Price (BDT)</label>
+                        <label htmlFor="product-price" className="block text-[11px] font-semibold uppercase tracking-widest text-gray-500 mb-2">Price (BDT)</label>
                         <input
                             id="product-price"
                             type="number"
                             value={form.price}
                             onChange={(e) => setForm(prev => ({ ...prev, price: e.target.value }))}
                             placeholder="e.g. 2500"
-                            className="w-full border-2 border-black p-3 font-bold text-sm focus:shadow-[4px_4px_0px_0px_#000] outline-none transition-all placeholder-gray-300"
+                            className="w-full border border-gray-200 rounded-none p-3.5 font-medium text-sm focus:border-[#C2B280] focus:ring-1 focus:ring-[#C2B280] outline-none transition-all bg-gray-50/50 placeholder-gray-400"
                         />
                     </div>
 
                     {/* Gender Toggle Buttons */}
                     <div>
-                        <span className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-2">Gender</span>
+                        <span className="block text-[11px] font-semibold uppercase tracking-widest text-gray-500 mb-3">Gender</span>
                         <div className="flex gap-2">
                             {["Men", "Women", "Unisex"].map(g => (
                                 <button
                                     key={g}
                                     type="button"
                                     onClick={() => setForm(prev => ({ ...prev, gender: g }))}
-                                    className={`flex-1 py-3 border-2 border-black font-black uppercase tracking-widest text-xs transition-all ${form.gender === g
-                                        ? "bg-black text-white shadow-[4px_4px_0px_0px_#000]"
-                                        : "bg-white text-black hover:bg-gray-100"
+                                    className={`flex-1 py-3 rounded-none font-semibold uppercase tracking-widest text-[10px] transition-all border ${form.gender === g
+                                        ? "bg-gray-900 text-white border-gray-900 shadow-md"
+                                        : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50 hover:border-gray-300"
                                         }`}
                                 >
                                     {g}
@@ -111,40 +111,40 @@ function ProductFormDialog({
 
                     {/* Concentration */}
                     <div>
-                        <label htmlFor="product-concentration" className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Concentration</label>
+                        <label htmlFor="product-concentration" className="block text-[11px] font-semibold uppercase tracking-widest text-gray-500 mb-2">Concentration</label>
                         <input
                             id="product-concentration"
                             type="text"
                             value={form.concentration}
                             onChange={(e) => setForm(prev => ({ ...prev, concentration: e.target.value }))}
                             placeholder="e.g. EDP / EDT / Parfum"
-                            className="w-full border-2 border-black p-3 font-bold text-sm focus:shadow-[4px_4px_0px_0px_#000] outline-none transition-all placeholder-gray-300"
+                            className="w-full border border-gray-200 rounded-none p-3.5 font-medium text-sm focus:border-[#C2B280] focus:ring-1 focus:ring-[#C2B280] outline-none transition-all bg-gray-50/50 placeholder-gray-400"
                         />
                     </div>
 
                     {/* Size (ML) */}
                     <div>
-                        <label htmlFor="product-size" className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Size (ML)</label>
+                        <label htmlFor="product-size" className="block text-[11px] font-semibold uppercase tracking-widest text-gray-500 mb-2">Size (ML)</label>
                         <input
                             id="product-size"
                             type="number"
                             value={form.sizeMl}
                             onChange={(e) => setForm(prev => ({ ...prev, sizeMl: e.target.value }))}
                             placeholder="e.g. 100"
-                            className="w-full border-2 border-black p-3 font-bold text-sm focus:shadow-[4px_4px_0px_0px_#000] outline-none transition-all placeholder-gray-300"
+                            className="w-full border border-gray-200 rounded-none p-3.5 font-medium text-sm focus:border-[#C2B280] focus:ring-1 focus:ring-[#C2B280] outline-none transition-all bg-gray-50/50 placeholder-gray-400"
                         />
                     </div>
 
                     {/* Image URLs */}
                     <div>
-                        <label htmlFor="product-images" className="block text-[10px] font-black uppercase tracking-widest text-gray-500 mb-1">Image URLs (comma separated)</label>
+                        <label htmlFor="product-images" className="block text-[11px] font-semibold uppercase tracking-widest text-gray-500 mb-2">Image URLs (comma separated)</label>
                         <input
                             id="product-images"
                             type="text"
                             value={form.imageUrls}
                             onChange={(e) => setForm(prev => ({ ...prev, imageUrls: e.target.value }))}
                             placeholder="https://example.com/image.jpg"
-                            className="w-full border-2 border-black p-3 font-bold text-sm focus:shadow-[4px_4px_0px_0px_#000] outline-none transition-all placeholder-gray-300"
+                            className="w-full border border-gray-200 rounded-none p-3.5 font-medium text-sm focus:border-[#C2B280] focus:ring-1 focus:ring-[#C2B280] outline-none transition-all bg-gray-50/50 placeholder-gray-400"
                         />
                     </div>
                 </div>
@@ -154,16 +154,16 @@ function ProductFormDialog({
                         type="button"
                         onClick={handleSave}
                         disabled={saving || !form.name || !form.brand || !form.price}
-                        className="flex-1 bg-black text-white py-4 font-black uppercase tracking-widest text-xs border-2 border-black hover:bg-emerald-600 hover:border-emerald-600 transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-[4px_4px_0px_0px_#000] active:translate-y-1 active:shadow-none"
+                        className="flex-1 bg-gray-900 text-white py-4 rounded-none font-semibold uppercase tracking-widest text-xs hover:bg-[#C2B280] transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-md hover:shadow-lg hover:-translate-y-0.5"
                     >
-                        {saving ? "SAVING..." : selectedId ? "UPDATE PRODUCT" : "ADD PRODUCT"}
+                        {saving ? "Saving..." : selectedId ? "Update Product" : "Add Product"}
                     </button>
                     <button
                         type="button"
                         onClick={() => { setShowDialog(false); resetForm(); setEditMode(false); }}
-                        className="px-6 py-4 border-2 border-black font-black uppercase tracking-widest text-xs hover:bg-gray-100 transition-colors"
+                        className="px-6 py-4 rounded-none bg-gray-100 text-gray-700 font-semibold uppercase tracking-widest text-xs hover:bg-gray-200 transition-colors"
                     >
-                        CANCEL
+                        Cancel
                     </button>
                 </div>
             </div>
@@ -184,16 +184,16 @@ function ProductCatalogTable({
     handleSelectForEdit: (p: Product) => void;
 }) {
     return (
-        <div className="bg-white border-2 border-black shadow-[4px_4px_0px_0px_#000]">
-            <div className="px-6 py-4 border-b-2 border-black flex items-center justify-between bg-black text-white">
-                <h3 className="font-black uppercase tracking-widest text-sm">All Products</h3>
-                {editMode && <span className="text-[10px] font-bold uppercase tracking-widest text-yellow-400 animate-pulse">← Select a row to edit</span>}
+        <div className="bg-white rounded-none border border-gray-300 shadow-sm overflow-hidden">
+            <div className="px-6 py-5 border-b border-gray-200 flex items-center justify-between bg-white">
+                <h3 className="font-medium uppercase tracking-widest text-sm text-gray-800">All Products</h3>
+                {editMode && <span className="text-[10px] font-semibold uppercase tracking-widest text-blue-500 animate-pulse bg-blue-50 px-3 py-1 rounded-full">⬆ Select a row to edit</span>}
             </div>
             <div className="overflow-x-auto">
-                <table className="w-full text-sm">
+                <table className="w-full text-sm text-center">
                     <thead>
-                        <tr className="border-b-2 border-black bg-gray-50">
-                            {editMode && <th className="px-3 py-3 text-center text-[10px] font-black uppercase tracking-widest text-red-600 border-r-2 border-black">Select</th>}
+                        <tr className="bg-gray-50/50 border-b border-gray-300 divide-x divide-gray-300 text-center">
+                            {editMode && <th className="px-6 py-4 text-[10px] font-semibold uppercase tracking-widest text-red-600 text-center">Select</th>}
                             {[
                                 "ID",
                                 "Brand",
@@ -204,43 +204,43 @@ function ProductCatalogTable({
                                 "ML",
                                 "ImageURL"
                             ].map(h => (
-                                <th key={h} className="px-5 py-3 text-center text-[10px] font-black uppercase tracking-widest text-red-600 whitespace-nowrap border-r-2 border-black last:border-r-0">{h}</th>
+                                <th key={h} className="px-6 py-4 text-[10px] font-semibold uppercase tracking-widest text-red-600 whitespace-nowrap text-center">{h}</th>
                             ))}
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="divide-y divide-gray-200">
                         {products.map((p) => (
                             <tr
                                 key={p.id}
-                                className={`border-b border-gray-100 hover:bg-gray-50 transition-colors text-center font-bold ${editMode ? "cursor-pointer" : ""} ${selectedId === p.id ? "bg-blue-50 border-blue-300" : ""}`}
+                                className={`hover:bg-gray-50/50 transition-colors divide-x divide-gray-300 text-center ${editMode ? "cursor-pointer" : ""} ${selectedId === p.id ? "bg-blue-50/50" : ""}`}
                                 onClick={() => editMode && handleSelectForEdit(p)}
                             >
                                 {editMode && (
-                                    <td className="px-3 py-4 border-r-2 border-black">
-                                        <div className="flex justify-center">
-                                            <div className={`w-5 h-5 border-2 border-black flex items-center justify-center ${selectedId === p.id ? "bg-blue-600" : "bg-white"}`}>
-                                                {selectedId === p.id && <span className="text-white text-xs font-black">✓</span>}
+                                    <td className="px-6 py-4 text-center">
+                                        <div className="flex items-center justify-center">
+                                            <div className={`w-5 h-5 rounded-none flex items-center justify-center transition-colors border ${selectedId === p.id ? "bg-blue-500 border-blue-500" : "bg-white border-gray-300"}`}>
+                                                {selectedId === p.id && <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"/></svg>}
                                             </div>
                                         </div>
                                     </td>
                                 )}
-                                <td className="px-5 py-4 font-mono text-[10px] text-gray-400 border-r-2 border-black last:border-r-0" title={p.id}>
-                                    {p.id}
+                                <td className="px-6 py-4 font-mono text-xs text-gray-400 text-center" title={p.id}>
+                                    {p.id.slice(-8)}
                                 </td>
-                                <td className="px-5 py-4 uppercase border-r-2 border-black last:border-r-0">{p.brand}</td>
-                                <td className="px-5 py-4 border-r-2 border-black last:border-r-0 truncate max-w-[150px]">{p.name}</td>
-                                <td className="px-5 py-4 font-black border-r-2 border-black last:border-r-0">BDT {p.price.toLocaleString()}</td>
-                                <td className="px-5 py-4 uppercase text-xs border-r-2 border-black last:border-r-0">{p.gender}</td>
-                                <td className="px-3 py-4 uppercase text-[10px] border-r-2 border-black last:border-r-0 max-w-[80px] truncate">{p.concentration}</td>
-                                <td className="px-5 py-4 border-r-2 border-black last:border-r-0">{p.sizeMl}ML</td>
-                                <td className="px-5 py-4 border-r-2 border-black last:border-r-0">
-                                    <div className="flex justify-center">
+                                <td className="px-6 py-4 font-medium text-gray-700 uppercase tracking-wide text-xs text-center">{p.brand}</td>
+                                <td className="px-6 py-4 font-medium text-gray-900 truncate max-w-[150px] text-center">{p.name}</td>
+                                <td className="px-6 py-4 font-semibold text-gray-900 text-center">BDT {p.price.toLocaleString()}</td>
+                                <td className="px-6 py-4 text-gray-500 uppercase text-xs text-center">{p.gender}</td>
+                                <td className="px-6 py-4 text-gray-500 uppercase text-xs max-w-[80px] truncate text-center">{p.concentration}</td>
+                                <td className="px-6 py-4 text-gray-500 text-center">{p.sizeMl}ml</td>
+                                <td className="px-6 py-4 text-center">
+                                    <div className="flex items-center justify-center">
                                         {p.imageUrls[0] ? (
-                                            <div className="w-10 h-10 border-2 border-black overflow-hidden relative">
+                                            <div className="w-10 h-10 rounded-none border border-gray-100 overflow-hidden relative shadow-sm">
                                                 <Image src={p.imageUrls[0]} alt={p.name} fill sizes="40px" className="object-cover" />
                                             </div>
                                         ) : (
-                                            <span className="text-gray-300 text-[10px]">NO IMG</span>
+                                            <span className="text-gray-300 text-[10px] font-medium tracking-widest">NO IMG</span>
                                         )}
                                     </div>
                                 </td>
@@ -336,25 +336,35 @@ export function ProductsTab({ products, setProducts }: { products: Product[], se
 
     return (
         <div>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 {[
                     { label: "Total Products", value: products.length.toString() },
                     { label: "Brands", value: Array.from(new Set(products.map(p => p.brand))).length.toString() },
                 ].map(s => (
-                    <div key={s.label} className="bg-white border-2 border-black p-5 shadow-[4px_4px_0px_0px_#000]">
-                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 mb-2">{s.label}</p>
-                        <p className="text-3xl font-black tracking-tight">{s.value}</p>
+                    <div key={s.label} className="bg-white rounded-none border border-gray-100 p-6 shadow-sm hover:shadow-md transition-shadow text-center flex flex-col items-center justify-center">
+                        <p className="text-[11px] font-medium uppercase tracking-widest text-gray-400 mb-2">{s.label}</p>
+                        <p className="text-3xl font-light text-gray-900">{s.value}</p>
                     </div>
                 ))}
 
                 {/* Add Item Button */}
-                <button type="button" onClick={handleAddClick} className="bg-transparent text-green-600 p-5 border-2 border-green-600 transition-all hover:bg-green-600 hover:text-white active:translate-y-1 group">
-                    <span className="text-xl font-black uppercase tracking-tighter truncate w-full">+ Add Item</span>
+                <button type="button" onClick={handleAddClick} className="bg-white rounded-none border border-emerald-100 p-6 shadow-sm hover:shadow-md hover:bg-emerald-50 hover:border-emerald-200 transition-all text-emerald-600 flex items-center justify-center group">
+                    <span className="text-lg font-medium tracking-wide flex items-center gap-2">
+                        <svg className="w-6 h-6 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4"/></svg>
+                        Add Item
+                    </span>
                 </button>
 
                 {/* Edit Item Button */}
-                <button type="button" onClick={handleEditClick} className={`p-5 border-2 transition-all active:translate-y-1 group ${editMode ? "bg-blue-600 text-white border-blue-600 hover:bg-blue-700" : "bg-transparent text-blue-600 border-blue-600 hover:bg-blue-600 hover:text-white"}`}>
-                    <span className="text-xl font-black uppercase tracking-tighter truncate w-full">{editMode ? "Cancel Edit" : "Edit Item"}</span>
+                <button type="button" onClick={handleEditClick} className={`rounded-none border p-6 shadow-sm hover:shadow-md transition-all flex items-center justify-center ${editMode ? "bg-blue-50 border-blue-200 text-blue-600" : "bg-white border-blue-100 text-blue-600 hover:bg-blue-50 hover:border-blue-200"}`}>
+                    <span className="text-lg font-medium tracking-wide flex items-center gap-2">
+                        {editMode ? "Cancel Edit" : (
+                            <>
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                Edit Item
+                            </>
+                        )}
+                    </span>
                 </button>
             </div>
 
