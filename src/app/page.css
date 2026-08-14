@@ -341,15 +341,149 @@
 .hero-bg-heading .bg-word {
   flex-shrink: 0;
   color: #FFFFFF;
-  -webkit-text-stroke: clamp(1.8px, 0.25vw, 2.6px) #2A3A1E;
+  -webkit-text-stroke: clamp(1.2px, 0.18vw, 2px) #2A3A1E;
   text-shadow:
     1px 1px 0px #2A3A1E,
     2px 2px 0px #2A3A1E,
     3px 3px 0px #2A3A1E,
-    4px 4px 0px #2A3A1E,
-    5px 5px 0px #2A3A1E,
-    6px 6px 0px #2A3A1E,
-    0 16px 32px rgba(0, 0, 0, 0.22);
+    0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.hero-bg-heading .line-1 .word-meet {
+  margin-right: 7vw;
+}
+
+.hero-bg-heading .line-2 {
+  padding-left: clamp(80px, 10vw, 160px);
+  padding-right: 0;
+  transform: translateY(clamp(20px, 3vw, 45px));
+}
+
+.hero-bg-heading .line-2 .word-radiant {
+  margin-right: clamp(-80px, -6vw, -20px);
+}
+
+.hero-bg-heading .line-3 {
+  transform: translateY(clamp(40px, 6vw, 90px));
+}
+
+@media (max-width: 768px) {
+  .alora-hero {
+    padding: 75px 16px 30px;
+    min-height: 100svh;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .hero-image-wrap {
+    order: 1;
+    margin-top: -20px;
+    margin-bottom: 0;
+  }
+
+  .hero-image-wrap.fade-in-css {
+    animation-name: heroFadeInMobile;
+  }
+
+  @keyframes heroFadeInMobile {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.96);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .hero-image-inner {
+    width: clamp(260px, 70vw, 340px);
+    height: clamp(310px, 80vw, 400px);
+  }
+
+  .hero-butterfly {
+    display: block !important;
+    position: absolute;
+    z-index: 4;
+  }
+
+  .hero-butterfly-orange {
+    top: 345px;
+    right: 15%;
+    width: clamp(125px, 32vw, 175px);
+    z-index: 4;
+  }
+
+  .hero-butterfly-orange2 {
+    bottom: auto;
+    top: 130px;
+    left: 20%;
+    width: clamp(85px, 22vw, 120px);
+    z-index: 4;
+  }
+
+  .hero-bg-heading {
+    order: 2;
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    padding: 0 10px;
+    gap: 10px;
+    width: 100%;
+    margin-top: -18px;
+  }
+
+  .hero-bg-heading .bg-word {
+    -webkit-text-stroke: 0.9px #2A3A1E;
+    text-shadow:
+      1px 1px 0px #2A3A1E,
+      2px 2px 0px #2A3A1E;
+  }
+
+  .hero-bg-heading .bg-line {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    font-size: clamp(52px, 14vw, 72px);
+    line-height: 1.02;
+    letter-spacing: 0.03em;
+    text-align: center;
+    transform: none;
+  }
+
+  .hero-bg-heading .line-1 {
+    justify-content: center;
+    gap: 20px;
+    transform: none;
+  }
+
+  .hero-bg-heading .line-1 .word-meet {
+    margin-right: 0;
+  }
+
+  .hero-bg-heading .line-2 {
+    padding-left: 0;
+    justify-content: center;
+    gap: 20px;
+    transform: none;
+  }
+
+  .hero-bg-heading .line-2 .word-raw {
+    margin-right: 0;
+    transform: none;
+  }
+
+  .hero-bg-heading .line-2 .word-radiant {
+    margin-right: 0;
+    transform: none;
+  }
+
+  .hero-bg-heading .line-3 {
+    justify-content: center;
+    transform: none;
+  }
 }
 
 .hero-image-inner {
@@ -1184,13 +1318,11 @@
 .fys-card-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(10, 30, 10, 0.92) 0%,
-    rgba(10, 30, 10, 0.55) 35%,
-    rgba(10, 30, 10, 0.1) 65%,
-    transparent 100%
-  );
+  background: linear-gradient(to top,
+      rgba(10, 30, 10, 0.92) 0%,
+      rgba(10, 30, 10, 0.55) 35%,
+      rgba(10, 30, 10, 0.1) 65%,
+      transparent 100%);
   z-index: 1;
   transition: opacity 0.4s ease;
 }
@@ -1854,7 +1986,7 @@
     gap: 12px;
   }
 
-  .perfume-grid > :last-child:nth-child(odd) {
+  .perfume-grid> :last-child:nth-child(odd) {
     grid-column: 1 / -1;
     width: calc(50% - 6px);
     justify-self: center;
@@ -2162,30 +2294,12 @@
 
 /* ==================== RESPONSIVE ==================== */
 @media (max-width: 1024px) {
-  .alora-hero {
-    padding: 100px 24px 40px;
-    min-height: auto;
-  }
-
-  .hero-bg-heading {
-    top: 55%;
-  }
-
   .hero-side-stats {
     display: none;
   }
 
   .hero-corner {
     display: none;
-  }
-
-  .hero-butterfly {
-    display: none;
-  }
-
-  .hero-image-inner {
-    width: clamp(260px, 60vw, 400px) !important;
-    height: clamp(320px, 72vw, 480px) !important;
   }
 
   .section-products {
@@ -2251,23 +2365,6 @@
   .perfume-finder-header .section-h2,
   .about-header .section-h2 {
     white-space: normal !important;
-  }
-
-  .alora-hero {
-    padding: 110px 16px 30px;
-  }
-
-  .hero-bg-heading {
-    top: 56%;
-  }
-
-  .hero-headline {
-    font-size: clamp(32px, 10vw, 48px);
-  }
-
-  .hero-image-inner {
-    width: clamp(220px, 70vw, 320px) !important;
-    height: clamp(270px, 85vw, 400px) !important;
   }
 
   .products-grid {
