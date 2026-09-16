@@ -1,40 +1,39 @@
 import Image from "next/image";
-import prisma from "@/lib/prisma";
+import Link from "next/link";
 import { normalizeImageUrl } from "@/lib/imageUrl";
+import { getPaginatedProductsByGender } from "@/lib/products";
 import AddToCartButton from "../components/AddToCartButton";
 
 export const revalidate = 60;
 
+interface PageProps {
+  searchParams?: Promise<{ page?: string }>;
+}
 
-export default async function UnisexPage() {
-  const products = await prisma.product.findMany({
-    where: { gender: 'UNISEX' },
-    orderBy: [{ brand: 'asc' }, { name: 'asc' }],
-    select: {
-      id: true,
-      name: true,
-      brand: true,
-      price: true,
-      sizeMl: true,
-      concentration: true,
-      gender: true,
-      imageUrls: true,
-      topNotes: true,
-    },
-  });
+const PAGE_SIZE = 24;
+
+export default async function UnisexPage({ searchParams }: PageProps) {
+  const resolvedParams = searchParams ? await searchParams : {};
+  const currentPage = Math.max(1, parseInt(resolvedParams.page || "1", 10) || 1);
+
+  const { products, totalPages } = await getPaginatedProductsByGender(
+    "UNISEX",
+    currentPage,
+    PAGE_SIZE
+  );
 
   return (
     <div className="min-h-screen bg-white text-black pb-32 pt-16 font-sans">
       <div className="mx-auto w-full px-6 sm:px-10 md:px-16 lg:px-20">
-        <header className="text-center" style={{ marginBottom: '50px', paddingTop: '60px' }}>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-space-grotesk font-bold uppercase tracking-[0.02em] mb-8 text-black">Unisex Collection</h1>
+        <header className="text-center" style={{ marginBottom: "50px", paddingTop: "60px" }}>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-space-grotesk font-bold uppercase tracking-[0.02em] mb-8 text-black">
+            Unisex Collection
+          </h1>
         </header>
 
         <div className="w-full">
           {/* Product cards grid */}
-          <div
-            className="flex flex-wrap justify-center gap-x-2 gap-y-8 md:gap-x-6 md:gap-y-20"
-          >
+          <div className="flex flex-wrap justify-center gap-x-2 gap-y-8 md:gap-x-6 md:gap-y-20">
             {products.map((product, index) => {
               const image =
                 product.imageUrls && product.imageUrls.length > 0
@@ -44,11 +43,15 @@ export default async function UnisexPage() {
               const formattedPrice = `BDT ${product.price}`;
 
               return (
-                <div key={product.id} id={`product-${product.id}`} className="group/card flex flex-col cursor-pointer h-full w-[calc(33.33%-6px)] sm:w-[calc(25%-6px)] md:w-[185px] relative">
+                <div
+                  key={product.id}
+                  id={`product-${product.id}`}
+                  className="group/card flex flex-col cursor-pointer h-full w-[calc(33.33%-6px)] sm:w-[calc(25%-6px)] md:w-[185px] relative"
+                >
                   {product.topNotes && product.topNotes.length > 0 && (
                     <div className="absolute -top-5 left-0 right-0 z-10 flex justify-center opacity-0 transition-opacity duration-300 group-hover/card:opacity-100 pointer-events-none px-2">
                       <span className="text-[8px] text-center text-black tracking-wide font-semibold px-1 uppercase">
-                        {product.topNotes.join(' · ')}
+                        {product.topNotes.join(" · ")}
                       </span>
                     </div>
                   )}
@@ -59,6 +62,7 @@ export default async function UnisexPage() {
                         alt={product.name}
                         fill
                         priority={index < 6}
+                        unoptimized={image.includes("res.cloudinary.com")}
                         sizes="(max-width: 768px) 33vw, (max-width: 1024px) 25vw, 185px"
                         className="object-contain transition-transform duration-700 ease-out group-hover/card:scale-110 drop-shadow-md"
                       />
@@ -109,6 +113,43 @@ export default async function UnisexPage() {
               );
             })}
           </div>
+
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-16">
+              {currentPage > 1 && (
+                <Link
+                  href={`/unisex?page=${currentPage - 1}`}
+                  className="px-4 py-2 border border-neutral-300 text-xs font-semibold uppercase tracking-widest hover:border-black transition-colors"
+                >
+                  Previous
+                </Link>
+              )}
+              <div className="flex items-center gap-1">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+                  <Link
+                    key={p}
+                    href={`/unisex?page=${p}`}
+                    className={`w-9 h-9 flex items-center justify-center text-xs font-medium transition-colors ${
+                      p === currentPage
+                        ? "bg-black text-white"
+                        : "border border-neutral-200 text-neutral-600 hover:border-black"
+                    }`}
+                  >
+                    {p}
+                  </Link>
+                ))}
+              </div>
+              {currentPage < totalPages && (
+                <Link
+                  href={`/unisex?page=${currentPage + 1}`}
+                  className="px-4 py-2 border border-neutral-300 text-xs font-semibold uppercase tracking-widest hover:border-black transition-colors"
+                >
+                  Next
+                </Link>
+              )}
+            </div>
+          )}
         </div>
         <div className="h-20 md:h-32 w-full"></div>
       </div>
