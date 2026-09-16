@@ -3,13 +3,24 @@ import prisma from "@/lib/prisma";
 import { normalizeImageUrl } from "@/lib/imageUrl";
 import AddToCartButton from "../components/AddToCartButton";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 
 export default async function MenPage() {
   const products = await prisma.product.findMany({
     where: { gender: 'MEN' },
-    orderBy: [{ brand: 'asc' }, { name: 'asc' }]
+    orderBy: [{ brand: 'asc' }, { name: 'asc' }],
+    select: {
+      id: true,
+      name: true,
+      brand: true,
+      price: true,
+      sizeMl: true,
+      concentration: true,
+      gender: true,
+      imageUrls: true,
+      topNotes: true,
+    },
   });
 
   return (
@@ -24,7 +35,7 @@ export default async function MenPage() {
           <div
             className="flex flex-wrap justify-center gap-x-2 gap-y-8 md:gap-x-6 md:gap-y-20"
           >
-            {products.map((product) => {
+            {products.map((product, index) => {
               const image =
                 product.imageUrls && product.imageUrls.length > 0
                   ? normalizeImageUrl(product.imageUrls[0])
@@ -47,6 +58,7 @@ export default async function MenPage() {
                         src={image}
                         alt={product.name}
                         fill
+                        priority={index < 6}
                         sizes="(max-width: 768px) 33vw, (max-width: 1024px) 25vw, 185px"
                         className="object-contain transition-transform duration-700 ease-out group-hover/card:scale-110 drop-shadow-md"
                       />

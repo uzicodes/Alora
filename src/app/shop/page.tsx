@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 import { normalizeImageUrl } from "@/lib/imageUrl";
 import AddToCartButton from "../components/AddToCartButton";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function ShopAllPage() {
   const products = await prisma.product.findMany();

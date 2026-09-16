@@ -1,7 +1,15 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
+import { revalidatePath } from "next/cache";
 import prisma from "@/lib/prisma";
 import { normalizeImageUrls } from "@/lib/imageUrl";
+
+function revalidateCollectionPages() {
+    revalidatePath("/men");
+    revalidatePath("/woman");
+    revalidatePath("/unisex");
+    revalidatePath("/shop");
+}
 
 // Create a new product
 export async function POST(req: Request) {
@@ -28,6 +36,8 @@ export async function POST(req: Request) {
                 ),
             },
         });
+
+        revalidateCollectionPages();
 
         return NextResponse.json({ success: true, product: structuredClone(product) });
     } catch (error) {
@@ -66,6 +76,8 @@ export async function PUT(req: Request) {
                 ),
             },
         });
+
+        revalidateCollectionPages();
 
         return NextResponse.json({ success: true, product: structuredClone(product) });
     } catch (error) {
